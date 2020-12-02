@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainDestination">
+
+    <include
+        app:graph="@navigation/navigation_graph_greeting"/>
+
+    <fragment
+        android:id="@+id/mainDestination">
+
+        <action
+            android:id="@+id/action_mainDestination_to_navigationGraphGreeting"
+            app:destination="@id/navigation_graph_greeting"/>
+
+    </fragment>
+
+</navigation>

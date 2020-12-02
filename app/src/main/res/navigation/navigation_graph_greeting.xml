@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph_greeting"
+    app:startDestination="@id/greetingDestination1">
+
+    <fragment
+        android:id="@+id/greetingDestination1">
+
+        <action
+            android:id="@+id/action_greetingDestination1_to_greetingDestination2"
+            app:destination="@id/greetingDestination2"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/greetingDestination2">
+
+        <action
+            android:id="@+id/action_greetingDestination2_to_greetingDestination3"
+            app:destination="@id/greetingDestination3"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/greetingDestination3">
+
+        <action
+            android:id="@+id/action_greetingDestination3_to_greetingDestination4"
+            app:destination="@id/greetingDestination4"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/greetingDestination4">
+
+        <action
+            android:id="@+id/action_exit_from_greetings_graph"
+            app:popUpTo="@id/navigation_graph_greeting"
+            app:popUpToInclusive="true"/>
+
+    </fragment>
+
+</navigation>
