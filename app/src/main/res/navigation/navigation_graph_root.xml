@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/mainDestination">
 
@@ -14,8 +12,72 @@
 
         <action
             android:id="@+id/action_mainDestination_to_navigationGraphGreeting"
-            app:destination="@id/navigation_graph_greeting"/>
+            app:destination="@id/navigation_graph_greeting"
+            app:popUpTo="@id/mainDestination"
+            app:popUpToInclusive="true"/>
+
+        <action
+            android:id="@+id/action_mainDestination_to_telephoneNumberInputDestination"
+            app:destination="@id/telephoneNumberInputDestination"
+            app:popUpTo="@id/mainDestination"
+            app:popUpToInclusive="true"/>
+
+        <action
+            android:id="@+id/action_mainDestination_to_registrationDestination"
+            app:destination="@id/registrationDestination"/>
+
+        <action
+            android:id="@+id/action_mainDestination_to_liveBroadcastDestination"
+            app:destination="@id/liveBroadcastDestination"/>
 
     </fragment>
+
+    <fragment
+        android:id="@+id/telephoneNumberInputDestination">
+
+        <action
+            android:id="@+id/action_telephoneNumberInputDestination_to_telephoneNumberConfirmationDestination"
+            app:destination="@id/telephoneNumberConfirmationDestination"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/telephoneNumberConfirmationDestination">
+
+        <action
+            android:id="@+id/action_telephoneNumberConfirmationDestination_to_registrationDestination"
+            app:destination="@id/registrationDestination"
+            app:popUpTo="@id/mainDestination"
+            app:popUpToInclusive="true"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/registrationDestination">
+
+        <action
+            android:id="@+id/action_registrationDestination_to_cardConfirmationDestination"
+            app:destination="@id/cardConfirmationDestination"/>
+
+        <action
+            android:id="@+id/action_registrationDestination_to_mainDestination"
+            app:popUpTo="@id/mainDestination"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/cardConfirmationDestination"/>
+
+    <fragment
+        android:id="@+id/liveBroadcastDestination">
+
+        <action
+            android:id="@+id/action_liveBroadcastDestination_to_productOrderDestination"
+            app:destination="@id/productOrderDestination"/>
+
+    </fragment>
+
+    <dialog
+        android:id="@+id/productOrderDestination"/>
 
 </navigation>
