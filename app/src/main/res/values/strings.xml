@@ -3,4 +3,37 @@
 
     <!-- Empty fragment -->
     <string name="empty_fragment_text">Пустой фрагмент</string>
+
+    <!-- Greeting fragment -->
+    <string name="greeting_fragment_next_button">Далее</string>
+    <string name="greeting_fragment_start_button">Начать</string>
+    <string name="greeting_fragment_skip_button">Пропустить</string>
+
+    <!-- Greeting fragment page 1 -->
+    <string name="greeting_fragment_page1_title">Добро пожаловать!</string>
+    <string name="greeting_fragment_page1_description">@string/template_text</string>
+
+    <!-- Greeting fragment page 2 -->
+    <string name="greeting_fragment_page2_title">Смотри и покупай!</string>
+    <string name="greeting_fragment_page2_description">
+        Смотри прямые эфиры, в которых блоггеры будут показывать товары с уникальной ценой.
+        Совершай покупки не отключаясь от эфира
+    </string>
+
+    <!-- Greeting fragment page 3 -->
+    <string name="greeting_fragment_page3_title">Регистрируй карту!</string>
+    <string name="greeting_fragment_page3_description">
+        Регистрируй банковскую карту, чтобы совершать покупки не прерывая прямой эфир
+    </string>
+
+    <!-- Greeting fragment page 4 -->
+    <string name="greeting_fragment_page4_title">Покупай с выгодой!</string>
+    <string name="greeting_fragment_page4_description">@string/template_text</string>
+
+    <!-- Template text -->
+    <string name="template_text">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+    </string>
+
 </resources>

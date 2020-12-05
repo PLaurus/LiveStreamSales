@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-    <item android:drawable="@color/colorPrimary"/>
+    <item android:drawable="@color/colorSplashScreenBackground"/>
 
     <item
         android:gravity="center"

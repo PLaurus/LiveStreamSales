@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFFFFFFF</color>
+    <color name="colorPrimary">#FF0000</color>
+    <color name="colorOnPrimary">#FFFFFFFF</color>
+
     <color name="colorPrimaryNight">#FFFFFFFF</color>
     <color name="colorPrimaryVariant">#FF3700B3</color>
     <color name="colorSecondary">#FF03DAC5</color>
     <color name="colorSecondaryVariant">#FF018786</color>
     <color name="colorOnSecondary">#FF000000</color>
-    <color name="colorOnPrimary">#FFFFFFFF</color>
+
+    <color name="colorPrimaryText">#000000</color>
+    <color name="colorSecondaryText">#AAAAAA</color>
+
+    <!-- Splash screen -->
+    <color name="colorSplashScreenBackground">#FFFFFF</color>
 </resources>
