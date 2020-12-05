@@ -36,7 +36,9 @@
 
         <action
             android:id="@+id/action_greetingDestination_to_mainDestination"
-            app:popUpTo="@id/mainDestination"/>
+            app:popUpTo="@id/mainDestination"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
 
     </fragment>
 
