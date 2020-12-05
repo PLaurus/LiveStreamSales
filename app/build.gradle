@@ -47,6 +47,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation 'com.facebook.fresco:fresco:2.3.0'
+    implementation 'com.romandanylyk:pageindicatorview:1.0.3'
 
     // Video player
     implementation 'com.google.android.exoplayer:exoplayer:r2.3.1'
