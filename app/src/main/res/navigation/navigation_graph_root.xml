@@ -6,7 +6,8 @@
     app:startDestination="@id/mainDestination">
 
     <fragment
-        android:id="@+id/mainDestination">
+        android:id="@+id/mainDestination"
+        tools:layout="@layout/fragment_main">
 
         <action
             android:id="@+id/action_mainDestination_to_navigationGraphGreeting"

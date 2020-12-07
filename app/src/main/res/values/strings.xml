@@ -36,4 +36,15 @@
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
     </string>
 
+    <!-- Home fragment -->
+    <string name="fragment_home_live">● Прямой эфир</string>
+    <string name="fragment_home_announcement">Анонс</string>
+    <string name="fragment_home_coming_soon">Скоро в эфире</string>
+
+    <!-- Main fragment -->
+    <string name="fragment_main_home">Главная</string>
+    <string name="fragment_main_notifications">Напоминания</string>
+    <string name="fragment_main_category">Категории</string>
+    <string name="fragment_main_settings">Настройки</string>
+
 </resources>

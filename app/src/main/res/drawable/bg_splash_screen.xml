@@ -13,7 +13,7 @@
 
         <bitmap
             android:gravity="fill_horizontal|fill_vertical"
-            android:src="@drawable/logo"/>
+            android:src="@drawable/test_logo"/>
 
     </item>
 
