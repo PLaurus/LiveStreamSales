@@ -7,6 +7,7 @@
 
     <fragment
         android:id="@+id/mainDestination"
+        android:label="@string/fragment_main_title"
         tools:layout="@layout/fragment_main">
 
         <action
@@ -33,6 +34,7 @@
 
     <fragment
         android:id="@+id/greetingDestination"
+        android:label="@string/greeting_fragment_title"
         tools:layout="@layout/fragment_greeting">
 
         <action
@@ -44,7 +46,8 @@
     </fragment>
 
     <fragment
-        android:id="@+id/telephoneNumberInputDestination">
+        android:id="@+id/telephoneNumberInputDestination"
+        android:label="@string/fragment_telephone_number_input_title">
 
         <action
             android:id="@+id/action_telephoneNumberInputDestination_to_telephoneNumberConfirmationDestination"
@@ -53,7 +56,8 @@
     </fragment>
 
     <fragment
-        android:id="@+id/telephoneNumberConfirmationDestination">
+        android:id="@+id/telephoneNumberConfirmationDestination"
+        android:label="@string/fragment_telephone_number_confirmation_title">
 
         <action
             android:id="@+id/action_telephoneNumberConfirmationDestination_to_registrationDestination"
@@ -80,7 +84,8 @@
         android:id="@+id/cardConfirmationDestination"/>
 
     <fragment
-        android:id="@+id/liveBroadcastDestination">
+        android:id="@+id/liveBroadcastDestination"
+        android:label="@string/fragment_live_broadcasts_title">
 
         <action
             android:id="@+id/action_liveBroadcastDestination_to_productOrderDestination"
@@ -89,6 +94,7 @@
     </fragment>
 
     <dialog
-        android:id="@+id/productOrderDestination"/>
+        android:id="@+id/productOrderDestination"
+        android:label="@string/dialog_product_order_title"/>
 
 </navigation>

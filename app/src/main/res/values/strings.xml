@@ -2,9 +2,10 @@
     <string name="app_name">LiveStreamSales</string>
 
     <!-- Empty fragment -->
-    <string name="empty_fragment_text">Пустой фрагмент</string>
+    <string name="empty_fragment_text">Скоро…</string>
 
     <!-- Greeting fragment -->
+    <string name="greeting_fragment_title">Добро пожаловать</string>
     <string name="greeting_fragment_next_button">Далее</string>
     <string name="greeting_fragment_start_button">Начать</string>
     <string name="greeting_fragment_skip_button">Пропустить</string>
@@ -36,15 +37,30 @@
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
     </string>
 
+    <!-- Main fragment -->
+    <string name="fragment_main_title">@string/app_name</string>
+    <string name="fragment_main_home_button">Главная</string>
+    <string name="fragment_main_notifications_button">Напоминания</string>
+    <string name="fragment_main_category_button">Категории</string>
+    <string name="fragment_main_settings_button">Настройки</string>
+
     <!-- Home fragment -->
     <string name="fragment_home_live">● Прямой эфир</string>
     <string name="fragment_home_announcement">Анонс</string>
     <string name="fragment_home_coming_soon">Скоро в эфире</string>
 
-    <!-- Main fragment -->
-    <string name="fragment_main_home">Главная</string>
-    <string name="fragment_main_notifications">Напоминания</string>
-    <string name="fragment_main_category">Категории</string>
-    <string name="fragment_main_settings">Настройки</string>
+    <!-- Live broadcasts fragment -->
+    <string name="fragment_live_broadcasts_title">Прямая трансляция</string>
+
+    <!-- Product order dialog -->
+    <string name="dialog_product_order_title">Заказ</string>
+
+    <!-- Telephone number input fragment -->
+    <string name="fragment_telephone_number_input_title">Номер телефона</string>
+
+    <!-- Telephone number confirmation destination -->
+    <string name="fragment_telephone_number_confirmation_title">Подтверждение номера</string>
+
+    <!-- Registration destination -->
 
 </resources>

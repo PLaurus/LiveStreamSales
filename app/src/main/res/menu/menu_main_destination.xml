@@ -6,28 +6,28 @@
     <item
         android:id="@+id/homeDestination"
         android:icon="@drawable/ic_home_white_24"
-        android:title="@string/fragment_main_home"
+        android:title="@string/fragment_main_home_button"
         android:enabled="true"
         app:showAsAction="ifRoom|withText"/>
 
     <item
         android:id="@+id/notificationsDestination"
         android:icon="@drawable/ic_bell_outlined_white_24"
-        android:title="@string/fragment_main_notifications"
+        android:title="@string/fragment_main_notifications_button"
         android:enabled="false"
         app:showAsAction="ifRoom|withText"/>
 
     <item
         android:id="@+id/categoriesDestination"
         android:icon="@drawable/ic_filter_white_24"
-        android:title="@string/fragment_main_category"
+        android:title="@string/fragment_main_category_button"
         android:enabled="false"
         app:showAsAction="ifRoom|withText"/>
 
     <item
         android:id="@+id/settingsDestination"
         android:icon="@drawable/ic_settings_white_24"
-        android:title="@string/fragment_main_settings"
+        android:title="@string/fragment_main_settings_button"
         android:enabled="true"
         app:showAsAction="ifRoom|withText"/>
 
