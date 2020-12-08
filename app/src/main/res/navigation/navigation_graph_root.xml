@@ -47,7 +47,8 @@
 
     <fragment
         android:id="@+id/telephoneNumberInputDestination"
-        android:label="@string/fragment_telephone_number_input_title">
+        android:label="@string/fragment_telephone_number_input_title"
+        tools:layout="@layout/fragment_telephone_number_input">
 
         <action
             android:id="@+id/action_telephoneNumberInputDestination_to_telephoneNumberConfirmationDestination"
