@@ -8,15 +8,19 @@
 
     <fragment
         android:id="@+id/homeDestination"
+        android:label="@string/fragment_home_title"
         tools:layout="@layout/fragment_home"/>
 
     <fragment
-        android:id="@+id/notificationsDestination"/>
+        android:id="@+id/notificationsDestination"
+        android:label="@string/fragment_notifications_title"/>
 
     <fragment
-        android:id="@+id/categoriesDestination"/>
+        android:id="@+id/categoriesDestination"
+        android:label="@string/fragment_categories_title"/>
 
     <fragment
-        android:id="@+id/settingsDestination"/>
+        android:id="@+id/settingsDestination"
+        android:label="@string/fragment_settings_title"/>
 
 </navigation>

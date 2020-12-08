@@ -58,9 +58,25 @@
     <!-- Telephone number input fragment -->
     <string name="fragment_telephone_number_input_title">Номер телефона</string>
 
-    <!-- Telephone number confirmation destination -->
+    <!-- Telephone number confirmation fragment -->
     <string name="fragment_telephone_number_confirmation_title">Подтверждение номера</string>
 
-    <!-- Registration destination -->
+    <!-- Registration fragment -->
+    <string name="fragment_registration_title">Информация о пользователе</string>
+
+    <!-- Card confirmation fragment -->
+    <string name="fragment_card_confirmation_title">Подтверждение карты</string>
+
+    <!-- Home fragment -->
+    <string name="fragment_home_title">Главная</string>
+
+    <!-- Notifications fragment -->
+    <string name="fragment_notifications_title">Напоминания</string>
+
+    <!-- Categories fragment -->
+    <string name="fragment_categories_title">Категории</string>
+
+    <!-- Settings fragment -->
+    <string name="fragment_settings_title">Настройки</string>
 
 </resources>
