@@ -63,6 +63,37 @@
 
     <!-- Telephone number confirmation fragment -->
     <string name="fragment_telephone_number_confirmation_title">Подтверждение номера</string>
+    <string name="fragment_telephone_number_confirmation_enter_code">Введите код</string>
+    <string name="fragment_telephone_number_confirmation_code_is_sent">
+        Мы отправили код на номер
+        <annotation highlighted="">%s</annotation>
+    </string>
+    <string name="fragment_telephone_number_confirmation_code_is_sent_tools">
+        Мы отправили код на номер
+        <font color="#FF0000">+ 7 (999) 999 99 99</font>
+    </string>
+    <string name="fragment_telephone_number_confirmation_new_code_message">
+        Получить новый код можно через
+        <annotation highlighted="">%s</annotation>
+    </string>
+    <string name="fragment_telephone_number_confirmation_new_code_message_tools">
+        Получить новый код можно через
+        <font color="#FF0000">00:47</font>
+    </string>
+    <string name="fragment_phone_confirmation_terms_of_the_offer_text">
+        Я ознакомлен, согласен и принимаю
+        <annotation link="https://www.google.ru/">
+            <annotation highlighted="">
+                условия оферты
+            </annotation>
+        </annotation>
+    </string>
+    <string name="fragment_phone_confirmation_terms_of_the_offer_text_tools">
+        Я ознакомлен, согласен и принимаю
+        <font color="#FF0000">
+            условия оферты
+        </font>
+    </string>
 
     <!-- Registration fragment -->
     <string name="fragment_registration_title">Информация о пользователе</string>

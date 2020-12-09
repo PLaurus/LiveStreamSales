@@ -4,13 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/screen_content_padding"
+    android:clipToPadding="false">
 
     <ImageView
         android:id="@+id/fragment_greeting_page_image"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="60dp"
+        android:layout_margin="45dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +36,7 @@
         android:id="@+id/fragment_greeting_page_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
+        android:layout_marginHorizontal="15dp"
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:textSize="17sp"

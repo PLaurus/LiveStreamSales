@@ -9,9 +9,10 @@
     <color name="colorSecondaryVariant">#FF018786</color>
     <color name="colorOnSecondary">#FF000000</color>
 
+    <!-- App text -->
     <color name="colorPrimaryText">#000000</color>
     <color name="colorSecondaryText">#AAAAAA</color>
 
-    <!-- Splash screen -->
+    <!-- Splash activity -->
     <color name="colorSplashScreenBackground">#FFFFFF</color>
 </resources>

@@ -2,4 +2,11 @@
 <resources>
     <!-- Empty fragment -->
     <dimen name="empty_fragment_text_size">20sp</dimen>
+
+    <!-- Shared dimensions -->
+    <dimen name="screen_content_padding">15dp</dimen>
+    <dimen name="content_margin">15dp</dimen>
+    <dimen name="header_text_size">20sp</dimen>
+    <dimen name="text_size">16sp</dimen>
+    <dimen name="elements_corner_radius">15dp</dimen>
 </resources>

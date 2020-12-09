@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/screen_content_padding"
+    android:clipToPadding="false">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fragment_phone_confirmation_enter_code_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_telephone_number_confirmation_enter_code"
+        android:textSize="@dimen/header_text_size"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fragment_phone_confirmation_code_is_sent_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/content_margin"
+        android:text="@string/fragment_telephone_number_confirmation_code_is_sent"
+        android:textColor="@color/colorSecondaryText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_phone_confirmation_enter_code_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="@string/fragment_telephone_number_confirmation_code_is_sent_tools"/>
+
+<!--    <com.google.android.material.textview.MaterialTextView-->
+<!--        android:id="@+id/fragment_phone_confirmation_telephone_number_text"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginStart="5dp"-->
+<!--        android:textColor="@color/colorPrimary"-->
+<!--        app:layout_constraintStart_toEndOf="@id/fragment_phone_confirmation_code_is_sent_text"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@id/fragment_phone_confirmation_code_is_sent_text"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/fragment_phone_confirmation_code_is_sent_text"-->
+<!--        app:autoSizeTextType="uniform"-->
+<!--        tools:text="+7 (999) 999 99 99"/>-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/fragment_phone_confirmation_code_digit_1_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/content_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/fragment_phone_confirmation_code_digit_2_input_layout"
+        app:layout_constraintTop_toBottomOf="@id/fragment_phone_confirmation_code_is_sent_text"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:hintEnabled="false">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/fragment_phone_confirmation_code_digit_1_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="25sp"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:maxLength="1"
+            android:cursorVisible="false"
+            android:focusable="true"
+            tools:text="1"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/fragment_phone_confirmation_code_digit_2_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/content_margin"
+        android:layout_marginTop="@dimen/content_margin"
+        app:layout_constraintStart_toEndOf="@id/fragment_phone_confirmation_code_digit_1_input_layout"
+        app:layout_constraintEnd_toStartOf="@id/fragment_phone_confirmation_code_digit_3_input_layout"
+        app:layout_constraintTop_toBottomOf="@id/fragment_phone_confirmation_code_is_sent_text"
+        app:layout_constraintDimensionRatio="1"
+        app:hintEnabled="false">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/fragment_phone_confirmation_code_digit_2_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="25sp"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:maxLength="1"
+            android:cursorVisible="false"
+            android:focusable="true"
+            tools:text="2"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/fragment_phone_confirmation_code_digit_3_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/content_margin"
+        android:layout_marginTop="@dimen/content_margin"
+        app:layout_constraintStart_toEndOf="@id/fragment_phone_confirmation_code_digit_2_input_layout"
+        app:layout_constraintEnd_toStartOf="@id/fragment_phone_confirmation_code_digit_4_input_layout"
+        app:layout_constraintTop_toBottomOf="@id/fragment_phone_confirmation_code_is_sent_text"
+        app:layout_constraintDimensionRatio="1"
+        app:hintEnabled="false">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/fragment_phone_confirmation_code_digit_3_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="25sp"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:maxLength="1"
+            android:cursorVisible="false"
+            android:focusable="true"
+            tools:text="3"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/fragment_phone_confirmation_code_digit_4_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/content_margin"
+        android:layout_marginTop="@dimen/content_margin"
+        app:layout_constraintStart_toEndOf="@id/fragment_phone_confirmation_code_digit_3_input_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_phone_confirmation_code_is_sent_text"
+        app:layout_constraintDimensionRatio="1"
+        app:hintEnabled="false">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/fragment_phone_confirmation_code_digit_4_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="25sp"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:maxLength="1"
+            android:cursorVisible="false"
+            android:focusable="true"
+            tools:text="4"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/fragment_phone_confirmation_new_code_message_layout"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/content_margin"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/fragment_phone_confirmation_code_digit_4_input_layout"-->
+<!--        tools:visibility="visible">-->
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/fragment_phone_confirmation_new_code_message_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_margin"
+            android:text="@string/fragment_telephone_number_confirmation_new_code_message"
+            android:textColor="@color/colorSecondaryText"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_phone_confirmation_code_digit_4_input_layout"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constrainedWidth="true"
+            tools:visibility="visible"
+            tools:text="@string/fragment_telephone_number_confirmation_new_code_message_tools"/>
+
+<!--        <com.google.android.material.textview.MaterialTextView-->
+<!--            android:id="@+id/fragment_phone_confirmation_time_left_text"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:textColor="@color/colorPrimary"-->
+<!--            app:layout_constraintStart_toEndOf="@id/fragment_phone_confirmation_new_code_message_text"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            tools:text="00:47"/>-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fragment_phone_confirmation_terms_of_the_offer_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_phone_confirmation_terms_of_the_offer_text"
+        android:textColor="@color/colorSecondaryText"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_phone_confirmation_code_digit_4_input_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintVertical_bias="0.2"
+        tools:text="@string/fragment_phone_confirmation_terms_of_the_offer_text_tools"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

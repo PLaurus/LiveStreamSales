@@ -10,17 +10,17 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/fragment_telephone_number_input_enter_phone_number_text"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:text="@string/fragment_telephone_number_input_enter_telephone_number"
+        android:textSize="@dimen/header_text_size"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHeight_percent="0.035"
         app:autoSizeTextType="uniform"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/fragment_telephone_number_input_phone_number_input"
+        android:id="@+id/fragment_telephone_number_input_phone_number_input_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -30,13 +30,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_telephone_number_input_enter_phone_number_text"
         app:layout_constraintHeight_percent="0.08"
-        app:boxCornerRadiusTopStart="15dp"
-        app:boxCornerRadiusTopEnd="15dp"
-        app:boxCornerRadiusBottomStart="15dp"
-        app:boxCornerRadiusBottomEnd="15dp"
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/fragment_telephone_number_input_phone_number_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="phone"/>
@@ -52,8 +49,8 @@
         android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_telephone_number_input_phone_number_input"
+        app:layout_constraintTop_toBottomOf="@id/fragment_telephone_number_input_phone_number_input_layout"
         app:layout_constraintHeight_percent="0.08"
-        app:cornerRadius="15dp"/>
+        app:cornerRadius="@dimen/elements_corner_radius"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
