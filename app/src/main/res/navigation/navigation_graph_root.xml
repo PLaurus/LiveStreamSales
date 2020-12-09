@@ -58,7 +58,8 @@
 
     <fragment
         android:id="@+id/telephoneNumberConfirmationDestination"
-        android:label="@string/fragment_telephone_number_confirmation_title">
+        android:label="@string/fragment_telephone_number_confirmation_title"
+        tools:layout="@layout/fragment_phone_confirmation">
 
         <action
             android:id="@+id/action_telephoneNumberConfirmationDestination_to_registrationDestination"
@@ -70,7 +71,8 @@
 
     <fragment
         android:id="@+id/registrationDestination"
-        android:label="@string/fragment_registration_title">
+        android:label="@string/fragment_registration_title"
+        tools:layout="@layout/fragment_registration">
 
         <action
             android:id="@+id/action_registrationDestination_to_cardConfirmationDestination"

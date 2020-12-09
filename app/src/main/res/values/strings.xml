@@ -96,7 +96,28 @@
     </string>
 
     <!-- Registration fragment -->
-    <string name="fragment_registration_title">Информация о пользователе</string>
+    <string name="fragment_registration_title">Регистрация</string>
+
+    <!-- Settings fragment -->
+    <string name="fragment_settings_personal_information">1. Личные данные</string>
+    <string name="fragment_settings_payment_card_title">2. Платёжная карта</string>
+
+    <!-- User personal information fragment -->
+    <string name="fragment_user_personal_information_name_input_hint">Имя</string>
+    <string name="fragment_user_personal_information_surname_input_hint">Фамилия</string>
+    <string name="fragment_user_personal_information_telephone_number_hint">Номер телефона</string>
+    <string name="fragment_user_personal_information_email_hint">E-mail</string>
+    <string name="fragment_user_personal_information_save_user_information_button">Сохранить</string>
+
+    <!-- Payment card editing fragment -->
+    <string name="fragment_payment_card_editing_purpose_description">
+        Привяжите свою карту, чтобы делать заказ не отрываясь от прямого эфира
+    </string>
+    <string name="fragment_payment_card_editing_card_number_hint">Номер карты</string>
+    <string name="fragment_payment_card_editing_card_holder_name_hint">Имя владельца карты</string>
+    <string name="fragment_payment_card_editing_valid_through_hint">Срок действия</string>
+    <string name="fragment_payment_card_editing_cvc_hint">Код безопасности</string>
+    <string name="fragment_payment_card_editing_confirm_button">Подтвердить карту</string>
 
     <!-- Card confirmation fragment -->
     <string name="fragment_card_confirmation_title">Подтверждение карты</string>

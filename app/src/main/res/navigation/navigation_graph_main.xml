@@ -21,6 +21,7 @@
 
     <fragment
         android:id="@+id/settingsDestination"
-        android:label="@string/fragment_settings_title"/>
+        android:label="@string/fragment_settings_title"
+        tools:layout="@layout/fragment_settings"/>
 
 </navigation>
