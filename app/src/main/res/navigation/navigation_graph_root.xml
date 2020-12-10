@@ -11,7 +11,7 @@
         tools:layout="@layout/fragment_main">
 
         <action
-            android:id="@+id/action_mainDestination_to_navigationGraphGreeting"
+            android:id="@+id/action_mainDestination_to_greetingDestination"
             app:destination="@id/greetingDestination"
             app:popUpTo="@id/mainDestination"
             app:popUpToInclusive="true"/>
