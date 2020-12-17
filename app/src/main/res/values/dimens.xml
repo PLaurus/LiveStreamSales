@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Empty fragment -->
-    <dimen name="empty_fragment_text_size">20sp</dimen>
+    <dimen name="emptyFragment_textSize">20sp</dimen>
 
-    <!-- Shared dimensions -->
-    <dimen name="screen_content_padding">16dp</dimen>
-    <dimen name="content_margin">16dp</dimen>
-    <dimen name="header_text_size">20sp</dimen>
-    <dimen name="text_size">16sp</dimen>
-    <dimen name="elements_corner_radius">16dp</dimen>
+    <!-- Shared -->
+    <dimen name="screenPadding">16dp</dimen>
+    <dimen name="contentMargin">16dp</dimen>
+    <dimen name="headerTextSize">20sp</dimen>
+    <dimen name="textSize">16sp</dimen>
+    <dimen name="textInputLayout_cornerRadius">16dp</dimen>
+    <dimen name="card_cornerRadius">16dp</dimen>
+    <dimen name="card_elevation">5dp</dimen>
+
+    <!-- Big material button -->
+    <dimen name="bigButton_cornerRadius">16dp</dimen>
+
+    <!-- Payment card -->
+    <dimen name="paymentCard_content_paddingHorizontal">30dp</dimen>
+    <dimen name="paymentCard_numberTextPart_heightPercent">0.15</dimen>
+    <dimen name="paymentCard_numberTextPart_maxLines">1</dimen>
+    <dimen name="paymentCard_numberTextPart_maxLength">4</dimen>
+    <dimen name="paymentCard_description_heightPercent">0.1</dimen>
+    <dimen name="paymentCard_text_shadowRadius">3</dimen>
+    <dimen name="paymentCard_text_shadowDx">1</dimen>
+    <dimen name="paymentCard_text_shadowDy">1</dimen>
 </resources>

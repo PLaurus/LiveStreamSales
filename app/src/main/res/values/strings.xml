@@ -119,6 +119,9 @@
     <string name="fragment_payment_card_editing_cvc_hint">Код безопасности</string>
     <string name="fragment_payment_card_editing_confirm_button">Подтвердить карту</string>
 
+    <!-- Payment card fragment -->
+    <string name="fragment_payment_card_replace_card">Заменить карту</string>
+
     <!-- Card confirmation fragment -->
     <string name="fragment_card_confirmation_title">Подтверждение карты</string>
 

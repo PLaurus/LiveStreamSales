@@ -15,4 +15,9 @@
 
     <!-- Splash activity -->
     <color name="colorSplashScreenBackground">#FFFFFF</color>
+
+    <!-- Payment card -->
+    <color name="colorPaymentCardBackground">#434343</color>
+    <color name="colorPaymentCardText">#FFFFFF</color>
+    <color name="colorPaymentCardTextShadow">#AFAFAF</color>
 </resources>

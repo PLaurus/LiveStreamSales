@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/screen_content_padding"
+    android:padding="@dimen/screenPadding"
     android:clipToPadding="false">
 
     <com.google.android.material.textview.MaterialTextView
@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/fragment_telephone_number_input_enter_telephone_number"
-        android:textSize="@dimen/header_text_size"
+        android:textSize="@dimen/headerTextSize"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +23,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/content_margin"
+        android:layout_marginTop="@dimen/contentMargin"
         android:hint="@string/fragment_telephone_number_input_telephone_number_hint"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +48,6 @@
         android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/phoneNumberLayout"
-        app:cornerRadius="@dimen/elements_corner_radius"/>
+        app:layout_constraintTop_toBottomOf="@id/phoneNumberLayout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

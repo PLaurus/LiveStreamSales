@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/screenPadding"
+    android:clipToPadding="false"
+    tools:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintDimensionRatio="1.6"
+        app:cardCornerRadius="@dimen/card_cornerRadius"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardBackgroundColor="@color/colorPaymentCardBackground">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="@dimen/paymentCard_content_paddingHorizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/firstFourDigitsText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorPaymentCardText"
+                android:maxLines="@dimen/paymentCard_numberTextPart_maxLines"
+                android:maxLength="@dimen/paymentCard_numberTextPart_maxLength"
+                android:shadowColor="@color/colorPaymentCardTextShadow"
+                android:shadowRadius="@dimen/paymentCard_text_shadowRadius"
+                android:shadowDx="@dimen/paymentCard_text_shadowDx"
+                android:shadowDy="@dimen/paymentCard_text_shadowDy"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/secondFourDigitsText"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.6"
+                app:layout_constraintHeight_percent="@dimen/paymentCard_numberTextPart_heightPercent"
+                app:autoSizeTextType="uniform"
+                tools:text="●●●●"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/secondFourDigitsText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorPaymentCardText"
+                android:maxLines="@dimen/paymentCard_numberTextPart_maxLines"
+                android:maxLength="@dimen/paymentCard_numberTextPart_maxLength"
+                android:shadowColor="@color/colorPaymentCardTextShadow"
+                android:shadowRadius="@dimen/paymentCard_text_shadowRadius"
+                android:shadowDx="@dimen/paymentCard_text_shadowDx"
+                android:shadowDy="@dimen/paymentCard_text_shadowDy"
+                app:layout_constraintStart_toEndOf="@id/firstFourDigitsText"
+                app:layout_constraintEnd_toStartOf="@id/thirdFourDigitsText"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.6"
+                app:layout_constraintHeight_percent="@dimen/paymentCard_numberTextPart_heightPercent"
+                app:autoSizeTextType="uniform"
+                tools:text="●●●●"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/thirdFourDigitsText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorPaymentCardText"
+                android:maxLines="@dimen/paymentCard_numberTextPart_maxLines"
+                android:maxLength="@dimen/paymentCard_numberTextPart_maxLength"
+                android:shadowColor="@color/colorPaymentCardTextShadow"
+                android:shadowRadius="@dimen/paymentCard_text_shadowRadius"
+                android:shadowDx="@dimen/paymentCard_text_shadowDx"
+                android:shadowDy="@dimen/paymentCard_text_shadowDy"
+                app:layout_constraintStart_toEndOf="@id/secondFourDigitsText"
+                app:layout_constraintEnd_toStartOf="@id/fourthFourDigitsText"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.6"
+                app:layout_constraintHeight_percent="@dimen/paymentCard_numberTextPart_heightPercent"
+                app:autoSizeTextType="uniform"
+                tools:text="●●●●"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fourthFourDigitsText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorPaymentCardText"
+                android:maxLines="@dimen/paymentCard_numberTextPart_maxLines"
+                android:maxLength="@dimen/paymentCard_numberTextPart_maxLength"
+                android:shadowColor="@color/colorPaymentCardTextShadow"
+                android:shadowRadius="@dimen/paymentCard_text_shadowRadius"
+                android:shadowDx="@dimen/paymentCard_text_shadowDx"
+                android:shadowDy="@dimen/paymentCard_text_shadowDy"
+                app:layout_constraintStart_toEndOf="@id/thirdFourDigitsText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.6"
+                app:layout_constraintHeight_percent="@dimen/paymentCard_numberTextPart_heightPercent"
+                app:autoSizeTextType="uniform"
+                tools:text="0000"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/cardOwnerText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPaymentCardText"
+                android:shadowColor="@color/colorPaymentCardTextShadow"
+                android:shadowRadius="@dimen/paymentCard_text_shadowRadius"
+                android:shadowDx="@dimen/paymentCard_text_shadowDx"
+                android:shadowDy="@dimen/paymentCard_text_shadowDy"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/validThroughText"
+                app:layout_constraintTop_toBottomOf="@id/firstFourDigitsText"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHeight_percent="@dimen/paymentCard_description_heightPercent"
+                app:autoSizeTextType="uniform"
+                tools:text="CARD OWNER"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/validThroughText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:textAlignment="textEnd"
+                android:textStyle="bold"
+                android:textColor="@color/colorPaymentCardText"
+                android:shadowColor="@color/colorPaymentCardTextShadow"
+                android:shadowRadius="@dimen/paymentCard_text_shadowRadius"
+                android:shadowDx="@dimen/paymentCard_text_shadowDx"
+                android:shadowDy="@dimen/paymentCard_text_shadowDy"
+                app:layout_constraintStart_toStartOf="@id/fourthFourDigitsText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/firstFourDigitsText"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHeight_percent="@dimen/paymentCard_description_heightPercent"
+                app:autoSizeTextType="uniform"
+                tools:text="10/77"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/replaceCardButton"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_payment_card_replace_card"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card"
+        app:layout_constraintHorizontal_bias="1"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

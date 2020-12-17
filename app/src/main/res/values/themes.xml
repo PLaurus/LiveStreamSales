@@ -1,6 +1,4 @@
-<resources
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.LiveStreamSales" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
@@ -16,13 +14,13 @@
 
         <!-- Text -->
         <item name="android:textColor">@color/colorPrimaryText</item>
-        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:textSize">@dimen/textSize</item>
 
         <!-- Text input layout -->
-        <item name="boxCornerRadiusTopStart">@dimen/elements_corner_radius</item>
-        <item name="boxCornerRadiusTopEnd">@dimen/elements_corner_radius</item>
-        <item name="boxCornerRadiusBottomStart">@dimen/elements_corner_radius</item>
-        <item name="boxCornerRadiusBottomEnd">@dimen/elements_corner_radius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/textInputLayout_cornerRadius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/textInputLayout_cornerRadius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/textInputLayout_cornerRadius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/textInputLayout_cornerRadius</item>
 
     </style>
 
@@ -33,5 +31,6 @@
     <style name="Theme.LiveStreamSales.BigMaterialButton" parent="Widget.MaterialComponents.Button">
         <item name="android:paddingTop">16dp</item>
         <item name="android:paddingBottom">16dp</item>
+        <item name="cornerRadius">@dimen/bigButton_cornerRadius</item>
     </style>
 </resources>
