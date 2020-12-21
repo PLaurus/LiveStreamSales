@@ -50,7 +50,7 @@ dependencies {
     implementation 'com.romandanylyk:pageindicatorview:1.0.3'
 
     // Video player
-    implementation 'com.google.android.exoplayer:exoplayer:r2.3.1'
+    implementation 'com.google.android.exoplayer:exoplayer:2.12.2'
 
     // Android navigation component
     def navigationVersion = "2.3.2"

@@ -2,12 +2,13 @@
 <resources>
     <color name="colorPrimary">#FF0000</color>
     <color name="colorOnPrimary">#FFFFFFFF</color>
+    <color name="colorSecondary">#FFFFC120</color>
+    <color name="colorOnSecondary">#FFFFFFFF</color>
 
     <color name="colorPrimaryNight">#FFFFFFFF</color>
     <color name="colorPrimaryVariant">#FF3700B3</color>
-    <color name="colorSecondary">#FF03DAC5</color>
+
     <color name="colorSecondaryVariant">#FF018786</color>
-    <color name="colorOnSecondary">#FF000000</color>
 
     <!-- App text -->
     <color name="colorPrimaryText">#000000</color>
@@ -20,4 +21,10 @@
     <color name="colorPaymentCardBackground">#434343</color>
     <color name="colorPaymentCardText">#FFFFFF</color>
     <color name="colorPaymentCardTextShadow">#AFAFAF</color>
+
+    <!-- Live broadcast fragment -->
+    <color name="colorLiveBroadcast_shadow">#4A4A4A</color>
+    <color name="colorLiveBroadcast_messageInput_boxBackgroundColor">#80FFFFFF</color>
+    <color name="colorLiveBroadcast_messageInput_boxStrokeColor">#80000000</color>
+
 </resources>

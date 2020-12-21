@@ -24,4 +24,11 @@
     <dimen name="paymentCard_text_shadowRadius">3</dimen>
     <dimen name="paymentCard_text_shadowDx">1</dimen>
     <dimen name="paymentCard_text_shadowDy">1</dimen>
+
+    <!-- Live broadcast fragment -->
+    <dimen name="liveBroadcast_shadowRadius">5</dimen>
+    <dimen name="liveBroadcast_shadowDx">1</dimen>
+    <dimen name="liveBroadcast_shadowDy">1</dimen>
+    <dimen name="liveBroadcast_messageInput_cornerRadius">10dp</dimen>
+    <dimen name="liveBroadcast_messageInput_strokeWidth">4dp</dimen>
 </resources>

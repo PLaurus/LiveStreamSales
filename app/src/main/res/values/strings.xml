@@ -35,6 +35,8 @@
     <string name="template_text">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
     </string>
 
     <!-- Main fragment -->
@@ -136,5 +138,13 @@
 
     <!-- Settings fragment -->
     <string name="fragment_settings_title">Настройки</string>
+
+    <!-- Live broadcast fragment -->
+    <string name="fragment_live_broadcast_timer_title">до конца эфира</string>
+    <string name="fragment_live_broadcast_message_hint">Оставить комментарий</string>
+    <string name="fragment_live_broadcast_send_message">Отправить</string>
+    <string name="fragment_live_broadcast_buy">Купить</string>
+    <string name="fragment_live_broadcast_user_name_and_message_separator">:</string>
+
 
 </resources>

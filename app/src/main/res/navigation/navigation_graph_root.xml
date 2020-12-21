@@ -90,7 +90,8 @@
 
     <fragment
         android:id="@+id/liveBroadcastDestination"
-        android:label="@string/fragment_live_broadcasts_title">
+        android:label="@string/fragment_live_broadcasts_title"
+        tools:layout="@layout/fragment_live_broadcast">
 
         <action
             android:id="@+id/action_liveBroadcastDestination_to_productOrderDestination"
