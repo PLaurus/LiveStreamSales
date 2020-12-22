@@ -144,7 +144,13 @@
     <string name="fragment_live_broadcast_message_hint">Оставить комментарий</string>
     <string name="fragment_live_broadcast_send_message">Отправить</string>
     <string name="fragment_live_broadcast_buy">Купить</string>
-    <string name="fragment_live_broadcast_user_name_and_message_separator">:</string>
+
+    <!-- Product order fragment -->
+    <string name="fragment_product_order_specifications_title">Характеристики:</string>
+    <string name="fragment_product_order_products_amount">Количество</string>
+    <string name="fragment_product_order_product_color">Цвет</string>
+    <string name="fragment_product_order_add_to_cart">Добавить</string>
+    <string name="fragment_product_order_buy">Купить</string>
 
 
 </resources>

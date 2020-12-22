@@ -27,4 +27,9 @@
     <color name="colorLiveBroadcast_messageInput_boxBackgroundColor">#80FFFFFF</color>
     <color name="colorLiveBroadcast_messageInput_boxStrokeColor">#80000000</color>
 
+    <!-- Product order fragment -->
+    <color name="order_amountSelector_background">#F2F2F7</color>
+    <color name="order_amountSelector_border">#E5E5EA</color>
+    <color name="order_colorBox_border">#E5E5EA</color>
+
 </resources>
