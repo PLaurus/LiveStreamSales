@@ -23,7 +23,7 @@
         android:theme="@style/Theme.LiveStreamSales">
 
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".ui.activity.splash.SplashScreenActivity"
             android:theme="@style/Theme.LiveStreamSales.SplashScreen">
 
             <intent-filter>
@@ -34,7 +34,7 @@
 
         </activity>
 
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".ui.activity.main.MainActivity"/>
 
     </application>
 

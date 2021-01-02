@@ -1,0 +1,3 @@
+package com.example.livestreamsales.repository.authorization
+
+interface IAuthorizationRepository

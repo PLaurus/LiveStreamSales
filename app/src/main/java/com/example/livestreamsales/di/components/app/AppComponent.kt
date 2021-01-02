@@ -1,13 +1,17 @@
 package com.example.livestreamsales.di.components.app
 
 import android.content.Context
+import com.example.livestreamsales.authorization.IAuthorizationManager
+import com.example.livestreamsales.di.scopes.ApplicationScope
 import dagger.BindsInstance
 import dagger.Component
-import javax.inject.Singleton
 
-@Singleton
+@ApplicationScope
 @Component(modules = [
-    SubcomponentsModule::class
+    SubComponentsModule::class,
+    ReactiveXModule::class,
+    NetworkModule::class,
+    AuthorizationModule::class
 ])
 interface AppComponent {
 
@@ -15,4 +19,6 @@ interface AppComponent {
     interface Factory{
         fun create(@BindsInstance context: Context): AppComponent
     }
+
+    fun authorizationManager(): IAuthorizationManager
 }

@@ -1,184 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/screenPadding"
-            android:clipToPadding="false">
+    <fragment
+        android:id="@+id/mainDirectionNavigationFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fragment_main_bottom_navigation"
+        app:defaultNavHost="false"
+        app:navGraph="@navigation/navigation_graph_home"
+        tools:ignore="FragmentTagUsage" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/fragment_home_primary_broadcasts_card"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintDimensionRatio="1.8"
-                app:cardCornerRadius="@dimen/card_cornerRadius"
-                app:cardElevation="@dimen/card_elevation"
-                tools:cardBackgroundColor="@color/colorSecondaryText">
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/fragment_main_bottom_navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu_main_destination"
+        app:labelVisibilityMode="labeled"/>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/fragment_home_primary_broadcasts_pager"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/fragment_home_primary_broadcasts_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:textColor="@color/colorOnPrimary"
-                        android:shadowRadius="0.5"
-                        android:shadowColor="@color/colorSecondaryText"
-                        android:shadowDx="3"
-                        android:shadowDy="1"
-                        app:layout_constraintStart_toStartOf="@id/fragment_home_primary_broadcasts_live_text"
-                        app:layout_constraintBottom_toTopOf="@id/fragment_home_primary_broadcasts_live_text"
-                        tools:text="IPhone 12 с Идой Галич"/>
-                    
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/fragment_home_primary_broadcasts_live_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginBottom="15dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:cardBackgroundColor="@color/colorPrimary">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="7dp"
-                            android:text="@string/fragment_home_live"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorOnPrimary"
-                            android:textStyle="bold"/>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.rd.PageIndicatorView
-                        android:id="@+id/fragment_home_primary_broadcasts_card_page_indicator"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="15dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:piv_animationType="worm"
-                        app:piv_interactiveAnimation="true"
-                        app:piv_selectedColor="@color/colorPrimary"
-                        app:piv_unselectedColor="@color/colorOnPrimary"
-                        app:piv_viewPager="@id/fragment_home_primary_broadcasts_pager"
-                        app:piv_dynamicCount="true"
-                        app:piv_radius="3dp"
-                        app:piv_padding="8dp"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/fragment_home_announcement_text"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/fragment_home_announcement"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_home_primary_broadcasts_card"
-                app:layout_constraintDimensionRatio="10"
-                app:autoSizeTextType="uniform"/>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/fragment_home_broadcasts_announcement_card"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_home_announcement_text"
-                app:layout_constraintDimensionRatio="2.2"
-                app:cardCornerRadius="@dimen/card_cornerRadius"
-                app:cardElevation="@dimen/card_elevation"
-                tools:cardBackgroundColor="@color/colorSecondaryText">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/fragment_home_broadcasts_announcement_pager"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/fragment_home_broadcasts_announcement_coming_soon_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginTop="15dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:cardBackgroundColor="@color/colorPrimary">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="7dp"
-                            android:text="@string/fragment_home_coming_soon"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorOnPrimary"
-                            android:textStyle="bold"/>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.rd.PageIndicatorView
-                android:id="@+id/fragment_home_broadcasts_announcement_page_indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_home_broadcasts_announcement_card"
-                app:piv_animationType="worm"
-                app:piv_interactiveAnimation="true"
-                app:piv_selectedColor="@color/colorPrimary"
-                app:piv_unselectedColor="@color/colorSecondaryText"
-                app:piv_viewPager="@id/fragment_home_broadcasts_announcement_pager"
-                app:piv_dynamicCount="true"
-                app:piv_radius="3dp"
-                app:piv_padding="8dp"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        
-    </ScrollView>
-
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

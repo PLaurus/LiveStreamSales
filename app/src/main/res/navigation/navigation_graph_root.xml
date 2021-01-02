@@ -3,31 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainDestination">
+    app:startDestination="@id/homeDestination">
 
     <fragment
-        android:id="@+id/mainDestination"
+        android:id="@+id/homeDestination"
         android:label="@string/fragment_main_title"
-        tools:layout="@layout/fragment_main">
+        tools:layout="@layout/fragment_home">
 
         <action
-            android:id="@+id/action_mainDestination_to_greetingDestination"
+            android:id="@+id/action_homeDestination_to_greetingDestination"
             app:destination="@id/greetingDestination"
-            app:popUpTo="@id/mainDestination"
+            app:popUpTo="@id/homeDestination"
             app:popUpToInclusive="true"/>
 
         <action
-            android:id="@+id/action_mainDestination_to_telephoneNumberInputDestination"
+            android:id="@+id/action_homeDestination_to_telephoneNumberInputDestination"
             app:destination="@id/telephoneNumberInputDestination"
-            app:popUpTo="@id/mainDestination"
+            app:popUpTo="@id/homeDestination"
             app:popUpToInclusive="true"/>
 
         <action
-            android:id="@+id/action_mainDestination_to_registrationDestination"
+            android:id="@+id/action_homeDestination_to_registrationDestination"
             app:destination="@id/registrationDestination"/>
 
         <action
-            android:id="@+id/action_mainDestination_to_liveBroadcastDestination"
+            android:id="@+id/action_homeDestination_to_liveBroadcastDestination"
             app:destination="@id/liveBroadcastDestination"/>
 
     </fragment>
@@ -39,7 +39,7 @@
 
         <action
             android:id="@+id/action_greetingDestination_to_mainDestination"
-            app:popUpTo="@id/mainDestination"
+            app:popUpTo="@id/homeDestination"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"/>
 
@@ -64,7 +64,7 @@
         <action
             android:id="@+id/action_telephoneNumberConfirmationDestination_to_registrationDestination"
             app:destination="@id/registrationDestination"
-            app:popUpTo="@id/mainDestination"
+            app:popUpTo="@id/homeDestination"
             app:popUpToInclusive="true"/>
 
     </fragment>
@@ -80,7 +80,7 @@
 
         <action
             android:id="@+id/action_registrationDestination_to_mainDestination"
-            app:popUpTo="@id/mainDestination"/>
+            app:popUpTo="@id/homeDestination"/>
 
     </fragment>
 

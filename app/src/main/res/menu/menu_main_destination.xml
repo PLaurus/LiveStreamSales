@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/homeDestination"
+        android:id="@+id/broadcastsInformationDestination"
         android:icon="@drawable/ic_home_white_24"
         android:title="@string/fragment_main_home_button"
         android:enabled="true"

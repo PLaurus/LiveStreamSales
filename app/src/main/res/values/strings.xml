@@ -127,8 +127,8 @@
     <!-- Card confirmation fragment -->
     <string name="fragment_card_confirmation_title">Подтверждение карты</string>
 
-    <!-- Home fragment -->
-    <string name="fragment_home_title">Главная</string>
+    <!-- Broadcasts information fragment -->
+    <string name="fragment_broadcasts_information_title">Главная</string>
 
     <!-- Notifications fragment -->
     <string name="fragment_notifications_title">Напоминания</string>

@@ -4,12 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph_main"
-    app:startDestination="@id/homeDestination">
+    app:startDestination="@id/broadcastsInformationDestination">
 
     <fragment
-        android:id="@+id/homeDestination"
-        android:label="@string/fragment_home_title"
-        tools:layout="@layout/fragment_home"/>
+        android:id="@+id/broadcastsInformationDestination"
+        android:label="@string/fragment_broadcasts_information_title"
+        tools:layout="@layout/fragment_broadcasts_information"/>
 
     <fragment
         android:id="@+id/notificationsDestination"
