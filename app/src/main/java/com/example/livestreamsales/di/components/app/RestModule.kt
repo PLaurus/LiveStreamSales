@@ -2,8 +2,8 @@ package com.example.livestreamsales.di.components.app
 
 import com.example.livestreamsales.BuildConfig
 import com.example.livestreamsales.di.scopes.ApplicationScope
-import com.example.livestreamsales.network.rest.IRestManager
-import com.example.livestreamsales.network.rest.RetrofitRestManager
+import com.example.livestreamsales.network.rest.IApiProvider
+import com.example.livestreamsales.network.rest.RetrofitApiProvider
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 
 @Module
-abstract class NetworkModule {
+abstract class RestModule {
 
     companion object{
         private const val DEPENDENCY_NAME_REST_BASE_URL = "REST_BASE_URL"
@@ -93,5 +93,5 @@ abstract class NetworkModule {
 
     @ApplicationScope
     @Binds
-    abstract fun provideRestManager(restManager: RetrofitRestManager): IRestManager
+    abstract fun provideRestManager(retrofitApiProvider: RetrofitApiProvider): IApiProvider
 }

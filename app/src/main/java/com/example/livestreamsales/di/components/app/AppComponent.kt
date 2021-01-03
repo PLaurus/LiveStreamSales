@@ -10,7 +10,7 @@ import dagger.Component
 @Component(modules = [
     SubComponentsModule::class,
     ReactiveXModule::class,
-    NetworkModule::class,
+    RestModule::class,
     AuthorizationModule::class
 ])
 interface AppComponent {

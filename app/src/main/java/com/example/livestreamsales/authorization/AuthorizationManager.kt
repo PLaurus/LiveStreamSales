@@ -1,5 +1,6 @@
 package com.example.livestreamsales.authorization
 
+import com.example.livestreamsales.di.components.app.ReactiveXModule
 import com.example.livestreamsales.di.components.authorizeduser.AuthorizedUserComponent
 import com.example.livestreamsales.model.request.SendCodeRequestBody
 import com.example.livestreamsales.network.rest.api.IAuthorizationApi
@@ -9,10 +10,12 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import javax.inject.Inject
+import javax.inject.Named
 
 class AuthorizationManager @Inject constructor(
     private val authorizationApi: IAuthorizationApi,
     private val authorizedUserComponentFactory: AuthorizedUserComponent.Factory,
+    @Named(ReactiveXModule.DEPENDENCY_NAME_MAIN_THREAD_SCHEDULER)
     private val mainThreadScheduler: Scheduler
 ): IAuthorizationManager {
     private val disposables = CompositeDisposable()
@@ -31,12 +34,13 @@ class AuthorizationManager @Inject constructor(
         authorizationApi.sendCode(sendCodeRequestBody)
     }
 
+    // TODO: extract subscribe body into another function
     private fun manageAuthorizedUserComponentLifecycle(){
-        isUserLoggedIn
+        token
             .observeOn(mainThreadScheduler)
             .subscribe {
-                val authorizedUserComponentNewValue = if(it){
-                    authorizedUserComponentFactory.create()
+                val authorizedUserComponentNewValue = if(it != null){
+                    authorizedUserComponentFactory.create(it)
                 } else null
 
                 authorizedUserComponent.onNext(authorizedUserComponentNewValue)
