@@ -2,8 +2,14 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/navigation_graph_root"
     app:startDestination="@id/homeDestination">
+
+    <action
+        android:id="@+id/action_global_telephoneNumberInputDestination"
+        app:destination="@id/telephoneNumberInputDestination"
+        app:popUpTo="@id/homeDestination"
+        app:popUpToInclusive="true"/>
 
     <fragment
         android:id="@+id/homeDestination"
@@ -13,12 +19,6 @@
         <action
             android:id="@+id/action_homeDestination_to_greetingDestination"
             app:destination="@id/greetingDestination"
-            app:popUpTo="@id/homeDestination"
-            app:popUpToInclusive="true"/>
-
-        <action
-            android:id="@+id/action_homeDestination_to_telephoneNumberInputDestination"
-            app:destination="@id/telephoneNumberInputDestination"
             app:popUpTo="@id/homeDestination"
             app:popUpToInclusive="true"/>
 

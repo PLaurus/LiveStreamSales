@@ -1,3 +1,7 @@
 package com.example.livestreamsales.repository.authorization
 
-interface IAuthorizationRepository
+import io.reactivex.rxjava3.core.Maybe
+
+interface IAuthorizationRepository{
+    fun sendVerificationCodeRequest(telephoneNumber: String): Maybe<Boolean>
+}

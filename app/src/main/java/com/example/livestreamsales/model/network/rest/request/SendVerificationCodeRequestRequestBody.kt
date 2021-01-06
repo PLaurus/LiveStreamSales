@@ -1,8 +1,8 @@
-package com.example.livestreamsales.model.request
+package com.example.livestreamsales.model.network.rest.request
 
 import com.google.gson.annotations.SerializedName
 
-data class SendCodeRequestBody(
+data class SendVerificationCodeRequestRequestBody(
     @SerializedName("telephone_number")
     val telephoneNumber: String
 )

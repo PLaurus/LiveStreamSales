@@ -4,6 +4,9 @@ import com.example.livestreamsales.BuildConfig
 import com.example.livestreamsales.di.scopes.ApplicationScope
 import com.example.livestreamsales.network.rest.IApiProvider
 import com.example.livestreamsales.network.rest.RetrofitApiProvider
+import com.example.livestreamsales.network.rest.errors.IResponseErrorsManager
+import com.example.livestreamsales.network.rest.errors.ResponseErrorsManager
+import com.example.livestreamsales.network.rest.interceptors.RestServerErrorsInterceptor
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -50,11 +53,13 @@ abstract class RestModule {
         @ApplicationScope
         @Provides
         @JvmStatic
-        fun provideOkHttpClient(
-                httpLoggingInterceptor: HttpLoggingInterceptor
+        fun provideBaseOkHttpClient(
+                httpLoggingInterceptor: HttpLoggingInterceptor,
+                restServerErrorsInterceptor: RestServerErrorsInterceptor
         ): OkHttpClient{
             return OkHttpClient.Builder()
-                    .addInterceptor(httpLoggingInterceptor)
+                .addInterceptor(httpLoggingInterceptor)
+                .addInterceptor(restServerErrorsInterceptor)
                 .build()
         }
 
@@ -89,9 +94,26 @@ abstract class RestModule {
                 }
             }
         }
+
+        @ApplicationScope
+        @Provides
+        @JvmStatic
+        fun provideRestServerErrorInterceptor(
+            responseErrorsManager: IResponseErrorsManager
+        ): RestServerErrorsInterceptor{
+            return RestServerErrorsInterceptor(responseErrorsManager)
+        }
     }
 
     @ApplicationScope
     @Binds
-    abstract fun provideRestManager(retrofitApiProvider: RetrofitApiProvider): IApiProvider
+    abstract fun provideApiProvider(
+        retrofitApiProvider: RetrofitApiProvider
+    ): IApiProvider
+
+    @ApplicationScope
+    @Binds
+    abstract fun provideRestServerErrorsManager(
+        restServerErrorsManager: ResponseErrorsManager
+    ): IResponseErrorsManager
 }

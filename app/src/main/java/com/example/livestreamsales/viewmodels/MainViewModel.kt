@@ -1,26 +1,28 @@
 package com.example.livestreamsales.viewmodels
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.ViewModel
 import com.example.livestreamsales.authorization.IAuthorizationManager
+import com.example.livestreamsales.di.components.app.ReactiveXModule
+import com.example.livestreamsales.network.rest.errors.IResponseErrorsManager
+import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.kotlin.addTo
+import javax.inject.Inject
+import javax.inject.Named
 
-class MainViewModel(
+class MainViewModel @Inject constructor(
     authorizationManager: IAuthorizationManager,
-    mainThreadScheduler: Scheduler
-): ViewModel(){
+    private val responseErrorsManager: IResponseErrorsManager,
+    @Named(ReactiveXModule.DEPENDENCY_NAME_MAIN_THREAD_SCHEDULER)
+    private val mainThreadScheduler: Scheduler
+): ViewModel(), IMainViewModel{
     private val disposables = CompositeDisposable()
-    private val isUserLoggedInMutableLiveData = MutableLiveData<Boolean>(false)
 
-    val isUserLoggedIn: LiveData<Boolean> = isUserLoggedInMutableLiveData.apply{
-        authorizationManager.isUserLoggedIn
-            .observeOn(mainThreadScheduler)
-            .subscribe(this::setValue)
-            .addTo(disposables)
-    }
+    override val isUserLoggedIn: LiveData<Boolean> = LiveDataReactiveStreams.fromPublisher(
+        authorizationManager.isUserLoggedIn.toFlowable(BackpressureStrategy.LATEST)
+    )
 
     override fun onCleared() {
         disposables.dispose()
