@@ -5,5 +5,7 @@ import com.example.livestreamsales.application.LiveStreamSalesApplication
 import com.example.livestreamsales.di.components.app.AppComponent
 
 open class BaseActivity: AppCompatActivity() {
-    protected val appComponent: AppComponent = (application as LiveStreamSalesApplication).appComponent
+    protected val appComponent: AppComponent by lazy{
+        (application as LiveStreamSalesApplication).appComponent
+    }
 }

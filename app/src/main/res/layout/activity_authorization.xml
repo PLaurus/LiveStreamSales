@@ -5,11 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.main.MainActivity">
+    tools:context=".ui.activity.authorization.AuthorizationActivity">
 
     <fragment
-        android:id="@+id/main_navigation_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:id="@+id/authorization_navigation_host_fragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/navigation_graph_root"
-        tools:ignore="FragmentTagUsage" />
+        app:navGraph="@navigation/navigation_graph_authorization"
+        tools:ignore="FragmentTagUsage"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

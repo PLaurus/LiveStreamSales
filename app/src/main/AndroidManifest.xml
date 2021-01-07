@@ -35,6 +35,7 @@
         </activity>
 
         <activity android:name=".ui.activity.main.MainActivity"/>
+        <activity android:name=".ui.activity.authorization.AuthorizationActivity"/>
 
     </application>
 

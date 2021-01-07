@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 
 interface IAuthorizationManager {
-    val authorizedUserComponent: Observable<AuthorizedUserComponent?>
+    var authorizedUserComponent: AuthorizedUserComponent?
     val token: Observable<String?>
     val isUserLoggedIn: Observable<Boolean>
 

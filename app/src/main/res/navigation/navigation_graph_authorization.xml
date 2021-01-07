@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph_authorization"
+    app:startDestination="@id/telephoneNumberInputDestination">
+
+    <activity
+        android:id="@+id/mainGraphDestination"
+        android:name="com.example.livestreamsales.ui.activity.main.MainActivity"
+        tools:layout="@layout/activity_main"/>
+
+    <fragment
+        android:id="@+id/telephoneNumberInputDestination"
+        android:name="com.example.livestreamsales.ui.fragment.telephonenumberinput.TelephoneNumberInputFragment"
+        android:label="@string/fragment_telephone_number_input_title"
+        tools:layout="@layout/fragment_telephone_number_input">
+
+        <action
+            android:id="@+id/action_telephoneNumberInputDestination_to_telephoneNumberConfirmationDestination"
+            app:destination="@id/telephoneNumberConfirmationDestination"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/telephoneNumberConfirmationDestination"
+        android:label="@string/fragment_telephone_number_confirmation_title"
+        tools:layout="@layout/fragment_phone_confirmation">
+
+        <action
+            android:id="@+id/action_telephoneNumberConfirmationDestination_to_mainGraphDestination"
+            app:destination="@id/mainGraphDestination"
+            app:popUpTo="@id/telephoneNumberInputDestination"
+            app:popUpToInclusive="true"/>
+
+        <action
+            android:id="@+id/action_telephoneNumberConfirmationDestination_to_registrationDestination"
+            app:destination="@id/registrationDestination"
+            app:popUpTo="@id/telephoneNumberInputDestination"
+            app:popUpToInclusive="true"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/registrationDestination"
+        android:label="@string/fragment_registration_title"
+        tools:layout="@layout/fragment_registration">
+
+        <action
+            android:id="@+id/action_registrationDestination_to_mainGraphDestination"
+            app:destination="@id/mainGraphDestination"
+            app:popUpTo="@id/telephoneNumberInputDestination"
+            app:popUpToInclusive="true"/>
+
+    </fragment>
+
+</navigation>

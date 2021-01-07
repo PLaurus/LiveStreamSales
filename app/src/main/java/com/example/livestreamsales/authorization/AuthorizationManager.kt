@@ -20,9 +20,9 @@ class AuthorizationManager @Inject constructor(
 ): IAuthorizationManager {
     private val disposables = CompositeDisposable()
 
-    override val authorizedUserComponent: BehaviorSubject<AuthorizedUserComponent?> = BehaviorSubject.create<AuthorizedUserComponent?>()
-    override val token: BehaviorSubject<String?> = BehaviorSubject.createDefault<String?>(null)
-    override val isUserLoggedIn: Observable<Boolean> = token.map{ it != null }
+    override var authorizedUserComponent: AuthorizedUserComponent? = null
+    override val token: BehaviorSubject<String> = BehaviorSubject.createDefault("")
+    override val isUserLoggedIn: Observable<Boolean> = token.map{ it.isNotEmpty() }
 
     init{
         manageAuthorizedUserComponentLifecycle()
@@ -37,11 +37,9 @@ class AuthorizationManager @Inject constructor(
         token
             .observeOn(mainThreadScheduler)
             .subscribe {
-                val authorizedUserComponentNewValue = if(it != null){
+                authorizedUserComponent = if(it.isNotEmpty()){
                     authorizedUserComponentFactory.create(it)
                 } else null
-
-                authorizedUserComponent.onNext(authorizedUserComponentNewValue)
             }
             .addTo(disposables)
     }

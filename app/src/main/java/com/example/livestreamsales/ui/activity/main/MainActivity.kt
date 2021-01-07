@@ -14,7 +14,7 @@ import javax.inject.Inject
 class MainActivity : BaseActivity() {
     private val disposables = CompositeDisposable()
     private val navigationController by lazy{
-        findNavController(R.id.navigation_host_fragment)
+        findNavController(R.id.main_navigation_host_fragment)
     }
 
     private lateinit var viewBinding: ActivityMainBinding
@@ -28,7 +28,7 @@ class MainActivity : BaseActivity() {
         injectDependencies()
         super.onCreate(savedInstanceState)
         bindView()
-        startToManageLogOutNavigation()
+        observeIsUserLoggedOut()
     }
 
     override fun onDestroy() {
@@ -49,12 +49,16 @@ class MainActivity : BaseActivity() {
         setContentView(viewBinding.root)
     }
 
-    private fun startToManageLogOutNavigation(){
+    private fun observeIsUserLoggedOut(){
         mainViewModel.isUserLoggedIn.observe(this, { isUserLoggedIn ->
-            if(isUserLoggedIn){
-                val action = NavigationGraphRootDirections.actionGlobalTelephoneNumberInputDestination()
-                navigationController.navigate(action)
-            }
+            manageLogOutNavigation(isUserLoggedIn)
         })
+    }
+
+    private fun manageLogOutNavigation(isUserLoggedIn: Boolean){
+        if(!isUserLoggedIn){
+            val action = NavigationGraphRootDirections.actionGlobalTelephoneNumberInputDestination()
+            navigationController.navigate(action)
+        }
     }
 }
