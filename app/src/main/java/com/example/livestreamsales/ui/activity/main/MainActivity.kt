@@ -57,8 +57,13 @@ class MainActivity : BaseActivity() {
 
     private fun manageLogOutNavigation(isUserLoggedIn: Boolean){
         if(!isUserLoggedIn){
-            val action = NavigationGraphRootDirections.actionGlobalTelephoneNumberInputDestination()
-            navigationController.navigate(action)
+            navigateToAuthorization()
         }
+    }
+
+    private fun navigateToAuthorization(){
+        val action = NavigationGraphRootDirections.actionGlobalAuthorizationGraphDestination()
+        navigationController.navigate(action)
+        finish()
     }
 }

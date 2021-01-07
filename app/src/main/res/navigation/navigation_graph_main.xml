@@ -6,8 +6,8 @@
     app:startDestination="@id/homeDestination">
 
     <action
-        android:id="@+id/action_global_telephoneNumberInputDestination"
-        app:destination="@id/telephoneNumberInputDestination"
+        android:id="@+id/action_global_authorizationGraphDestination"
+        app:destination="@id/authorizationGraphDestination"
         app:popUpTo="@id/homeDestination"
         app:popUpToInclusive="true"/>
 
@@ -22,10 +22,6 @@
             app:destination="@id/greetingDestination"
             app:popUpTo="@id/homeDestination"
             app:popUpToInclusive="true"/>
-
-        <action
-            android:id="@+id/action_homeDestination_to_registrationDestination"
-            app:destination="@id/registrationDestination"/>
 
         <action
             android:id="@+id/action_homeDestination_to_liveBroadcastDestination"
@@ -64,5 +60,10 @@
     <dialog
         android:id="@+id/productOrderDestination"
         android:label="@string/dialog_product_order_title"/>
+
+    <activity
+        android:id="@+id/authorizationGraphDestination"
+        android:name="com.example.livestreamsales.ui.activity.authorization.AuthorizationActivity"
+        tools:layout="@layout/activity_authorization"/>
 
 </navigation>

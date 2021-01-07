@@ -26,6 +26,9 @@
 
     <style name="Theme.LiveStreamSales.SplashScreen" parent="Theme.LiveStreamSales">
         <item name="android:windowBackground">@drawable/bg_splash_screen</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
     </style>
 
     <style name="Theme.LiveStreamSales.BigMaterialButton" parent="Widget.MaterialComponents.Button">
