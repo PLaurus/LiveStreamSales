@@ -21,6 +21,7 @@ class AuthorizationRepository @Inject constructor(
         val response = authorizationApi.sendVerificationCodeRequest(sendRequestCodeRequestBody)
 
         return response
+            .subscribeOn(ioScheduler)
             .filter{ it.isSuccessful }
             .flatMap{
                 val body = it.body()

@@ -1,13 +1,12 @@
-package com.example.livestreamsales.di.components.mainactivity
+package com.example.livestreamsales.di.components.main
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import com.example.livestreamsales.di.scopes.ActivityScope
 import com.example.livestreamsales.viewmodels.IMainViewModel
 import com.example.livestreamsales.viewmodels.MainViewModel
 import dagger.Module
 import dagger.Provides
-import javax.inject.Named
 
 @Module
 class ViewModelModule {
@@ -16,9 +15,8 @@ class ViewModelModule {
     @Provides
     fun provideMainViewModel(
         viewModelProviderFactory: ViewModelProvider.Factory,
-        @Named(MainActivityComponent.DEPENDENCY_NAME_MAIN_VIEW_MODEL_STORE_OWNER)
-        viewModelStoreOwner: ViewModelStoreOwner
+        activity: AppCompatActivity
     ): IMainViewModel{
-        return ViewModelProvider(viewModelStoreOwner, viewModelProviderFactory)[MainViewModel::class.java]
+        return ViewModelProvider(activity, viewModelProviderFactory)[MainViewModel::class.java]
     }
 }

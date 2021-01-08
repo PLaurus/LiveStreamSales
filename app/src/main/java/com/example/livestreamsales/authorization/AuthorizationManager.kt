@@ -32,7 +32,6 @@ class AuthorizationManager @Inject constructor(
         return authorizationRepository.sendVerificationCodeRequest(telephoneNumber)
     }
 
-    // TODO: extract subscribe body into another function
     private fun manageAuthorizedUserComponentLifecycle(){
         token
             .observeOn(mainThreadScheduler)

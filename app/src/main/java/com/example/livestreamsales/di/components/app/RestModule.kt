@@ -13,12 +13,14 @@ import dagger.Provides
 import io.reactivex.rxjava3.core.Scheduler
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.tls.HandshakeCertificates
 import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
+import javax.net.ssl.HostnameVerifier
 
 @Module
 abstract class RestModule {
@@ -48,16 +50,23 @@ abstract class RestModule {
         @Provides
         @Named(DEPENDENCY_NAME_REST_BASE_URL)
         @JvmStatic
-        fun provideRestBaseUrl(): String = "https://www.google.com/"
+        fun provideRestBaseUrl(): String = "https://stream-api.mywfc.ru/api/"
 
         @ApplicationScope
         @Provides
         @JvmStatic
         fun provideBaseOkHttpClient(
-                httpLoggingInterceptor: HttpLoggingInterceptor,
-                restServerErrorsInterceptor: RestServerErrorsInterceptor
+            handshakeCertificates: HandshakeCertificates,
+            hostnameVerifier: HostnameVerifier,
+            httpLoggingInterceptor: HttpLoggingInterceptor,
+            restServerErrorsInterceptor: RestServerErrorsInterceptor
         ): OkHttpClient{
             return OkHttpClient.Builder()
+                .sslSocketFactory(
+                    handshakeCertificates.sslSocketFactory(),
+                    handshakeCertificates.trustManager
+                )
+                .hostnameVerifier(hostnameVerifier)
                 .addInterceptor(httpLoggingInterceptor)
                 .addInterceptor(restServerErrorsInterceptor)
                 .build()

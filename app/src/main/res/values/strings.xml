@@ -62,6 +62,9 @@
     <string name="fragment_telephone_number_input_enter_telephone_number">Введите ваш номер телефона</string>
     <string name="fragment_telephone_number_input_telephone_number_hint">Номер телефона</string>
     <string name="fragment_telephone_number_input_send_code_button">Отправить код</string>
+    <string name="fragment_telephone_number_input_code_request_error">
+        Не удалось запросить код подтверждения
+    </string>
 
     <!-- Telephone number confirmation fragment -->
     <string name="fragment_telephone_number_confirmation_title">Подтверждение номера</string>

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/screenPadding"
@@ -34,7 +35,9 @@
             android:id="@+id/phoneNumberEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="phone"/>
+            android:inputType="phone"
+            android:digits="01234567890 +()-"
+            android:maxLength="20"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -46,8 +49,10 @@
         android:layout_marginTop="15dp"
         android:text="@string/fragment_telephone_number_input_send_code_button"
         android:textAllCaps="false"
+        android:enabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/phoneNumberLayout"/>
+        app:layout_constraintTop_toBottomOf="@id/phoneNumberLayout"
+        tools:enabled="true"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

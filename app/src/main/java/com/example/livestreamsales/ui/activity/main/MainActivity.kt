@@ -5,7 +5,7 @@ import androidx.navigation.findNavController
 import com.example.livestreamsales.NavigationGraphRootDirections
 import com.example.livestreamsales.R
 import com.example.livestreamsales.databinding.ActivityMainBinding
-import com.example.livestreamsales.di.components.mainactivity.MainActivityComponent
+import com.example.livestreamsales.di.components.main.MainActivityComponent
 import com.example.livestreamsales.ui.activity.base.BaseActivity
 import com.example.livestreamsales.viewmodels.IMainViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable

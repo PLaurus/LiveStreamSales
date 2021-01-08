@@ -12,7 +12,7 @@ import retrofit2.http.POST
 
 interface IAuthorizationApi: IApi {
 
-    @POST("send_code")
+    @POST("login")
     fun sendVerificationCodeRequest(
         @Body sendVerificationCodeRequestRequestBody: SendVerificationCodeRequestRequestBody
     ): Single<Response<SendCodeResponseBody>>
