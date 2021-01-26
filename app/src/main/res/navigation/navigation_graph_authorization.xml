@@ -19,12 +19,17 @@
 
         <action
             android:id="@+id/action_telephoneNumberInputDestination_to_telephoneNumberConfirmationDestination"
-            app:destination="@id/telephoneNumberConfirmationDestination"/>
+            app:destination="@id/telephoneNumberConfirmationDestination"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/stay_as_is"
+            app:popEnterAnim="@anim/stay_as_is"
+            app:popExitAnim="@anim/slide_out_right"/>
 
     </fragment>
 
     <fragment
         android:id="@+id/telephoneNumberConfirmationDestination"
+        android:name="com.example.livestreamsales.ui.fragment.telephonenumberconfirmation.TelephoneNumberConfirmationFragment"
         android:label="@string/fragment_telephone_number_confirmation_title"
         tools:layout="@layout/fragment_phone_confirmation">
 

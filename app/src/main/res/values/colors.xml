@@ -22,6 +22,12 @@
     <color name="colorPaymentCardText">#FFFFFF</color>
     <color name="colorPaymentCardTextShadow">#AFAFAF</color>
 
+    <!-- Fragments -->
+    <color name="defaultFragmentBackground">#FFFFFF</color>
+
+    <!-- Base fragment -->
+    <color name="baseFragment_progressContainer_background">#1A000000</color>
+
     <!-- Live broadcast fragment -->
     <color name="colorLiveBroadcast_shadow">#4A4A4A</color>
     <color name="colorLiveBroadcast_messageInput_boxBackgroundColor">#80FFFFFF</color>
@@ -31,5 +37,4 @@
     <color name="order_amountSelector_background">#F2F2F7</color>
     <color name="order_amountSelector_border">#E5E5EA</color>
     <color name="order_colorBox_border">#E5E5EA</color>
-
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="boxDividedEditText_defaultBoxWidth">24dp</dimen>
+    <dimen name="boxDividedEditText_defaultBoxHeight">24dp</dimen>
+    <dimen name="boxDividedEditText_defaultGapBetweenBoxes">16dp</dimen>
+    <dimen name="boxDividedEditText_defaultBoxCornerRadius">16dp</dimen>
+    <dimen name="boxDividedEditText_defaultBoxBorderWidth">2dp</dimen>
+    <dimen name="boxDividedEditText_defaultTextSize">40sp</dimen>
+</resources>

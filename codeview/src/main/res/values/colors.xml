@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="boxDividedEditText_defaultBoxBackgroundColor">#FFFFFF</color>
+    <color name="boxDividedEditText_defaultFilledBoxBorderColor">#FF0000</color>
+    <color name="boxDividedEditText_defaultEmptyBoxBorderColor">#D6D6D6</color>
+    <color name="boxDividedEditText_defaultHintTextColor">#DC0000</color>
+</resources>

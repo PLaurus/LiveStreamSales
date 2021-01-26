@@ -46,7 +46,7 @@
         style="@style/Theme.LiveStreamSales.BigMaterialButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/contentMargin"
         android:text="@string/fragment_telephone_number_input_send_code_button"
         android:textAllCaps="false"
         android:enabled="false"
@@ -54,5 +54,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/phoneNumberLayout"
         tools:enabled="true"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/newCodeTimerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/contentMargin"
+        android:text="@string/fragment_telephone_number_input_new_code_message"
+        android:textColor="@color/colorSecondaryText"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sendCodeButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0"
+        tools:text="@string/fragment_telephone_number_input_new_code_message_tools"
+        tools:visibility="visible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

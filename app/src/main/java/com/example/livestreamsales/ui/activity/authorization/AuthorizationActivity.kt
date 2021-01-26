@@ -33,6 +33,10 @@ class AuthorizationActivity: BaseActivity() {
         observeResponseErrors()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return navigationController.navigateUp() || super.onSupportNavigateUp()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         disposables.dispose()
@@ -53,11 +57,13 @@ class AuthorizationActivity: BaseActivity() {
     
     private fun observeResponseErrors(){
         viewModel.responseError.observe(this, { responseError ->
-            Snackbar.make(
-                viewBinding.root,
-                responseError.message,
-                Snackbar.LENGTH_SHORT
-            ).show()
+            responseError?.message?.let{ message ->
+                Snackbar.make(
+                    viewBinding.root,
+                    message,
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         })
     }
 }

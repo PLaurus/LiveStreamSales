@@ -6,14 +6,13 @@ import com.example.livestreamsales.NavigationGraphSplashDirections
 import com.example.livestreamsales.R
 import com.example.livestreamsales.authorization.IAuthorizationManager
 import com.example.livestreamsales.databinding.ActivitySplashBinding
-import com.example.livestreamsales.di.components.app.ReactiveXModule
+import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
 import com.example.livestreamsales.di.components.splash.SplashComponent
 import com.example.livestreamsales.ui.activity.base.BaseActivity
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import javax.inject.Inject
-import javax.inject.Named
 
 class SplashScreenActivity: BaseActivity() {
     private val disposables = CompositeDisposable()
@@ -28,7 +27,7 @@ class SplashScreenActivity: BaseActivity() {
     lateinit var authorizationManager: IAuthorizationManager
 
     @Inject
-    @Named(ReactiveXModule.DEPENDENCY_NAME_MAIN_THREAD_SCHEDULER)
+    @MainThreadScheduler
     lateinit var mainThreadScheduler: Scheduler
 
     override fun onCreate(savedInstanceState: Bundle?) {

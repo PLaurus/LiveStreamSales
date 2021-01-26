@@ -5,7 +5,7 @@ import androidx.navigation.findNavController
 import com.example.livestreamsales.NavigationGraphRootDirections
 import com.example.livestreamsales.R
 import com.example.livestreamsales.databinding.ActivityMainBinding
-import com.example.livestreamsales.di.components.main.MainActivityComponent
+import com.example.livestreamsales.di.components.main.MainComponent
 import com.example.livestreamsales.ui.activity.base.BaseActivity
 import com.example.livestreamsales.viewmodels.IMainViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -18,7 +18,7 @@ class MainActivity : BaseActivity() {
     }
 
     private lateinit var viewBinding: ActivityMainBinding
-    private lateinit var mainActivityComponent: MainActivityComponent
+    private lateinit var mainComponent: MainComponent
 
     @Inject
     lateinit var mainViewModel: IMainViewModel
@@ -37,11 +37,11 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initializeMainActivityComponent(){
-        mainActivityComponent = appComponent.mainActivityComponent().create(this)
+        mainComponent = appComponent.mainActivityComponent().create(this)
     }
 
     private fun injectDependencies(){
-        mainActivityComponent.inject(this)
+        mainComponent.inject(this)
     }
 
     private fun bindView(){
