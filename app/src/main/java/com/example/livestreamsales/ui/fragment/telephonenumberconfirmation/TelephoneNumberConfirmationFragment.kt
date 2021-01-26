@@ -20,6 +20,7 @@ import com.example.livestreamsales.R
 import com.example.livestreamsales.databinding.FragmentPhoneConfirmationBinding
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
 import com.example.livestreamsales.di.components.phoneconfirmation.PhoneConfirmationComponent
+import com.example.livestreamsales.model.application.phoneconfirmation.PhoneConfirmationResult
 import com.example.livestreamsales.model.application.viewmodel.ViewModelPreparationState
 import com.example.livestreamsales.ui.fragment.base.AuthorizationFragment
 import com.example.livestreamsales.utils.IStringResAnnotationProcessor
@@ -117,19 +118,9 @@ class TelephoneNumberConfirmationFragment: AuthorizationFragment(R.layout.fragme
 
     private fun manageNavigation(){
         viewModel.phoneConfirmationResult.observe(viewLifecycleOwner,{ phoneConfirmationResult ->
-            when(phoneConfirmationResult){
-                IPhoneConfirmationViewModel.PhoneConfirmationResult.PHONE_CONFIRMED ->{
-                    val action = TelephoneNumberConfirmationFragmentDirections.actionTelephoneNumberConfirmationDestinationToMainGraphDestination()
-                    navigationController.navigate(action)
-                }
-                IPhoneConfirmationViewModel.PhoneConfirmationResult.PHONE_CONFIRMED_NEED_REGISTRATION -> {
-                    val action = TelephoneNumberConfirmationFragmentDirections.actionTelephoneNumberConfirmationDestinationToRegistrationDestination()
-                    navigationController.navigate(action)
-                }
-                IPhoneConfirmationViewModel.PhoneConfirmationResult.PHONE_NOT_CONFIRMED -> {
-                    //TODO: highlight divided textbox with red
-                }
-                else -> Unit
+            if(phoneConfirmationResult is PhoneConfirmationResult.PhoneIsConfirmed){
+                val action = TelephoneNumberConfirmationFragmentDirections.actionTelephoneNumberConfirmationDestinationToMainGraphDestination()
+                navigationController.navigate(action)
             }
         })
     }
@@ -172,7 +163,7 @@ class TelephoneNumberConfirmationFragment: AuthorizationFragment(R.layout.fragme
             }
 
             onMaxTextEntered = {
-                viewModel.confirmPhoneNumber()
+                viewModel.confirmPhone()
             }
         }
     }

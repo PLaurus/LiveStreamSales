@@ -2,12 +2,13 @@ package com.example.livestreamsales.storage.authorization.remote
 
 import com.example.livestreamsales.BuildConfig
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.IoScheduler
-import com.example.livestreamsales.model.application.authorization.PhoneNumberVerificationResult
+import com.example.livestreamsales.model.application.phoneconfirmation.PhoneConfirmationResult
 import com.example.livestreamsales.model.network.rest.request.SendVerificationCodeRequestRequestBody
 import com.example.livestreamsales.model.network.rest.request.VerifyPhoneNumberRequestBody
 import com.example.livestreamsales.network.rest.api.IAuthorizationApi
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class AuthorizationRemoteStorage @Inject constructor(
@@ -18,33 +19,31 @@ class AuthorizationRemoteStorage @Inject constructor(
     /**
      * Requests the remote storage to send verification code in an sms.
      * Operates by default on an IoScheduler.
-     * @param telephoneNumber - phone number which user want to confirm.
-     * @return the new Maybe that emits whether code is sent. If error occurred during
-     * communication Maybe emits nothing and then just completes
+     * @param telephoneNumber phone number which user want to confirm.
+     * @return The new Single that emits whether code is sent
      */
-    override fun sendVerificationCodeRequest(telephoneNumber: String): Maybe<Boolean> {
+    override fun sendVerificationCodeRequest(telephoneNumber: String): Single<Boolean> {
         if(BuildConfig.IgnoreRestRequests){
-            return Maybe.just(true)
+            return Single.just(true)
         }
 
         val sendRequestCodeRequestBody = SendVerificationCodeRequestRequestBody(telephoneNumber)
         val response = authorizationApi.sendVerificationCodeRequest(sendRequestCodeRequestBody)
 
         return response
-            .filter{ it.isSuccessful }
             .flatMap{
                 val body = it.body()
 
                 if(body != null){
-                    Maybe.just(body.isCodeSent)
+                    Single.just(body.isCodeSent)
                 } else{
-                    Maybe.empty()
+                    Single.just(false)
                 }
             }
             .subscribeOn(ioScheduler)
     }
 
-    override fun getCodeLength(): Maybe<Int> {
+    override fun getRequiredCodeLength(): Maybe<Int> {
         val response = authorizationApi.getVerificationCodeLength()
 
         return response
@@ -59,46 +58,54 @@ class AuthorizationRemoteStorage @Inject constructor(
             .subscribeOn(ioScheduler)
     }
 
+    override fun getNextCodeRequestRequiredWaitingTime(): Maybe<Long> {
+        val response = authorizationApi.getNextCodeRequestRequiredWaitingTime()
+
+        return response
+            .filter{ it.isSuccessful }
+            .flatMap {
+                val body = it.body()
+
+                if(body != null){
+                    Maybe.just(body.timeInSeconds)
+                } else Maybe.empty()
+            }
+            .subscribeOn(ioScheduler)
+    }
+
     /**
      * Requests server to verify phone number by the specified verification code.
      * Operates by default on an IoScheduler.
-     * @param phoneNumber - phone number which user want to confirm.
-     * @param verificationCode - the code that was received in an sms by a user.
-     * @return the new Maybe that emits verification result.
+     * @param phoneNumber phone number which user want to confirm.
+     * @param verificationCode the code that was received in an sms by a user.
+     * @return The new Maybe that emits verification result.
      * If error occurred during communication Maybe emits nothing and then just completes
      */
-    override fun verifyPhoneNumber(phoneNumber: String, verificationCode: Int): Maybe<PhoneNumberVerificationResult>{
+    override fun confirmPhone(phoneNumber: String, verificationCode: Int): Single<PhoneConfirmationResult>{
         if(BuildConfig.IgnoreRestRequests){
-            return Maybe.just(
-                PhoneNumberVerificationResult(
-                    isPhoneNumberConfirmed = true,
-                    errorMessage = null,
-                    token = "1a2b3c4d"
-                )
-            )
+            return Single.just(PhoneConfirmationResult.PhoneIsConfirmed("1a2b3c4d"))
         }
 
         val verifyPhoneNumberRequestBody = VerifyPhoneNumberRequestBody(phoneNumber, verificationCode)
         val response = authorizationApi.verifyPhoneNumber(verifyPhoneNumberRequestBody)
 
         return response
-            .filter{ it.isSuccessful }
             .flatMap{
                 val body = it.body()
 
                 if(body != null){
-                    val isPhoneNumberConfirmed = body.isPhoneNumberConfirmed
                     val errorMessage = body.errorMessage
                     val token = body.token
-                    val phoneNumberVerificationResult = PhoneNumberVerificationResult(
-                        isPhoneNumberConfirmed,
-                        errorMessage,
-                        token
-                    )
 
-                    Maybe.just(phoneNumberVerificationResult)
+                    val phoneConfirmationResult = if(token != null){
+                        PhoneConfirmationResult.PhoneIsConfirmed(token)
+                    } else{
+                        PhoneConfirmationResult.PhoneIsNotConfirmed(errorMessage)
+                    }
+
+                    Single.just(phoneConfirmationResult)
                 } else{
-                    Maybe.empty()
+                    Single.just(PhoneConfirmationResult.PhoneIsNotConfirmed())
                 }
             }
             .subscribeOn(ioScheduler)

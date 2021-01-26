@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.livestreamsales.authorization.IAuthorizationManager
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
+import com.example.livestreamsales.repository.authorization.IAuthorizationRepository
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
@@ -16,7 +16,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 
 class PhoneInputViewModel @Inject constructor(
-    private val authorizationManager: IAuthorizationManager,
+    private val authorizationRepository: IAuthorizationRepository,
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler
 ): ViewModel(), IPhoneInputViewModel {
@@ -28,7 +28,7 @@ class PhoneInputViewModel @Inject constructor(
     private val canRequestCodeSubject = Observable
         .combineLatest(
             isTelephoneNumberCorrectSubject,
-            authorizationManager.isCodeRequestAvailable,
+            authorizationRepository.isCodeRequestAvailable,
             { isTelephoneNumberCorrect, isCodeRequestAvailable ->
                 isTelephoneNumberCorrect && isCodeRequestAvailable
             }
@@ -39,14 +39,14 @@ class PhoneInputViewModel @Inject constructor(
     )
 
     override val newCodeRequestWaitingTime: LiveData<Long> = MutableLiveData(0L).apply{
-        authorizationManager.nextCodeRequestWaitingTime
+        authorizationRepository.nextCodeRequestWaitingTime
             .observeOn(mainThreadScheduler)
             .subscribe(::setValue)
             .addTo(disposables)
     }
 
     override val isCodeRequestAvailable: LiveData<Boolean> = MutableLiveData(false).apply{
-        authorizationManager.isCodeRequestAvailable
+        authorizationRepository.isCodeRequestAvailable
             .observeOn(mainThreadScheduler)
             .subscribe(::setValue)
             .addTo(disposables)
@@ -85,7 +85,7 @@ class PhoneInputViewModel @Inject constructor(
     }
 
     override fun requestVerificationCode(){
-        authorizationManager.sendVerificationCodeRequest(phoneNumberSubject.value)
+        authorizationRepository.sendVerificationCodeRequest(phoneNumberSubject.value)
             .subscribeOn(mainThreadScheduler)
             .observeOn(mainThreadScheduler)
             .subscribe(isVerificationCodeSentSubject::onNext)

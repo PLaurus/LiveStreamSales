@@ -1,9 +1,9 @@
 package com.example.livestreamsales.di.components.app
 
 import android.content.Context
-import com.example.livestreamsales.authorization.IAuthorizationManager
 import com.example.livestreamsales.di.components.app.modules.authorization.AuthorizationModule
 import com.example.livestreamsales.di.components.app.modules.certificates.CertificatesModule
+import com.example.livestreamsales.di.components.app.modules.database.SharedPreferencesModule
 import com.example.livestreamsales.di.components.app.modules.errorslogger.ErrorsLoggerModule
 import com.example.livestreamsales.di.components.app.modules.reactivex.ReactiveXModule
 import com.example.livestreamsales.di.components.app.modules.rest.RestModule
@@ -36,6 +36,5 @@ interface AppComponent {
 
     fun splashComponent(): SplashComponent.Factory
     fun authorizationComponent(): AuthorizationComponent.Factory
-    fun authorizationManager(): IAuthorizationManager
     fun mainActivityComponent(): MainComponent.Factory
 }

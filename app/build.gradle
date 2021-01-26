@@ -28,7 +28,7 @@ android {
         debug {
             debuggable true
             //minifyEnabled true
-            buildConfigField("boolean", "IgnoreRestRequests", "true")
+            buildConfigField("boolean", "IgnoreRestRequests", "false")
             buildConfigField("boolean", "IgnoreRestHostNameVerification", "true")
         }
 

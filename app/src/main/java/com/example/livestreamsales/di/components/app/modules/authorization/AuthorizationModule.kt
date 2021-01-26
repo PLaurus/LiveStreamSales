@@ -1,7 +1,5 @@
 package com.example.livestreamsales.di.components.app.modules.authorization
 
-import com.example.livestreamsales.authorization.AuthorizationManager
-import com.example.livestreamsales.authorization.IAuthorizationManager
 import com.example.livestreamsales.di.scopes.ApplicationScope
 import com.example.livestreamsales.network.rest.IApiProvider
 import com.example.livestreamsales.network.rest.api.IAuthorizationApi
@@ -17,12 +15,6 @@ import dagger.Provides
 
 @Module
 abstract class AuthorizationModule {
-
-    @ApplicationScope
-    @Binds
-    abstract fun provideAuthorizationManager(
-        authorizationManager: AuthorizationManager
-    ): IAuthorizationManager
 
     @ApplicationScope
     @Binds

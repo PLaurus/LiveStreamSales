@@ -2,11 +2,6 @@
     <!-- Application -->
     <string name="app_name">LiveStreamSales</string>
 
-    <!-- Authorization activity -->
-    <string name="activity_authorization_code_request_error">
-        Не удалось запросить код подтверждения
-    </string>
-
     <!-- Base fragment -->
     <string name="base_fragment_content_loading_error">Не удалось загрузить данные</string>
 
@@ -77,6 +72,9 @@
     <string name="fragment_telephone_number_input_new_code_message_tools">
         Получить новый код можно через
         <font color="#FF0000">00:47</font>
+    </string>
+    <string name="activity_authorization_code_request_error">
+        Не удалось запросить код подтверждения
     </string>
 
     <!-- Telephone number confirmation fragment -->

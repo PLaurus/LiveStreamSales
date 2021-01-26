@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.livestreamsales.application.errors.IApplicationErrorsLogger
-import com.example.livestreamsales.authorization.IAuthorizationManager
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
+import com.example.livestreamsales.model.application.phoneconfirmation.PhoneConfirmationResult
 import com.example.livestreamsales.model.application.viewmodel.ViewModelPreparationState
+import com.example.livestreamsales.repository.authorization.IAuthorizationRepository
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
@@ -16,7 +17,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 
 class PhoneConfirmationViewModel @Inject constructor(
-    private val authorizationManager: IAuthorizationManager,
+    private val authorizationRepository: IAuthorizationRepository,
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler,
     private val applicationErrorsLogger: IApplicationErrorsLogger
@@ -30,10 +31,10 @@ class PhoneConfirmationViewModel @Inject constructor(
     private val dataPreparationStateSubject = PublishSubject.create<ViewModelPreparationState>()
 
     private val phoneNumberSubject = BehaviorSubject.createDefault("")
-    private val codeSubject = BehaviorSubject.createDefault(0)
+    private val codeSubject = BehaviorSubject.createDefault("")
     private val isCodeBeingCheckedSubject = PublishSubject.create<Boolean>()
-    private val phoneConfirmationResultSubject = PublishSubject.create<IPhoneConfirmationViewModel.PhoneConfirmationResult>()
-    private val codeVerificationErrorsSubject = PublishSubject.create<String>()
+    private val phoneConfirmationResultSubject = PublishSubject.create<PhoneConfirmationResult>()
+    private val phoneConfirmationErrorsSubject = PublishSubject.create<String>()
 
     override val dataPreparationState: LiveData<ViewModelPreparationState> =
         MutableLiveData<ViewModelPreparationState>(ViewModelPreparationState.DataIsNotPrepared).apply {
@@ -51,7 +52,7 @@ class PhoneConfirmationViewModel @Inject constructor(
             .addTo(disposables)
     }
 
-    override val code: LiveData<Int> = MutableLiveData(0).apply {
+    override val code: LiveData<String> = MutableLiveData("").apply {
         codeSubject
             .observeOn(mainThreadScheduler)
             .subscribe(::setValue)
@@ -59,7 +60,7 @@ class PhoneConfirmationViewModel @Inject constructor(
     }
 
     override val codeLength: LiveData<Int> = MutableLiveData(0).apply{
-        authorizationManager.getVerificationCodeLength()
+        authorizationRepository.getRequiredCodeLength()
             .observeOn(mainThreadScheduler)
             .doOnSubscribe {
                 dataPreparationStateSubject.onNext(ViewModelPreparationState.DataIsBeingPrepared)
@@ -84,8 +85,8 @@ class PhoneConfirmationViewModel @Inject constructor(
             .addTo(disposables)
     }
 
-    override val phoneConfirmationResult: LiveData<IPhoneConfirmationViewModel.PhoneConfirmationResult?> =
-        MutableLiveData<IPhoneConfirmationViewModel.PhoneConfirmationResult?>().apply {
+    override val phoneConfirmationResult: LiveData<PhoneConfirmationResult?> =
+        MutableLiveData<PhoneConfirmationResult?>().apply {
             phoneConfirmationResultSubject
                 .observeOn(mainThreadScheduler)
                 .subscribe{ result ->
@@ -96,7 +97,7 @@ class PhoneConfirmationViewModel @Inject constructor(
         }
 
     override val phoneConfirmationErrors: LiveData<String?> = MutableLiveData<String?>().apply{
-        codeVerificationErrorsSubject
+        phoneConfirmationErrorsSubject
             .observeOn(mainThreadScheduler)
             .subscribe{
                 value = it
@@ -106,14 +107,14 @@ class PhoneConfirmationViewModel @Inject constructor(
     }
 
     override val newCodeRequestWaitingTime: LiveData<Long> = MutableLiveData(0L).apply{
-        authorizationManager.nextCodeRequestWaitingTime
+        authorizationRepository.nextCodeRequestWaitingTime
             .observeOn(mainThreadScheduler)
             .subscribe(::setValue)
             .addTo(disposables)
     }
 
     override val isCodeRequestAvailable: LiveData<Boolean> = MutableLiveData(false).apply{
-        authorizationManager.isCodeRequestAvailable
+        authorizationRepository.isCodeRequestAvailable
             .observeOn(mainThreadScheduler)
             .subscribe(::setValue)
             .addTo(disposables)
@@ -126,41 +127,28 @@ class PhoneConfirmationViewModel @Inject constructor(
     }
 
     override fun updateCode(code: String){
-        val intCode = try{
-            code.toInt()
-        } catch(ex: NumberFormatException) {
-            0
-        }
-
-        codeSubject.onNext(intCode)
+        codeSubject.onNext(code)
     }
 
-    override fun confirmPhoneNumber() {
-        authorizationManager.logIn(phoneNumberSubject.value, codeSubject.value)
+    override fun confirmPhone() {
+        codeSubject
+            .firstOrError()
+            .map{ it.toInt() }
+            .flatMap{ intCode ->
+                authorizationRepository.confirmPhone(phoneNumberSubject.value, intCode)
+            }
             .doOnSubscribe { isCodeBeingCheckedSubject.onNext(true) }
             .doAfterSuccess { isCodeBeingCheckedSubject.onNext(false) }
             .doOnError{ isCodeBeingCheckedSubject.onNext(false) }
             .observeOn(mainThreadScheduler)
             .subscribeBy(
-                onSuccess = { logInResult ->
-                    logInResult.errorMessage?.let{
-                        codeVerificationErrorsSubject.onNext(it)
-                    }
+                onSuccess = { confirmationResult ->
+                    phoneConfirmationResultSubject.onNext(confirmationResult)
 
-                    if(logInResult.isLoggedIn){
-                        if(logInResult.needRegistration){
-                            phoneConfirmationResultSubject.onNext(
-                                IPhoneConfirmationViewModel.PhoneConfirmationResult.PHONE_CONFIRMED_NEED_REGISTRATION
-                            )
-                        } else{
-                            phoneConfirmationResultSubject.onNext(
-                                IPhoneConfirmationViewModel.PhoneConfirmationResult.PHONE_CONFIRMED
-                            )
+                    if(confirmationResult is PhoneConfirmationResult.PhoneIsNotConfirmed){
+                        confirmationResult.errorMessage?.let{
+                            phoneConfirmationErrorsSubject.onNext(it)
                         }
-                    } else{
-                        phoneConfirmationResultSubject.onNext(
-                            IPhoneConfirmationViewModel.PhoneConfirmationResult.PHONE_NOT_CONFIRMED
-                        )
                     }
                 },
                 onError = applicationErrorsLogger::logError
@@ -169,7 +157,7 @@ class PhoneConfirmationViewModel @Inject constructor(
     }
 
     override fun requestNewCode() {
-        authorizationManager.sendVerificationCodeRequest(phoneNumberSubject.value)
+        authorizationRepository.sendVerificationCodeRequest(phoneNumberSubject.value)
     }
 
     override fun onCleared() {

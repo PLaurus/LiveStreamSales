@@ -165,6 +165,15 @@ class BoxDividedEditText @JvmOverloads constructor(
         }
 
     var onMaxTextEntered: ((text: String) -> Unit)? = null
+        set(value){
+            field = value
+            addTextChangedListener {
+                it?.toString()?.let{ newText ->
+                    if(newText.length >= numberOfBoxes)
+                        field?.invoke(newText)
+                }
+            }
+        }
 
     init{
         background = null
@@ -175,13 +184,6 @@ class BoxDividedEditText @JvmOverloads constructor(
         isClickable = true
         isFocusableInTouchMode = true
         inputType = InputType.TYPE_CLASS_NUMBER
-        
-        addTextChangedListener {
-            it?.toString()?.let{ newText ->
-                if(newText.length >= numberOfBoxes)
-                    onMaxTextEntered?.invoke(newText)
-            }
-        }
 
         context.withStyledAttributes(attrs, R.styleable.BoxDividedEditText, defStyleAttr){
             squareBoxes = getBoolean(

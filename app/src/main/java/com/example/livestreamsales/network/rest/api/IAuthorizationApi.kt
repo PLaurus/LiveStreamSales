@@ -2,6 +2,7 @@ package com.example.livestreamsales.network.rest.api
 
 import com.example.livestreamsales.model.network.rest.request.SendVerificationCodeRequestRequestBody
 import com.example.livestreamsales.model.network.rest.request.VerifyPhoneNumberRequestBody
+import com.example.livestreamsales.model.network.rest.response.GetNextCodeRequestRequiredWaitingTimeResponseBody
 import com.example.livestreamsales.model.network.rest.response.GetVerificationCodeLengthResponseBody
 import com.example.livestreamsales.model.network.rest.response.SendCodeResponseBody
 import com.example.livestreamsales.model.network.rest.response.VerifyPhoneNumberResponseBody
@@ -25,4 +26,7 @@ interface IAuthorizationApi: IApi {
 
     @GET("verification_code_length")
     fun getVerificationCodeLength(): Single<Response<GetVerificationCodeLengthResponseBody>>
+
+    @GET("next_code_request_required_waiting_time")
+    fun getNextCodeRequestRequiredWaitingTime(): Single<Response<GetNextCodeRequestRequiredWaitingTimeResponseBody>>
 }

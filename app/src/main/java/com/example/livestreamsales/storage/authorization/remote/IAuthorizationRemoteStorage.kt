@@ -1,10 +1,12 @@
 package com.example.livestreamsales.storage.authorization.remote
 
-import com.example.livestreamsales.model.application.authorization.PhoneNumberVerificationResult
+import com.example.livestreamsales.model.application.phoneconfirmation.PhoneConfirmationResult
 import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Single
 
 interface IAuthorizationRemoteStorage {
-    fun sendVerificationCodeRequest(telephoneNumber: String): Maybe<Boolean>
-    fun getCodeLength(): Maybe<Int>
-    fun verifyPhoneNumber(phoneNumber: String, verificationCode: Int): Maybe<PhoneNumberVerificationResult>
+    fun sendVerificationCodeRequest(telephoneNumber: String): Single<Boolean>
+    fun getRequiredCodeLength(): Maybe<Int>
+    fun getNextCodeRequestRequiredWaitingTime(): Maybe<Long>
+    fun confirmPhone(phoneNumber: String, verificationCode: Int): Single<PhoneConfirmationResult>
 }

@@ -4,10 +4,10 @@ import android.os.Bundle
 import androidx.navigation.findNavController
 import com.example.livestreamsales.NavigationGraphSplashDirections
 import com.example.livestreamsales.R
-import com.example.livestreamsales.authorization.IAuthorizationManager
 import com.example.livestreamsales.databinding.ActivitySplashBinding
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
 import com.example.livestreamsales.di.components.splash.SplashComponent
+import com.example.livestreamsales.repository.authorization.IAuthorizationRepository
 import com.example.livestreamsales.ui.activity.base.BaseActivity
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -23,8 +23,9 @@ class SplashScreenActivity: BaseActivity() {
     private lateinit var viewBinding: ActivitySplashBinding
 
     lateinit var splashComponent: SplashComponent
+
     @Inject
-    lateinit var authorizationManager: IAuthorizationManager
+    lateinit var authorizationRepository: IAuthorizationRepository
 
     @Inject
     @MainThreadScheduler
@@ -53,7 +54,7 @@ class SplashScreenActivity: BaseActivity() {
     }
 
     private fun navigateToNextGraph(){
-        authorizationManager.isUserLoggedIn
+        authorizationRepository.isUserLoggedIn
             .subscribeOn(mainThreadScheduler)
             .observeOn(mainThreadScheduler)
             .subscribe{ isUserLoggedIn ->
