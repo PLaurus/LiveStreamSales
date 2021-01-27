@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.example.livestreamsales.model.network.rest.error.ResponseError
 
 interface IAuthorizationViewModel {
-    val responseError: LiveData<ResponseError?>
+    val responseError: LiveData<ResponseError>
     val phoneNumber: LiveData<String>
 
     fun updatePhoneNumber(phoneNumber: String)

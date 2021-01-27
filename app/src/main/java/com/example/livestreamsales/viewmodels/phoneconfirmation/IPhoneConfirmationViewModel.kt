@@ -10,8 +10,8 @@ interface IPhoneConfirmationViewModel {
     val code: LiveData<String>
     val codeLength: LiveData<Int>
     val isCodeBeingChecked: LiveData<Boolean>
-    val phoneConfirmationResult: LiveData<PhoneConfirmationResult?>
-    val phoneConfirmationErrors: LiveData<String?>
+    val phoneConfirmationResult: LiveData<PhoneConfirmationResult>
+    val phoneConfirmationErrors: LiveData<String>
     val newCodeRequestWaitingTime: LiveData<Long>
     val isCodeRequestAvailable: LiveData<Boolean>
     val termsOfTheOfferUrl: LiveData<String>

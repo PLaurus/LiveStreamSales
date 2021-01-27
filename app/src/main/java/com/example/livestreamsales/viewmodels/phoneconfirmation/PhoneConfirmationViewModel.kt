@@ -8,6 +8,7 @@ import com.example.livestreamsales.di.components.app.modules.reactivex.qualifier
 import com.example.livestreamsales.model.application.phoneconfirmation.PhoneConfirmationResult
 import com.example.livestreamsales.model.application.viewmodel.ViewModelPreparationState
 import com.example.livestreamsales.repository.authorization.IAuthorizationRepository
+import com.example.livestreamsales.utils.LiveEvent
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
@@ -85,24 +86,18 @@ class PhoneConfirmationViewModel @Inject constructor(
             .addTo(disposables)
     }
 
-    override val phoneConfirmationResult: LiveData<PhoneConfirmationResult?> =
-        MutableLiveData<PhoneConfirmationResult?>().apply {
+    override val phoneConfirmationResult: LiveData<PhoneConfirmationResult> =
+        LiveEvent<PhoneConfirmationResult>().apply {
             phoneConfirmationResultSubject
                 .observeOn(mainThreadScheduler)
-                .subscribe{ result ->
-                    value = result
-                    value = null
-                }
+                .subscribe(::setValue)
                 .addTo(disposables)
         }
 
-    override val phoneConfirmationErrors: LiveData<String?> = MutableLiveData<String?>().apply{
+    override val phoneConfirmationErrors: LiveData<String> = LiveEvent<String>().apply{
         phoneConfirmationErrorsSubject
             .observeOn(mainThreadScheduler)
-            .subscribe{
-                value = it
-                value = null
-            }
+            .subscribe(::setValue)
             .addTo(disposables)
     }
 

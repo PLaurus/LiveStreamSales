@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
 import com.example.livestreamsales.repository.authorization.IAuthorizationRepository
+import com.example.livestreamsales.utils.LiveEvent
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
@@ -52,13 +53,10 @@ class PhoneInputViewModel @Inject constructor(
             .addTo(disposables)
     }
 
-    override val isVerificationCodeSent: LiveData<Boolean?> = MutableLiveData<Boolean?>().apply{
+    override val isVerificationCodeSent: LiveData<Boolean> = LiveEvent<Boolean>().apply{
         isVerificationCodeSentSubject
             .observeOn(mainThreadScheduler)
-            .subscribe{
-                value = it
-                value = null
-            }
+            .subscribe(::setValue)
             .addTo(disposables)
     }
 

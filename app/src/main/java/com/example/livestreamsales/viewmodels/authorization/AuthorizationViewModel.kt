@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
 import com.example.livestreamsales.model.network.rest.error.ResponseError
 import com.example.livestreamsales.network.rest.errors.IResponseErrorsManager
+import com.example.livestreamsales.utils.LiveEvent
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
@@ -21,13 +22,10 @@ class AuthorizationViewModel @Inject constructor(
 
     private val phoneNumberSubject = PublishSubject.create<String>()
 
-    override val responseError: LiveData<ResponseError?> = MutableLiveData<ResponseError?>().apply{
+    override val responseError: LiveData<ResponseError> = LiveEvent<ResponseError>().apply{
         responseErrorsManager.errors
             .observeOn(mainThreadScheduler)
-            .subscribe{
-                value = it
-                value = null
-            }
+            .subscribe(::setValue)
             .addTo(disposables)
     }
 

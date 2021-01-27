@@ -158,7 +158,7 @@ class TelephoneNumberInputFragment: AuthorizationFragment(R.layout.fragment_tele
 
     private fun initializeCodeRequestErrorSnackbar(){
         viewModel.isVerificationCodeSent.observe(viewLifecycleOwner, { isVerificationCodeSent ->
-            if(isVerificationCodeSent == false){
+            if(!isVerificationCodeSent){
                 codeRequestErrorSnackbar?.show()
             }
         })
