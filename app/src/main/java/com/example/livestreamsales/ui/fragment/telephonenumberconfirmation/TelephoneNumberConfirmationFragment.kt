@@ -121,6 +121,7 @@ class TelephoneNumberConfirmationFragment: AuthorizationFragment(R.layout.fragme
             if(phoneConfirmationResult is PhoneConfirmationResult.PhoneIsConfirmed){
                 val action = TelephoneNumberConfirmationFragmentDirections.actionTelephoneNumberConfirmationDestinationToMainGraphDestination()
                 navigationController.navigate(action)
+                authorizationActivity.finish()
             }
         })
     }

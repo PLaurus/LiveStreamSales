@@ -35,9 +35,7 @@
 
         <action
             android:id="@+id/action_telephoneNumberConfirmationDestination_to_mainGraphDestination"
-            app:destination="@id/mainGraphDestination"
-            app:popUpTo="@id/telephoneNumberInputDestination"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/mainGraphDestination"/>
 
         <action
             android:id="@+id/action_telephoneNumberConfirmationDestination_to_registrationDestination"

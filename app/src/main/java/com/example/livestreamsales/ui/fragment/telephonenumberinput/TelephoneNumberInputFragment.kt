@@ -149,7 +149,7 @@ class TelephoneNumberInputFragment: AuthorizationFragment(R.layout.fragment_tele
 
     private fun manageNavigation(){
         viewModel.isVerificationCodeSent.observe(viewLifecycleOwner, { isVerificationCodeSent ->
-            if(isVerificationCodeSent == true){
+            if(isVerificationCodeSent){
                 val action = TelephoneNumberInputFragmentDirections.actionTelephoneNumberInputDestinationToTelephoneNumberConfirmationDestination()
                 navigationController.navigate(action)
             }
