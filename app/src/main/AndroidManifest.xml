@@ -23,8 +23,9 @@
         android:theme="@style/Theme.LiveStreamSales">
 
         <activity
-            android:name=".ui.activity.splash.SplashScreenActivity"
-            android:theme="@style/Theme.LiveStreamSales.SplashScreen">
+            android:name=".ui.activity.splash.SplashActivity"
+            android:theme="@style/Theme.LiveStreamSales.SplashScreen"
+            android:windowSoftInputMode="adjustResize">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +35,13 @@
 
         </activity>
 
-        <activity android:name=".ui.activity.main.MainActivity"/>
+        <activity
+            android:name=".ui.activity.greeting.GreetingActivity"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name=".ui.activity.main.MainActivity"
+            android:windowSoftInputMode="adjustResize"/>
 
         <activity
             android:name=".ui.activity.authorization.AuthorizationActivity"

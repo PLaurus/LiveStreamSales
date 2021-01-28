@@ -1,21 +1,21 @@
-package com.example.livestreamsales.storage.greeting.local
+package com.example.livestreamsales.storage.applicationsettings.local
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.example.livestreamsales.di.components.app.modules.database.qualifiers.GreetingSharedPreferences
+import com.example.livestreamsales.di.components.app.modules.database.qualifiers.ApplicationSharedPreferences
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.IoScheduler
-import com.example.livestreamsales.storage.greeting.IGreetingStorage
+import com.example.livestreamsales.storage.applicationsettings.IApplicationSettingsStorage
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
-class GreetingLocalStorage @Inject constructor(
-    @GreetingSharedPreferences
-    private val greetingSharedPreferences: SharedPreferences,
+class ApplicationSettingsLocalStorage @Inject constructor(
+    @ApplicationSharedPreferences
+    private val applicationSharedPreferences: SharedPreferences,
     @IoScheduler
     private val ioScheduler: Scheduler
-): IGreetingStorage {
+): IApplicationSettingsStorage {
     companion object{
         private const val IS_GREETING_SHOWN_KEY = "is_greeting_shown"
     }
@@ -43,11 +43,11 @@ class GreetingLocalStorage @Inject constructor(
     }
 
     private fun getIsGreetingShownFromSharedPreferences(): Boolean{
-        return greetingSharedPreferences.getBoolean(IS_GREETING_SHOWN_KEY, false)
+        return applicationSharedPreferences.getBoolean(IS_GREETING_SHOWN_KEY, false)
     }
 
     private fun saveIsGreetingShownToSharedPreferences(isShown: Boolean){
-        greetingSharedPreferences.edit{
+        applicationSharedPreferences.edit{
             putBoolean(IS_GREETING_SHOWN_KEY, isShown)
         }
     }

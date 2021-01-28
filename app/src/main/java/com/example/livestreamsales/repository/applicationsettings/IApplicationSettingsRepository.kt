@@ -1,9 +1,9 @@
-package com.example.livestreamsales.repository.greeting
+package com.example.livestreamsales.repository.applicationsettings
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
-interface IGreetingRepository {
+interface IApplicationSettingsRepository {
     fun getIsGreetingShown(): Single<Boolean>
     fun saveIsGreetingShown(isShown: Boolean): Completable
 }

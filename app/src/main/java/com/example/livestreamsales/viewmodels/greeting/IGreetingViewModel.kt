@@ -1,0 +1,3 @@
+package com.example.livestreamsales.viewmodels.greeting
+
+interface IGreetingViewModel

@@ -2,8 +2,8 @@ package com.example.livestreamsales.di.components.app.modules.database
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.livestreamsales.di.components.app.modules.database.qualifiers.ApplicationSharedPreferences
 import com.example.livestreamsales.di.components.app.modules.database.qualifiers.AuthorizationSharedPreferences
-import com.example.livestreamsales.di.components.app.modules.database.qualifiers.GreetingSharedPreferences
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -12,16 +12,20 @@ import javax.inject.Named
 class SharedPreferencesModule {
     companion object{
         private const val DEPENDENCY_NAME_AUTHORIZATION_FILE_NAME = "AUTHORIZATION_FILE_NAME"
-        private const val DEPENDENCY_NAME_GREETING_FILE_NAME = "GREETING_FILE_NAME"
+        private const val DEPENDENCY_NAME_APPLICATION_SETTINGS_FILE_NAME = "APPLICATION_SETTINGS_FILE_NAME"
     }
 
     @Provides
     @Named(DEPENDENCY_NAME_AUTHORIZATION_FILE_NAME)
-    internal fun provideAuthorizationSharedPreferencesFileName(): String = "tv.wfc.livestreamsales.AUTHORIZATION_SHARED_PREFERENCES"
+    internal fun provideAuthorizationSharedPreferencesFileName(): String{
+        return "tv.wfc.livestreamsales.AUTHORIZATION_SHARED_PREFERENCES"
+    }
 
     @Provides
-    @Named(DEPENDENCY_NAME_GREETING_FILE_NAME)
-    internal fun provideGreetingSharedPreferencesFileName(): String = "tv.wfc.livestreamsales.GREETING_SHARED_PREFERENCES"
+    @Named(DEPENDENCY_NAME_APPLICATION_SETTINGS_FILE_NAME)
+    internal fun provideApplicationSharedPreferencesFileName(): String {
+        return "tv.wfc.livestreamsales.APPLICATION_SHARED_PREFERENCES"
+    }
 
     @Provides
     @AuthorizationSharedPreferences
@@ -30,16 +34,22 @@ class SharedPreferencesModule {
         @Named(DEPENDENCY_NAME_AUTHORIZATION_FILE_NAME)
         authorizationSharedPreferencesFileName: String
     ): SharedPreferences{
-        return context.getSharedPreferences(authorizationSharedPreferencesFileName, Context.MODE_PRIVATE)
+        return context.getSharedPreferences(
+            authorizationSharedPreferencesFileName,
+            Context.MODE_PRIVATE
+        )
     }
 
     @Provides
-    @GreetingSharedPreferences
-    internal fun provideGreetingSharedPreferences(
+    @ApplicationSharedPreferences
+    internal fun provideApplicationSharedPreferences(
         context: Context,
-        @Named(DEPENDENCY_NAME_GREETING_FILE_NAME)
-        greetingSharedPreferencesFileName: String
+        @Named(DEPENDENCY_NAME_APPLICATION_SETTINGS_FILE_NAME)
+        applicationSharedPreferencesFileName: String
     ): SharedPreferences{
-        return context.getSharedPreferences(greetingSharedPreferencesFileName, Context.MODE_PRIVATE)
+        return context.getSharedPreferences(
+            applicationSharedPreferencesFileName,
+            Context.MODE_PRIVATE
+        )
     }
 }

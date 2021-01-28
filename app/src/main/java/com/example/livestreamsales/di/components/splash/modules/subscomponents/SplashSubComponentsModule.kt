@@ -5,4 +5,4 @@ import dagger.Module
 @Module(subcomponents = [
 
 ])
-class GreetingSubComponentsModule
+class SplashSubComponentsModule

@@ -14,19 +14,18 @@ import dagger.multibindings.IntoMap
 
 @Module
 abstract class ViewModelProviderModule {
+    @Binds
+    @IntoMap
+    @ViewModelKey(AuthorizationViewModel::class)
+    abstract fun provideAuthorizationViewModel(
+        authorizationViewModel: AuthorizationViewModel
+    ): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(MainViewModel::class)
     abstract fun provideMainViewModel(
         mainViewModel: MainViewModel
-    ): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(AuthorizationViewModel::class)
-    abstract fun provideAuthorizationViewModel(
-        authorizationViewModel: AuthorizationViewModel
     ): ViewModel
 
     @Binds

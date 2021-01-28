@@ -5,8 +5,9 @@ import com.example.livestreamsales.ui.activity.authorization.AuthorizationActivi
 
 abstract class AuthorizationFragment(@LayoutRes contentLayoutId: Int): BaseFragment(contentLayoutId) {
     protected val authorizationActivity by lazy{
-        (requireActivity() as AuthorizationActivity)
+        requireActivity() as AuthorizationActivity
     }
+
     protected val authorizationComponent by lazy{
         authorizationActivity.authorizationComponent
     }

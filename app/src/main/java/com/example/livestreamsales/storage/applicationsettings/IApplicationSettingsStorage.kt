@@ -1,9 +1,9 @@
-package com.example.livestreamsales.storage.greeting
+package com.example.livestreamsales.storage.applicationsettings
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
-interface IGreetingStorage {
+interface IApplicationSettingsStorage {
     fun getIsGreetingShown(): Single<Boolean>
     fun saveIsGreetingShown(isShown: Boolean): Completable
 }

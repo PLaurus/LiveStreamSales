@@ -1,17 +1,17 @@
 package com.example.livestreamsales.di.components.splash
 
 import androidx.appcompat.app.AppCompatActivity
-import com.example.livestreamsales.di.components.splash.modules.greeting.GreetingModule
-import com.example.livestreamsales.di.components.splash.modules.subscomponents.GreetingSubComponentsModule
+import com.example.livestreamsales.di.components.splash.modules.subscomponents.SplashSubComponentsModule
+import com.example.livestreamsales.di.components.splash.modules.viewmodel.SplashViewModelModule
 import com.example.livestreamsales.di.scopes.ActivityScope
-import com.example.livestreamsales.ui.activity.splash.SplashScreenActivity
+import com.example.livestreamsales.ui.activity.splash.SplashActivity
 import dagger.BindsInstance
 import dagger.Subcomponent
 
 @ActivityScope
 @Subcomponent(modules = [
-    GreetingSubComponentsModule::class,
-    GreetingModule::class
+    SplashSubComponentsModule::class,
+    SplashViewModelModule::class
 ])
 interface SplashComponent {
 
@@ -20,5 +20,5 @@ interface SplashComponent {
         fun create(@BindsInstance activity: AppCompatActivity): SplashComponent
     }
 
-    fun inject(activity: SplashScreenActivity)
+    fun inject(activity: SplashActivity)
 }

@@ -22,6 +22,7 @@ class AuthorizationActivity: BaseActivity() {
 
     lateinit var authorizationComponent: AuthorizationComponent
         private set
+
     @Inject
     lateinit var viewModel: IAuthorizationViewModel
 
