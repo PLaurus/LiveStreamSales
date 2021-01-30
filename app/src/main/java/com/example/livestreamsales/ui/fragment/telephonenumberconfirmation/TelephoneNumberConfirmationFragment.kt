@@ -21,7 +21,6 @@ import com.example.livestreamsales.databinding.FragmentPhoneConfirmationBinding
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
 import com.example.livestreamsales.di.components.phoneconfirmation.PhoneConfirmationComponent
 import com.example.livestreamsales.model.application.phoneconfirmation.PhoneConfirmationResult
-import com.example.livestreamsales.model.application.viewmodel.ViewModelPreparationState
 import com.example.livestreamsales.ui.fragment.base.AuthorizationFragment
 import com.example.livestreamsales.utils.IStringResAnnotationProcessor
 import com.example.livestreamsales.viewmodels.authorization.IAuthorizationViewModel
@@ -48,7 +47,7 @@ class TelephoneNumberConfirmationFragment: AuthorizationFragment(R.layout.fragme
     lateinit var authorizationViewModel: IAuthorizationViewModel
 
     @Inject
-    lateinit var viewModel: IPhoneConfirmationViewModel
+    override lateinit var viewModel: IPhoneConfirmationViewModel
 
     @Inject
     @MainThreadScheduler
@@ -66,15 +65,17 @@ class TelephoneNumberConfirmationFragment: AuthorizationFragment(R.layout.fragme
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindView(view)
-        manageContentState{
-            manageNavigation()
-            initializeOperationProgressView()
-            initializeCodeIsSentText()
-            initializeCodeEditText()
-            initializeNewCodeTimerText()
-            initializeRequestCodeButton()
-            initializeTermsOfTheOfferText()
-        }
+    }
+
+    override fun onDataIsPrepared() {
+        super.onDataIsPrepared()
+        manageNavigation()
+        initializeOperationProgressView()
+        initializeCodeIsSentText()
+        initializeCodeEditText()
+        initializeNewCodeTimerText()
+        initializeRequestCodeButton()
+        initializeTermsOfTheOfferText()
     }
 
     override fun onDestroyView() {
@@ -100,22 +101,6 @@ class TelephoneNumberConfirmationFragment: AuthorizationFragment(R.layout.fragme
         viewBinding = null
     }
 
-    private fun manageContentState(onContentPrepared: (() -> Unit)? = null){
-        viewModel.dataPreparationState.observe(viewLifecycleOwner,{ dataPreparationState ->
-            when(dataPreparationState){
-                is ViewModelPreparationState.DataIsBeingPrepared ->
-                    showContentLoadingProgress()
-                is ViewModelPreparationState.DataIsPrepared ->{
-                    onContentPrepared?.invoke()
-                    showContent()
-                }
-                is ViewModelPreparationState.FailedToPrepareData ->
-                    showContentLoadingError()
-                else -> Unit
-            }
-        })
-    }
-
     private fun manageNavigation(){
         viewModel.phoneConfirmationResult.observe(viewLifecycleOwner,{ phoneConfirmationResult ->
             if(phoneConfirmationResult is PhoneConfirmationResult.PhoneIsConfirmed){
@@ -130,8 +115,9 @@ class TelephoneNumberConfirmationFragment: AuthorizationFragment(R.layout.fragme
         viewModel.isCodeBeingChecked.observe(viewLifecycleOwner,{ isCodeBeingChecked ->
             if(isCodeBeingChecked){
                 showOperationProgress()
-            } else
-                showContent()
+            } else{
+                hideOperationProgress()
+            }
         })
     }
 

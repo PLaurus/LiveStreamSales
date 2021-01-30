@@ -26,7 +26,7 @@
     <color name="defaultFragmentBackground">#FFFFFF</color>
 
     <!-- Base fragment -->
-    <color name="baseFragment_progressContainer_background">#1A000000</color>
+    <color name="baseFragment_operationProgressContainer_background">#33000000</color>
 
     <!-- Live broadcast fragment -->
     <color name="colorLiveBroadcast_shadow">#4A4A4A</color>

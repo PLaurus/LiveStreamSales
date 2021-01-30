@@ -2,10 +2,9 @@ package com.example.livestreamsales.viewmodels.phoneconfirmation
 
 import androidx.lifecycle.LiveData
 import com.example.livestreamsales.model.application.phoneconfirmation.PhoneConfirmationResult
-import com.example.livestreamsales.model.application.viewmodel.ViewModelPreparationState
+import com.example.livestreamsales.viewmodels.base.IToBePreparedViewModel
 
-interface IPhoneConfirmationViewModel {
-    val dataPreparationState: LiveData<ViewModelPreparationState>
+interface IPhoneConfirmationViewModel: IToBePreparedViewModel {
     val phoneNumber: LiveData<String>
     val code: LiveData<String>
     val codeLength: LiveData<Int>

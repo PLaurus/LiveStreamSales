@@ -5,60 +5,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/screenPadding"
-    android:clipToPadding="false"
     tools:context=".ui.activity.greeting.GreetingActivity">
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/fragment_greeting_pager_view"
+        android:id="@+id/pagerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHeight_percent="0.6"/>
+        app:layout_constraintBottom_toTopOf="@id/proceedButton"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintHeight_percent="0.65"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/fragment_greeting_proceed_button"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:id="@+id/proceedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/greeting_fragment_next_button"
         android:textAllCaps="false"
-        app:layout_constraintStart_toStartOf="@id/fragment_greeting_pager_view"
-        app:layout_constraintEnd_toEndOf="@id/fragment_greeting_pager_view"
-        app:layout_constraintTop_toBottomOf="@id/fragment_greeting_pager_view"
-        app:layout_constraintHeight_percent="0.07"
-        app:layout_constraintWidth_percent="0.3"/>
+        app:cornerRadius="@dimen/bigButton_cornerRadius"
+        app:layout_constraintStart_toStartOf="@id/pagerView"
+        app:layout_constraintEnd_toEndOf="@id/pagerView"
+        app:layout_constraintTop_toBottomOf="@id/pagerView"
+        app:layout_constraintBottom_toTopOf="@id/pageIndicator"/>
 
-    <com.rd.PageIndicatorView
-        android:id="@+id/fragment_greeting_page_indicator"
+    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+        android:id="@+id/pageIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="@id/fragment_greeting_proceed_button"
-        app:layout_constraintEnd_toEndOf="@id/fragment_greeting_proceed_button"
-        app:layout_constraintTop_toBottomOf="@id/fragment_greeting_proceed_button"
-        app:piv_animationType="worm"
-        app:piv_interactiveAnimation="true"
-        app:piv_selectedColor="@color/colorPrimary"
-        app:piv_unselectedColor="@color/colorSecondaryText"
-        app:piv_viewPager="@id/fragment_greeting_pager_view"
-        app:piv_radius="3dp"
-        app:piv_padding="15dp"/>
+        android:layout_marginTop="@dimen/contentMargin"
+        app:layout_constraintStart_toStartOf="@id/proceedButton"
+        app:layout_constraintEnd_toEndOf="@id/proceedButton"
+        app:layout_constraintTop_toBottomOf="@id/proceedButton"
+        app:layout_constraintBottom_toTopOf="@id/skipButton"
+        app:dotsColor="@color/colorSecondaryText"
+        app:dotsCornerRadius="8dp"
+        app:dotsSize="8dp"
+        app:dotsSpacing="8dp"
+        app:dotsWidthFactor="3"
+        app:selectedDotColor="@color/colorPrimary"
+        app:progressMode="true" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/fragment_greeting_skip_button"
+        android:id="@+id/skipButton"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/screenPadding"
         android:text="@string/greeting_fragment_skip_button"
         android:textAllCaps="false"
         android:textColor="@color/colorSecondaryText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_greeting_page_indicator"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.9"/>
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

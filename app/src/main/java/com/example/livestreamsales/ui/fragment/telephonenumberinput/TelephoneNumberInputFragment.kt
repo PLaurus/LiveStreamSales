@@ -38,6 +38,7 @@ class TelephoneNumberInputFragment: AuthorizationFragment(R.layout.fragment_tele
             )
         }
     }
+
     private val navigationController by lazy{
         findNavController()
     }
@@ -51,7 +52,7 @@ class TelephoneNumberInputFragment: AuthorizationFragment(R.layout.fragment_tele
     lateinit var authorizationViewModel: IAuthorizationViewModel
 
     @Inject
-    lateinit var viewModel: IPhoneInputViewModel
+    override lateinit var viewModel: IPhoneInputViewModel
 
     @Inject
     @MainThreadScheduler
@@ -69,7 +70,7 @@ class TelephoneNumberInputFragment: AuthorizationFragment(R.layout.fragment_tele
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewBinding = FragmentTelephoneNumberInputBinding.bind(view)
+        bindView(view)
         initializeTelephoneNumberEditText()
         initializeSendCodeButton()
         initializeNewCodeTimerText()
@@ -80,7 +81,7 @@ class TelephoneNumberInputFragment: AuthorizationFragment(R.layout.fragment_tele
 
     override fun onDestroyView() {
         super.onDestroyView()
-        viewBinding = null
+        unbindView()
     }
 
     private fun createTelephoneNumberInputComponent(){
@@ -89,6 +90,14 @@ class TelephoneNumberInputFragment: AuthorizationFragment(R.layout.fragment_tele
 
     private fun injectDependencies(){
         phoneInputComponent.inject(this)
+    }
+
+    private fun bindView(view: View){
+        viewBinding = FragmentTelephoneNumberInputBinding.bind(view)
+    }
+
+    private fun unbindView(){
+        viewBinding = null
     }
 
     private fun connectAuthorizationViewModel(){

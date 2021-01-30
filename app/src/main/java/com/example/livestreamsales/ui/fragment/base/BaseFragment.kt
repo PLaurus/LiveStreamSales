@@ -1,7 +1,6 @@
 package com.example.livestreamsales.ui.fragment.base
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.livestreamsales.R
 import com.example.livestreamsales.databinding.FragmentBaseBinding
+import com.example.livestreamsales.model.application.viewmodel.ViewModelPreparationState
+import com.example.livestreamsales.viewmodels.base.IToBePreparedViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 abstract class BaseFragment(
@@ -20,6 +21,8 @@ abstract class BaseFragment(
 ): Fragment() {
     protected lateinit var viewScopeDisposables: CompositeDisposable
     private var viewBinding: FragmentBaseBinding? = null
+
+    abstract val viewModel: IToBePreparedViewModel
 
     @CallSuper
     override fun onCreateView(
@@ -30,16 +33,46 @@ abstract class BaseFragment(
         viewScopeDisposables = CompositeDisposable()
 
         val view = bindView(inflater, container)
-
         inflateContentView(view.context)
 
         return view
+    }
+
+    @CallSuper
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        manageContentAndProgressVisibility()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         viewScopeDisposables.dispose()
         unbindView()
+    }
+
+    protected open fun onDataIsNotPrepared() = Unit
+
+    @CallSuper
+    protected open fun onDataIsBeingPrepared(){
+        showContentLoadingProgress()
+    }
+
+    @CallSuper
+    protected open fun onDataIsPrepared() {
+        showContent()
+    }
+
+    @CallSuper
+    protected open fun onDataPreparationFailure(){
+        showContentLoadingError()
+    }
+
+    protected fun showOperationProgress(){
+        viewBinding?.operationProgressContainer?.visibility = View.VISIBLE
+    }
+
+    protected fun hideOperationProgress(){
+        viewBinding?.operationProgressContainer?.visibility = View.INVISIBLE
     }
 
     private fun bindView(
@@ -53,56 +86,8 @@ abstract class BaseFragment(
         }
     }
 
-    protected fun showContent(){
-        viewBinding?.apply{
-            contentContainer.visibility = View.VISIBLE
-            progressContainer.visibility = View.INVISIBLE
-            contentIsNotLoadedMessage.visibility = View.INVISIBLE
-        }
-    }
-
-    protected fun showContentLoadingProgress(){
-        viewBinding?.apply{
-            contentContainer.visibility = View.INVISIBLE
-            contentIsNotLoadedMessage.visibility = View.INVISIBLE
-            progressContainer.apply{
-                setBackgroundColor(Color.TRANSPARENT)
-                visibility = View.VISIBLE
-            }
-        }
-    }
-
-    protected fun showOperationProgress(){
-        viewBinding?.apply{
-            contentIsNotLoadedMessage.visibility = View.INVISIBLE
-            contentContainer.visibility = View.VISIBLE
-            progressContainer.apply{
-                setBackgroundColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.baseFragment_progressContainer_background
-                    )
-                )
-                visibility = View.VISIBLE
-            }
-        }
-    }
-
-    protected fun showContentLoadingError(
-        error: String = resources.getString(R.string.base_fragment_content_loading_error)
-    ){
-        viewBinding?.apply {
-            contentContainer.visibility = View.INVISIBLE
-            progressContainer.visibility = View.INVISIBLE
-            contentIsNotLoadedMessage.apply{
-                text = error
-                visibility = View.VISIBLE
-            }
-        }
-    }
-
-    protected fun hideProgress(){
-        viewBinding?.progressContainer?.visibility = View.INVISIBLE
+    private fun unbindView(){
+        viewBinding = null
     }
 
     private fun inflateContentView(context: Context): View?{
@@ -121,8 +106,44 @@ abstract class BaseFragment(
         return contentView
     }
 
-    private fun unbindView(){
-        viewBinding = null
+    private fun manageContentAndProgressVisibility(){
+        viewModel.dataPreparationState.observe(viewLifecycleOwner, { dataPreparationState ->
+            when(dataPreparationState){
+                is ViewModelPreparationState.DataIsBeingPrepared -> onDataIsBeingPrepared()
+                is ViewModelPreparationState.DataIsPrepared -> onDataIsPrepared()
+                is ViewModelPreparationState.FailedToPrepareData -> onDataPreparationFailure()
+                else -> onDataIsNotPrepared()
+            }
+        })
+    }
+
+    private fun showContent(){
+        viewBinding?.apply{
+            contentContainer.visibility = View.VISIBLE
+            contentProgressContainer.visibility = View.INVISIBLE
+            contentIsNotLoadedMessage.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun showContentLoadingProgress(){
+        viewBinding?.apply{
+            contentContainer.visibility = View.INVISIBLE
+            contentIsNotLoadedMessage.visibility = View.INVISIBLE
+            contentProgressContainer.visibility = View.VISIBLE
+        }
+    }
+
+    private fun showContentLoadingError(
+        error: String = resources.getString(R.string.base_fragment_content_loading_error)
+    ){
+        viewBinding?.apply {
+            contentContainer.visibility = View.INVISIBLE
+            contentProgressContainer.visibility = View.INVISIBLE
+            contentIsNotLoadedMessage.apply{
+                text = error
+                visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun View.replaceEmptyBackground(){

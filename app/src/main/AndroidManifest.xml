@@ -37,7 +37,7 @@
 
         <activity
             android:name=".ui.activity.greeting.GreetingActivity"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustNothing"/>
 
         <activity
             android:name=".ui.activity.main.MainActivity"

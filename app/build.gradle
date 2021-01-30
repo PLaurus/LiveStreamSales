@@ -60,6 +60,7 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation 'com.facebook.fresco:fresco:2.3.0'
     implementation 'com.romandanylyk:pageindicatorview:1.0.3'
+    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
 
     // Video player
     implementation 'com.google.android.exoplayer:exoplayer:2.12.2'

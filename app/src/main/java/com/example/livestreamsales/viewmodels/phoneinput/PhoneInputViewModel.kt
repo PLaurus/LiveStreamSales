@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
+import com.example.livestreamsales.model.application.viewmodel.ViewModelPreparationState
 import com.example.livestreamsales.repository.authorization.IAuthorizationRepository
 import com.example.livestreamsales.utils.LiveEvent
 import io.reactivex.rxjava3.core.BackpressureStrategy
@@ -34,6 +35,8 @@ class PhoneInputViewModel @Inject constructor(
                 isTelephoneNumberCorrect && isCodeRequestAvailable
             }
         )
+
+    override val dataPreparationState = MutableLiveData<ViewModelPreparationState>(ViewModelPreparationState.DataIsPrepared)
 
     override val phoneNumber: LiveData<String> = LiveDataReactiveStreams.fromPublisher(
         phoneNumberSubject.toFlowable(BackpressureStrategy.LATEST)
