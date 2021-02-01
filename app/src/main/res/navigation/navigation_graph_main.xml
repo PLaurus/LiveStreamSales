@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/homeDestination"
-        android:name="com.example.livestreamsales.ui.activity.main.fragments.home.HomeFragment"
+        android:name="tv.wfc.livestreamsales.ui.activity.main.fragments.home.HomeFragment"
         android:label="@string/fragment_main_title"
         tools:layout="@layout/fragment_home">
 
@@ -32,7 +32,7 @@
     <fragment
         android:id="@+id/greetingDestination"
         android:label="@string/greeting_fragment_title"
-        tools:layout="@layout/fragment_greeting">
+        tools:layout="@layout/activity_greeting">
 
         <action
             android:id="@+id/action_greetingDestination_to_mainDestination"
@@ -63,7 +63,7 @@
 
     <activity
         android:id="@+id/authorizationGraphDestination"
-        android:name="com.example.livestreamsales.ui.activity.login.LogInActivity"
+        android:name="tv.wfc.livestreamsales.ui.activity.login.LogInActivity"
         tools:layout="@layout/activity_authorization"/>
 
 </navigation>
