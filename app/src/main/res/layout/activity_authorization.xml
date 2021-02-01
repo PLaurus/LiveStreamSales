@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.authorization.AuthorizationActivity">
+    tools:context=".ui.activity.login.LogInActivity">
 
     <fragment
         android:id="@+id/authorization_navigation_host_fragment"

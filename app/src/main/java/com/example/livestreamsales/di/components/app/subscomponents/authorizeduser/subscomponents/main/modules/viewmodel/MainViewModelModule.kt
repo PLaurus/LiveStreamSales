@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.livestreamsales.di.mapkeys.ViewModelKey
 import com.example.livestreamsales.di.scopes.ActivityScope
-import com.example.livestreamsales.viewmodels.IMainViewModel
-import com.example.livestreamsales.viewmodels.MainViewModel
+import com.example.livestreamsales.viewmodels.main.IMainViewModel
+import com.example.livestreamsales.viewmodels.main.MainViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -21,7 +21,7 @@ abstract class MainViewModelModule {
         internal fun provideIMainViewModel(
             activity: AppCompatActivity,
             viewModelProviderFactory: ViewModelProvider.Factory
-        ): IMainViewModel{
+        ): IMainViewModel {
             return ViewModelProvider(
                 activity,
                 viewModelProviderFactory

@@ -11,9 +11,9 @@ import com.example.livestreamsales.databinding.ActivityGreetingBinding
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
 import com.example.livestreamsales.di.components.app.subscomponents.greeting.GreetingComponent
 import com.example.livestreamsales.model.application.greetingpage.GreetingPage
-import com.example.livestreamsales.ui.activity.authorization.AuthorizationActivity
 import com.example.livestreamsales.ui.activity.base.BaseActivity
 import com.example.livestreamsales.ui.activity.greeting.adapters.greetingpage.GreetingPageViewHolder
+import com.example.livestreamsales.ui.activity.login.LogInActivity
 import com.example.livestreamsales.ui.activity.main.MainActivity
 import com.example.livestreamsales.viewmodels.greeting.IGreetingViewModel
 import com.jakewharton.rxbinding4.view.clicks
@@ -190,7 +190,7 @@ class GreetingActivity: BaseActivity() {
     }
 
     private fun navigateToAuthorizationActivity(){
-        val authorizationActivityIntent = Intent(applicationContext, AuthorizationActivity::class.java)
+        val authorizationActivityIntent = Intent(applicationContext, LogInActivity::class.java)
         startActivity(authorizationActivityIntent)
         finish()
     }

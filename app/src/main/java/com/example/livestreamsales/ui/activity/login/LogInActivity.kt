@@ -1,17 +1,17 @@
-package com.example.livestreamsales.ui.activity.authorization
+package com.example.livestreamsales.ui.activity.login
 
 import android.os.Bundle
 import androidx.navigation.findNavController
 import com.example.livestreamsales.R
 import com.example.livestreamsales.databinding.ActivityAuthorizationBinding
-import com.example.livestreamsales.di.components.app.subscomponents.authorization.AuthorizationComponent
+import com.example.livestreamsales.di.components.app.subscomponents.login.LogInComponent
 import com.example.livestreamsales.ui.activity.base.BaseActivity
-import com.example.livestreamsales.viewmodels.authorization.IAuthorizationViewModel
+import com.example.livestreamsales.viewmodels.login.ILogInViewModel
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class AuthorizationActivity: BaseActivity() {
+class LogInActivity: BaseActivity() {
     private val disposables = CompositeDisposable()
 
     private lateinit var viewBinding: ActivityAuthorizationBinding
@@ -20,11 +20,11 @@ class AuthorizationActivity: BaseActivity() {
         findNavController(R.id.authorization_navigation_host_fragment)
     }
 
-    lateinit var authorizationComponent: AuthorizationComponent
+    lateinit var logInComponent: LogInComponent
         private set
 
     @Inject
-    lateinit var viewModel: IAuthorizationViewModel
+    lateinit var viewModel: ILogInViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initializeAuthorizationComponent()
@@ -44,11 +44,11 @@ class AuthorizationActivity: BaseActivity() {
     }
 
     private fun initializeAuthorizationComponent(){
-        authorizationComponent = appComponent.authorizationComponent().create(this)
+        logInComponent = appComponent.authorizationComponent().create(this)
     }
 
     private fun injectDependencies(){
-        authorizationComponent.inject(this)
+        logInComponent.inject(this)
     }
 
     private fun bindView(){

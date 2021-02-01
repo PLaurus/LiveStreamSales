@@ -8,6 +8,7 @@
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
+            <!--suppress AndroidElementNotAllowed -->
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="http" />
         </intent>
@@ -44,7 +45,7 @@
             android:windowSoftInputMode="adjustResize"/>
 
         <activity
-            android:name=".ui.activity.authorization.AuthorizationActivity"
+            android:name=".ui.activity.login.LogInActivity"
             android:windowSoftInputMode="adjustResize"/>
 
     </application>

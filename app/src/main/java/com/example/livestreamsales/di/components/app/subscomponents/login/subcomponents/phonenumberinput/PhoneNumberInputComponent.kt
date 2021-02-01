@@ -1,8 +1,8 @@
-package com.example.livestreamsales.di.components.app.subscomponents.authorization.subcomponents.phonenumberinput
+package com.example.livestreamsales.di.components.app.subscomponents.login.subcomponents.phonenumberinput
 
 import androidx.fragment.app.Fragment
-import com.example.livestreamsales.di.components.app.subscomponents.authorization.subcomponents.phonenumberinput.modules.viewmodel.PhoneNumberInputViewModelModule
-import com.example.livestreamsales.di.components.app.subscomponents.authorization.subcomponents.phonenumberinput.qualifiers.PhoneNumberInputFragment
+import com.example.livestreamsales.di.components.app.subscomponents.login.subcomponents.phonenumberinput.modules.viewmodel.PhoneNumberInputViewModelModule
+import com.example.livestreamsales.di.components.app.subscomponents.login.subcomponents.phonenumberinput.qualifiers.PhoneNumberInputFragment
 import com.example.livestreamsales.di.scopes.FragmentScope
 import dagger.BindsInstance
 import dagger.Subcomponent

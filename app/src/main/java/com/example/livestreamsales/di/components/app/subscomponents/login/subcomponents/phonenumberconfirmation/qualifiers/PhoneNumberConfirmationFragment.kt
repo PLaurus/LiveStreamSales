@@ -1,4 +1,4 @@
-package com.example.livestreamsales.di.components.app.subscomponents.authorization.subcomponents.phonenumberconfirmation.qualifiers
+package com.example.livestreamsales.di.components.app.subscomponents.login.subcomponents.phonenumberconfirmation.qualifiers
 
 import javax.inject.Qualifier
 

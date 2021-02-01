@@ -1,9 +1,9 @@
-package com.example.livestreamsales.di.components.app.subscomponents.authorization.subcomponents.phonenumberconfirmation.modules.viewmodel
+package com.example.livestreamsales.di.components.app.subscomponents.login.subcomponents.phonenumberconfirmation.modules.viewmodel
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.livestreamsales.di.components.app.subscomponents.authorization.subcomponents.phonenumberconfirmation.qualifiers.PhoneNumberConfirmationFragment
+import com.example.livestreamsales.di.components.app.subscomponents.login.subcomponents.phonenumberconfirmation.qualifiers.PhoneNumberConfirmationFragment
 import com.example.livestreamsales.di.mapkeys.ViewModelKey
 import com.example.livestreamsales.di.scopes.FragmentScope
 import com.example.livestreamsales.viewmodels.ViewModelProviderFactory

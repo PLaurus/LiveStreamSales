@@ -11,8 +11,8 @@ import com.example.livestreamsales.di.components.app.modules.rest.RestModule
 import com.example.livestreamsales.di.components.app.modules.subcomponents.AppSubComponentsModule
 import com.example.livestreamsales.di.components.app.modules.utils.UtilsModule
 import com.example.livestreamsales.di.components.app.modules.viewmodelprovider.ViewModelProviderModule
-import com.example.livestreamsales.di.components.app.subscomponents.authorization.AuthorizationComponent
 import com.example.livestreamsales.di.components.app.subscomponents.greeting.GreetingComponent
+import com.example.livestreamsales.di.components.app.subscomponents.login.LogInComponent
 import com.example.livestreamsales.di.components.app.subscomponents.splash.SplashComponent
 import com.example.livestreamsales.di.scopes.ApplicationScope
 import com.example.livestreamsales.repository.authorization.IAuthorizationRepository
@@ -41,7 +41,7 @@ interface AppComponent {
 
     fun splashComponent(): SplashComponent.Factory
     fun greetingComponent(): GreetingComponent.Factory
-    fun authorizationComponent(): AuthorizationComponent.Factory
+    fun authorizationComponent(): LogInComponent.Factory
 
     fun authorizationRepository(): IAuthorizationRepository
 }

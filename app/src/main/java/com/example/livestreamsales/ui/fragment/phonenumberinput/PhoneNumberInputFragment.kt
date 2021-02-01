@@ -15,9 +15,9 @@ import com.example.livestreamsales.R
 import com.example.livestreamsales.databinding.FragmentPhoneNumberInputBinding
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.ComputationScheduler
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
-import com.example.livestreamsales.di.components.app.subscomponents.authorization.subcomponents.phonenumberinput.PhoneNumberInputComponent
+import com.example.livestreamsales.di.components.app.subscomponents.login.subcomponents.phonenumberinput.PhoneNumberInputComponent
 import com.example.livestreamsales.ui.fragment.base.AuthorizationFragment
-import com.example.livestreamsales.viewmodels.authorization.IAuthorizationViewModel
+import com.example.livestreamsales.viewmodels.login.ILogInViewModel
 import com.example.livestreamsales.viewmodels.phonenumberinput.IPhoneNumberInputViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding4.view.clicks
@@ -49,7 +49,7 @@ class PhoneNumberInputFragment: AuthorizationFragment(R.layout.fragment_phone_nu
         private set
 
     @Inject
-    lateinit var authorizationViewModel: IAuthorizationViewModel
+    lateinit var logInViewModel: ILogInViewModel
 
     @Inject
     override lateinit var viewModel: IPhoneNumberInputViewModel
@@ -101,10 +101,10 @@ class PhoneNumberInputFragment: AuthorizationFragment(R.layout.fragment_phone_nu
     }
 
     private fun connectAuthorizationViewModel(){
-        viewModel.updatePhoneNumber(authorizationViewModel.phoneNumber.value ?: "")
+        viewModel.updatePhoneNumber(logInViewModel.phoneNumber.value ?: "")
         viewModel.phoneNumber.observe(
             viewLifecycleOwner,
-            authorizationViewModel::updatePhoneNumber
+            logInViewModel::updatePhoneNumber
         )
     }
 

@@ -63,7 +63,7 @@
 
     <activity
         android:id="@+id/authorizationGraphDestination"
-        android:name="com.example.livestreamsales.ui.activity.authorization.AuthorizationActivity"
+        android:name="com.example.livestreamsales.ui.activity.login.LogInActivity"
         tools:layout="@layout/activity_authorization"/>
 
 </navigation>

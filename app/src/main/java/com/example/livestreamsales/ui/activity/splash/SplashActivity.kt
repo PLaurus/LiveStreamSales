@@ -4,9 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import com.example.livestreamsales.databinding.ActivitySplashBinding
 import com.example.livestreamsales.di.components.app.subscomponents.splash.SplashComponent
-import com.example.livestreamsales.ui.activity.authorization.AuthorizationActivity
 import com.example.livestreamsales.ui.activity.base.BaseActivity
 import com.example.livestreamsales.ui.activity.greeting.GreetingActivity
+import com.example.livestreamsales.ui.activity.login.LogInActivity
 import com.example.livestreamsales.ui.activity.main.MainActivity
 import com.example.livestreamsales.viewmodels.splash.ISplashViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -72,7 +72,7 @@ class SplashActivity: BaseActivity() {
     }
 
     private fun navigateToAuthorizationActivity(){
-        val authorizationActivity = Intent(applicationContext, AuthorizationActivity::class.java)
+        val authorizationActivity = Intent(applicationContext, LogInActivity::class.java)
         startActivity(authorizationActivity)
         finish()
     }

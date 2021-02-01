@@ -19,11 +19,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.livestreamsales.R
 import com.example.livestreamsales.databinding.FragmentPhoneNumberConfirmationBinding
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
-import com.example.livestreamsales.di.components.app.subscomponents.authorization.subcomponents.phonenumberconfirmation.PhoneNumberConfirmationComponent
+import com.example.livestreamsales.di.components.app.subscomponents.login.subcomponents.phonenumberconfirmation.PhoneNumberConfirmationComponent
 import com.example.livestreamsales.model.application.phonenumberconfirmation.PhoneNumberConfirmationResult
 import com.example.livestreamsales.ui.fragment.base.AuthorizationFragment
 import com.example.livestreamsales.utils.IStringResAnnotationProcessor
-import com.example.livestreamsales.viewmodels.authorization.IAuthorizationViewModel
+import com.example.livestreamsales.viewmodels.login.ILogInViewModel
 import com.example.livestreamsales.viewmodels.phonenumberconfirmation.IPhoneNumberConfirmationViewModel
 import com.jakewharton.rxbinding4.view.clicks
 import io.reactivex.rxjava3.core.Scheduler
@@ -44,7 +44,7 @@ class PhoneNumberConfirmationFragment: AuthorizationFragment(R.layout.fragment_p
         private set
 
     @Inject
-    lateinit var authorizationViewModel: IAuthorizationViewModel
+    lateinit var logInViewModel: ILogInViewModel
 
     @Inject
     override lateinit var viewModel: IPhoneNumberConfirmationViewModel
@@ -122,7 +122,7 @@ class PhoneNumberConfirmationFragment: AuthorizationFragment(R.layout.fragment_p
     }
 
     private fun initializeCodeIsSentText(){
-        authorizationViewModel.phoneNumber.observe(
+        logInViewModel.phoneNumber.observe(
             viewLifecycleOwner,
             { phoneNumber ->
                 viewModel.updatePhoneNumber(phoneNumber)

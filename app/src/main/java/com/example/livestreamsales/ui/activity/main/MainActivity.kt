@@ -7,7 +7,7 @@ import com.example.livestreamsales.R
 import com.example.livestreamsales.databinding.ActivityMainBinding
 import com.example.livestreamsales.di.components.app.subscomponents.authorizeduser.subscomponents.main.MainComponent
 import com.example.livestreamsales.ui.activity.base.AuthorizedUserActivity
-import com.example.livestreamsales.viewmodels.IMainViewModel
+import com.example.livestreamsales.viewmodels.main.IMainViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 

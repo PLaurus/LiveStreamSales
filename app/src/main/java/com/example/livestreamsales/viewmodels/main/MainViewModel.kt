@@ -1,4 +1,4 @@
-package com.example.livestreamsales.viewmodels
+package com.example.livestreamsales.viewmodels.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +14,7 @@ class MainViewModel @Inject constructor(
     authorizationRepository: IAuthorizationRepository,
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler
-): ViewModel(), IMainViewModel{
+): ViewModel(), IMainViewModel {
     private val disposables = CompositeDisposable()
 
     override val isUserLoggedIn: LiveData<Boolean> = MutableLiveData<Boolean>().apply {

@@ -1,4 +1,4 @@
-package com.example.livestreamsales.viewmodels.authorization
+package com.example.livestreamsales.viewmodels.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,11 +13,11 @@ import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 
-class AuthorizationViewModel @Inject constructor(
+class LogInViewModel @Inject constructor(
     private val responseErrorsManager: IResponseErrorsManager,
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler,
-): ViewModel(), IAuthorizationViewModel {
+): ViewModel(), ILogInViewModel {
     private val disposables = CompositeDisposable()
 
     private val phoneNumberSubject = PublishSubject.create<String>()
