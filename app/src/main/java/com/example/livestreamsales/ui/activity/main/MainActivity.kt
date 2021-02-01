@@ -5,13 +5,13 @@ import androidx.navigation.findNavController
 import com.example.livestreamsales.NavigationGraphRootDirections
 import com.example.livestreamsales.R
 import com.example.livestreamsales.databinding.ActivityMainBinding
-import com.example.livestreamsales.di.components.main.MainComponent
-import com.example.livestreamsales.ui.activity.base.BaseActivity
+import com.example.livestreamsales.di.components.app.subscomponents.authorizeduser.subscomponents.main.MainComponent
+import com.example.livestreamsales.ui.activity.base.AuthorizedUserActivity
 import com.example.livestreamsales.viewmodels.IMainViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class MainActivity : BaseActivity() {
+class MainActivity : AuthorizedUserActivity() {
     private val disposables = CompositeDisposable()
     private val navigationController by lazy{
         findNavController(R.id.main_navigation_host_fragment)
@@ -37,7 +37,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initializeMainActivityComponent(){
-        mainComponent = appComponent.mainActivityComponent().create(this)
+        mainComponent = authorizedUserComponent.mainComponent().create(this)
     }
 
     private fun injectDependencies(){

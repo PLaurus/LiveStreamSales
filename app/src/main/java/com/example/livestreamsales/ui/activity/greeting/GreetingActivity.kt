@@ -9,7 +9,7 @@ import com.example.livestreamsales.R
 import com.example.livestreamsales.application.errors.IApplicationErrorsLogger
 import com.example.livestreamsales.databinding.ActivityGreetingBinding
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
-import com.example.livestreamsales.di.components.greeting.GreetingComponent
+import com.example.livestreamsales.di.components.app.subscomponents.greeting.GreetingComponent
 import com.example.livestreamsales.model.application.greetingpage.GreetingPage
 import com.example.livestreamsales.ui.activity.authorization.AuthorizationActivity
 import com.example.livestreamsales.ui.activity.base.BaseActivity

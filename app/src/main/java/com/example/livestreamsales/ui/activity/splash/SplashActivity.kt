@@ -3,7 +3,7 @@ package com.example.livestreamsales.ui.activity.splash
 import android.content.Intent
 import android.os.Bundle
 import com.example.livestreamsales.databinding.ActivitySplashBinding
-import com.example.livestreamsales.di.components.splash.SplashComponent
+import com.example.livestreamsales.di.components.app.subscomponents.splash.SplashComponent
 import com.example.livestreamsales.ui.activity.authorization.AuthorizationActivity
 import com.example.livestreamsales.ui.activity.base.BaseActivity
 import com.example.livestreamsales.ui.activity.greeting.GreetingActivity

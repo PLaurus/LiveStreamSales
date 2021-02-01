@@ -2,8 +2,8 @@ package com.example.livestreamsales.repository.user
 
 import com.example.livestreamsales.application.errors.IApplicationErrorsLogger
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
-import com.example.livestreamsales.di.components.authorizeduser.modules.userinformation.qualifiers.UserInformationLocalStorage
-import com.example.livestreamsales.di.components.authorizeduser.modules.userinformation.qualifiers.UserInformationRemoteStorage
+import com.example.livestreamsales.di.components.app.subscomponents.authorizeduser.modules.userinformation.qualifiers.UserInformationLocalStorage
+import com.example.livestreamsales.di.components.app.subscomponents.authorizeduser.modules.userinformation.qualifiers.UserInformationRemoteStorage
 import com.example.livestreamsales.model.application.user.UserInformation
 import com.example.livestreamsales.storage.userinformation.IUserStorage
 import io.reactivex.rxjava3.core.*

@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.navigation.findNavController
 import com.example.livestreamsales.R
 import com.example.livestreamsales.databinding.ActivityAuthorizationBinding
-import com.example.livestreamsales.di.components.authorization.AuthorizationComponent
+import com.example.livestreamsales.di.components.app.subscomponents.authorization.AuthorizationComponent
 import com.example.livestreamsales.ui.activity.base.BaseActivity
 import com.example.livestreamsales.viewmodels.authorization.IAuthorizationViewModel
 import com.google.android.material.snackbar.Snackbar

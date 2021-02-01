@@ -1,6 +1,6 @@
 package com.example.livestreamsales.repository.greetingpage
 
-import com.example.livestreamsales.di.components.greeting.modules.localstorage.qualifiers.GreetingPageLocalStorage
+import com.example.livestreamsales.di.components.app.subscomponents.greeting.modules.localstorage.qualifiers.GreetingPageLocalStorage
 import com.example.livestreamsales.model.application.greetingpage.GreetingPage
 import com.example.livestreamsales.storage.greetingpage.IGreetingPageStorage
 import io.reactivex.rxjava3.core.Single

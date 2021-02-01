@@ -1,6 +1,6 @@
 package com.example.livestreamsales.repository.authorization
 
-import com.example.livestreamsales.di.components.authorizeduser.AuthorizedUserComponent
+import com.example.livestreamsales.di.components.app.subscomponents.authorizeduser.AuthorizedUserComponent
 import com.example.livestreamsales.model.application.phonenumberconfirmation.PhoneNumberConfirmationResult
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable

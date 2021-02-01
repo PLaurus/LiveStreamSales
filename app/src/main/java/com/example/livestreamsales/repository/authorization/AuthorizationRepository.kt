@@ -2,7 +2,7 @@ package com.example.livestreamsales.repository.authorization
 
 import com.example.livestreamsales.application.errors.IApplicationErrorsLogger
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
-import com.example.livestreamsales.di.components.authorizeduser.AuthorizedUserComponent
+import com.example.livestreamsales.di.components.app.subscomponents.authorizeduser.AuthorizedUserComponent
 import com.example.livestreamsales.model.application.phonenumberconfirmation.PhoneNumberConfirmationResult
 import com.example.livestreamsales.storage.authorization.local.IAuthorizationLocalStorage
 import com.example.livestreamsales.storage.authorization.remote.IAuthorizationRemoteStorage

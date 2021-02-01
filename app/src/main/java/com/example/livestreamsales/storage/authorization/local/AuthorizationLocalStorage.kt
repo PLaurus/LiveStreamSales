@@ -5,7 +5,7 @@ import androidx.core.content.edit
 import com.example.livestreamsales.di.components.app.modules.database.qualifiers.AuthorizationSharedPreferences
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.ComputationScheduler
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.IoScheduler
-import com.example.livestreamsales.di.components.authorizeduser.AuthorizedUserComponent
+import com.example.livestreamsales.di.components.app.subscomponents.authorizeduser.AuthorizedUserComponent
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler

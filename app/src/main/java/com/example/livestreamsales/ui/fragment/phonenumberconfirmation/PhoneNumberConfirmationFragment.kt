@@ -19,7 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.livestreamsales.R
 import com.example.livestreamsales.databinding.FragmentPhoneNumberConfirmationBinding
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
-import com.example.livestreamsales.di.components.phonenumberconfirmation.PhoneNumberConfirmationComponent
+import com.example.livestreamsales.di.components.app.subscomponents.authorization.subcomponents.phonenumberconfirmation.PhoneNumberConfirmationComponent
 import com.example.livestreamsales.model.application.phonenumberconfirmation.PhoneNumberConfirmationResult
 import com.example.livestreamsales.ui.fragment.base.AuthorizationFragment
 import com.example.livestreamsales.utils.IStringResAnnotationProcessor

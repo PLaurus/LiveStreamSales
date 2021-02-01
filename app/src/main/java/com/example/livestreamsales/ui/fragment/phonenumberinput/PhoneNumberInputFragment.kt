@@ -15,7 +15,7 @@ import com.example.livestreamsales.R
 import com.example.livestreamsales.databinding.FragmentPhoneNumberInputBinding
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.ComputationScheduler
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
-import com.example.livestreamsales.di.components.phonenumberinput.PhoneNumberInputComponent
+import com.example.livestreamsales.di.components.app.subscomponents.authorization.subcomponents.phonenumberinput.PhoneNumberInputComponent
 import com.example.livestreamsales.ui.fragment.base.AuthorizationFragment
 import com.example.livestreamsales.viewmodels.authorization.IAuthorizationViewModel
 import com.example.livestreamsales.viewmodels.phonenumberinput.IPhoneNumberInputViewModel
