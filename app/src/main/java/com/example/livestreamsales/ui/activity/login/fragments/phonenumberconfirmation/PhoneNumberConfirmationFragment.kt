@@ -1,4 +1,4 @@
-package com.example.livestreamsales.ui.fragment.phonenumberconfirmation
+package com.example.livestreamsales.ui.activity.login.fragments.phonenumberconfirmation
 
 import android.content.Context
 import android.content.Intent
@@ -21,7 +21,7 @@ import com.example.livestreamsales.databinding.FragmentPhoneNumberConfirmationBi
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
 import com.example.livestreamsales.di.components.app.subscomponents.login.subcomponents.phonenumberconfirmation.PhoneNumberConfirmationComponent
 import com.example.livestreamsales.model.application.phonenumberconfirmation.PhoneNumberConfirmationResult
-import com.example.livestreamsales.ui.fragment.base.AuthorizationFragment
+import com.example.livestreamsales.ui.activity.login.fragments.base.LogInFragment
 import com.example.livestreamsales.utils.IStringResAnnotationProcessor
 import com.example.livestreamsales.viewmodels.login.ILogInViewModel
 import com.example.livestreamsales.viewmodels.phonenumberconfirmation.IPhoneNumberConfirmationViewModel
@@ -33,7 +33,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class PhoneNumberConfirmationFragment: AuthorizationFragment(R.layout.fragment_phone_number_confirmation) {
+class PhoneNumberConfirmationFragment: LogInFragment(R.layout.fragment_phone_number_confirmation) {
     private val navigationController by lazy{
         findNavController()
     }

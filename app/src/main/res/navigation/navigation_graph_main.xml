@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/homeDestination"
-        android:name="com.example.livestreamsales.ui.fragment.home.HomeFragment"
+        android:name="com.example.livestreamsales.ui.activity.main.fragments.home.HomeFragment"
         android:label="@string/fragment_main_title"
         tools:layout="@layout/fragment_home">
 

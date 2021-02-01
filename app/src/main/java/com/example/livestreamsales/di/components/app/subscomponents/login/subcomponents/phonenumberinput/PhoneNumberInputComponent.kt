@@ -21,5 +21,5 @@ interface PhoneNumberInputComponent {
         ): PhoneNumberInputComponent
     }
 
-    fun inject(fragment: com.example.livestreamsales.ui.fragment.phonenumberinput.PhoneNumberInputFragment)
+    fun inject(fragment: com.example.livestreamsales.ui.activity.login.fragments.phonenumberinput.PhoneNumberInputFragment)
 }

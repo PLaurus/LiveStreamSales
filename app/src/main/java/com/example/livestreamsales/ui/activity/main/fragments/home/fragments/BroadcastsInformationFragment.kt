@@ -1,4 +1,4 @@
-package com.example.livestreamsales.ui.fragment.home.fragments
+package com.example.livestreamsales.ui.activity.main.fragments.home.fragments
 
 import android.os.Bundle
 import android.view.View

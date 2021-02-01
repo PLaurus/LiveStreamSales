@@ -1,4 +1,4 @@
-package com.example.livestreamsales.ui.fragment.phonenumberinput
+package com.example.livestreamsales.ui.activity.login.fragments.phonenumberinput
 
 import android.content.Context
 import android.os.Bundle
@@ -16,7 +16,7 @@ import com.example.livestreamsales.databinding.FragmentPhoneNumberInputBinding
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.ComputationScheduler
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
 import com.example.livestreamsales.di.components.app.subscomponents.login.subcomponents.phonenumberinput.PhoneNumberInputComponent
-import com.example.livestreamsales.ui.fragment.base.AuthorizationFragment
+import com.example.livestreamsales.ui.activity.login.fragments.base.LogInFragment
 import com.example.livestreamsales.viewmodels.login.ILogInViewModel
 import com.example.livestreamsales.viewmodels.phonenumberinput.IPhoneNumberInputViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -28,7 +28,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class PhoneNumberInputFragment: AuthorizationFragment(R.layout.fragment_phone_number_input) {
+class PhoneNumberInputFragment: LogInFragment(R.layout.fragment_phone_number_input) {
     private val codeRequestErrorSnackbar: Snackbar? by lazy {
         viewBinding?.root?.let{
             Snackbar.make(

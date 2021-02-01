@@ -8,25 +8,25 @@
 
     <fragment
         android:id="@+id/broadcastsInformationDestination"
-        android:name="com.example.livestreamsales.ui.fragment.home.fragments.BroadcastsInformationFragment"
+        android:name="com.example.livestreamsales.ui.activity.main.fragments.home.fragments.BroadcastsInformationFragment"
         android:label="@string/fragment_broadcasts_information_title"
         tools:layout="@layout/fragment_broadcasts_information"/>
 
     <fragment
         android:id="@+id/notificationsDestination"
-        android:name="com.example.livestreamsales.ui.fragment.home.fragments.NotificationsFragment"
+        android:name="com.example.livestreamsales.ui.activity.main.fragments.home.fragments.NotificationsFragment"
         android:label="@string/fragment_notifications_title"
         tools:layout="@layout/fragment_empty"/>
 
     <fragment
         android:id="@+id/categoriesDestination"
-        android:name="com.example.livestreamsales.ui.fragment.home.fragments.CategoriesFragment"
+        android:name="com.example.livestreamsales.ui.activity.main.fragments.home.fragments.CategoriesFragment"
         android:label="@string/fragment_categories_title"
         tools:layout="@layout/fragment_empty"/>
 
     <fragment
         android:id="@+id/settingsDestination"
-        android:name="com.example.livestreamsales.ui.fragment.home.fragments.SettingsFragment"
+        android:name="com.example.livestreamsales.ui.activity.main.fragments.home.fragments.SettingsFragment"
         android:label="@string/fragment_settings_title"
         tools:layout="@layout/fragment_settings"/>
 

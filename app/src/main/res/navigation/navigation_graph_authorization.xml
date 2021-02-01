@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/phoneNumberInputDestination"
-        android:name="com.example.livestreamsales.ui.fragment.phonenumberinput.PhoneNumberInputFragment"
+        android:name="com.example.livestreamsales.ui.activity.login.fragments.phonenumberinput.PhoneNumberInputFragment"
         android:label="@string/fragment_phone_number_input_title"
         tools:layout="@layout/fragment_phone_number_input">
 
@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/phoneNumberConfirmationDestination"
-        android:name="com.example.livestreamsales.ui.fragment.phonenumberconfirmation.PhoneNumberConfirmationFragment"
+        android:name="com.example.livestreamsales.ui.activity.login.fragments.phonenumberconfirmation.PhoneNumberConfirmationFragment"
         android:label="@string/fragment_phone_number_confirmation_title"
         tools:layout="@layout/fragment_phone_number_confirmation">
 

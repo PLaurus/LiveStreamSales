@@ -21,5 +21,5 @@ interface PhoneNumberConfirmationComponent {
         ): PhoneNumberConfirmationComponent
     }
 
-    fun inject(fragment: com.example.livestreamsales.ui.fragment.phonenumberconfirmation.PhoneNumberConfirmationFragment)
+    fun inject(fragment: com.example.livestreamsales.ui.activity.login.fragments.phonenumberconfirmation.PhoneNumberConfirmationFragment)
 }
