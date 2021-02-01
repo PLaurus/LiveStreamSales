@@ -1,11 +1,13 @@
 package com.example.livestreamsales.di.components.app.subscomponents.authorizeduser
 
+import com.example.livestreamsales.di.components.app.subscomponents.authorizeduser.modules.api.ApiModule
+import com.example.livestreamsales.di.components.app.subscomponents.authorizeduser.modules.repository.RepositoryModule
 import com.example.livestreamsales.di.components.app.subscomponents.authorizeduser.modules.rest.AuthorizedRestModule
+import com.example.livestreamsales.di.components.app.subscomponents.authorizeduser.modules.storage.StorageModule
 import com.example.livestreamsales.di.components.app.subscomponents.authorizeduser.modules.subscomponents.AuthorizedUserSubComponentsModule
-import com.example.livestreamsales.di.components.app.subscomponents.authorizeduser.modules.userinformation.UserInformationModule
 import com.example.livestreamsales.di.components.app.subscomponents.authorizeduser.subscomponents.main.MainComponent
 import com.example.livestreamsales.di.scopes.AuthorizedUserScope
-import com.example.livestreamsales.repository.user.IUserRepository
+import com.example.livestreamsales.repository.logout.ILogOutRepository
 import dagger.BindsInstance
 import dagger.Subcomponent
 import javax.inject.Named
@@ -14,7 +16,9 @@ import javax.inject.Named
 @Subcomponent(modules = [
     AuthorizedUserSubComponentsModule::class,
     AuthorizedRestModule::class,
-    UserInformationModule::class
+    ApiModule::class,
+    StorageModule::class,
+    RepositoryModule::class,
 ])
 interface AuthorizedUserComponent {
     companion object {
@@ -32,5 +36,5 @@ interface AuthorizedUserComponent {
 
     fun mainComponent(): MainComponent.Factory
 
-    fun userRepository(): IUserRepository
+    fun logOutRepository(): ILogOutRepository
 }

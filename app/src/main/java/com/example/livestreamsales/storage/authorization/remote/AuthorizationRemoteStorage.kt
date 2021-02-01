@@ -5,14 +5,14 @@ import com.example.livestreamsales.di.components.app.modules.reactivex.qualifier
 import com.example.livestreamsales.model.application.phonenumberconfirmation.PhoneNumberConfirmationResult
 import com.example.livestreamsales.model.network.rest.request.ConfirmPhoneNumberRequestBody
 import com.example.livestreamsales.model.network.rest.request.SendConfirmationCodeRequestRequestBody
-import com.example.livestreamsales.network.rest.api.IAuthorizationApi
+import com.example.livestreamsales.network.rest.api.notauthorized.ILogInApi
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class AuthorizationRemoteStorage @Inject constructor(
-    private val authorizationApi: IAuthorizationApi,
+    private val logInApi: ILogInApi,
     @IoScheduler
     private val ioScheduler: Scheduler
 ): IAuthorizationRemoteStorage {
@@ -28,7 +28,7 @@ class AuthorizationRemoteStorage @Inject constructor(
         }
 
         val sendRequestCodeRequestBody = SendConfirmationCodeRequestRequestBody(phoneNumber)
-        val response = authorizationApi.sendConfirmationCodeRequest(sendRequestCodeRequestBody)
+        val response = logInApi.sendConfirmationCodeRequest(sendRequestCodeRequestBody)
 
         return response
             .flatMap{
@@ -44,7 +44,7 @@ class AuthorizationRemoteStorage @Inject constructor(
     }
 
     override fun getRequiredCodeLength(): Maybe<Int> {
-        val response = authorizationApi.getConfirmationCodeLength()
+        val response = logInApi.getConfirmationCodeLength()
 
         return response
             .filter{ it.isSuccessful }
@@ -59,7 +59,7 @@ class AuthorizationRemoteStorage @Inject constructor(
     }
 
     override fun getNextCodeRequestRequiredWaitingTime(): Maybe<Long> {
-        val response = authorizationApi.getNextCodeRequestRequiredWaitingTime()
+        val response = logInApi.getNextCodeRequestRequiredWaitingTime()
 
         return response
             .filter{ it.isSuccessful }
@@ -87,7 +87,7 @@ class AuthorizationRemoteStorage @Inject constructor(
         }
 
         val confirmPhoneNumberRequestBody = ConfirmPhoneNumberRequestBody(phoneNumber, confirmationCode)
-        val response = authorizationApi.confirmPhoneNumber(confirmPhoneNumberRequestBody)
+        val response = logInApi.confirmPhoneNumber(confirmPhoneNumberRequestBody)
 
         return response
             .flatMap{

@@ -2,7 +2,7 @@ package com.example.livestreamsales.di.components.app.modules.authorization
 
 import com.example.livestreamsales.di.scopes.ApplicationScope
 import com.example.livestreamsales.network.rest.IApiProvider
-import com.example.livestreamsales.network.rest.api.IAuthorizationApi
+import com.example.livestreamsales.network.rest.api.notauthorized.ILogInApi
 import com.example.livestreamsales.repository.authorization.AuthorizationRepository
 import com.example.livestreamsales.repository.authorization.IAuthorizationRepository
 import com.example.livestreamsales.storage.authorization.local.AuthorizationLocalStorage
@@ -38,8 +38,8 @@ abstract class AuthorizationModule {
         @ApplicationScope
         @Provides
         @JvmStatic
-        fun provideAuthorizationApi(apiProvider: IApiProvider): IAuthorizationApi{
-            return apiProvider.createApi(IAuthorizationApi::class.java)
+        fun provideLogInApi(apiProvider: IApiProvider): ILogInApi {
+            return apiProvider.createApi(ILogInApi::class.java)
         }
     }
 }

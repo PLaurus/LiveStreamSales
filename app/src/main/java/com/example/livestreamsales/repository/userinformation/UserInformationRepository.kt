@@ -1,26 +1,26 @@
-package com.example.livestreamsales.repository.user
+package com.example.livestreamsales.repository.userinformation
 
 import com.example.livestreamsales.application.errors.IApplicationErrorsLogger
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
 import com.example.livestreamsales.di.components.app.subscomponents.authorizeduser.modules.userinformation.qualifiers.UserInformationLocalStorage
 import com.example.livestreamsales.di.components.app.subscomponents.authorizeduser.modules.userinformation.qualifiers.UserInformationRemoteStorage
 import com.example.livestreamsales.model.application.user.UserInformation
-import com.example.livestreamsales.storage.userinformation.IUserStorage
+import com.example.livestreamsales.storage.userinformation.IUserInformationStorage
 import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import javax.inject.Inject
 
-class UserRepository @Inject constructor(
+class UserInformationRepository @Inject constructor(
     @UserInformationRemoteStorage
-    private val userRemoteStorage: IUserStorage,
+    private val userRemoteStorage: IUserInformationStorage,
     @UserInformationLocalStorage
-    private val userLocalStorage: IUserStorage,
+    private val userLocalStorage: IUserInformationStorage,
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler,
     private val applicationErrorsLogger: IApplicationErrorsLogger
-): IUserRepository {
+): IUserInformationRepository {
     private var disposables = CompositeDisposable()
 
     private var isUserInformationSavedLocally = false
@@ -67,17 +67,6 @@ class UserRepository @Inject constructor(
                     saveUserInformationLocally(userInformation)
                 }
             }
-    }
-
-    override fun processDataOnLogOut(): Completable {
-        return Completable
-            .mergeArrayDelayError(
-                userLocalStorage.processDataOnLogout()
-                    .doOnError(applicationErrorsLogger::logError),
-                userRemoteStorage.processDataOnLogout()
-                    .doOnError(applicationErrorsLogger::logError)
-            )
-
     }
 
     private fun setMinUserNameLengthLocally(minLength: Int){

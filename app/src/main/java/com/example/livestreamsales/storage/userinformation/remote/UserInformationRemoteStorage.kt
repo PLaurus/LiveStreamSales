@@ -4,19 +4,19 @@ import com.example.livestreamsales.BuildConfig
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.IoScheduler
 import com.example.livestreamsales.model.application.user.UserInformation
 import com.example.livestreamsales.model.network.rest.request.UpdateUserInformationRequestBody
-import com.example.livestreamsales.network.rest.api.IUserApi
-import com.example.livestreamsales.storage.userinformation.IUserStorage
+import com.example.livestreamsales.network.rest.api.authorized.IUserInformationApi
+import com.example.livestreamsales.storage.userinformation.IUserInformationStorage
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
-class UserRemoteStorage @Inject constructor(
-    private val userApi: IUserApi,
+class UserInformationRemoteStorage @Inject constructor(
+    private val userInformationApi: IUserInformationApi,
     @IoScheduler
     private val ioScheduler: Scheduler
-): IUserStorage {
+): IUserInformationStorage {
     override fun setMinUserNameLength(minLength: Int): Completable {
         return Completable.fromCallable {
             throw NotImplementedError()
@@ -56,7 +56,7 @@ class UserRemoteStorage @Inject constructor(
             )
         }
 
-        val response = userApi.getUserInformation()
+        val response = userInformationApi.getUserInformation()
 
         return response
             .filter{ it.isSuccessful }
@@ -92,7 +92,7 @@ class UserRemoteStorage @Inject constructor(
             email
         )
 
-        val response = userApi.updateUserInformation(updateUserInformationRequestBody)
+        val response = userInformationApi.updateUserInformation(updateUserInformationRequestBody)
 
         return response
             .flatMap{
@@ -105,17 +105,6 @@ class UserRemoteStorage @Inject constructor(
                     Single.just(body.isInformationUpdatedSuccessfully)
                 }
             }
-            .subscribeOn(ioScheduler)
-    }
-
-    /**
-     * Process data specific to log out event.
-     * Operates by default on an IoScheduler.
-     * @return Completable that indicates that data is or is not processed yet.
-     */
-    override fun processDataOnLogout(): Completable {
-        return userApi.logOut()
-            .ignoreElement()
             .subscribeOn(ioScheduler)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.livestreamsales.network.rest.api
+package com.example.livestreamsales.network.rest.api.notauthorized
 
 import com.example.livestreamsales.model.network.rest.request.ConfirmPhoneNumberRequestBody
 import com.example.livestreamsales.model.network.rest.request.SendConfirmationCodeRequestRequestBody
@@ -13,7 +13,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-interface IAuthorizationApi: IApi {
+interface ILogInApi: IApi {
     @POST("login")
     fun sendConfirmationCodeRequest(
         @Body sendConfirmationCodeRequestRequestBody: SendConfirmationCodeRequestRequestBody

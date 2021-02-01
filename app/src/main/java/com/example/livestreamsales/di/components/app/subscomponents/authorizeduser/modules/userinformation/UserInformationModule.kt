@@ -5,10 +5,10 @@ import com.example.livestreamsales.di.components.app.subscomponents.authorizedus
 import com.example.livestreamsales.di.components.app.subscomponents.authorizeduser.modules.userinformation.qualifiers.UserInformationRemoteStorage
 import com.example.livestreamsales.di.scopes.AuthorizedUserScope
 import com.example.livestreamsales.network.rest.IApiProvider
-import com.example.livestreamsales.network.rest.api.IUserApi
-import com.example.livestreamsales.repository.user.IUserRepository
-import com.example.livestreamsales.repository.user.UserRepository
-import com.example.livestreamsales.storage.userinformation.IUserStorage
+import com.example.livestreamsales.network.rest.api.authorized.IUserInformationApi
+import com.example.livestreamsales.repository.userinformation.IUserInformationRepository
+import com.example.livestreamsales.repository.userinformation.UserInformationRepository
+import com.example.livestreamsales.storage.userinformation.IUserInformationStorage
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -20,8 +20,8 @@ abstract class UserInformationModule {
         internal fun provideUserInformationApi(
             @AuthorizedApiProvider
             authorizedApiProvider: IApiProvider
-        ): IUserApi{
-            return authorizedApiProvider.createApi(IUserApi::class.java)
+        ): IUserInformationApi {
+            return authorizedApiProvider.createApi(IUserInformationApi::class.java)
         }
     }
 
@@ -29,19 +29,19 @@ abstract class UserInformationModule {
     @Binds
     @UserInformationRemoteStorage
     internal abstract fun provideUserInformationRemoteStorage(
-        userInformationRemoteStorage: com.example.livestreamsales.storage.userinformation.remote.UserRemoteStorage
-    ): IUserStorage
+        userInformationInformationRemoteStorage: com.example.livestreamsales.storage.userinformation.remote.UserInformationRemoteStorage
+    ): IUserInformationStorage
 
     @AuthorizedUserScope
     @Binds
     @UserInformationLocalStorage
     internal abstract fun provideUserInformationLocalStorage(
-        userInformationLocalStorage: com.example.livestreamsales.storage.userinformation.local.UserLocalStorage
-    ): IUserStorage
+        userInformationInformationLocalStorage: com.example.livestreamsales.storage.userinformation.local.UserInformationLocalStorage
+    ): IUserInformationStorage
 
     @AuthorizedUserScope
     @Binds
     internal abstract fun provideUserInformationRepository(
-        userInformationRepository: UserRepository
-    ): IUserRepository
+        userInformationRepository: UserInformationRepository
+    ): IUserInformationRepository
 }

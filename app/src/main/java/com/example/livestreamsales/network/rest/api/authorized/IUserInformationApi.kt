@@ -1,4 +1,4 @@
-package com.example.livestreamsales.network.rest.api
+package com.example.livestreamsales.network.rest.api.authorized
 
 import com.example.livestreamsales.model.network.rest.request.UpdateUserInformationRequestBody
 import com.example.livestreamsales.model.network.rest.response.GetUserInformationResponseBody
@@ -10,7 +10,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-interface IUserApi: IAuthorizedApi {
+interface IUserInformationApi: IAuthorizedApi {
     @GET("profile")
     fun getUserInformation(): Single<Response<GetUserInformationResponseBody>>
 
@@ -18,7 +18,4 @@ interface IUserApi: IAuthorizedApi {
     fun updateUserInformation(
         @Body updateUserInformationRequestBody: UpdateUserInformationRequestBody
     ): Single<Response<UpdateUserInformationResponseBody>>
-
-    @POST("logout")
-    fun logOut(): Single<Response<Unit>>
 }

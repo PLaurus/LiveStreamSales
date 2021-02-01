@@ -83,10 +83,8 @@ class AuthorizationRepository @Inject constructor(
     }
 
     override fun logOut(): Completable {
-        return (authorizedUserComponent?.userRepository()?.processDataOnLogOut() ?: Completable.complete())
+        return (authorizedUserComponent?.logOutRepository()?.logOut() ?: Completable.complete())
                 .concatWith(authorizationLocalStorage.updateAuthorizationToken(null))
-                .observeOn(mainThreadScheduler)
-
     }
 
     private fun getAndSaveRequiredCodeLengthFromRemote(): Maybe<Int>{

@@ -2,17 +2,17 @@ package com.example.livestreamsales.storage.userinformation.local
 
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.IoScheduler
 import com.example.livestreamsales.model.application.user.UserInformation
-import com.example.livestreamsales.storage.userinformation.IUserStorage
+import com.example.livestreamsales.storage.userinformation.IUserInformationStorage
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
-class UserLocalStorage @Inject constructor(
+class UserInformationLocalStorage @Inject constructor(
     @IoScheduler
     private val ioScheduler: Scheduler
-): IUserStorage {
+): IUserInformationStorage {
     companion object{
         private const val DEFAULT_MIN_USER_NAME_LENGTH = 5
         private const val DEFAULT_MAX_USER_NAME_LENGTH = 15
@@ -68,15 +68,6 @@ class UserLocalStorage @Inject constructor(
             .create<Boolean> { emitter ->
                 this.userInformation = userInformation
                 emitter.onSuccess(true)
-            }
-            .subscribeOn(ioScheduler)
-    }
-
-    override fun processDataOnLogout(): Completable {
-        return Completable
-            .create{ emitter ->
-                userInformation = null
-                emitter.onComplete()
             }
             .subscribeOn(ioScheduler)
     }
