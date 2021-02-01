@@ -3,7 +3,7 @@ package com.example.livestreamsales.repository.authorization
 import com.example.livestreamsales.application.errors.IApplicationErrorsLogger
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
 import com.example.livestreamsales.di.components.authorizeduser.AuthorizedUserComponent
-import com.example.livestreamsales.model.application.phoneconfirmation.PhoneConfirmationResult
+import com.example.livestreamsales.model.application.phonenumberconfirmation.PhoneNumberConfirmationResult
 import com.example.livestreamsales.storage.authorization.local.IAuthorizationLocalStorage
 import com.example.livestreamsales.storage.authorization.remote.IAuthorizationRemoteStorage
 import io.reactivex.rxjava3.core.*
@@ -41,9 +41,9 @@ class AuthorizationRepository @Inject constructor(
             .addTo(disposables)
     }
 
-    override fun sendVerificationCodeRequest(telephoneNumber: String): Single<Boolean> {
+    override fun sendConfirmationCodeRequest(phoneNumber: String): Single<Boolean> {
         if(isCodeRequestAvailable.hasValue() && isCodeRequestAvailable.value){
-            return authorizationRemoteStorage.sendVerificationCodeRequest(telephoneNumber)
+            return authorizationRemoteStorage.sendConfirmationCodeRequest(phoneNumber)
                 .doOnSuccess{ isCodeSent ->
                     if(isCodeSent){
                         getAndSaveNextCodeRequestRequiredWaitingTimeFromRemote()
@@ -70,11 +70,11 @@ class AuthorizationRepository @Inject constructor(
             .switchIfEmpty(authorizationLocalStorage.getNextCodeRequestRequiredWaitingTime())
     }
 
-    override fun confirmPhone(phoneNumber: String, verificationCode: Int): Single<PhoneConfirmationResult>{
-        return authorizationRemoteStorage.confirmPhone(phoneNumber, verificationCode)
-            .doOnSuccess { phoneConfirmationResult ->
-                if(phoneConfirmationResult is PhoneConfirmationResult.PhoneIsConfirmed){
-                    authorizationLocalStorage.updateAuthorizationToken(phoneConfirmationResult.token)
+    override fun confirmPhoneNumber(phoneNumber: String, confirmationCode: Int): Single<PhoneNumberConfirmationResult>{
+        return authorizationRemoteStorage.confirmPhoneNumber(phoneNumber, confirmationCode)
+            .doOnSuccess { phoneNumberConfirmationResult ->
+                if(phoneNumberConfirmationResult is PhoneNumberConfirmationResult.PhoneNumberIsConfirmed){
+                    authorizationLocalStorage.updateAuthorizationToken(phoneNumberConfirmationResult.token)
                         .observeOn(mainThreadScheduler)
                         .subscribeBy(onError = applicationErrorsLogger::logError)
                         .addTo(disposables)

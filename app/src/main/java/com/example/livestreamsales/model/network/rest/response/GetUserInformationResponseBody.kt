@@ -8,7 +8,7 @@ data class GetUserInformationResponseBody(
     @SerializedName("surname")
     val surname: String?,
     @SerializedName("phone")
-    val phone: String,
+    val phoneNumber: String,
     @SerializedName("email")
     val email: String?
 )

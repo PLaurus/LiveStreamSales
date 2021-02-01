@@ -61,15 +61,15 @@
     <!-- Product order dialog -->
     <string name="dialog_product_order_title">Заказ</string>
 
-    <!-- Telephone number input fragment -->
-    <string name="fragment_telephone_number_input_title">Номер телефона</string>
-    <string name="fragment_telephone_number_input_enter_telephone_number">Введите ваш номер телефона</string>
-    <string name="fragment_telephone_number_input_telephone_number_hint">Номер телефона</string>
-    <string name="fragment_telephone_number_input_send_code_button">Отправить код</string>
-    <string name="fragment_telephone_number_input_new_code_message">
+    <!-- Phone number input fragment -->
+    <string name="fragment_phone_number_input_title">Номер телефона</string>
+    <string name="fragment_phone_number_input_enter_phone_number">Введите ваш номер телефона</string>
+    <string name="fragment_phone_number_input_phone_number_hint">Номер телефона</string>
+    <string name="fragment_phone_number_input_send_code_button">Отправить код</string>
+    <string name="fragment_phone_number_input_new_code_message">
         Получить новый код можно через %s
     </string>
-    <string name="fragment_telephone_number_input_new_code_message_tools">
+    <string name="fragment_phone_number_input_new_code_message_tools">
         Получить новый код можно через
         <font color="#FF0000">00:47</font>
     </string>
@@ -77,28 +77,28 @@
         Не удалось запросить код подтверждения
     </string>
 
-    <!-- Telephone number confirmation fragment -->
-    <string name="fragment_telephone_number_confirmation_title">Подтверждение номера</string>
-    <string name="fragment_telephone_number_confirmation_enter_code">Введите код</string>
-    <string name="fragment_telephone_number_confirmation_code_is_sent">
+    <!-- Phone number confirmation fragment -->
+    <string name="fragment_phone_number_confirmation_title">Подтверждение номера</string>
+    <string name="fragment_phone_number_confirmation_enter_code">Введите код</string>
+    <string name="fragment_phone_number_confirmation_code_is_sent">
         Мы отправили код на номер %s
     </string>
-    <string name="fragment_telephone_number_confirmation_code_is_sent_tools">
+    <string name="fragment_phone_number_confirmation_code_is_sent_tools">
         Мы отправили код на номер
         <font color="#FF0000">+ 7 (999) 999 99 99</font>
     </string>
-    <string name="fragment_telephone_number_confirmation_new_code_message">
+    <string name="fragment_phone_number_confirmation_new_code_message">
         Получить новый код можно через %s
     </string>
-    <string name="fragment_telephone_number_confirmation_new_code_message_tools">
+    <string name="fragment_phone_number_confirmation_new_code_message_tools">
         Получить новый код можно через
         <font color="#FF0000">00:47</font>
     </string>
     <string name="fragment_phone_number_confirmation_request_code">Получить новый код</string>
-    <string name="fragment_phone_confirmation_terms_of_the_offer_text">
+    <string name="fragment_phone_number_confirmation_terms_of_the_offer_text">
         Я ознакомлен, согласен и принимаю <annotation tag="">условия оферты</annotation>
     </string>
-    <string name="fragment_phone_confirmation_terms_of_the_offer_text_tools">
+    <string name="fragment_phone_number_confirmation_terms_of_the_offer_text_tools">
         Я ознакомлен, согласен и принимаю
         <font color="#FF0000">
             условия оферты
@@ -115,7 +115,7 @@
     <!-- User personal information fragment -->
     <string name="fragment_user_personal_information_name_input_hint">Имя</string>
     <string name="fragment_user_personal_information_surname_input_hint">Фамилия</string>
-    <string name="fragment_user_personal_information_telephone_number_hint">Номер телефона</string>
+    <string name="fragment_user_personal_information_phone_number_hint">Номер телефона</string>
     <string name="fragment_user_personal_information_email_hint">E-mail</string>
     <string name="fragment_user_personal_information_save_user_information_button">Сохранить</string>
 

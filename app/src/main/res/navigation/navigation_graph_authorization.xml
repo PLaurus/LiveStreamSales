@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph_authorization"
-    app:startDestination="@id/telephoneNumberInputDestination">
+    app:startDestination="@id/phoneNumberInputDestination">
 
     <activity
         android:id="@+id/mainGraphDestination"
@@ -12,14 +12,14 @@
         tools:layout="@layout/activity_main"/>
 
     <fragment
-        android:id="@+id/telephoneNumberInputDestination"
-        android:name="com.example.livestreamsales.ui.fragment.telephonenumberinput.TelephoneNumberInputFragment"
-        android:label="@string/fragment_telephone_number_input_title"
-        tools:layout="@layout/fragment_telephone_number_input">
+        android:id="@+id/phoneNumberInputDestination"
+        android:name="com.example.livestreamsales.ui.fragment.phonenumberinput.PhoneNumberInputFragment"
+        android:label="@string/fragment_phone_number_input_title"
+        tools:layout="@layout/fragment_phone_number_input">
 
         <action
-            android:id="@+id/action_telephoneNumberInputDestination_to_telephoneNumberConfirmationDestination"
-            app:destination="@id/telephoneNumberConfirmationDestination"
+            android:id="@+id/action_phoneNumberInputDestination_to_phoneNumberConfirmationDestination"
+            app:destination="@id/phoneNumberConfirmationDestination"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/stay_as_is"
             app:popEnterAnim="@anim/stay_as_is"
@@ -28,19 +28,19 @@
     </fragment>
 
     <fragment
-        android:id="@+id/telephoneNumberConfirmationDestination"
-        android:name="com.example.livestreamsales.ui.fragment.telephonenumberconfirmation.TelephoneNumberConfirmationFragment"
-        android:label="@string/fragment_telephone_number_confirmation_title"
-        tools:layout="@layout/fragment_phone_confirmation">
+        android:id="@+id/phoneNumberConfirmationDestination"
+        android:name="com.example.livestreamsales.ui.fragment.phonenumberconfirmation.PhoneNumberConfirmationFragment"
+        android:label="@string/fragment_phone_number_confirmation_title"
+        tools:layout="@layout/fragment_phone_number_confirmation">
 
         <action
-            android:id="@+id/action_telephoneNumberConfirmationDestination_to_mainGraphDestination"
+            android:id="@+id/action_phoneNumberConfirmationDestination_to_mainGraphDestination"
             app:destination="@id/mainGraphDestination"/>
 
         <action
-            android:id="@+id/action_telephoneNumberConfirmationDestination_to_registrationDestination"
+            android:id="@+id/action_phoneNumberConfirmationDestination_to_registrationDestination"
             app:destination="@id/registrationDestination"
-            app:popUpTo="@id/telephoneNumberInputDestination"
+            app:popUpTo="@id/phoneNumberInputDestination"
             app:popUpToInclusive="true"/>
 
     </fragment>
@@ -53,7 +53,7 @@
         <action
             android:id="@+id/action_registrationDestination_to_mainGraphDestination"
             app:destination="@id/mainGraphDestination"
-            app:popUpTo="@id/telephoneNumberInputDestination"
+            app:popUpTo="@id/phoneNumberInputDestination"
             app:popUpToInclusive="true"/>
 
     </fragment>

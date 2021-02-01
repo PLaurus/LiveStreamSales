@@ -44,12 +44,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/telephoneNumberLayout"
+        android:id="@+id/phoneNumberLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/contentMargin"
-        android:hint="@string/fragment_user_personal_information_telephone_number_hint"
+        android:hint="@string/fragment_user_personal_information_phone_number_hint"
         android:focusable="false"
         android:enabled="false"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +58,7 @@
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/telephoneNumberEditText"
+            android:id="@+id/phoneNumberEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="phone"/>
@@ -74,7 +74,7 @@
         android:hint="@string/fragment_user_personal_information_email_hint"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/telephoneNumberLayout"
+        app:layout_constraintTop_toBottomOf="@id/phoneNumberLayout"
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText

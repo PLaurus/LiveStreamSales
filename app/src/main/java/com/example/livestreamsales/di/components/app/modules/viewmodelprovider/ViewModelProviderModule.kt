@@ -6,8 +6,8 @@ import com.example.livestreamsales.di.mapkeys.ViewModelKey
 import com.example.livestreamsales.viewmodels.MainViewModel
 import com.example.livestreamsales.viewmodels.ViewModelProviderFactory
 import com.example.livestreamsales.viewmodels.authorization.AuthorizationViewModel
-import com.example.livestreamsales.viewmodels.phoneconfirmation.PhoneConfirmationViewModel
-import com.example.livestreamsales.viewmodels.phoneinput.PhoneInputViewModel
+import com.example.livestreamsales.viewmodels.phonenumberconfirmation.PhoneNumberConfirmationViewModel
+import com.example.livestreamsales.viewmodels.phonenumberinput.PhoneNumberInputViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -30,16 +30,16 @@ abstract class ViewModelProviderModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(PhoneInputViewModel::class)
-    abstract fun provideTelephoneNumberInputViewModel(
-        telephoneNumberInputViewModel: PhoneInputViewModel
+    @ViewModelKey(PhoneNumberInputViewModel::class)
+    abstract fun providePhoneNumberInputViewModel(
+        phoneNumberInputViewModel: PhoneNumberInputViewModel
     ): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(PhoneConfirmationViewModel::class)
-    abstract fun provideTelephoneNumberConfirmationViewModel(
-        telephoneNumberConfirmationViewModel: PhoneConfirmationViewModel
+    @ViewModelKey(PhoneNumberConfirmationViewModel::class)
+    abstract fun providePhoneNumberConfirmationViewModel(
+        phoneNumberConfirmationViewModel: PhoneNumberConfirmationViewModel
     ): ViewModel
 
     @Binds

@@ -66,9 +66,9 @@ class UserRemoteStorage @Inject constructor(
                 if(body != null){
                     val name = body.name
                     val surname = body.surname
-                    val phone = body.phone
+                    val phoneNumber = body.phoneNumber
                     val email = body.email
-                    val userInformation = UserInformation(name, surname, phone, email)
+                    val userInformation = UserInformation(name, surname, phoneNumber, email)
 
                     Maybe.just(userInformation)
                 } else Maybe.empty()

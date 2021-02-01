@@ -2,9 +2,9 @@ package com.example.livestreamsales.storage.authorization.remote
 
 import com.example.livestreamsales.BuildConfig
 import com.example.livestreamsales.di.components.app.modules.reactivex.qualifiers.IoScheduler
-import com.example.livestreamsales.model.application.phoneconfirmation.PhoneConfirmationResult
-import com.example.livestreamsales.model.network.rest.request.SendVerificationCodeRequestRequestBody
-import com.example.livestreamsales.model.network.rest.request.VerifyPhoneNumberRequestBody
+import com.example.livestreamsales.model.application.phonenumberconfirmation.PhoneNumberConfirmationResult
+import com.example.livestreamsales.model.network.rest.request.ConfirmPhoneNumberRequestBody
+import com.example.livestreamsales.model.network.rest.request.SendConfirmationCodeRequestRequestBody
 import com.example.livestreamsales.network.rest.api.IAuthorizationApi
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Scheduler
@@ -17,18 +17,18 @@ class AuthorizationRemoteStorage @Inject constructor(
     private val ioScheduler: Scheduler
 ): IAuthorizationRemoteStorage {
     /**
-     * Requests the remote storage to send verification code in an sms.
+     * Requests the remote storage to send confirmation code in an sms.
      * Operates by default on an IoScheduler.
-     * @param telephoneNumber phone number which user want to confirm.
+     * @param phoneNumber phone number which user want to confirm.
      * @return The new Single that emits whether code is sent
      */
-    override fun sendVerificationCodeRequest(telephoneNumber: String): Single<Boolean> {
+    override fun sendConfirmationCodeRequest(phoneNumber: String): Single<Boolean> {
         if(BuildConfig.IgnoreRestRequests){
             return Single.just(true)
         }
 
-        val sendRequestCodeRequestBody = SendVerificationCodeRequestRequestBody(telephoneNumber)
-        val response = authorizationApi.sendVerificationCodeRequest(sendRequestCodeRequestBody)
+        val sendRequestCodeRequestBody = SendConfirmationCodeRequestRequestBody(phoneNumber)
+        val response = authorizationApi.sendConfirmationCodeRequest(sendRequestCodeRequestBody)
 
         return response
             .flatMap{
@@ -44,7 +44,7 @@ class AuthorizationRemoteStorage @Inject constructor(
     }
 
     override fun getRequiredCodeLength(): Maybe<Int> {
-        val response = authorizationApi.getVerificationCodeLength()
+        val response = authorizationApi.getConfirmationCodeLength()
 
         return response
             .filter{ it.isSuccessful }
@@ -74,20 +74,20 @@ class AuthorizationRemoteStorage @Inject constructor(
     }
 
     /**
-     * Requests server to verify phone number by the specified verification code.
+     * Requests server to confirm phone number by the specified confirmation code.
      * Operates by default on an IoScheduler.
      * @param phoneNumber phone number which user want to confirm.
-     * @param verificationCode the code that was received in an sms by a user.
-     * @return The new Maybe that emits verification result.
+     * @param confirmationCode the code that was received in an sms by a user.
+     * @return The new Maybe that emits confirmation result.
      * If error occurred during communication Maybe emits nothing and then just completes
      */
-    override fun confirmPhone(phoneNumber: String, verificationCode: Int): Single<PhoneConfirmationResult>{
+    override fun confirmPhoneNumber(phoneNumber: String, confirmationCode: Int): Single<PhoneNumberConfirmationResult>{
         if(BuildConfig.IgnoreRestRequests){
-            return Single.just(PhoneConfirmationResult.PhoneIsConfirmed("1a2b3c4d"))
+            return Single.just(PhoneNumberConfirmationResult.PhoneNumberIsConfirmed("1a2b3c4d"))
         }
 
-        val verifyPhoneNumberRequestBody = VerifyPhoneNumberRequestBody(phoneNumber, verificationCode)
-        val response = authorizationApi.verifyPhoneNumber(verifyPhoneNumberRequestBody)
+        val confirmPhoneNumberRequestBody = ConfirmPhoneNumberRequestBody(phoneNumber, confirmationCode)
+        val response = authorizationApi.confirmPhoneNumber(confirmPhoneNumberRequestBody)
 
         return response
             .flatMap{
@@ -97,15 +97,15 @@ class AuthorizationRemoteStorage @Inject constructor(
                     val errorMessage = body.errorMessage
                     val token = body.token
 
-                    val phoneConfirmationResult = if(token != null){
-                        PhoneConfirmationResult.PhoneIsConfirmed(token)
+                    val phoneNumberConfirmationResult = if(token != null){
+                        PhoneNumberConfirmationResult.PhoneNumberIsConfirmed(token)
                     } else{
-                        PhoneConfirmationResult.PhoneIsNotConfirmed(errorMessage)
+                        PhoneNumberConfirmationResult.PhoneNumberIsNotConfirmed(errorMessage)
                     }
 
-                    Single.just(phoneConfirmationResult)
+                    Single.just(phoneNumberConfirmationResult)
                 } else{
-                    Single.just(PhoneConfirmationResult.PhoneIsNotConfirmed())
+                    Single.just(PhoneNumberConfirmationResult.PhoneNumberIsNotConfirmed())
                 }
             }
             .subscribeOn(ioScheduler)
