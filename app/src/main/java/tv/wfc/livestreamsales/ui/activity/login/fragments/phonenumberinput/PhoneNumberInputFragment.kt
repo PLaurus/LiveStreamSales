@@ -16,7 +16,7 @@ import tv.wfc.livestreamsales.databinding.FragmentPhoneNumberInputBinding
 import tv.wfc.livestreamsales.di.components.app.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.di.components.app.subscomponents.login.subcomponents.phonenumberinput.PhoneNumberInputComponent
-import tv.wfc.livestreamsales.ui.activity.login.fragments.base.LogInFragment
+import tv.wfc.livestreamsales.ui.activity.login.fragments.base.PropertyOfLogInActivity
 import tv.wfc.livestreamsales.viewmodels.login.ILogInViewModel
 import tv.wfc.livestreamsales.viewmodels.phonenumberinput.IPhoneNumberInputViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -28,7 +28,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class PhoneNumberInputFragment: LogInFragment(R.layout.fragment_phone_number_input) {
+class PhoneNumberInputFragment: PropertyOfLogInActivity(R.layout.fragment_phone_number_input) {
     private val codeRequestErrorSnackbar: Snackbar? by lazy {
         viewBinding?.root?.let{
             Snackbar.make(

@@ -21,7 +21,7 @@ abstract class LogInViewModelModule {
         @JvmStatic
         internal fun provideILogInViewModel(
             activity: AppCompatActivity,
-            viewModelProviderFactory: ViewModelProviderFactory
+            viewModelProviderFactory: ViewModelProvider.Factory
         ): ILogInViewModel{
             return ViewModelProvider(
                 activity,

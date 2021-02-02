@@ -21,9 +21,12 @@ abstract class GreetingViewModelModule {
         @JvmStatic
         fun provideIGreetingViewModel(
             activity: AppCompatActivity,
-            viewModelProviderFactory: ViewModelProviderFactory
+            viewModelProviderFactory: ViewModelProvider.Factory
         ): IGreetingViewModel{
-            return ViewModelProvider(activity, viewModelProviderFactory)[GreetingViewModel::class.java]
+            return ViewModelProvider(
+                activity,
+                viewModelProviderFactory
+            )[GreetingViewModel::class.java]
         }
     }
 

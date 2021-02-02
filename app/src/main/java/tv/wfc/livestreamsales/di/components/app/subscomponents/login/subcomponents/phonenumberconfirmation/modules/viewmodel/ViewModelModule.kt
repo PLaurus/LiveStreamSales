@@ -3,16 +3,15 @@ package tv.wfc.livestreamsales.di.components.app.subscomponents.login.subcompone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import tv.wfc.livestreamsales.di.components.app.subscomponents.login.subcomponents.phonenumberconfirmation.qualifiers.PhoneNumberConfirmationFragment
-import tv.wfc.livestreamsales.di.scopes.FragmentScope
-import tv.wfc.livestreamsales.viewmodels.ViewModelProviderFactory
-import tv.wfc.livestreamsales.viewmodels.phonenumberconfirmation.IPhoneNumberConfirmationViewModel
-import tv.wfc.livestreamsales.viewmodels.phonenumberconfirmation.PhoneNumberConfirmationViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
+import tv.wfc.livestreamsales.di.components.app.subscomponents.login.subcomponents.phonenumberconfirmation.qualifiers.PhoneNumberConfirmationFragment
 import tv.wfc.livestreamsales.di.mapkeys.ViewModelKey
+import tv.wfc.livestreamsales.di.scopes.FragmentScope
+import tv.wfc.livestreamsales.viewmodels.phonenumberconfirmation.IPhoneNumberConfirmationViewModel
+import tv.wfc.livestreamsales.viewmodels.phonenumberconfirmation.PhoneNumberConfirmationViewModel
 
 @Module
 abstract class ViewModelModule {
@@ -20,10 +19,10 @@ abstract class ViewModelModule {
         @FragmentScope
         @Provides
         @JvmStatic
-        fun provideIPhoneNumberConfirmationViewModel(
+        internal fun provideIPhoneNumberConfirmationViewModel(
             @PhoneNumberConfirmationFragment
             fragment: Fragment,
-            viewModelProviderFactory: ViewModelProviderFactory
+            viewModelProviderFactory: ViewModelProvider.Factory
         ): IPhoneNumberConfirmationViewModel{
             return ViewModelProvider(
                 fragment,
@@ -35,7 +34,7 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(PhoneNumberConfirmationViewModel::class)
-    abstract fun bindPhoneNumberConfirmationViewModelIntoMap(
+    internal abstract fun bindPhoneNumberConfirmationViewModelIntoMap(
         phoneNumberConfirmationViewModel: PhoneNumberConfirmationViewModel
     ): ViewModel
 }

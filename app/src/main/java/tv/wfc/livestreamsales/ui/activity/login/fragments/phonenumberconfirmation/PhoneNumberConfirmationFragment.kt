@@ -21,7 +21,7 @@ import tv.wfc.livestreamsales.databinding.FragmentPhoneNumberConfirmationBinding
 import tv.wfc.livestreamsales.di.components.app.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.di.components.app.subscomponents.login.subcomponents.phonenumberconfirmation.PhoneNumberConfirmationComponent
 import tv.wfc.livestreamsales.model.application.phonenumberconfirmation.PhoneNumberConfirmationResult
-import tv.wfc.livestreamsales.ui.activity.login.fragments.base.LogInFragment
+import tv.wfc.livestreamsales.ui.activity.login.fragments.base.PropertyOfLogInActivity
 import tv.wfc.livestreamsales.utils.IStringResAnnotationProcessor
 import tv.wfc.livestreamsales.viewmodels.login.ILogInViewModel
 import tv.wfc.livestreamsales.viewmodels.phonenumberconfirmation.IPhoneNumberConfirmationViewModel
@@ -33,7 +33,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class PhoneNumberConfirmationFragment: LogInFragment(R.layout.fragment_phone_number_confirmation) {
+class PhoneNumberConfirmationFragment: PropertyOfLogInActivity(R.layout.fragment_phone_number_confirmation) {
     private val navigationController by lazy{
         findNavController()
     }

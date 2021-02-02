@@ -7,6 +7,7 @@ import tv.wfc.livestreamsales.di.scopes.ActivityScope
 import tv.wfc.livestreamsales.ui.activity.main.MainActivity
 import dagger.BindsInstance
 import dagger.Subcomponent
+import tv.wfc.livestreamsales.di.components.app.subscomponents.authorizeduser.subscomponents.main.subscomponents.home.HomeComponent
 
 @ActivityScope
 @Subcomponent(modules = [
@@ -14,11 +15,12 @@ import dagger.Subcomponent
     MainViewModelModule::class
 ])
 interface MainComponent {
-
     @Subcomponent.Factory
     interface Factory{
         fun create(@BindsInstance activity: AppCompatActivity): MainComponent
     }
 
     fun inject(activity: MainActivity)
+
+    fun homeComponent(): HomeComponent.Factory
 }

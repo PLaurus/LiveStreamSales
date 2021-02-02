@@ -21,7 +21,7 @@ abstract class SplashViewModelModule {
         @JvmStatic
         internal fun provideISplashViewModel(
             activity: AppCompatActivity,
-            viewModelProviderFactory: ViewModelProviderFactory
+            viewModelProviderFactory: ViewModelProvider.Factory
         ): ISplashViewModel{
             return ViewModelProvider(activity, viewModelProviderFactory)[SplashViewModel::class.java]
         }

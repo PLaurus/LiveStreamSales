@@ -18,7 +18,9 @@ class MainActivity : AuthorizedUserActivity() {
     }
 
     private lateinit var viewBinding: ActivityMainBinding
-    private lateinit var mainComponent: MainComponent
+
+    lateinit var mainComponent: MainComponent
+        private set
 
     @Inject
     lateinit var mainViewModel: IMainViewModel

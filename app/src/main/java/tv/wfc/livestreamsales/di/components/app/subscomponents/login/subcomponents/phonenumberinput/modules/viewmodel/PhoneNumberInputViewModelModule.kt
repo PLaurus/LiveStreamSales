@@ -23,7 +23,7 @@ abstract class PhoneNumberInputViewModelModule {
         fun provideIPhoneNumberInputViewModel(
             @PhoneNumberInputFragment
             fragment: Fragment,
-            viewModelProviderFactory: ViewModelProviderFactory
+            viewModelProviderFactory: ViewModelProvider.Factory
         ): IPhoneNumberInputViewModel{
             return ViewModelProvider(
                 fragment,
