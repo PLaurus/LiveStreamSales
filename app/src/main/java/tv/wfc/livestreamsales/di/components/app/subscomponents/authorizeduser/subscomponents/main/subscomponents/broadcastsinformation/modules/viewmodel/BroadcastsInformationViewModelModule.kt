@@ -1,4 +1,4 @@
-package tv.wfc.livestreamsales.di.components.app.subscomponents.authorizeduser.subscomponents.main.subscomponents.home.subcomponents.broadcastsinformation.modules.viewmodel
+package tv.wfc.livestreamsales.di.components.app.subscomponents.authorizeduser.subscomponents.main.subscomponents.broadcastsinformation.modules.viewmodel
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
@@ -7,8 +7,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
-import tv.wfc.livestreamsales.di.components.app.subscomponents.authorizeduser.subscomponents.main.subscomponents.home.subcomponents.broadcastsinformation.qualifiers.BroadcastsInformationFragment
-import tv.wfc.livestreamsales.di.components.app.subscomponents.authorizeduser.subscomponents.main.subscomponents.home.subcomponents.broadcastsinformation.qualifiers.BroadcastsInformationFragmentScope
+import tv.wfc.livestreamsales.di.components.app.subscomponents.authorizeduser.subscomponents.main.subscomponents.broadcastsinformation.qualifiers.BroadcastsInformationFragment
+import tv.wfc.livestreamsales.di.components.app.subscomponents.authorizeduser.subscomponents.main.subscomponents.broadcastsinformation.qualifiers.BroadcastsInformationFragmentScope
 import tv.wfc.livestreamsales.di.mapkeys.ViewModelKey
 import tv.wfc.livestreamsales.viewmodels.broadcastsinformation.BroadcastsInformationViewModel
 import tv.wfc.livestreamsales.viewmodels.broadcastsinformation.IBroadcastsInformationViewModel

@@ -94,13 +94,15 @@ abstract class BaseFragment(
         var contentView: View? = null
 
         viewBinding?.contentContainer?.let{
-            contentView = View.inflate(context, contentLayoutId, it).apply{
+            contentView = LayoutInflater.from(context).inflate(contentLayoutId, it, false).apply{
                 layoutParams.apply {
                     width = ViewGroup.LayoutParams.MATCH_PARENT
                     height = ViewGroup.LayoutParams.MATCH_PARENT
                 }
-                requestLayout()
             }
+
+            it.addView(contentView)
+            it.requestLayout()
         }
 
         return contentView

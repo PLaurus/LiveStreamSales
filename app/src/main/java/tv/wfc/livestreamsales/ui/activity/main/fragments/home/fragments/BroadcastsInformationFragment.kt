@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.view.View
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.databinding.FragmentBroadcastsInformationBinding
-import tv.wfc.livestreamsales.di.components.app.subscomponents.authorizeduser.subscomponents.main.subscomponents.home.subcomponents.broadcastsinformation.BroadcastsInformationComponent
-import tv.wfc.livestreamsales.ui.activity.main.fragments.home.fragments.base.PropertyOfHomeFragment
+import tv.wfc.livestreamsales.di.components.app.subscomponents.authorizeduser.subscomponents.main.subscomponents.broadcastsinformation.BroadcastsInformationComponent
+import tv.wfc.livestreamsales.ui.activity.main.fragments.base.PropertyOfMainActivity
 import tv.wfc.livestreamsales.viewmodels.broadcastsinformation.IBroadcastsInformationViewModel
 import javax.inject.Inject
 
-class BroadcastsInformationFragment: PropertyOfHomeFragment(R.layout.fragment_broadcasts_information) {
+class BroadcastsInformationFragment: PropertyOfMainActivity(R.layout.fragment_broadcasts_information) {
     private var viewBinding: FragmentBroadcastsInformationBinding? = null
 
     private lateinit var broadcastsInformationComponent: BroadcastsInformationComponent
@@ -43,7 +43,7 @@ class BroadcastsInformationFragment: PropertyOfHomeFragment(R.layout.fragment_br
     }
 
     private fun initializeBroadcastsInformationComponent(){
-        broadcastsInformationComponent = homeComponent.broadcastsInformationComponent().create(this)
+        broadcastsInformationComponent = mainComponent.broadcastsInformationComponent().create(this)
     }
 
     private fun injectDependencies(){

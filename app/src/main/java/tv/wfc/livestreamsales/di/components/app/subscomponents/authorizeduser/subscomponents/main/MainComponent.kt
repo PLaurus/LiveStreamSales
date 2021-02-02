@@ -7,6 +7,7 @@ import tv.wfc.livestreamsales.di.scopes.ActivityScope
 import tv.wfc.livestreamsales.ui.activity.main.MainActivity
 import dagger.BindsInstance
 import dagger.Subcomponent
+import tv.wfc.livestreamsales.di.components.app.subscomponents.authorizeduser.subscomponents.main.subscomponents.broadcastsinformation.BroadcastsInformationComponent
 import tv.wfc.livestreamsales.di.components.app.subscomponents.authorizeduser.subscomponents.main.subscomponents.home.HomeComponent
 
 @ActivityScope
@@ -23,4 +24,5 @@ interface MainComponent {
     fun inject(activity: MainActivity)
 
     fun homeComponent(): HomeComponent.Factory
+    fun broadcastsInformationComponent(): BroadcastsInformationComponent.Factory
 }
