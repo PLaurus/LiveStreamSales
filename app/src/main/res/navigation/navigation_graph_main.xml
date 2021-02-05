@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/homeDestination"
-        android:name="tv.wfc.livestreamsales.ui.activity.main.fragments.home.HomeFragment"
+        android:name="tv.wfc.livestreamsales.features.home.ui.HomeFragment"
         android:label="@string/fragment_main_title"
-        tools:layout="@layout/fragment_home">
+        tools:layout="@layout/fragment_main_bottom_navigation">
 
         <action
             android:id="@+id/action_homeDestination_to_greetingDestination"
@@ -63,7 +63,7 @@
 
     <activity
         android:id="@+id/authorizationGraphDestination"
-        android:name="tv.wfc.livestreamsales.ui.activity.login.LogInActivity"
+        android:name="tv.wfc.livestreamsales.features.login.ui.LogInActivity"
         tools:layout="@layout/activity_authorization"/>
 
 </navigation>

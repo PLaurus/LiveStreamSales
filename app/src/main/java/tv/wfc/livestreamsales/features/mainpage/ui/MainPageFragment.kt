@@ -1,0 +1,176 @@
+package tv.wfc.livestreamsales.features.mainpage.ui
+
+import android.content.Context
+import android.os.Bundle
+import android.view.View
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import tv.wfc.livestreamsales.R
+import tv.wfc.livestreamsales.databinding.FragmentMainPageBinding
+import tv.wfc.livestreamsales.features.mainpage.di.MainPageComponent
+import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastBaseInformation
+import tv.wfc.livestreamsales.application.tools.viewpager2.onPageSelected
+import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserFragment
+import tv.wfc.livestreamsales.features.mainpage.ui.adapters.announcements.AnnouncementViewHolder
+import tv.wfc.livestreamsales.features.mainpage.ui.adapters.livebroadcast.LiveBroadcastViewHolder
+import tv.wfc.livestreamsales.features.mainpage.viewmodel.IMainPageViewModel
+import javax.inject.Inject
+
+class MainPageFragment: AuthorizedUserFragment(R.layout.fragment_main_page) {
+    private var viewBinding: FragmentMainPageBinding? = null
+
+    private lateinit var mainPageComponent: MainPageComponent
+
+    @Inject
+    override lateinit var viewModel: IMainPageViewModel
+
+    @Inject
+    lateinit var liveBroadcastsAdapter: ListAdapter<BroadcastBaseInformation, LiveBroadcastViewHolder>
+
+    @Inject
+    lateinit var announcementsAdapter: ListAdapter<BroadcastBaseInformation, AnnouncementViewHolder>
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        initializeBroadcastsInformationComponent()
+        injectDependencies()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        bindView(view)
+    }
+
+    override fun onDataIsPrepared() {
+        super.onDataIsPrepared()
+        initializeSwipeRefreshLayout()
+        initializeNoLiveBroadcastsText()
+        initializeLiveBroadcastTitleText()
+        initializeDescriptionBackground()
+        initializeLiveBroadcastsViewPager()
+        initializeLiveBroadcastsPageIndicator()
+        initializeNoAnnouncementsText()
+        initializeAnnouncementsViewPager()
+        initializeAnnouncementsPageIndicator()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unbindView()
+    }
+
+    private fun bindView(view: View){
+        viewBinding = FragmentMainPageBinding.bind(view)
+    }
+
+    private fun unbindView(){
+        viewBinding = null
+    }
+
+    private fun initializeBroadcastsInformationComponent(){
+        mainPageComponent = authorizedUserComponent.mainPageComponent().create(this)
+    }
+
+    private fun injectDependencies(){
+        mainPageComponent.inject(this)
+    }
+
+    private fun initializeSwipeRefreshLayout(){
+        viewBinding?.swipeRefreshLayout?.apply{
+            setOnRefreshListener {
+                viewModel.refreshData()
+            }
+
+            viewModel.isDataBeingRefreshed.observe(viewLifecycleOwner,{ isDataBeingRefreshed ->
+                isRefreshing = isDataBeingRefreshed
+            })
+        }
+    }
+
+    private fun initializeNoLiveBroadcastsText(){
+        viewBinding?.noLiveBroadcastsText?.apply{
+            viewModel.liveBroadcasts.observe(viewLifecycleOwner,{ liveBroadcasts ->
+                visibility = if(liveBroadcasts.isEmpty()){
+                    View.VISIBLE
+                } else View.GONE
+            })
+        }
+    }
+
+    private fun initializeLiveBroadcastTitleText(){
+        viewBinding?.apply{
+            viewModel.liveBroadcasts.observe(viewLifecycleOwner,{ liveBroadcasts ->
+                if(liveBroadcasts.isNotEmpty()){
+                    changeLiveBroadcastTitleText(liveBroadcastsPager.currentItem)
+                    liveBroadcastsTitle.visibility = View.VISIBLE
+                } else {
+                    liveBroadcastsTitle.visibility = View.GONE
+                }
+            })
+
+            liveBroadcastsPager.onPageSelected {
+                changeLiveBroadcastTitleText(it)
+            }
+        }
+    }
+
+    private fun changeLiveBroadcastTitleText(pagePosition: Int){
+        viewBinding
+            ?.liveBroadcastsTitle
+            ?.text = viewModel.getLiveBroadcastTitleByPosition(pagePosition)
+    }
+
+    private fun initializeDescriptionBackground(){
+        viewBinding?.descriptionBackground?.apply{
+            viewModel.liveBroadcasts.observe(viewLifecycleOwner,{ liveBroadcasts ->
+                visibility = if(liveBroadcasts.isNotEmpty()){
+                    View.VISIBLE
+                } else View.GONE
+            })
+        }
+    }
+
+    private fun initializeLiveBroadcastsViewPager(){
+        viewBinding?.liveBroadcastsPager?.apply{
+            (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+            adapter = liveBroadcastsAdapter
+        }
+
+        viewModel.liveBroadcasts.observe(viewLifecycleOwner,{ liveBroadcasts ->
+            liveBroadcastsAdapter.submitList(liveBroadcasts)
+        })
+    }
+
+    private fun initializeLiveBroadcastsPageIndicator(){
+        viewBinding?.liveBroadcastsPager?.let {
+            viewBinding?.liveBroadcastsPageIndicator?.setViewPager2(it)
+        }
+    }
+
+    private fun initializeNoAnnouncementsText(){
+        viewBinding?.noAnnouncementsText?.apply{
+            viewModel.announcements.observe(viewLifecycleOwner,{ announcements ->
+                visibility = if(announcements.isEmpty()){
+                    View.VISIBLE
+                } else View.GONE
+            })
+        }
+    }
+
+    private fun initializeAnnouncementsViewPager(){
+        viewBinding?.announcementViewPager?.apply{
+            (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+            adapter = announcementsAdapter
+        }
+
+        viewModel.announcements.observe(viewLifecycleOwner,{ broadcastAnnouncements ->
+            announcementsAdapter.submitList(broadcastAnnouncements)
+        })
+    }
+
+    private fun initializeAnnouncementsPageIndicator(){
+        viewBinding?.announcementViewPager?.let {
+            viewBinding?.announcementPageIndicator?.setViewPager2(it)
+        }
+    }
+}

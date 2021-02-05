@@ -8,12 +8,12 @@
 
     <activity
         android:id="@+id/mainGraphDestination"
-        android:name="tv.wfc.livestreamsales.ui.activity.main.MainActivity"
-        tools:layout="@layout/activity_main"/>
+        android:name="tv.wfc.livestreamsales.features.mainappcontent.ui.MainAppContentActivity"
+        tools:layout="@layout/activity_main_app_content"/>
 
     <fragment
         android:id="@+id/phoneNumberInputDestination"
-        android:name="tv.wfc.livestreamsales.ui.activity.login.fragments.phonenumberinput.PhoneNumberInputFragment"
+        android:name="tv.wfc.livestreamsales.features.phonenumberinput.ui.PhoneNumberInputFragment"
         android:label="@string/fragment_phone_number_input_title"
         tools:layout="@layout/fragment_phone_number_input">
 
@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/phoneNumberConfirmationDestination"
-        android:name="tv.wfc.livestreamsales.ui.activity.login.fragments.phonenumberconfirmation.PhoneNumberConfirmationFragment"
+        android:name="tv.wfc.livestreamsales.features.phonenumberconfirmation.ui.PhoneNumberConfirmationFragment"
         android:label="@string/fragment_phone_number_confirmation_title"
         tools:layout="@layout/fragment_phone_number_confirmation">
 

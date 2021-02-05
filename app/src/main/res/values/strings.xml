@@ -135,8 +135,13 @@
     <!-- Card confirmation fragment -->
     <string name="fragment_card_confirmation_title">Подтверждение карты</string>
 
-    <!-- Broadcasts information fragment -->
-    <string name="fragment_broadcasts_information_title">Главная</string>
+    <!-- Main page fragment -->
+    <string name="main_page_title">Главная</string>
+    <string name="main_page_no_live_broadcasts">Пока нет доступных трансляций</string>
+    <string name="main_page_no_announcements">Ничего не запланировано</string>
+
+    <!-- Item live broadcast page -->
+    <string name="item_live_broadcast_page_time">в %s</string>
 
     <!-- Notifications fragment -->
     <string name="fragment_notifications_title">Напоминания</string>

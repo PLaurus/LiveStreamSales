@@ -28,6 +28,11 @@
     <!-- Base fragment -->
     <color name="baseFragment_operationProgressContainer_background">#33000000</color>
 
+    <!-- Main page fragment -->
+    <color name="mainPageFragment_card_background">#F3F3F3</color>
+    <color name="mainPageFragment_card_bottomGradient_startColor">#80000000</color>
+    <color name="mainPageFragment_card_bottomGradient_endColor">#00000000</color>
+
     <!-- Live broadcast fragment -->
     <color name="colorLiveBroadcast_shadow">#4A4A4A</color>
     <color name="colorLiveBroadcast_messageInput_boxBackgroundColor">#80FFFFFF</color>

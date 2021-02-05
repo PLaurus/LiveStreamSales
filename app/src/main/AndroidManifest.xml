@@ -24,7 +24,7 @@
         android:theme="@style/Theme.LiveStreamSales">
 
         <activity
-            android:name=".ui.activity.splash.SplashActivity"
+            android:name=".features.splash.ui.SplashActivity"
             android:theme="@style/Theme.LiveStreamSales.SplashScreen"
             android:windowSoftInputMode="adjustResize">
 
@@ -37,14 +37,14 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.greeting.GreetingActivity"
+            android:name=".features.greeting.ui.GreetingActivity"
             android:windowSoftInputMode="adjustNothing"/>
 
         <activity
-            android:name=".ui.activity.main.MainActivity"/>
+            android:name=".features.mainappcontent.ui.MainAppContentActivity"/>
 
         <activity
-            android:name=".ui.activity.login.LogInActivity"
+            android:name=".features.login.ui.LogInActivity"
             android:windowSoftInputMode="adjustResize"/>
 
     </application>

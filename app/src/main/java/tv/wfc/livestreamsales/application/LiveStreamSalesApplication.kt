@@ -2,9 +2,9 @@ package tv.wfc.livestreamsales.application
 
 import android.app.Application
 import android.content.Context
-import tv.wfc.livestreamsales.di.components.app.AppComponent
-import tv.wfc.livestreamsales.di.components.app.DaggerAppComponent
+import tv.wfc.livestreamsales.application.di.AppComponent
 import com.facebook.drawee.backends.pipeline.Fresco
+import tv.wfc.livestreamsales.application.di.DaggerAppComponent
 
 class LiveStreamSalesApplication: Application() {
 
