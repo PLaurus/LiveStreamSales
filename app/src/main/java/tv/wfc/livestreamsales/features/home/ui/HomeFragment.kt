@@ -4,14 +4,14 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.databinding.FragmentMainBottomNavigationBinding
+import tv.wfc.livestreamsales.databinding.FragmentHomeBinding
 import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserFragment
 import tv.wfc.livestreamsales.features.home.di.HomeComponent
 import tv.wfc.livestreamsales.features.home.viewmodel.IHomeViewModel
 import javax.inject.Inject
 
-class HomeFragment: AuthorizedUserFragment(R.layout.fragment_main_bottom_navigation) {
-    private var viewBinding: FragmentMainBottomNavigationBinding? = null
+class HomeFragment: AuthorizedUserFragment(R.layout.fragment_home) {
+    private var viewBinding: FragmentHomeBinding? = null
 
     lateinit var homeComponent: HomeComponent
         private set
@@ -44,7 +44,7 @@ class HomeFragment: AuthorizedUserFragment(R.layout.fragment_main_bottom_navigat
     }
 
     private fun bindView(view: View){
-        viewBinding = FragmentMainBottomNavigationBinding.bind(view)
+        viewBinding = FragmentHomeBinding.bind(view)
     }
 
     private fun unbindView(){

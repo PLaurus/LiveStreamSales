@@ -8,12 +8,13 @@ import coil.ImageLoader
 import coil.request.Disposable
 import coil.request.ImageRequest
 import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.databinding.ItemLiveBroadcastPageBinding
 import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastBaseInformation
+import tv.wfc.livestreamsales.databinding.ItemLiveBroadcastPageBinding
 
 class LiveBroadcastViewHolder(
     liveBroadcastPage: View,
-    private val imageLoader: ImageLoader
+    private val imageLoader: ImageLoader,
+    private val onItemClick: (broadcastId: Long) -> Unit
 ): RecyclerView.ViewHolder(liveBroadcastPage){
     private val viewBinding = ItemLiveBroadcastPageBinding.bind(liveBroadcastPage)
 
@@ -22,16 +23,28 @@ class LiveBroadcastViewHolder(
     fun bind(broadcastInformation: BroadcastBaseInformation){
         clearView()
 
+        bindLiveBroadcastId(broadcastInformation.id)
         bindLiveBroadcastImage(broadcastInformation.imageUrl)
     }
 
     private fun clearView(){
+        clearItemClickListener()
         clearLiveBroadcastImage()
+    }
+
+    private fun clearItemClickListener(){
+        viewBinding.root.setOnClickListener(null)
     }
 
     private fun clearLiveBroadcastImage(){
         liveBroadcastImageLoaderDisposable?.dispose()
         viewBinding.image.setImageDrawable(null)
+    }
+
+    private fun bindLiveBroadcastId(broadcastId: Long){
+        viewBinding.root.setOnClickListener {
+            onItemClick(broadcastId)
+        }
     }
 
     private fun bindLiveBroadcastImage(uri: String?){

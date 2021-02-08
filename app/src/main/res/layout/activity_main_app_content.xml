@@ -8,7 +8,7 @@
     tools:context=".features.mainappcontent.ui.MainAppContentActivity">
 
     <fragment
-        android:id="@+id/main_navigation_host_fragment"
+        android:id="@+id/mainAppContentNavigationHostFragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/navigation_graph_main"
+        app:navGraph="@navigation/navigation_graph_main_app_content"
         tools:ignore="FragmentTagUsage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

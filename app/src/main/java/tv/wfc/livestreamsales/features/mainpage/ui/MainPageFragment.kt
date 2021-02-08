@@ -3,20 +3,43 @@ package tv.wfc.livestreamsales.features.mainpage.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.ListAdapter
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.databinding.FragmentMainPageBinding
 import tv.wfc.livestreamsales.features.mainpage.di.MainPageComponent
 import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastBaseInformation
 import tv.wfc.livestreamsales.application.tools.viewpager2.onPageSelected
 import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserFragment
-import tv.wfc.livestreamsales.features.mainpage.ui.adapters.announcements.AnnouncementViewHolder
-import tv.wfc.livestreamsales.features.mainpage.ui.adapters.livebroadcast.LiveBroadcastViewHolder
+import tv.wfc.livestreamsales.features.home.ui.HomeFragmentDirections
+import tv.wfc.livestreamsales.features.mainpage.ui.adapters.announcements.AnnouncementsAdapter
+import tv.wfc.livestreamsales.features.mainpage.ui.adapters.livebroadcast.LiveBroadcastAdapter
 import tv.wfc.livestreamsales.features.mainpage.viewmodel.IMainPageViewModel
 import javax.inject.Inject
 
 class MainPageFragment: AuthorizedUserFragment(R.layout.fragment_main_page) {
+    private val homeNavigationController by lazy{
+        findNavController()
+    }
+
+    private val mainAppContentNavigationController by lazy{
+        requireActivity().findNavController(R.id.mainAppContentNavigationHostFragment)
+    }
+
+    private val liveBroadcastsAdapter: LiveBroadcastAdapter by lazy{
+        LiveBroadcastAdapter(
+            broadcastsDiffUtilCallback,
+            imageLoader,
+            ::navigateToLiveBroadcastDestination)
+    }
+
+    private val announcementsAdapter: AnnouncementsAdapter by lazy{
+        AnnouncementsAdapter(broadcastsDiffUtilCallback, imageLoader)
+    }
+
     private var viewBinding: FragmentMainPageBinding? = null
 
     private lateinit var mainPageComponent: MainPageComponent
@@ -25,14 +48,14 @@ class MainPageFragment: AuthorizedUserFragment(R.layout.fragment_main_page) {
     override lateinit var viewModel: IMainPageViewModel
 
     @Inject
-    lateinit var liveBroadcastsAdapter: ListAdapter<BroadcastBaseInformation, LiveBroadcastViewHolder>
+    lateinit var imageLoader: ImageLoader
 
     @Inject
-    lateinit var announcementsAdapter: ListAdapter<BroadcastBaseInformation, AnnouncementViewHolder>
+    lateinit var broadcastsDiffUtilCallback: DiffUtil.ItemCallback<BroadcastBaseInformation>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        initializeBroadcastsInformationComponent()
+        initializeMainPageComponent()
         injectDependencies()
     }
 
@@ -67,7 +90,7 @@ class MainPageFragment: AuthorizedUserFragment(R.layout.fragment_main_page) {
         viewBinding = null
     }
 
-    private fun initializeBroadcastsInformationComponent(){
+    private fun initializeMainPageComponent(){
         mainPageComponent = authorizedUserComponent.mainPageComponent().create(this)
     }
 
@@ -172,5 +195,10 @@ class MainPageFragment: AuthorizedUserFragment(R.layout.fragment_main_page) {
         viewBinding?.announcementViewPager?.let {
             viewBinding?.announcementPageIndicator?.setViewPager2(it)
         }
+    }
+
+    private fun navigateToLiveBroadcastDestination(liveBroadcastId: Long){
+        val action = HomeFragmentDirections.actionHomeDestinationToLiveBroadcastDestination(liveBroadcastId)
+        mainAppContentNavigationController.navigate(action)
     }
 }

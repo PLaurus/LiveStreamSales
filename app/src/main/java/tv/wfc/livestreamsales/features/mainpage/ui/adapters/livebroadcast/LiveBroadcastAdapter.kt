@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import coil.ImageLoader
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastBaseInformation
-import javax.inject.Inject
 
-class LiveBroadcastAdapter @Inject constructor(
+class LiveBroadcastAdapter(
     liveBroadcastsDiffUtilCallback: DiffUtil.ItemCallback<BroadcastBaseInformation>,
-    private val imageLoader: ImageLoader
+    private val imageLoader: ImageLoader,
+    private val onItemClick: (broadcastId: Long) -> Unit
 ): ListAdapter<BroadcastBaseInformation, LiveBroadcastViewHolder>(liveBroadcastsDiffUtilCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LiveBroadcastViewHolder {
         val liveBroadcastPage =
@@ -19,7 +19,11 @@ class LiveBroadcastAdapter @Inject constructor(
                 .from(parent.context)
                 .inflate(R.layout.item_live_broadcast_page, parent, false)
 
-        return LiveBroadcastViewHolder(liveBroadcastPage, imageLoader)
+        return LiveBroadcastViewHolder(
+            liveBroadcastPage,
+            imageLoader,
+            onItemClick
+        )
     }
 
     override fun onBindViewHolder(holder: LiveBroadcastViewHolder, position: Int) {

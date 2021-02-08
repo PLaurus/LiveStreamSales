@@ -15,30 +15,15 @@
         android:id="@+id/homeDestination"
         android:name="tv.wfc.livestreamsales.features.home.ui.HomeFragment"
         android:label="@string/fragment_main_title"
-        tools:layout="@layout/fragment_main_bottom_navigation">
-
-        <action
-            android:id="@+id/action_homeDestination_to_greetingDestination"
-            app:destination="@id/greetingDestination"
-            app:popUpTo="@id/homeDestination"
-            app:popUpToInclusive="true"/>
+        tools:layout="@layout/fragment_home">
 
         <action
             android:id="@+id/action_homeDestination_to_liveBroadcastDestination"
-            app:destination="@id/liveBroadcastDestination"/>
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/greetingDestination"
-        android:label="@string/greeting_fragment_title"
-        tools:layout="@layout/activity_greeting">
-
-        <action
-            android:id="@+id/action_greetingDestination_to_mainDestination"
-            app:popUpTo="@id/homeDestination"
+            app:destination="@id/liveBroadcastDestination"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:exitAnim="@anim/stay_as_is"
+            app:popEnterAnim="@anim/stay_as_is"
+            app:popExitAnim="@anim/slide_out_right"/>
 
     </fragment>
 
@@ -54,6 +39,10 @@
         <action
             android:id="@+id/action_liveBroadcastDestination_to_productOrderDestination"
             app:destination="@id/productOrderDestination"/>
+
+        <argument
+            android:name="liveBroadcastId"
+            app:argType="long" />
 
     </fragment>
 

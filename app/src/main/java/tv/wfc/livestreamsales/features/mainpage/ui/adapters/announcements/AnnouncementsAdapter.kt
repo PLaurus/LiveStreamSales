@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import coil.ImageLoader
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastBaseInformation
-import javax.inject.Inject
 
-class AnnouncementsAdapter @Inject constructor(
+class AnnouncementsAdapter(
     diffUtilsItemCallback: DiffUtil.ItemCallback<BroadcastBaseInformation>,
     private val imageLoader: ImageLoader
 ): ListAdapter<BroadcastBaseInformation, AnnouncementViewHolder>(diffUtilsItemCallback) {

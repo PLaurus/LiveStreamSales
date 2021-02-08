@@ -5,7 +5,6 @@ import dagger.BindsInstance
 import dagger.Subcomponent
 import tv.wfc.livestreamsales.features.mainpage.di.modules.api.ApiModule
 import tv.wfc.livestreamsales.features.mainpage.di.modules.diffutils.DiffUtilsModule
-import tv.wfc.livestreamsales.features.mainpage.di.modules.listadapters.ListAdaptersModule
 import tv.wfc.livestreamsales.features.mainpage.di.modules.repository.RepositoryModule
 import tv.wfc.livestreamsales.features.mainpage.di.modules.storage.StorageModule
 import tv.wfc.livestreamsales.features.mainpage.di.modules.viewmodel.MainPageViewModelModule
@@ -18,8 +17,7 @@ import tv.wfc.livestreamsales.features.mainpage.di.scope.MainPageFeatureScope
     ApiModule::class,
     StorageModule::class,
     RepositoryModule::class,
-    DiffUtilsModule::class,
-    ListAdaptersModule::class
+    DiffUtilsModule::class
 ])
 interface MainPageComponent {
     @Subcomponent.Factory

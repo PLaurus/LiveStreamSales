@@ -2,19 +2,19 @@ package tv.wfc.livestreamsales.features.mainappcontent.ui
 
 import android.os.Bundle
 import androidx.navigation.findNavController
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import tv.wfc.livestreamsales.NavigationGraphRootDirections
 import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.features.mainappcontent.di.MainAppContentComponent
-import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserActivity
-import tv.wfc.livestreamsales.features.mainappcontent.viewmodel.IMainAppContentViewModel
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import tv.wfc.livestreamsales.databinding.ActivityMainAppContentBinding
+import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserActivity
+import tv.wfc.livestreamsales.features.mainappcontent.di.MainAppContentComponent
+import tv.wfc.livestreamsales.features.mainappcontent.viewmodel.IMainAppContentViewModel
 import javax.inject.Inject
 
 class MainAppContentActivity : AuthorizedUserActivity() {
     private val disposables = CompositeDisposable()
     private val navigationController by lazy{
-        findNavController(R.id.main_navigation_host_fragment)
+        findNavController(R.id.mainAppContentNavigationHostFragment)
     }
 
     private lateinit var viewBinding: ActivityMainAppContentBinding
