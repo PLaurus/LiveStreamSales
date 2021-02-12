@@ -14,7 +14,7 @@
 
         <bitmap
             android:gravity="fill_horizontal|fill_vertical"
-            android:src="@drawable/test_logo"/>
+            android:src="@drawable/splash_logo"/>
 
     </item>
 
