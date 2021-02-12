@@ -136,7 +136,7 @@ abstract class RestModule {
         @Provides
         @RestDateTimeFormatPattern
         @JvmStatic
-        internal fun provideRestDateTimeFormatPattern(): String = "yyyy-MM-dd HH:mm:ss Z"
+        internal fun provideRestDateTimeFormatPattern(): String = "yyyy-MM-dd'T'HH:mm:ssZ"
 
         @ApplicationScope
         @Provides

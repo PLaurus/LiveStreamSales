@@ -3,6 +3,8 @@ package tv.wfc.livestreamsales.features.home.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.databinding.FragmentHomeBinding
 import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserFragment
@@ -11,6 +13,10 @@ import tv.wfc.livestreamsales.features.home.viewmodel.IHomeViewModel
 import javax.inject.Inject
 
 class HomeFragment: AuthorizedUserFragment(R.layout.fragment_home) {
+    private val homeNavigationController by lazy {
+        requireActivity().findNavController(R.id.homeDestinationNavigationFragment)
+    }
+
     private var viewBinding: FragmentHomeBinding? = null
 
     lateinit var homeComponent: HomeComponent
@@ -28,6 +34,11 @@ class HomeFragment: AuthorizedUserFragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindView(view)
+    }
+
+    override fun onDataIsPrepared() {
+        super.onDataIsPrepared()
+        initializeBottomNavigation()
     }
 
     override fun onDestroyView() {
@@ -49,5 +60,9 @@ class HomeFragment: AuthorizedUserFragment(R.layout.fragment_home) {
 
     private fun unbindView(){
         viewBinding = null
+    }
+
+    private fun initializeBottomNavigation(){
+        viewBinding?.bottomNavigation?.setupWithNavController(homeNavigationController)
     }
 }

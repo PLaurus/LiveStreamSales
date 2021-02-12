@@ -6,14 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.exoplayer2.ui.PlayerView
-        android:id="@+id/player"
+    <com.google.android.exoplayer2.ui.StyledPlayerView
+        android:id="@+id/playerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:use_controller="false"
+        app:auto_show="false"
+        app:show_buffering="always"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
@@ -28,28 +30,23 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/headerLayout"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="60dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHeight_percent="0.08">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/streamerDrawee"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1"
-                app:roundAsCircle="true"
-                app:actualImageScaleType="centerCrop"
-                app:placeholderImage="@drawable/ic_person_outlined_white_24dp"
-                app:placeholderImageScaleType="centerCrop"
-                app:backgroundImage="@color/colorSecondaryText"/>
+                tools:src="@drawable/ic_live_broadcast_avatar_placeholder"/>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/streamerNicknameText"
+                android:id="@+id/broadcast_title_text"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginHorizontal="@dimen/contentMargin"
@@ -62,20 +59,20 @@
                 android:shadowRadius="@dimen/liveBroadcast_shadowRadius"
                 android:shadowDx="@dimen/liveBroadcast_shadowDx"
                 android:shadowDy="@dimen/liveBroadcast_shadowDy"
-                app:layout_constraintStart_toEndOf="@id/streamerDrawee"
-                app:layout_constraintEnd_toStartOf="@id/viewersIndicatorDrawee"
+                app:layout_constraintStart_toEndOf="@id/image"
+                app:layout_constraintEnd_toStartOf="@id/viewersIndicatorImage"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="Цыган Разводящий"/>
+                tools:text="Отдай мне свои деньги 2"/>
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/viewersIndicatorDrawee"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/viewersIndicatorImage"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 app:layout_constraintEnd_toStartOf="@id/viewersIndicatorText"
                 app:layout_constraintTop_toTopOf="@id/viewersIndicatorText"
                 app:layout_constraintBottom_toBottomOf="@id/viewersIndicatorText"
-                app:actualImageResource="@drawable/ic_eye_white_24"/>
+                app:srcCompat="@drawable/ic_eye_white_24"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/viewersIndicatorText"
@@ -89,8 +86,8 @@
                 android:shadowDx="@dimen/liveBroadcast_shadowDx"
                 android:shadowDy="@dimen/liveBroadcast_shadowDy"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/streamerDrawee"
-                app:layout_constraintBottom_toBottomOf="@id/streamerDrawee"
+                app:layout_constraintTop_toTopOf="@id/image"
+                app:layout_constraintBottom_toBottomOf="@id/image"
                 tools:text="135 онлайн"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -98,15 +95,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/streamInformationLayout"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="100dp"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/headerLayout"
-            app:layout_constraintHeight_percent="0.12">
+            app:layout_constraintTop_toBottomOf="@id/headerLayout">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/productDescriptionText"
+                android:id="@+id/broadcastDescriptionText"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginEnd="8dp"
@@ -158,7 +154,7 @@
                 android:shadowDx="@dimen/liveBroadcast_shadowDx"
                 android:shadowDy="@dimen/liveBroadcast_shadowDy"
                 app:layout_constraintStart_toEndOf="@id/productPriceText"
-                app:layout_constraintEnd_toEndOf="@id/productDescriptionText"
+                app:layout_constraintEnd_toEndOf="@id/broadcastDescriptionText"
                 app:layout_constraintTop_toTopOf="@id/productPriceText"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintVertical_bias="1"

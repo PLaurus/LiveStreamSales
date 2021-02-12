@@ -8,6 +8,9 @@ import tv.wfc.livestreamsales.application.storage.authorization.local.Authorizat
 import tv.wfc.livestreamsales.application.storage.authorization.local.IAuthorizationLocalStorage
 import tv.wfc.livestreamsales.application.storage.authorization.remote.AuthorizationRemoteStorage
 import tv.wfc.livestreamsales.application.storage.authorization.remote.IAuthorizationRemoteStorage
+import tv.wfc.livestreamsales.application.storage.broadcastsinformation.IBroadcastsInformationStorage
+import tv.wfc.livestreamsales.application.di.modules.storage.qualifiers.BroadcastsInformationLocalStorage
+import tv.wfc.livestreamsales.application.di.modules.storage.qualifiers.BroadcastsInformationRemoteStorage
 
 @Module
 abstract class AppStorageModule {
@@ -26,4 +29,16 @@ abstract class AppStorageModule {
     internal abstract fun provideApplicationSettingsLocalStorage(
         applicationSettingsLocalStorage: tv.wfc.livestreamsales.application.storage.applicationsettings.local.ApplicationSettingsLocalStorage
     ): IApplicationSettingsStorage
+
+    @Binds
+    @BroadcastsInformationRemoteStorage
+    internal abstract fun provideBroadcastsInformationRemoteStorage(
+        broadcastsInformationRemoteStorage: tv.wfc.livestreamsales.application.storage.broadcastsinformation.remote.BroadcastsInformationRemoteStorage
+    ): IBroadcastsInformationStorage
+
+    @Binds
+    @BroadcastsInformationLocalStorage
+    internal abstract fun provideBroadcastsInformationLocalStorage(
+        broadcastsInformationLocalStorage: tv.wfc.livestreamsales.application.storage.broadcastsinformation.local.BroadcastsInformationLocalStorage
+    ): IBroadcastsInformationStorage
 }

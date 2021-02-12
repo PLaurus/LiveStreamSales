@@ -11,7 +11,7 @@ import coil.request.ImageRequest
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastBaseInformation
+import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
 import tv.wfc.livestreamsales.databinding.ItemBroadcastAnnouncementPageBinding
 
 class AnnouncementViewHolder(
@@ -22,7 +22,7 @@ class AnnouncementViewHolder(
 
     private var announcementImageLoaderDisposable: Disposable? = null
 
-    fun bind(broadcastInformation: BroadcastBaseInformation){
+    fun bind(broadcastInformation: BroadcastInformation){
         clearView()
 
         bindAnnouncementImage(broadcastInformation.imageUrl)

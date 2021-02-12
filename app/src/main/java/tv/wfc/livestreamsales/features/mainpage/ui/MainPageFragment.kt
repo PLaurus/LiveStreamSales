@@ -11,7 +11,7 @@ import coil.ImageLoader
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.databinding.FragmentMainPageBinding
 import tv.wfc.livestreamsales.features.mainpage.di.MainPageComponent
-import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastBaseInformation
+import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
 import tv.wfc.livestreamsales.application.tools.viewpager2.onPageSelected
 import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserFragment
 import tv.wfc.livestreamsales.features.home.ui.HomeFragmentDirections
@@ -51,7 +51,7 @@ class MainPageFragment: AuthorizedUserFragment(R.layout.fragment_main_page) {
     lateinit var imageLoader: ImageLoader
 
     @Inject
-    lateinit var broadcastsDiffUtilCallback: DiffUtil.ItemCallback<BroadcastBaseInformation>
+    lateinit var broadcastsDiffUtilCallback: DiffUtil.ItemCallback<BroadcastInformation>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

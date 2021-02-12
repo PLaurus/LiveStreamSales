@@ -33,6 +33,7 @@
 
     <fragment
         android:id="@+id/liveBroadcastDestination"
+        android:name="tv.wfc.livestreamsales.features.livebroadcast.ui.LiveBroadcastFragment"
         android:label="@string/fragment_live_broadcasts_title"
         tools:layout="@layout/fragment_live_broadcast">
 

@@ -12,6 +12,7 @@ import dagger.BindsInstance
 import dagger.Subcomponent
 import tv.wfc.livestreamsales.features.authorizeduser.di.qualifiers.AuthorizationToken
 import tv.wfc.livestreamsales.features.home.di.HomeComponent
+import tv.wfc.livestreamsales.features.livebroadcast.di.LiveBroadcastComponent
 import tv.wfc.livestreamsales.features.mainpage.di.MainPageComponent
 
 @AuthorizedUserFeatureScope
@@ -35,6 +36,7 @@ interface AuthorizedUserComponent {
     fun mainAppComponent(): MainAppContentComponent.Factory
     fun homeComponent(): HomeComponent.Factory
     fun mainPageComponent(): MainPageComponent.Factory
+    fun liveBroadcastComponent(): LiveBroadcastComponent.Factory
 
     fun logOutRepository(): ILogOutRepository
 }

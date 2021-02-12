@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import coil.ImageLoader
 import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastBaseInformation
+import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
 
 class AnnouncementsAdapter(
-    diffUtilsItemCallback: DiffUtil.ItemCallback<BroadcastBaseInformation>,
+    diffUtilsItemCallback: DiffUtil.ItemCallback<BroadcastInformation>,
     private val imageLoader: ImageLoader
-): ListAdapter<BroadcastBaseInformation, AnnouncementViewHolder>(diffUtilsItemCallback) {
+): ListAdapter<BroadcastInformation, AnnouncementViewHolder>(diffUtilsItemCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

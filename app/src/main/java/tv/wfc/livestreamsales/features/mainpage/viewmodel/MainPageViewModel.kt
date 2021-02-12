@@ -10,7 +10,7 @@ import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
-import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastBaseInformation
+import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
 import tv.wfc.livestreamsales.application.model.viewmodel.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
 import javax.inject.Inject
@@ -27,9 +27,9 @@ class MainPageViewModel @Inject constructor(
 
     override val isDataBeingRefreshed = MutableLiveData(false)
 
-    override val liveBroadcasts = MutableLiveData<List<BroadcastBaseInformation>>()
+    override val liveBroadcasts = MutableLiveData<List<BroadcastInformation>>()
 
-    override val announcements = MutableLiveData<List<BroadcastBaseInformation>>()
+    override val announcements = MutableLiveData<List<BroadcastInformation>>()
 
     init{
         prepareData()
@@ -100,7 +100,7 @@ class MainPageViewModel @Inject constructor(
     private fun getBroadcastsFromRepository(
         onComplete: (() -> Unit)? = null,
         onError: ((Throwable) -> Unit)? = null,
-        onNext: ((List<BroadcastBaseInformation>) -> Unit)? = null
+        onNext: ((List<BroadcastInformation>) -> Unit)? = null
     ): Disposable{
         return broadcastsInformationRepository
             .getBroadcasts()
@@ -119,7 +119,7 @@ class MainPageViewModel @Inject constructor(
             )
     }
 
-    private fun updateBroadcastsInformation(broadcasts: List<BroadcastBaseInformation>){
+    private fun updateBroadcastsInformation(broadcasts: List<BroadcastInformation>){
         val liveBroadcasts = broadcasts.filter{ broadcastInformation ->
             broadcastInformation.startsAt?.isBeforeNow == true
         }

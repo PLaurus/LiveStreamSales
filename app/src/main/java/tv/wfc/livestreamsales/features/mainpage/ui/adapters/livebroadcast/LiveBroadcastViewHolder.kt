@@ -8,7 +8,7 @@ import coil.ImageLoader
 import coil.request.Disposable
 import coil.request.ImageRequest
 import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastBaseInformation
+import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
 import tv.wfc.livestreamsales.databinding.ItemLiveBroadcastPageBinding
 
 class LiveBroadcastViewHolder(
@@ -20,7 +20,7 @@ class LiveBroadcastViewHolder(
 
     private var liveBroadcastImageLoaderDisposable: Disposable? = null
 
-    fun bind(broadcastInformation: BroadcastBaseInformation){
+    fun bind(broadcastInformation: BroadcastInformation){
         clearView()
 
         bindLiveBroadcastId(broadcastInformation.id)

@@ -1,6 +1,19 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Application -->
     <string name="app_name">LiveStreamSales</string>
+
+    <!-- Generic player strings-->
+    <string name="player_error_generic">Воспроизведение не удалось</string>
+    <string name="player_error_querying_decoders">Невозможно запросить декодеры устройства</string>
+    <string name="player_error_no_secure_decoder">
+        Это устройство не обеспечивает безопасный декодер для <xliff:g id="mime_type">%1$s</xliff:g>
+    </string>
+    <string name="player_error_no_decoder">
+        Это устройство не предоставляет декодер для <xliff:g id="mime_type">%1$s</xliff:g>
+    </string>
+    <string name="player_error_instantiating_decoder">
+        Не удается создать экземпляр декодера <xliff:g id="decoder_name">%1$s</xliff:g>
+    </string>
 
     <!-- Base fragment -->
     <string name="base_fragment_content_loading_error">Не удалось загрузить данные</string>
@@ -153,6 +166,7 @@
     <string name="fragment_settings_title">Настройки</string>
 
     <!-- Live broadcast fragment -->
+    <string name="fragment_live_broadcast_viewers_count">%d онлайн</string>
     <string name="fragment_live_broadcast_timer_title">до конца эфира</string>
     <string name="fragment_live_broadcast_message_hint">Оставить комментарий</string>
     <string name="fragment_live_broadcast_send_message">Отправить</string>
