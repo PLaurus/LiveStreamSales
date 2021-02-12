@@ -13,6 +13,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.source.MediaSourceFactory
 import com.google.android.exoplayer2.trackselection.TrackSelector
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.util.ErrorMessageProvider
 import com.google.android.exoplayer2.util.Util
 import tv.wfc.livestreamsales.R
@@ -152,6 +153,7 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
         viewBinding?.playerView?.apply{
             matchRootView()
             setErrorMessageProvider(playerErrorMessageProvider)
+            resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
             requestFocus()
         }
     }
