@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -16,13 +17,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:src="@drawable/ic_baseline_live_tv_24"/>
+        tools:srcCompat="@drawable/ic_baseline_live_tv_24"
+        tools:tint="@color/broadcastAnnouncementItem_image_placeholderTint"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/descriptionLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/gradient_main_page_broadcast_card"
+        android:background="@drawable/drawable_gradient_main_page_broadcast_card"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,7 +42,7 @@
             app:layout_constraintTop_toTopOf="@id/dateText"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1"
-            app:icon="@drawable/ic_bell_outlined_white_24"
+            app:icon="@drawable/ic_baseline_notifications_none_24"
             app:autoSizeTextType="uniform"
             app:roundAsCircle="true"
             tools:visibility="visible"/>

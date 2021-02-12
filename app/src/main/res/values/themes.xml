@@ -1,14 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Base application theme. -->
     <style name="Theme.LiveStreamSales" parent="Theme.MaterialComponents.Light.NoActionBar">
+
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
 
@@ -25,21 +29,26 @@
     </style>
 
     <style name="Theme.LiveStreamSales.SplashScreen" parent="Theme.LiveStreamSales">
-        <item name="android:windowBackground">@drawable/bg_splash_screen</item>
+
+        <item name="android:windowBackground">@drawable/drawable_splash_screen_background</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@null</item>
+
     </style>
 
     <style name="Theme.LiveStreamSales.BigMaterialButton" parent="Widget.MaterialComponents.Button">
+
         <item name="android:paddingTop">16dp</item>
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingRight">16dp</item>
         <item name="android:paddingBottom">16dp</item>
         <item name="cornerRadius">@dimen/bigButton_cornerRadius</item>
+
     </style>
 
     <style name="Theme.LiveStreamSales.MaterialButton.IconOnly" parent="Widget.MaterialComponents.Button">
+
         <item name="iconPadding">0dp</item>
         <item name="iconGravity">textStart</item>
         <item name="android:insetLeft">0dp</item>
@@ -50,10 +59,14 @@
         <item name="shapeAppearanceOverlay">
             @style/Theme.LiveStreamSales.ShapeAppearanceOverlay.Button.Circle
         </item>
+
     </style>
 
     <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.Button.Circle" parent="">
+
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
+
     </style>
+
 </resources>

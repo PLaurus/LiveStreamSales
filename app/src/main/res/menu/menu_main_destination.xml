@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/broadcastsInformationDestination"
-        android:icon="@drawable/ic_home_white_24"
+        android:icon="@drawable/ic_baseline_home_24"
         android:title="@string/fragment_main_home_button"
         android:enabled="true"
         app:showAsAction="ifRoom|withText"/>
 
     <item
         android:id="@+id/notificationsDestination"
-        android:icon="@drawable/ic_bell_outlined_white_24"
+        android:icon="@drawable/ic_baseline_notifications_none_24"
         android:title="@string/fragment_main_notifications_button"
         android:enabled="false"
         app:showAsAction="ifRoom|withText"/>
 
     <item
         android:id="@+id/categoriesDestination"
-        android:icon="@drawable/ic_filter_white_24"
+        android:icon="@drawable/ic_baseline_filter_alt_24"
         android:title="@string/fragment_main_category_button"
         android:enabled="false"
         app:showAsAction="ifRoom|withText"/>
 
     <item
         android:id="@+id/settingsDestination"
-        android:icon="@drawable/ic_settings_white_24"
+        android:icon="@drawable/ic_baseline_settings_24"
         android:title="@string/fragment_main_settings_button"
         android:enabled="true"
         app:showAsAction="ifRoom|withText"/>

@@ -43,10 +43,10 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1"
-                tools:src="@drawable/ic_live_broadcast_avatar_placeholder"/>
+                tools:src="@drawable/drawable_avatar_placeholder"/>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/broadcast_title_text"
+                android:id="@+id/broadcastTitleText"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginHorizontal="@dimen/contentMargin"
@@ -63,7 +63,7 @@
                 app:layout_constraintEnd_toStartOf="@id/viewersIndicatorImage"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="Отдай мне свои деньги 2"/>
+                tools:text="Отдай мне свои деньги 2 Отдай мне свои деньги 2"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/viewersIndicatorImage"
@@ -72,7 +72,8 @@
                 app:layout_constraintEnd_toStartOf="@id/viewersIndicatorText"
                 app:layout_constraintTop_toTopOf="@id/viewersIndicatorText"
                 app:layout_constraintBottom_toBottomOf="@id/viewersIndicatorText"
-                app:srcCompat="@drawable/ic_eye_white_24"/>
+                app:srcCompat="@drawable/ic_baseline_eye_24"
+                app:tint="@android:color/white"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/viewersIndicatorText"

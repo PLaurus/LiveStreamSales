@@ -33,6 +33,12 @@
     <color name="mainPageFragment_card_bottomGradient_startColor">#80000000</color>
     <color name="mainPageFragment_card_bottomGradient_endColor">#00000000</color>
 
+    <!-- Broadcast Announcement Item -->
+    <color name="broadcastAnnouncementItem_image_placeholderTint">#000000</color>
+
+    <!-- Live Broadcast Item -->
+    <color name="liveBroadcastItem_image_placeholderTint">#000000</color>
+
     <!-- Live broadcast fragment -->
     <color name="colorLiveBroadcast_shadow">#4A4A4A</color>
     <color name="colorLiveBroadcast_messageInput_boxBackgroundColor">#80FFFFFF</color>

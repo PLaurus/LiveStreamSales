@@ -48,7 +48,7 @@
         <ProgressBar
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:indeterminateDrawable="@drawable/progress_circle_content"
+            android:indeterminateDrawable="@drawable/drawable_progress_circle_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -75,7 +75,7 @@
         <ProgressBar
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:indeterminateDrawable="@drawable/progress_circle_operation"
+            android:indeterminateDrawable="@drawable/drawable_progress_circle_operation"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

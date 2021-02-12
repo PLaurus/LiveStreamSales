@@ -12,6 +12,7 @@ import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
+import tv.wfc.livestreamsales.application.tools.context.getDrawableCompat
 import tv.wfc.livestreamsales.databinding.ItemBroadcastAnnouncementPageBinding
 
 class AnnouncementViewHolder(
@@ -19,6 +20,8 @@ class AnnouncementViewHolder(
     private val imageLoader: ImageLoader
 ): RecyclerView.ViewHolder(broadcastAnnouncementPage) {
     private val viewBinding = ItemBroadcastAnnouncementPageBinding.bind(broadcastAnnouncementPage)
+    private val context: Context
+        get() = viewBinding.root.context
 
     private var announcementImageLoaderDisposable: Disposable? = null
 
@@ -77,8 +80,17 @@ class AnnouncementViewHolder(
     private fun setDefaultAnnouncementImage(){
         viewBinding.image.apply{
             scaleType = ImageView.ScaleType.FIT_CENTER
-            setImageResource(R.drawable.ic_baseline_live_tv_24)
+            val defaultDrawable = createDefaultAnnouncementImage()
+
+            setImageDrawable(defaultDrawable)
         }
+    }
+
+    private fun createDefaultAnnouncementImage(): Drawable? {
+        return context.getDrawableCompat(
+            R.drawable.ic_baseline_live_tv_24,
+            R.color.broadcastAnnouncementItem_image_placeholderTint
+        )
     }
 
     private fun bindAnnouncementDate(dateTime: DateTime?){

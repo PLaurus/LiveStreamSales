@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item>
+
         <shape android:shape="oval">
-            <solid android:color="@color/colorOnPrimary"/>
+
+            <solid android:color="@color/colorPrimary"/>
+
         </shape>
+
     </item>
 
-    <item android:drawable="@drawable/ic_person_outlined_white_24dp"/>
+    <item android:drawable="@drawable/ic_baseline_delete_24"/>
+
 </layer-list>

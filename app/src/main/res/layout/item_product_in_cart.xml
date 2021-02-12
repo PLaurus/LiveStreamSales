@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -24,15 +25,13 @@
         app:roundingBorderColor="#000000"
         tools:backgroundImage="@color/colorSecondary"/>
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHeight_percent="0.3"
         app:layout_constraintDimensionRatio="1:1"
-        app:backgroundImage="@color/colorPrimary"
-        app:placeholderImage="@drawable/ic_delete_white_24"
-        app:roundAsCircle="true" />
+        app:srcCompat="@drawable/drawable_remove_product_from_order"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

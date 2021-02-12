@@ -1,5 +1,6 @@
 package tv.wfc.livestreamsales.features.mainpage.ui.adapters.livebroadcast
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
@@ -9,6 +10,7 @@ import coil.request.Disposable
 import coil.request.ImageRequest
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
+import tv.wfc.livestreamsales.application.tools.context.getDrawableCompat
 import tv.wfc.livestreamsales.databinding.ItemLiveBroadcastPageBinding
 
 class LiveBroadcastViewHolder(
@@ -17,6 +19,8 @@ class LiveBroadcastViewHolder(
     private val onItemClick: (broadcastId: Long) -> Unit
 ): RecyclerView.ViewHolder(liveBroadcastPage){
     private val viewBinding = ItemLiveBroadcastPageBinding.bind(liveBroadcastPage)
+    private val context: Context
+        get() = viewBinding.root.context
 
     private var liveBroadcastImageLoaderDisposable: Disposable? = null
 
@@ -54,28 +58,36 @@ class LiveBroadcastViewHolder(
             val imageRequest = ImageRequest.Builder(context)
                 .data(uri)
                 .target(
-                    onError = { setDefaultAnnouncementImage() },
-                    onSuccess = ::setAnnouncementImageDrawable
+                    onError = { setDefaultLiveBroadcastImage() },
+                    onSuccess = ::setLiveBroadcastImageDrawable
                 )
                 .build()
 
             liveBroadcastImageLoaderDisposable = imageLoader.enqueue(imageRequest)
         } else{
-            setDefaultAnnouncementImage()
+            setDefaultLiveBroadcastImage()
         }
     }
 
-    private fun setAnnouncementImageDrawable(drawable: Drawable){
+    private fun setLiveBroadcastImageDrawable(drawable: Drawable){
         viewBinding.image.apply{
             scaleType = ImageView.ScaleType.CENTER_CROP
             setImageDrawable(drawable)
         }
     }
 
-    private fun setDefaultAnnouncementImage(){
+    private fun setDefaultLiveBroadcastImage(){
         viewBinding.image.apply{
             scaleType = ImageView.ScaleType.FIT_CENTER
-            setImageResource(R.drawable.ic_baseline_live_tv_24)
+            val defaultDrawable = createDefaultLiveBroadcastImage()
+            setImageDrawable(defaultDrawable)
         }
+    }
+
+    private fun createDefaultLiveBroadcastImage(): Drawable? {
+        return context.getDrawableCompat(
+            R.drawable.ic_baseline_live_tv_24,
+            R.color.liveBroadcastItem_image_placeholderTint
+        )
     }
 }

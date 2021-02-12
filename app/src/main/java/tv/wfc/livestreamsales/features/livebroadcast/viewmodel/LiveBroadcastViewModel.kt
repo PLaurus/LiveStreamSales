@@ -126,7 +126,7 @@ class LiveBroadcastViewModel @Inject constructor(
 
             val request = ImageRequest.Builder(context)
                 .data(imageUri)
-                .placeholder(R.drawable.ic_live_broadcast_avatar_placeholder)
+                .placeholder(R.drawable.drawable_avatar_placeholder)
                 .transformations(CircleCropTransformation())
                 .target(
                     onStart = image::setValue,

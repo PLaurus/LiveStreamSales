@@ -67,7 +67,7 @@
                             android:id="@+id/descriptionBackground"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:background="@drawable/gradient_main_page_broadcast_card"
+                            android:background="@drawable/drawable_gradient_main_page_broadcast_card"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/liveBroadcastsTitle"
