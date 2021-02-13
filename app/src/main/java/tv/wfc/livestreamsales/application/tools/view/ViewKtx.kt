@@ -1,5 +1,7 @@
 package tv.wfc.livestreamsales.application.tools.view
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.view.View
 
 fun View.matchRootView(
@@ -17,4 +19,46 @@ fun View.matchRootView(
             height = rootViewHeight
         }
     }
+}
+
+fun View.changeVisibilitySmoothly(
+    to: Visibility,
+    animationDuration: Long = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
+){
+    when(to){
+        Visibility.Visible -> revealSmoothly(animationDuration)
+        Visibility.Invisible -> hideSmoothly(animationDuration, toGone = false)
+        Visibility.Gone -> hideSmoothly(animationDuration)
+    }
+}
+
+fun View.revealSmoothly(
+    animationDuration: Long = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
+){
+    visibility = View.VISIBLE
+
+    animate()
+        .alpha(1f)
+        .setDuration(animationDuration)
+        .setListener(null)
+}
+
+fun View.hideSmoothly(
+    animationDuration: Long = resources.getInteger(android.R.integer.config_shortAnimTime).toLong(),
+    toGone: Boolean = true
+){
+    animate()
+        .alpha(0f)
+        .setDuration(animationDuration)
+        .setListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                visibility = if(toGone) View.GONE else View.INVISIBLE
+            }
+        })
+}
+
+enum class Visibility{
+    Visible,
+    Invisible,
+    Gone
 }

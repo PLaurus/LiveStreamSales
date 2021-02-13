@@ -13,19 +13,37 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.source.MediaSourceFactory
 import com.google.android.exoplayer2.trackselection.TrackSelector
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.util.ErrorMessageProvider
 import com.google.android.exoplayer2.util.Util
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.kotlin.addTo
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import tv.wfc.livestreamsales.R
+import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
+import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
+import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
+import tv.wfc.livestreamsales.application.tools.view.hideSmoothly
 import tv.wfc.livestreamsales.application.tools.view.matchRootView
+import tv.wfc.livestreamsales.application.tools.view.revealSmoothly
 import tv.wfc.livestreamsales.databinding.FragmentLiveBroadcastBinding
 import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserFragment
 import tv.wfc.livestreamsales.features.livebroadcast.di.LiveBroadcastComponent
 import tv.wfc.livestreamsales.features.livebroadcast.viewmodel.ILiveBroadcastViewModel
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broadcast) {
     private val navigationArguments by navArgs<LiveBroadcastFragmentArgs>()
     private val navigationController by lazy { findNavController() }
+    private val broadcastInformationRevealDuration by lazy{
+        resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
+    }
+    private val broadcastInformationHideDuration by lazy{
+        resources.getInteger(android.R.integer.config_longAnimTime).toLong()
+    }
 
     private var viewBinding: FragmentLiveBroadcastBinding? = null
     private var player: SimpleExoPlayer? = null
@@ -43,6 +61,17 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
 
     @Inject
     lateinit var trackSelector: TrackSelector
+
+    @Inject
+    @ComputationScheduler
+    lateinit var computationScheduler: Scheduler
+
+    @Inject
+    @MainThreadScheduler
+    lateinit var mainThreadScheduler: Scheduler
+
+    @Inject
+    lateinit var applicationErrorsLogger: IApplicationErrorsLogger
 
     @Inject
     override lateinit var viewModel: ILiveBroadcastViewModel
@@ -66,6 +95,7 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
         initializeViewersCountText()
         initializeBroadcastDescriptionText()
         initializePlayerView()
+        showBroadcastInformationTemporarily()
     }
 
     override fun onStart() {
@@ -152,7 +182,11 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
         viewBinding?.playerView?.apply{
             matchRootView()
             setErrorMessageProvider(playerErrorMessageProvider)
+            resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
             requestFocus()
+            videoSurfaceView?.setOnClickListener {
+                showBroadcastInformationTemporarily()
+            }
         }
     }
 
@@ -206,6 +240,36 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
                 this@LiveBroadcastFragment.player = player
                 viewBinding?.playerView?.player = this@LiveBroadcastFragment.player
             }
+        }
+    }
+
+    private var broadcastInformationVisibilityTimerDisposable: Disposable? = null
+
+    private fun showBroadcastInformationTemporarily(){
+        broadcastInformationVisibilityTimerDisposable?.dispose()
+
+        broadcastInformationVisibilityTimerDisposable = Observable
+            .timer(5L, TimeUnit.SECONDS, computationScheduler)
+            .observeOn(mainThreadScheduler)
+            .doOnSubscribe { showBroadcastInformation() }
+            .subscribeBy(
+                onNext = { hideBroadcastInformation() },
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(viewScopeDisposables)
+    }
+
+    private fun showBroadcastInformation(){
+        viewBinding?.apply {
+            headerLayout.revealSmoothly(broadcastInformationRevealDuration)
+            streamInformationLayout.revealSmoothly(broadcastInformationRevealDuration)
+        }
+    }
+
+    private fun hideBroadcastInformation(){
+        viewBinding?.apply {
+            headerLayout.hideSmoothly(broadcastInformationHideDuration)
+            streamInformationLayout.hideSmoothly(broadcastInformationHideDuration)
         }
     }
 }
