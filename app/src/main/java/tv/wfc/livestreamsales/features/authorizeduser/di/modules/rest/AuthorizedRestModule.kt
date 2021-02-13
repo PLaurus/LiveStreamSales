@@ -40,7 +40,9 @@ class AuthorizedRestModule {
         authorizationInterceptor: AuthorizationInterceptor
     ): OkHttpClient{
         return baseOkHttpClient.newBuilder()
-            .addInterceptor(authorizationInterceptor)
+            .apply{
+                interceptors().add(0, authorizationInterceptor)
+            }
             .build()
     }
 

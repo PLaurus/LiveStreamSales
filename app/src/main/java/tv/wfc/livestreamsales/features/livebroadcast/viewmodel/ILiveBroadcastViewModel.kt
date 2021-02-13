@@ -23,4 +23,6 @@ interface ILiveBroadcastViewModel: IToBePreparedViewModel{
 
     fun prepareData(broadcastId: Long)
     fun refreshData()
+    fun notifyUserIsWatchingBroadcast()
+    fun notifyUserIsNotWatchingBroadcast()
 }

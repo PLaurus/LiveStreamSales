@@ -11,11 +11,14 @@ import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import tv.wfc.livestreamsales.R
+import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
 import tv.wfc.livestreamsales.application.model.viewmodel.ViewModelPreparationState
@@ -23,14 +26,19 @@ import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroa
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.tools.exoplayer.PlaybackState
 import tv.wfc.livestreamsales.application.tools.livedata.LiveEvent
+import tv.wfc.livestreamsales.features.livebroadcast.repository.IBroadcastAnalyticsRepository
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class LiveBroadcastViewModel @Inject constructor(
     private val context: Context,
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler,
+    @ComputationScheduler
+    private val computationScheduler: Scheduler,
     private val imageLoader: ImageLoader,
     private val broadcastsInformationRepository: IBroadcastsInformationRepository,
+    private val broadcastAnalyticsRepository: IBroadcastAnalyticsRepository,
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): ViewModel(), ILiveBroadcastViewModel {
     private val disposables = CompositeDisposable()
@@ -56,6 +64,14 @@ class LiveBroadcastViewModel @Inject constructor(
         override fun onPlayerError(error: ExoPlaybackException) {
             onPlayerError.value = error
             applicationErrorsLogger.logError(error)
+        }
+
+        override fun onIsPlayingChanged(isPlaying: Boolean) {
+            if(isPlaying){
+                notifyUserIsWatchingBroadcast()
+            } else{
+                notifyUserIsNotWatchingBroadcast()
+            }
         }
     }
 
@@ -101,6 +117,28 @@ class LiveBroadcastViewModel @Inject constructor(
                 }
             )
             .addTo(disposables)
+    }
+
+    private var userIsWatchingBroadcastDisposable: Disposable? = null
+
+    override fun notifyUserIsWatchingBroadcast() {
+        userIsWatchingBroadcastDisposable?.dispose()
+
+        val broadcastId = this.broadcastId ?: return
+
+        userIsWatchingBroadcastDisposable = Observable
+            .interval(0L, 50L, TimeUnit.SECONDS, computationScheduler)
+            .map{ }
+            .observeOn(mainThreadScheduler)
+            .subscribeBy(
+                onNext = { notifyServerUserIsWatchingBroadcast(broadcastId) },
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
+
+    override fun notifyUserIsNotWatchingBroadcast() {
+        userIsWatchingBroadcastDisposable?.dispose()
     }
 
     private fun prepareBroadcastInformation(broadcastId: Long): Completable {
@@ -186,5 +224,14 @@ class LiveBroadcastViewModel @Inject constructor(
         val manifestUrl = broadcastInformation.manifestUrl ?: return null
 
         return MediaItem.fromUri(manifestUrl)
+    }
+
+    private fun notifyServerUserIsWatchingBroadcast(broadcastId: Long){
+        broadcastAnalyticsRepository.notifyWatchingBroadcast(broadcastId)
+            .observeOn(mainThreadScheduler)
+            .subscribeBy(
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
     }
 }
