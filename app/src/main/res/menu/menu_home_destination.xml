@@ -5,28 +5,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/broadcastsInformationDestination"
+        android:id="@+id/mainPage"
         android:icon="@drawable/ic_baseline_home_24"
         android:title="@string/fragment_main_home_button"
         android:enabled="true"
         app:showAsAction="ifRoom|withText"/>
 
     <item
-        android:id="@+id/notificationsDestination"
+        android:id="@+id/notificationsPage"
         android:icon="@drawable/ic_baseline_notifications_none_24"
         android:title="@string/fragment_main_notifications_button"
         android:enabled="false"
         app:showAsAction="ifRoom|withText"/>
 
     <item
-        android:id="@+id/categoriesDestination"
+        android:id="@+id/categoriesPage"
         android:icon="@drawable/ic_baseline_filter_alt_24"
         android:title="@string/fragment_main_category_button"
         android:enabled="false"
         app:showAsAction="ifRoom|withText"/>
 
     <item
-        android:id="@+id/settingsDestination"
+        android:id="@+id/settingsPage"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="@string/fragment_main_settings_button"
         android:enabled="true"
