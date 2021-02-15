@@ -89,12 +89,13 @@ class LiveBroadcastViewModel @Inject constructor(
         prepareBroadcastInformation(broadcastId)
             .observeOn(mainThreadScheduler)
             .doOnSubscribe { dataPreparationState.value = ViewModelPreparationState.DataIsBeingPrepared }
+            .doOnComplete { startAutoRefresh(10L) }
+            .doOnError(applicationErrorsLogger::logError)
             .subscribeBy(
                 onComplete = {
                     dataPreparationState.value = ViewModelPreparationState.DataIsPrepared
                 },
                 onError = {
-                    applicationErrorsLogger.logError(it)
                     dataPreparationState.value = ViewModelPreparationState.FailedToPrepareData()
                 }
             )
@@ -103,6 +104,7 @@ class LiveBroadcastViewModel @Inject constructor(
 
     override fun refreshData() {
         if(isDataBeingRefreshed.value == true) return
+        if(dataPreparationState.value == ViewModelPreparationState.DataIsBeingPrepared) return
 
         val broadcastId = this.broadcastId ?: return
 
@@ -214,22 +216,40 @@ class LiveBroadcastViewModel @Inject constructor(
         broadcastInformation: BroadcastInformation
     ): Completable{
         return Completable.fromRunnable{
-            broadcastMediaItem.value = createBroadcastMediaItem(broadcastInformation)
+            val previousManifestUri = broadcastMediaItem.value?.playbackProperties?.uri?.toString()
+            val newBroadcastManifestUri = broadcastInformation.manifestUrl
+
+            if(newBroadcastManifestUri != null &&
+                newBroadcastManifestUri == previousManifestUri) return@fromRunnable
+
+            broadcastMediaItem.value = newBroadcastManifestUri?.let{
+                createBroadcastMediaItem(it)
+            }
         }
     }
 
     private fun createBroadcastMediaItem(
-        broadcastInformation: BroadcastInformation
-    ): MediaItem? {
-        val manifestUrl = broadcastInformation.manifestUrl ?: return null
-
-        return MediaItem.fromUri(manifestUrl)
+        broadcastManifestUrl: String
+    ): MediaItem {
+        return MediaItem.fromUri(broadcastManifestUrl)
     }
 
     private fun notifyServerUserIsWatchingBroadcast(broadcastId: Long){
         broadcastAnalyticsRepository.notifyWatchingBroadcast(broadcastId)
             .observeOn(mainThreadScheduler)
             .subscribeBy(
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
+
+    private fun startAutoRefresh(period: Long, timeUnit: TimeUnit = TimeUnit.SECONDS){
+        Observable
+            .interval(period, timeUnit, computationScheduler)
+            .map{ }
+            .observeOn(mainThreadScheduler)
+            .subscribeBy(
+                onNext = { refreshData() },
                 onError = applicationErrorsLogger::logError
             )
             .addTo(disposables)

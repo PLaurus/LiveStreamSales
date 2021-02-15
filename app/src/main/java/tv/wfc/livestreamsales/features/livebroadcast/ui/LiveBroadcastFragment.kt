@@ -191,36 +191,12 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
     }
 
     private fun initializePlayer() {
-        viewModel.broadcastMediaItem.observe(viewLifecycleOwner, mediaItemObserver)
-    }
-
-    private fun resumePlayerLifecycle(){
-        initializePlayer()
-        viewBinding?.playerView?.onResume()
-    }
-
-    private fun pausePlayerLifecycle(){
-        viewBinding?.playerView?.onPause()
-        releasePlayer()
-    }
-
-    private fun releasePlayer() {
-        viewModel.broadcastMediaItem.removeObserver(mediaItemObserver)
-        player?.release()
-        player = null
-    }
-
-    private fun navigateUp(){
-        navigationController.navigateUp()
-    }
-
-    private val mediaItemObserver = object: Observer<MediaItem?>{
-        override fun onChanged(broadcastMediaItem: MediaItem?) {
+        viewModel.broadcastMediaItem.observe(viewLifecycleOwner, Observer{ broadcastMediaItem ->
             releasePlayer()
 
             if (broadcastMediaItem == null) {
                 navigateUp()
-                return
+                return@Observer
             }
 
             context?.let {
@@ -240,7 +216,26 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
                 this@LiveBroadcastFragment.player = player
                 viewBinding?.playerView?.player = this@LiveBroadcastFragment.player
             }
-        }
+        })
+    }
+
+    private fun resumePlayerLifecycle(){
+        initializePlayer()
+        viewBinding?.playerView?.onResume()
+    }
+
+    private fun pausePlayerLifecycle(){
+        viewBinding?.playerView?.onPause()
+        releasePlayer()
+    }
+
+    private fun releasePlayer() {
+        player?.release()
+        player = null
+    }
+
+    private fun navigateUp(){
+        navigationController.navigateUp()
     }
 
     private var broadcastInformationVisibilityTimerDisposable: Disposable? = null
