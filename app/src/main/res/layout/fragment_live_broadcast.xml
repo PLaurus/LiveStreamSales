@@ -53,7 +53,6 @@
                 android:layout_marginHorizontal="@dimen/contentMargin"
                 android:textColor="@color/colorOnPrimary"
                 android:textStyle="bold"
-                android:textSize="@dimen/headerTextSize"
                 android:gravity="start|center"
                 android:maxLines="2"
                 android:shadowColor="@color/colorLiveBroadcast_shadow"
@@ -64,6 +63,7 @@
                 app:layout_constraintEnd_toStartOf="@id/viewersIndicatorImage"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:autoSizeTextType="uniform"
                 tools:text="Отдай мне свои деньги 2 Отдай мне свои деньги 2"/>
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -98,7 +98,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/streamInformationLayout"
             android:layout_width="0dp"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -107,26 +107,25 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/broadcastDescriptionText"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="8dp"
+                android:layout_height="wrap_content"
                 android:textColor="@color/colorOnPrimary"
                 android:textSize="@dimen/textSize"
+                android:ellipsize="end"
                 android:maxLines="3"
                 android:shadowColor="@color/colorLiveBroadcast_shadow"
                 android:shadowRadius="@dimen/liveBroadcast_shadowRadius"
                 android:shadowDx="@dimen/liveBroadcast_shadowDx"
                 android:shadowDy="@dimen/liveBroadcast_shadowDy"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/discountCard"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/productPriceText"
-                app:autoSizeTextType="uniform"
                 tools:text="Потрясающее предложение на нового хромого коня с дорогими зубами"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/productPriceText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:textColor="@color/colorSecondary"
                 android:textStyle="bold"
@@ -138,6 +137,7 @@
                 android:shadowDy="@dimen/liveBroadcast_shadowDy"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/productOldPriceText"
+                app:layout_constraintTop_toBottomOf="@id/broadcastDescriptionText"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="1 000 000 руб."/>
 
@@ -157,121 +157,29 @@
                 android:shadowDx="@dimen/liveBroadcast_shadowDx"
                 android:shadowDy="@dimen/liveBroadcast_shadowDy"
                 app:layout_constraintStart_toEndOf="@id/productPriceText"
-                app:layout_constraintEnd_toEndOf="@id/broadcastDescriptionText"
+                app:layout_constraintEnd_toStartOf="@id/productsBoughtAmountText"
                 app:layout_constraintTop_toTopOf="@id/productPriceText"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintVertical_bias="1"
                 app:autoSizeTextType="uniform"
                 tools:text="1 129 990 руб."/>
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/timerBackgroundDrawee"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginVertical="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/discountCard"
-                app:layout_constraintBottom_toBottomOf="@id/discountCard"
-                app:layout_constraintHeight_percent="0.6"
-                app:layout_constraintDimensionRatio="2"
-                app:backgroundImage="@color/colorPrimary"
-                app:roundedCornerRadius="8dp"/>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/discountCard"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="@id/timerBackgroundDrawee"
-                app:layout_constraintEnd_toStartOf="@id/timerBackgroundDrawee"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintDimensionRatio="1"
-                app:layout_constraintHeight_percent="0.7"
-                app:cardBackgroundColor="@color/colorSecondary"
-                app:cardCornerRadius="45dp">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:gravity="center"
-                    android:textColor="@color/colorOnSecondary"
-                    android:textStyle="bold"
-                    android:shadowColor="@color/colorLiveBroadcast_shadow"
-                    android:shadowRadius="@dimen/liveBroadcast_shadowRadius"
-                    android:shadowDx="@dimen/liveBroadcast_shadowDx"
-                    android:shadowDy="@dimen/liveBroadcast_shadowDy"
-                    app:autoSizeTextType="uniform"
-                    tools:text="40%"/>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/timerInformationLayout"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:paddingHorizontal="4dp"
-                app:layout_constraintStart_toEndOf="@id/discountCard"
-                app:layout_constraintEnd_toEndOf="@id/timerBackgroundDrawee"
-                app:layout_constraintTop_toTopOf="@id/timerBackgroundDrawee"
-                app:layout_constraintBottom_toBottomOf="@id/timerBackgroundDrawee">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/timerTitleText"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:shadowColor="@color/colorLiveBroadcast_shadow"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
-                    android:shadowRadius="5"
-                    android:text="@string/fragment_live_broadcast_timer_title"
-                    android:maxLines="1"
-                    android:textColor="@color/colorOnPrimary"
-                    android:textAlignment="center"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintHeight_percent="0.3"
-                    app:autoSizeTextType="uniform"/>
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/timeLeftText"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:shadowColor="@color/colorLiveBroadcast_shadow"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
-                    android:shadowRadius="5"
-                    android:textColor="@color/colorOnPrimary"
-                    android:textStyle="bold"
-                    android:gravity="top"
-                    android:includeFontPadding="false"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/timerTitleText"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:autoSizeTextType="uniform"
-                    tools:text="05:35"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/productsBoughtAmountText"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginTop="8dp"
                 android:textColor="@color/colorOnPrimary"
                 android:gravity="bottom|end"
                 android:shadowColor="@color/colorLiveBroadcast_shadow"
                 android:shadowRadius="@dimen/liveBroadcast_shadowRadius"
                 android:shadowDx="@dimen/liveBroadcast_shadowDx"
                 android:shadowDy="@dimen/liveBroadcast_shadowDy"
-                app:layout_constraintStart_toStartOf="@id/discountCard"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/discountCard"
+                app:layout_constraintTop_toBottomOf="@id/broadcastDescriptionText"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintWidth_percent="0.4"
                 app:layout_constraintVertical_bias="1"
-                app:autoSizeTextType="uniform"
                 tools:text="30 товаров куплено"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
