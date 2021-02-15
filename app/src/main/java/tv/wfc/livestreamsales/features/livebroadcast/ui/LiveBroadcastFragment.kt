@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.exoplayer2.ExoPlaybackException
-import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.RenderersFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.audio.AudioAttributes
@@ -95,6 +94,9 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
         initializeViewersCountText()
         initializeBroadcastDescriptionText()
         initializePlayerView()
+        initializeBuyButton()
+        initializeSendMessageButton()
+        initializeMessageInput()
         showBroadcastInformationTemporarily()
     }
 
@@ -219,6 +221,33 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
         })
     }
 
+    private fun initializeBuyButton(){
+        viewBinding?.buyButton?.apply{
+            setOnClickListener { navigateToProductOrderDestination() }
+        }
+    }
+
+    private fun initializeSendMessageButton(){
+        viewBinding?.sendMessageButton?.apply{
+
+        }
+    }
+
+    private fun initializeMessageInput(){
+        viewBinding?.run{
+            messageInput.setOnFocusChangeListener { v, hasFocus ->
+                if(hasFocus){
+                    buyButton.visibility = View.INVISIBLE
+                    sendMessageButton.visibility = View.VISIBLE
+                } else{
+                    sendMessageButton.visibility = View.INVISIBLE
+                    buyButton.visibility = View.VISIBLE
+                }
+            }
+        }
+
+    }
+
     private fun resumePlayerLifecycle(){
         initializePlayer()
         viewBinding?.playerView?.onResume()
@@ -266,5 +295,10 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
             headerLayout.hideSmoothly(broadcastInformationHideDuration)
             streamInformationLayout.hideSmoothly(broadcastInformationHideDuration)
         }
+    }
+
+    private fun navigateToProductOrderDestination(){
+        val action = LiveBroadcastFragmentDirections.actionLiveBroadcastDestinationToProductOrderDestination()
+        navigationController.navigate(action)
     }
 }

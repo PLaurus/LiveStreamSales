@@ -217,11 +217,12 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/messageInputLayout"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:hint="@string/fragment_live_broadcast_message_hint"
+                    app:hintEnabled="false"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/sendMessageButtonsLayout"
+                    app:layout_constraintEnd_toStartOf="@id/mainButtonLayout"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:boxBackgroundColor="@color/colorLiveBroadcast_messageInput_boxBackgroundColor">
@@ -229,18 +230,21 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/messageInput"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="textMultiLine"/>
+                        android:layout_height="wrap_content"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:inputType="textMultiLine"
+                        android:maxLines="3"
+                        tools:text="Очко свиньи"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/sendMessageButtonsLayout"
+                    android:id="@+id/mainButtonLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     tools:ignore="RtlSymmetry">
 
@@ -248,7 +252,10 @@
                         android:id="@+id/buyButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="12dp"
+                        android:insetLeft="0dp"
+                        android:insetRight="0dp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
                         android:textAllCaps="false"
                         android:text="@string/fragment_live_broadcast_buy"
                         android:textStyle="bold"
@@ -259,9 +266,13 @@
                         app:cornerRadius="12dp"/>
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/sendPayedMessageButton"
+                        android:id="@+id/sendMessageButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:insetLeft="0dp"
+                        android:insetRight="0dp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
                         android:textAllCaps="false"
                         android:text="@string/fragment_live_broadcast_send_message"
                         android:textStyle="bold"
@@ -269,20 +280,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/sendFreeMessageButton"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/sendFreeMessageButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAllCaps="false"
-                        android:text="@string/fragment_live_broadcast_send_message"
-                        android:textStyle="bold"
-                        android:visibility="gone"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/sendPayedMessageButton"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:cornerRadius="12dp"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
