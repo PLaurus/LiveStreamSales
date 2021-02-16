@@ -19,6 +19,10 @@ interface ILiveBroadcastViewModel: IToBePreparedViewModel{
     val playbackState: LiveData<PlaybackState>
     val onPlayerError: LiveEvent<ExoPlaybackException>
 
+    val broadcastHasProducts: LiveData<Boolean>
+    val firstProductPrice: LiveData<Float>
+    val firstProductOldPrice: LiveData<Float>
+
     val playerEventListener: Player.EventListener
 
     fun prepareData(broadcastId: Long)

@@ -171,6 +171,7 @@
     <string name="fragment_live_broadcast_message_hint">Оставить комментарий</string>
     <string name="fragment_live_broadcast_send_message">Отправить</string>
     <string name="fragment_live_broadcast_buy">Купить</string>
+    <string name="fragment_live_broadcast_price">%.2f руб.</string>
 
     <!-- Product order fragment -->
     <string name="fragment_product_order_specifications_title">Характеристики:</string>

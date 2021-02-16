@@ -2,33 +2,30 @@ package tv.wfc.livestreamsales.features.phonenumberconfirmation.ui
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.text.*
 import android.text.Annotation
-import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.text.getSpans
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
-import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.databinding.FragmentPhoneNumberConfirmationBinding
-import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
-import tv.wfc.livestreamsales.features.phonenumberconfirmation.di.PhoneNumberConfirmationComponent
-import tv.wfc.livestreamsales.application.model.phonenumberconfirmation.PhoneNumberConfirmationResult
-import tv.wfc.livestreamsales.application.tools.stringresannotation.IStringResAnnotationProcessor
-import tv.wfc.livestreamsales.features.login.viewmodel.ILogInViewModel
-import tv.wfc.livestreamsales.features.phonenumberconfirmation.viewmodel.IPhoneNumberConfirmationViewModel
 import com.jakewharton.rxbinding4.view.clicks
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.kotlin.addTo
-import tv.wfc.livestreamsales.application.ui.base.BaseFragment
+import tv.wfc.livestreamsales.R
+import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
+import tv.wfc.livestreamsales.application.model.phonenumberconfirmation.PhoneNumberConfirmationResult
+import tv.wfc.livestreamsales.application.tools.stringresannotation.IStringResAnnotationProcessor
+import tv.wfc.livestreamsales.application.tools.view.makeTextViewLinkable
+import tv.wfc.livestreamsales.application.tools.view.removeHighlight
+import tv.wfc.livestreamsales.databinding.FragmentPhoneNumberConfirmationBinding
 import tv.wfc.livestreamsales.features.login.ui.base.LogInFragment
+import tv.wfc.livestreamsales.features.phonenumberconfirmation.di.PhoneNumberConfirmationComponent
+import tv.wfc.livestreamsales.features.phonenumberconfirmation.viewmodel.IPhoneNumberConfirmationViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -238,14 +235,6 @@ class PhoneNumberConfirmationFragment: LogInFragment(R.layout.fragment_phone_num
                 View.INVISIBLE
             }
         }
-    }
-
-    private fun TextView.makeTextViewLinkable(){
-        movementMethod = LinkMovementMethod.getInstance()
-    }
-
-    private fun TextView.removeHighlight(){
-        highlightColor = Color.TRANSPARENT
     }
 
     private fun applyStyleToTermsOfTheOfferText(url: String){

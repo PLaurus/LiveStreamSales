@@ -2,7 +2,10 @@ package tv.wfc.livestreamsales.application.tools.view
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.graphics.Color
+import android.text.method.LinkMovementMethod
 import android.view.View
+import android.widget.TextView
 
 fun View.matchRootView(
     matchWidth: Boolean = true,
@@ -19,6 +22,14 @@ fun View.matchRootView(
             height = rootViewHeight
         }
     }
+}
+
+fun TextView.makeTextViewLinkable(){
+    movementMethod = LinkMovementMethod.getInstance()
+}
+
+fun TextView.removeHighlight(){
+    highlightColor = Color.TRANSPARENT
 }
 
 fun View.changeVisibilitySmoothly(

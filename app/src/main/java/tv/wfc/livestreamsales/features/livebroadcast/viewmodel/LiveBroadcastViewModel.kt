@@ -2,6 +2,7 @@ package tv.wfc.livestreamsales.features.livebroadcast.viewmodel
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import coil.ImageLoader
@@ -17,12 +18,15 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.subjects.PublishSubject
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
+import tv.wfc.livestreamsales.application.model.productinformation.ProductInformation
 import tv.wfc.livestreamsales.application.model.viewmodel.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
+import tv.wfc.livestreamsales.application.repository.productsinformation.IProductsInformationRepository
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.tools.exoplayer.PlaybackState
 import tv.wfc.livestreamsales.application.tools.livedata.LiveEvent
@@ -39,11 +43,14 @@ class LiveBroadcastViewModel @Inject constructor(
     private val imageLoader: ImageLoader,
     private val broadcastsInformationRepository: IBroadcastsInformationRepository,
     private val broadcastAnalyticsRepository: IBroadcastAnalyticsRepository,
+    private val productsInformationRepository: IProductsInformationRepository,
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): ViewModel(), ILiveBroadcastViewModel {
     private val disposables = CompositeDisposable()
+    private val productsSubject = PublishSubject.create<List<ProductInformation>>()
 
     private var broadcastId: Long? = null
+    private var userIsWatchingBroadcastDisposable: Disposable? = null
 
     override val dataPreparationState = MutableLiveData<ViewModelPreparationState>()
     override val isDataBeingRefreshed = MutableLiveData(false)
@@ -55,6 +62,43 @@ class LiveBroadcastViewModel @Inject constructor(
 
     override val playbackState = MutableLiveData<PlaybackState>()
     override val onPlayerError = LiveEvent<ExoPlaybackException>()
+
+    override val broadcastHasProducts: LiveData<Boolean> = MutableLiveData(false).apply {
+        productsSubject
+            .observeOn(mainThreadScheduler)
+            .map{ it.isNotEmpty() }
+            .distinctUntilChanged()
+            .subscribeBy(
+                onNext = ::setValue,
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
+
+    override val firstProductPrice: LiveData<Float> = MutableLiveData<Float>().apply {
+        productsSubject
+            .observeOn(mainThreadScheduler)
+            .filter{ it.isNotEmpty() }
+            .map{ it[0].price }
+            .subscribeBy(
+                onNext = ::setValue,
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
+
+    override val firstProductOldPrice: LiveData<Float> = MutableLiveData<Float>().apply {
+        productsSubject
+            .observeOn(mainThreadScheduler)
+            .filter{ it.isNotEmpty() }
+            .filter{ it[0].oldPrice != null }
+            .map{ it[0].oldPrice!! }
+            .subscribeBy(
+                onNext = ::setValue,
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
 
     override val playerEventListener = object : Player.EventListener{
         override fun onPlaybackStateChanged(state: Int) {
@@ -87,6 +131,7 @@ class LiveBroadcastViewModel @Inject constructor(
         this.broadcastId = broadcastId
 
         prepareBroadcastInformation(broadcastId)
+            .concatWith(prepareProductsInformation(broadcastId))
             .observeOn(mainThreadScheduler)
             .doOnSubscribe { dataPreparationState.value = ViewModelPreparationState.DataIsBeingPrepared }
             .doOnComplete { startAutoRefresh(10L) }
@@ -109,6 +154,7 @@ class LiveBroadcastViewModel @Inject constructor(
         val broadcastId = this.broadcastId ?: return
 
         prepareBroadcastInformation(broadcastId)
+            .concatWith(prepareProductsInformation(broadcastId))
             .observeOn(mainThreadScheduler)
             .doOnSubscribe { isDataBeingRefreshed.value = true }
             .subscribeBy(
@@ -120,8 +166,6 @@ class LiveBroadcastViewModel @Inject constructor(
             )
             .addTo(disposables)
     }
-
-    private var userIsWatchingBroadcastDisposable: Disposable? = null
 
     override fun notifyUserIsWatchingBroadcast() {
         userIsWatchingBroadcastDisposable?.dispose()
@@ -226,6 +270,23 @@ class LiveBroadcastViewModel @Inject constructor(
                 createBroadcastMediaItem(it)
             }
         }
+    }
+
+    private fun prepareProductsInformation(broadcastId: Long): Completable{
+        return Completable
+            .create { emitter ->
+                val disposable = productsInformationRepository
+                    .getProducts(broadcastId)
+                    .lastOrError()
+                    .doOnError(applicationErrorsLogger::logError)
+                    .doOnTerminate { emitter.onComplete() }
+                    .subscribeBy(
+                        onSuccess = productsSubject::onNext,
+                        onError = { productsSubject.onNext(emptyList()) }
+                    )
+
+                emitter.setDisposable(disposable)
+            }
     }
 
     private fun createBroadcastMediaItem(

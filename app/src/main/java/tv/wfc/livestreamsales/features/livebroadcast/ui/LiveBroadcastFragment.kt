@@ -24,6 +24,7 @@ import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
+import tv.wfc.livestreamsales.application.tools.string.strikeThrough
 import tv.wfc.livestreamsales.application.tools.view.hideSmoothly
 import tv.wfc.livestreamsales.application.tools.view.matchRootView
 import tv.wfc.livestreamsales.application.tools.view.revealSmoothly
@@ -93,10 +94,13 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
         initializeBroadcastTitleText()
         initializeViewersCountText()
         initializeBroadcastDescriptionText()
+        initializePlayer()
         initializePlayerView()
         initializeBuyButton()
         initializeSendMessageButton()
         initializeMessageInput()
+        initializePriceText()
+        initializeOldPriceText()
         showBroadcastInformationTemporarily()
     }
 
@@ -222,8 +226,15 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
     }
 
     private fun initializeBuyButton(){
-        viewBinding?.buyButton?.apply{
-            setOnClickListener { navigateToProductOrderDestination() }
+        viewBinding?.run{
+            viewModel.broadcastHasProducts.observe(viewLifecycleOwner,{ hasProducts ->
+                if(!messageInput.isFocused){
+                    sendMessageButton.visibility = View.GONE
+                    buyButton.visibility = if(hasProducts) View.VISIBLE else View.GONE
+                }
+            })
+
+            buyButton.setOnClickListener { navigateToProductOrderDestination() }
         }
     }
 
@@ -235,21 +246,56 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
 
     private fun initializeMessageInput(){
         viewBinding?.run{
-            messageInput.setOnFocusChangeListener { v, hasFocus ->
+            messageInput.setOnFocusChangeListener { _, hasFocus ->
                 if(hasFocus){
-                    buyButton.visibility = View.INVISIBLE
+                    buyButton.visibility = View.GONE
                     sendMessageButton.visibility = View.VISIBLE
                 } else{
-                    sendMessageButton.visibility = View.INVISIBLE
-                    buyButton.visibility = View.VISIBLE
+                    sendMessageButton.visibility = View.GONE
+
+                    if(viewModel.broadcastHasProducts.value == true) {
+                        buyButton.visibility = View.VISIBLE
+                    }
                 }
             }
         }
+    }
 
+    private fun initializePriceText(){
+        viewBinding?.productPriceText?.apply {
+            viewModel.firstProductPrice.observe(viewLifecycleOwner, { price ->
+                if(price != null){
+                    visibility = View.VISIBLE
+                    text = resources.getString(
+                        R.string.fragment_live_broadcast_price,
+                        price
+                    )
+                } else{
+                    visibility = View.GONE
+                }
+            })
+        }
+    }
+
+    private fun initializeOldPriceText(){
+        viewBinding?.apply {
+            viewModel.firstProductOldPrice.observe(viewLifecycleOwner, { oldPrice ->
+                if(oldPrice != null && productPriceText.visibility == View.VISIBLE){
+                    productOldPriceText.apply {
+                        text = resources.getString(
+                            R.string.fragment_live_broadcast_price,
+                            oldPrice
+                        ).strikeThrough()
+                        visibility = View.VISIBLE
+                    }
+                } else {
+                    productOldPriceText.visibility = View.GONE
+                }
+            })
+        }
     }
 
     private fun resumePlayerLifecycle(){
-        initializePlayer()
         viewBinding?.playerView?.onResume()
     }
 
