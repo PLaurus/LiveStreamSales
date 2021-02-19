@@ -162,6 +162,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintVertical_bias="1"
                 app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="4sp"
                 tools:text="1 129 990 руб."/>
 
             <com.google.android.material.textview.MaterialTextView
