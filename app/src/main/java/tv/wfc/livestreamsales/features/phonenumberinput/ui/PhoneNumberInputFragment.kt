@@ -64,8 +64,8 @@ class PhoneNumberInputFragment: LogInFragment(R.layout.fragment_phone_number_inp
         injectDependencies()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onContentViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onContentViewCreated(view, savedInstanceState)
         bindView(view)
         initializePhoneNumberEditText()
         initializeSendCodeButton()

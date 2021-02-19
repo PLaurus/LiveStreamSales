@@ -1,8 +1,8 @@
 package tv.wfc.livestreamsales.features.phonenumberconfirmation.viewmodel
 
 import androidx.lifecycle.LiveData
+import tv.wfc.contentloader.viewmodel.IToBePreparedViewModel
 import tv.wfc.livestreamsales.application.model.phonenumberconfirmation.PhoneNumberConfirmationResult
-import tv.wfc.livestreamsales.application.viewmodels.base.IToBePreparedViewModel
 
 interface IPhoneNumberConfirmationViewModel: IToBePreparedViewModel {
     val phoneNumber: LiveData<String>

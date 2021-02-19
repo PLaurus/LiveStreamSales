@@ -49,7 +49,9 @@
 
     <dialog
         android:id="@+id/productOrderDestination"
-        android:label="@string/dialog_product_order_title"/>
+        android:name="tv.wfc.livestreamsales.features.productorder.ui.ProductOrderDialogFragment"
+        android:label="@string/dialog_product_order_title"
+        tools:layout="@layout/dialog_product_order"/>
 
     <activity
         android:id="@+id/authorizationGraphDestination"

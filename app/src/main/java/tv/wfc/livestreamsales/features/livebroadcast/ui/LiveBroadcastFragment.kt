@@ -15,6 +15,7 @@ import com.google.android.exoplayer2.trackselection.TrackSelector
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.util.ErrorMessageProvider
 import com.google.android.exoplayer2.util.Util
+import com.jakewharton.rxbinding4.view.clicks
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.Disposable
@@ -83,8 +84,8 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
         prepareViewModel(navigationArguments.liveBroadcastId)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onContentViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onContentViewCreated(view, savedInstanceState)
         bindView(view)
     }
 
@@ -234,7 +235,15 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
                 }
             })
 
-            buyButton.setOnClickListener { navigateToProductOrderDestination() }
+            buyButton
+                .clicks()
+                .throttleFirst(1L, TimeUnit.SECONDS, computationScheduler)
+                .observeOn(mainThreadScheduler)
+                .subscribeBy(
+                    onNext = { navigateToProductOrderDestination() },
+                    onError = applicationErrorsLogger::logError
+                )
+                .addTo(viewScopeDisposables)
         }
     }
 
@@ -319,7 +328,7 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
         broadcastInformationVisibilityTimerDisposable?.dispose()
 
         broadcastInformationVisibilityTimerDisposable = Observable
-            .timer(5L, TimeUnit.SECONDS, computationScheduler)
+            .timer(10L, TimeUnit.SECONDS, computationScheduler)
             .observeOn(mainThreadScheduler)
             .doOnSubscribe { showBroadcastInformation() }
             .subscribeBy(

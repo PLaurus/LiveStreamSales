@@ -1,4 +1,4 @@
-package tv.wfc.livestreamsales.application.model.viewmodel
+package tv.wfc.contentloader.model
 
 sealed class ViewModelPreparationState{
     object DataIsBeingPrepared: ViewModelPreparationState()

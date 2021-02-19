@@ -1,0 +1,5 @@
+package tv.wfc.livestreamsales.features.productorder.viewmodel
+
+import tv.wfc.contentloader.viewmodel.IToBePreparedViewModel
+
+interface IProductOrderViewModel: IToBePreparedViewModel

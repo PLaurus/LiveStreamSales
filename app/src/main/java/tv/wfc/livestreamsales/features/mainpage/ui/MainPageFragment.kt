@@ -9,12 +9,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.databinding.FragmentMainPageBinding
-import tv.wfc.livestreamsales.features.mainpage.di.MainPageComponent
 import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
 import tv.wfc.livestreamsales.application.tools.viewpager2.onPageSelected
+import tv.wfc.livestreamsales.databinding.FragmentMainPageBinding
 import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserFragment
 import tv.wfc.livestreamsales.features.home.ui.HomeFragmentDirections
+import tv.wfc.livestreamsales.features.mainpage.di.MainPageComponent
 import tv.wfc.livestreamsales.features.mainpage.ui.adapters.announcements.AnnouncementsAdapter
 import tv.wfc.livestreamsales.features.mainpage.ui.adapters.livebroadcast.LiveBroadcastAdapter
 import tv.wfc.livestreamsales.features.mainpage.viewmodel.IMainPageViewModel
@@ -59,8 +59,8 @@ class MainPageFragment: AuthorizedUserFragment(R.layout.fragment_main_page) {
         injectDependencies()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onContentViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onContentViewCreated(view, savedInstanceState)
         bindView(view)
     }
 

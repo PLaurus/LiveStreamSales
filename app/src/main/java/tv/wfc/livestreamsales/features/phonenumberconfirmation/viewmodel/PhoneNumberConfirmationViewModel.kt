@@ -3,12 +3,6 @@ package tv.wfc.livestreamsales.features.phonenumberconfirmation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
-import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
-import tv.wfc.livestreamsales.application.model.phonenumberconfirmation.PhoneNumberConfirmationResult
-import tv.wfc.livestreamsales.application.model.viewmodel.ViewModelPreparationState
-import tv.wfc.livestreamsales.application.repository.authorization.IAuthorizationRepository
-import tv.wfc.livestreamsales.application.tools.livedata.LiveEvent
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -16,6 +10,12 @@ import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
+import tv.wfc.contentloader.model.ViewModelPreparationState
+import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
+import tv.wfc.livestreamsales.application.model.phonenumberconfirmation.PhoneNumberConfirmationResult
+import tv.wfc.livestreamsales.application.repository.authorization.IAuthorizationRepository
+import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
+import tv.wfc.livestreamsales.application.tools.livedata.LiveEvent
 import tv.wfc.livestreamsales.features.login.repository.ILoginRepository
 import javax.inject.Inject
 

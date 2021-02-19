@@ -28,8 +28,8 @@ class HomeFragment: AuthorizedUserFragment(R.layout.fragment_home) {
         injectDependencies()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onContentViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onContentViewCreated(view, savedInstanceState)
         bindView(view)
     }
 

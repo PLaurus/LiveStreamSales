@@ -2,6 +2,7 @@
 
 <rotate
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:fromDegrees="0"
     android:toDegrees="1080"
     android:pivotX="50%"
@@ -20,9 +21,10 @@
         <gradient
             android:centerY="0.50"
             android:startColor="#00FFFFFF"
-            android:endColor="@color/colorPrimary"
+            android:endColor="?attr/colorPrimary"
             android:type="sweep"
-            android:useLevel="false" />
+            android:useLevel="false"
+            tools:endColor="#FF0000"/>
 
     </shape>
 

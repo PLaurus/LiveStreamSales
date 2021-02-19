@@ -8,11 +8,11 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
-import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
+import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
-import tv.wfc.livestreamsales.application.model.viewmodel.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
+import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import javax.inject.Inject
 
 class MainPageViewModel @Inject constructor(

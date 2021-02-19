@@ -9,11 +9,10 @@ import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.databinding.FragmentBaseBinding
-import tv.wfc.livestreamsales.application.model.viewmodel.ViewModelPreparationState
-import tv.wfc.livestreamsales.application.viewmodels.base.IToBePreparedViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import tv.wfc.contentloader.ContentLoaderView
+import tv.wfc.contentloader.viewmodel.IToBePreparedViewModel
+import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.LiveStreamSalesApplication
 import tv.wfc.livestreamsales.application.di.AppComponent
 
@@ -21,7 +20,7 @@ abstract class BaseFragment(
     @LayoutRes
     private val contentLayoutId: Int
 ): Fragment() {
-    private var viewBinding: FragmentBaseBinding? = null
+    private lateinit var contentLoaderView: ContentLoaderView
 
     protected lateinit var viewScopeDisposables: CompositeDisposable
         private set
@@ -37,127 +36,61 @@ abstract class BaseFragment(
         appComponent = (context.applicationContext as LiveStreamSalesApplication).appComponent
     }
 
-    @CallSuper
-    override fun onCreateView(
+    final override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewScopeDisposables = CompositeDisposable()
 
-        val view = bindView(inflater, container)
-        inflateContentView(view.context)
+        contentLoaderView = createContentLoaderView(requireContext(), contentLayoutId)
 
-        return view
+        return contentLoaderView
+    }
+
+    final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        onContentViewCreated(contentLoaderView.contentView, savedInstanceState)
     }
 
     @CallSuper
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        manageContentAndProgressVisibility()
-    }
+    protected open fun onContentViewCreated(view: View, savedInstanceState: Bundle?) = Unit
 
     override fun onDestroyView() {
         super.onDestroyView()
         viewScopeDisposables.dispose()
-        unbindView()
+        contentLoaderView.clearPreparationListeners()
     }
 
     protected open fun onDataIsNotPrepared() = Unit
 
-    @CallSuper
-    protected open fun onDataIsBeingPrepared(){
-        showContentLoadingProgress()
-    }
+    protected open fun onDataIsBeingPrepared() = Unit
 
-    @CallSuper
-    protected open fun onDataIsPrepared() {
-        showContent()
-    }
+    protected open fun onDataIsPrepared() = Unit
 
-    @CallSuper
-    protected open fun onDataPreparationFailure(){
-        showContentLoadingError()
-    }
+    protected open fun onDataPreparationFailure() = Unit
 
     protected fun showOperationProgress(){
-        viewBinding?.operationProgressContainer?.visibility = View.VISIBLE
+        contentLoaderView.showOperationProgress()
     }
 
     protected fun hideOperationProgress(){
-        viewBinding?.operationProgressContainer?.visibility = View.INVISIBLE
+        contentLoaderView.hideOperationProgress()
     }
 
-    private fun bindView(
-        inflater: LayoutInflater,
-        parent: ViewGroup?
-    ): View{
-        val viewBinding = FragmentBaseBinding.inflate(inflater, parent, false)
-        this.viewBinding = viewBinding
-        return viewBinding.root.apply{
+    private fun createContentLoaderView(
+        context: Context,
+        @LayoutRes
+        contentLayoutId: Int
+    ): ContentLoaderView{
+        return ContentLoaderView(context).apply {
+            attachContentView(contentLayoutId)
+            attachViewModel(viewLifecycleOwner, viewModel)
+            addOnDataIsNotPreparedListener(::onDataIsNotPrepared)
+            addOnDataIsBeingPreparedListener(::onDataIsBeingPrepared)
+            addOnDataIsPreparedListener(::onDataIsPrepared)
+            addOnDataPreparationFailureListener(::onDataPreparationFailure)
             replaceEmptyBackground()
-        }
-    }
-
-    private fun unbindView(){
-        viewBinding = null
-    }
-
-    private fun inflateContentView(context: Context): View?{
-        var contentView: View? = null
-
-        viewBinding?.contentContainer?.let{
-            contentView = LayoutInflater.from(context).inflate(contentLayoutId, it, false).apply{
-                layoutParams.apply {
-                    width = ViewGroup.LayoutParams.MATCH_PARENT
-                    height = ViewGroup.LayoutParams.MATCH_PARENT
-                }
-            }
-
-            it.addView(contentView)
-            it.requestLayout()
-        }
-
-        return contentView
-    }
-
-    private fun manageContentAndProgressVisibility(){
-        viewModel.dataPreparationState.observe(viewLifecycleOwner, { dataPreparationState ->
-            when(dataPreparationState){
-                is ViewModelPreparationState.DataIsBeingPrepared -> onDataIsBeingPrepared()
-                is ViewModelPreparationState.DataIsPrepared -> onDataIsPrepared()
-                is ViewModelPreparationState.FailedToPrepareData -> onDataPreparationFailure()
-                else -> onDataIsNotPrepared()
-            }
-        })
-    }
-
-    private fun showContent(){
-        viewBinding?.apply{
-            contentContainer.visibility = View.VISIBLE
-            contentProgressContainer.visibility = View.INVISIBLE
-            contentIsNotLoadedMessage.visibility = View.INVISIBLE
-        }
-    }
-
-    private fun showContentLoadingProgress(){
-        viewBinding?.apply{
-            contentContainer.visibility = View.INVISIBLE
-            contentIsNotLoadedMessage.visibility = View.INVISIBLE
-            contentProgressContainer.visibility = View.VISIBLE
-        }
-    }
-
-    private fun showContentLoadingError(
-        error: String = resources.getString(R.string.base_fragment_content_loading_error)
-    ){
-        viewBinding?.apply {
-            contentContainer.visibility = View.INVISIBLE
-            contentProgressContainer.visibility = View.INVISIBLE
-            contentIsNotLoadedMessage.apply{
-                text = error
-                visibility = View.VISIBLE
-            }
         }
     }
 

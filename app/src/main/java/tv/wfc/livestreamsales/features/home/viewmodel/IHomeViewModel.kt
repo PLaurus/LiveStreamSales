@@ -1,5 +1,5 @@
 package tv.wfc.livestreamsales.features.home.viewmodel
 
-import tv.wfc.livestreamsales.application.viewmodels.base.IToBePreparedViewModel
+import tv.wfc.contentloader.viewmodel.IToBePreparedViewModel
 
 interface IHomeViewModel: IToBePreparedViewModel

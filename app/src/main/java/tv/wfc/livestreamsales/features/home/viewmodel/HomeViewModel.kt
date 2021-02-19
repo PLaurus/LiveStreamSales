@@ -2,7 +2,7 @@ package tv.wfc.livestreamsales.features.home.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import tv.wfc.livestreamsales.application.model.viewmodel.ViewModelPreparationState
+import tv.wfc.contentloader.model.ViewModelPreparationState
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(

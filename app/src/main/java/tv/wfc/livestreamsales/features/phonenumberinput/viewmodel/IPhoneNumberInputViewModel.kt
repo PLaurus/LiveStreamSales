@@ -1,7 +1,7 @@
 package tv.wfc.livestreamsales.features.phonenumberinput.viewmodel
 
 import androidx.lifecycle.LiveData
-import tv.wfc.livestreamsales.application.viewmodels.base.IToBePreparedViewModel
+import tv.wfc.contentloader.viewmodel.IToBePreparedViewModel
 
 interface IPhoneNumberInputViewModel: IToBePreparedViewModel {
     val phoneNumber: LiveData<String>

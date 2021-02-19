@@ -57,8 +57,8 @@ class PhoneNumberConfirmationFragment: LogInFragment(R.layout.fragment_phone_num
         injectDependencies()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onContentViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onContentViewCreated(view, savedInstanceState)
         bindView(view)
     }
 

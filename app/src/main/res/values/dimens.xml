@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Base Dialog Fragment -->
+    <dimen name="baseDialogFragment_marginHorizontal_default">48dp</dimen>
+    <dimen name="baseDialogFragment_marginVertical_default">64dp</dimen>
+
     <!-- Empty fragment -->
     <dimen name="emptyFragment_textSize">20sp</dimen>
 
@@ -31,4 +35,6 @@
     <dimen name="liveBroadcast_shadowDy">1</dimen>
     <dimen name="liveBroadcast_messageInput_cornerRadius">10dp</dimen>
     <dimen name="liveBroadcast_messageInput_strokeWidth">4dp</dimen>
+
+
 </resources>
