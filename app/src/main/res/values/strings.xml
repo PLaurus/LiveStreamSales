@@ -176,5 +176,6 @@
     <string name="fragment_product_order_product_color">Цвет</string>
     <string name="fragment_product_order_add_to_cart">Добавить</string>
     <string name="fragment_product_order_buy">Купить</string>
+    <string name="fragment_product_order_price">%s руб.</string>
 
 </resources>

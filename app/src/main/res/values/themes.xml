@@ -56,9 +56,32 @@
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
         <item name="android:padding">0dp</item>
+
+    </style>
+
+    <style
+        name="Theme.LiveStreamSales.MaterialButton.IconOnly.Circle"
+        parent="Theme.LiveStreamSales.MaterialButton.IconOnly">
+
+        <item name="android:minWidth">48dip</item>
+        <item name="android:minHeight">48dip</item>
         <item name="shapeAppearanceOverlay">
             @style/Theme.LiveStreamSales.ShapeAppearanceOverlay.Button.Circle
         </item>
+
+    </style>
+
+    <style
+        name="Theme.LiveStreamSales.MaterialButton.IconOnly.Circle.Transparent"
+        parent="Theme.LiveStreamSales.MaterialButton.IconOnly.Circle">
+
+        <item
+            name="android:stateListAnimator"
+            tools:ignore="NewApi">@animator/mtrl_btn_unelevated_state_list_anim
+        </item>
+        <item name="elevation">0dp</item>
+        <item name="backgroundTint">@color/mtrl_btn_text_btn_bg_color_selector</item>
+        <item name="rippleColor">@color/mtrl_btn_text_btn_ripple_color</item>
 
     </style>
 

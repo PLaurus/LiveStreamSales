@@ -51,7 +51,13 @@
         android:id="@+id/productOrderDestination"
         android:name="tv.wfc.livestreamsales.features.productorder.ui.ProductOrderDialogFragment"
         android:label="@string/dialog_product_order_title"
-        tools:layout="@layout/dialog_product_order"/>
+        tools:layout="@layout/dialog_product_order">
+
+        <argument
+            android:name="liveBroadcastId"
+            app:argType="long" />
+
+    </dialog>
 
     <activity
         android:id="@+id/authorizationGraphDestination"

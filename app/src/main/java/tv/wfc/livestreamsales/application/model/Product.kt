@@ -1,8 +1,8 @@
-package tv.wfc.livestreamsales.application.model.productinformation
+package tv.wfc.livestreamsales.application.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ProductInformation(
+data class Product(
     @SerializedName("id")
     val id: Long,
     @SerializedName("name")

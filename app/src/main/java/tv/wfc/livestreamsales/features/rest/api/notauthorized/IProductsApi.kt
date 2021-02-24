@@ -6,7 +6,7 @@ import retrofit2.http.Query
 import tv.wfc.livestreamsales.features.rest.api.base.IApi
 import tv.wfc.livestreamsales.features.rest.model.api.response.GetProductsResponseBody
 
-interface IProductsInformationApi: IApi {
+interface IProductsApi: IApi {
     @GET("products")
     fun getProducts(
         @Query("broadcast_id") broadcastId: Long

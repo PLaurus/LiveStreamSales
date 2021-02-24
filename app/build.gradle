@@ -129,4 +129,5 @@ dependencies {
     // Modules
     implementation project(":codeview")
     implementation project(":ContentLoader")
+    implementation project(':AutoFillTextView')
 }

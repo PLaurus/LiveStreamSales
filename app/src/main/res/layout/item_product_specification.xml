@@ -6,31 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.google.android.material.textview.MaterialTextView
+    <com.flora.michael.autofilltextview.AutoFillTextView
         android:id="@+id/productSpecificationName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:textSize="@dimen/textSize"
         android:textStyle="bold"
         android:textColor="@color/colorSecondaryText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.7"
-        app:layout_constraintWidth_max="wrap"
-        tools:text="Количество режимов работы"/>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/productSpecificationDivider"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/textSize"
-        android:textStyle="bold"
-        android:textColor="@color/colorSecondaryText"
-        android:maxLines="1"
-        app:layout_constraintStart_toEndOf="@id/productSpecificationName"
         app:layout_constraintEnd_toStartOf="@id/productSpecificationValue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:text=" ................."/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Количество режимов работы"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/productSpecificationValue"
@@ -39,7 +26,7 @@
         android:textSize="@dimen/textSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintWidth_percent="0.14"
-        tools:text="4"/>
+        app:layout_constraintWidth_percent="0.25"
+        tools:text="4324234"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

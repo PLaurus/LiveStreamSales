@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import tv.wfc.livestreamsales.application.di.modules.storage.qualifiers.ProductsInformationLocalStorage
 import tv.wfc.livestreamsales.application.di.modules.storage.qualifiers.ProductsInformationRemoteStorage
-import tv.wfc.livestreamsales.application.model.productinformation.ProductInformation
+import tv.wfc.livestreamsales.application.model.Product
 import tv.wfc.livestreamsales.application.storage.productsinformation.IProductsInformationStorage
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import javax.inject.Inject
@@ -19,7 +19,7 @@ class ProductsInformationRepository @Inject constructor(
     private val productsInformationLocalStorage: IProductsInformationStorage,
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): IProductsInformationRepository {
-    override fun getProducts(broadcastId: Long): Observable<List<ProductInformation>> {
+    override fun getProducts(broadcastId: Long): Observable<List<Product>> {
         return productsInformationLocalStorage
             .getProducts(broadcastId)
             .onErrorComplete().toObservable()
@@ -28,7 +28,7 @@ class ProductsInformationRepository @Inject constructor(
 
     private val disposables = CompositeDisposable()
 
-    private fun getAndSaveProductsFromRemote(broadcastId: Long): Single<List<ProductInformation>>{
+    private fun getAndSaveProductsFromRemote(broadcastId: Long): Single<List<Product>>{
         return productsInformationRemoteStorage
             .getProducts(broadcastId)
             .doOnSuccess { saveProductsLocally(broadcastId, it) }
@@ -36,7 +36,7 @@ class ProductsInformationRepository @Inject constructor(
 
     private fun saveProductsLocally(
         broadcastId: Long,
-        products: List<ProductInformation>
+        products: List<Product>
     ){
         productsInformationLocalStorage
             .saveProducts(broadcastId, products)

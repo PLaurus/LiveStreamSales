@@ -23,8 +23,8 @@ import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
+import tv.wfc.livestreamsales.application.model.Product
 import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
-import tv.wfc.livestreamsales.application.model.productinformation.ProductInformation
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
 import tv.wfc.livestreamsales.application.repository.productsinformation.IProductsInformationRepository
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
@@ -47,7 +47,7 @@ class LiveBroadcastViewModel @Inject constructor(
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): ViewModel(), ILiveBroadcastViewModel {
     private val disposables = CompositeDisposable()
-    private val productsSubject = PublishSubject.create<List<ProductInformation>>()
+    private val productsSubject = PublishSubject.create<List<Product>>()
 
     private var broadcastId: Long? = null
     private var userIsWatchingBroadcastDisposable: Disposable? = null
@@ -218,8 +218,7 @@ class LiveBroadcastViewModel @Inject constructor(
                         image.value = result
                         emitter.onComplete()
                     },
-                    onError = {
-                        emitter.onComplete() }
+                    onError = { emitter.onComplete() }
                 )
                 .build()
 

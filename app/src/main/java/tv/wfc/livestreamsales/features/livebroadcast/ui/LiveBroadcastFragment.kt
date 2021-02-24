@@ -353,7 +353,7 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
     }
 
     private fun navigateToProductOrderDestination(){
-        val action = LiveBroadcastFragmentDirections.actionLiveBroadcastDestinationToProductOrderDestination()
+        val action = LiveBroadcastFragmentDirections.actionLiveBroadcastDestinationToProductOrderDestination(navigationArguments.liveBroadcastId)
         navigationController.navigate(action)
     }
 }
