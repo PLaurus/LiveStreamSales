@@ -10,6 +10,8 @@ import coil.ImageLoader
 import coil.load
 import coil.request.Disposable
 import com.jakewharton.rxbinding4.view.clicks
+import com.laurus.p.tools.floatKtx.format
+import com.laurus.p.tools.string.strikeThrough
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.kotlin.addTo
@@ -19,8 +21,6 @@ import tv.wfc.livestreamsales.application.LiveStreamSalesApplication
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
-import tv.wfc.livestreamsales.application.tools.float.format
-import tv.wfc.livestreamsales.application.tools.string.strikeThrough
 import tv.wfc.livestreamsales.application.ui.base.BaseDialogFragment
 import tv.wfc.livestreamsales.databinding.DialogProductOrderBinding
 import tv.wfc.livestreamsales.features.productorder.di.ProductOrderComponent

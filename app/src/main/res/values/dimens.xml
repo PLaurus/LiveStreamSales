@@ -22,12 +22,10 @@
     <!-- Payment card -->
     <dimen name="paymentCard_content_paddingHorizontal">30dp</dimen>
     <dimen name="paymentCard_numberTextPart_heightPercent">0.15</dimen>
-    <dimen name="paymentCard_numberTextPart_maxLines">1</dimen>
-    <dimen name="paymentCard_numberTextPart_maxLength">4</dimen>
     <dimen name="paymentCard_description_heightPercent">0.1</dimen>
-    <dimen name="paymentCard_text_shadowRadius">3</dimen>
-    <dimen name="paymentCard_text_shadowDx">1</dimen>
-    <dimen name="paymentCard_text_shadowDy">1</dimen>
+    <dimen name="paymentCard_text_shadowRadius">3.0</dimen>
+    <dimen name="paymentCard_text_shadowDx">1.0</dimen>
+    <dimen name="paymentCard_text_shadowDy">1.0</dimen>
 
     <!-- Live broadcast fragment -->
     <dimen name="liveBroadcast_shadowRadius">5</dimen>

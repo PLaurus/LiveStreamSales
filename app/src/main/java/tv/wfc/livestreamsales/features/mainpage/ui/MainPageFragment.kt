@@ -8,9 +8,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
+import com.laurus.p.tools.viewpager2.onPageSelected
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
-import tv.wfc.livestreamsales.application.tools.viewpager2.onPageSelected
 import tv.wfc.livestreamsales.databinding.FragmentMainPageBinding
 import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserFragment
 import tv.wfc.livestreamsales.features.home.ui.HomeFragmentDirections

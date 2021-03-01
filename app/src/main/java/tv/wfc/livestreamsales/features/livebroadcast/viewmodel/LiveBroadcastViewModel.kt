@@ -11,6 +11,7 @@ import coil.transform.CircleCropTransformation
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
+import com.laurus.p.tools.livedata.LiveEvent
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
@@ -29,7 +30,6 @@ import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroa
 import tv.wfc.livestreamsales.application.repository.productsinformation.IProductsInformationRepository
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.tools.exoplayer.PlaybackState
-import tv.wfc.livestreamsales.application.tools.livedata.LiveEvent
 import tv.wfc.livestreamsales.features.livebroadcast.repository.IBroadcastAnalyticsRepository
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

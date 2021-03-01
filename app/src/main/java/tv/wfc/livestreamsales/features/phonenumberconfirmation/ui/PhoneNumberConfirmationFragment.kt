@@ -14,14 +14,14 @@ import androidx.core.text.getSpans
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import com.jakewharton.rxbinding4.view.clicks
+import com.laurus.p.tools.view.makeTextViewLinkable
+import com.laurus.p.tools.view.removeHighlight
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.kotlin.addTo
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.model.phonenumberconfirmation.PhoneNumberConfirmationResult
 import tv.wfc.livestreamsales.application.tools.stringresannotation.IStringResAnnotationProcessor
-import tv.wfc.livestreamsales.application.tools.view.makeTextViewLinkable
-import tv.wfc.livestreamsales.application.tools.view.removeHighlight
 import tv.wfc.livestreamsales.databinding.FragmentPhoneNumberConfirmationBinding
 import tv.wfc.livestreamsales.features.login.ui.base.LogInFragment
 import tv.wfc.livestreamsales.features.phonenumberconfirmation.di.PhoneNumberConfirmationComponent

@@ -2,19 +2,19 @@ package tv.wfc.livestreamsales.features.greeting.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
-import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
-import tv.wfc.livestreamsales.features.greeting.model.GreetingPage
-import tv.wfc.livestreamsales.application.repository.applicationsettings.IApplicationSettingsRepository
-import tv.wfc.livestreamsales.application.repository.authorization.IAuthorizationRepository
-import tv.wfc.livestreamsales.features.greeting.repository.IGreetingPageRepository
-import tv.wfc.livestreamsales.application.tools.livedata.LiveEvent
+import com.laurus.p.tools.livedata.LiveEvent
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
+import tv.wfc.livestreamsales.application.repository.applicationsettings.IApplicationSettingsRepository
+import tv.wfc.livestreamsales.application.repository.authorization.IAuthorizationRepository
+import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
+import tv.wfc.livestreamsales.features.greeting.model.GreetingPage
+import tv.wfc.livestreamsales.features.greeting.repository.IGreetingPageRepository
 import javax.inject.Inject
 
 class GreetingViewModel @Inject constructor(

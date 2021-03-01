@@ -15,7 +15,7 @@ import tv.wfc.livestreamsales.features.livebroadcast.di.LiveBroadcastComponent
 import tv.wfc.livestreamsales.features.mainappcontent.di.MainAppContentComponent
 import tv.wfc.livestreamsales.features.mainpage.di.MainPageComponent
 import tv.wfc.livestreamsales.features.productorder.di.ProductOrderComponent
-import tv.wfc.livestreamsales.features.settings.di.SettingsComponent
+import tv.wfc.livestreamsales.features.usersettings.di.UserSettingsComponent
 
 @AuthorizedUserFeatureScope
 @Subcomponent(modules = [
@@ -40,7 +40,7 @@ interface AuthorizedUserComponent {
     fun mainPageComponent(): MainPageComponent.Factory
     fun liveBroadcastComponent(): LiveBroadcastComponent.Factory
     fun productOrderComponent(): ProductOrderComponent.Factory
-    fun settingsComponent(): SettingsComponent.Factory
+    fun settingsComponent(): UserSettingsComponent.Factory
 
     fun logOutRepository(): ILogOutRepository
 }

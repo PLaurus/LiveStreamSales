@@ -3,6 +3,7 @@ package tv.wfc.livestreamsales.features.phonenumberinput.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.laurus.p.tools.livedata.LiveEvent
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -14,7 +15,6 @@ import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.repository.authorization.IAuthorizationRepository
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
-import tv.wfc.livestreamsales.application.tools.livedata.LiveEvent
 import tv.wfc.livestreamsales.features.login.repository.ILoginRepository
 import javax.inject.Inject
 

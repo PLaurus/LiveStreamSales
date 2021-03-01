@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Payment card -->
+    <integer name="paymentCard_numberTextPart_maxLines">1</integer>
+    <integer name="paymentCard_numberTextPart_maxLength">4</integer>
+
+    <!-- Payment card editor -->
+    <integer name="paymentCardEditor_numberEditText_length">16</integer>
+</resources>

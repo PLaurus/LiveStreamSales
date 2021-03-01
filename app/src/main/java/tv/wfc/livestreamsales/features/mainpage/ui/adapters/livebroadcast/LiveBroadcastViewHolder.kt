@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.request.Disposable
 import coil.request.ImageRequest
+import com.laurus.p.tools.context.getDrawableCompat
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
-import tv.wfc.livestreamsales.application.tools.context.getDrawableCompat
 import tv.wfc.livestreamsales.databinding.ItemLiveBroadcastPageBinding
 
 class LiveBroadcastViewHolder(

@@ -1,15 +1,15 @@
 package tv.wfc.livestreamsales.features.authorizeduser.repository.userinformation
 
-import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
-import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
-import tv.wfc.livestreamsales.features.authorizeduser.di.modules.userinformation.qualifiers.UserInformationLocalStorage
-import tv.wfc.livestreamsales.features.authorizeduser.di.modules.userinformation.qualifiers.UserInformationRemoteStorage
-import tv.wfc.livestreamsales.features.authorizeduser.model.user.UserInformation
-import tv.wfc.livestreamsales.features.authorizeduser.storage.userinformation.IUserInformationStorage
 import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
+import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
+import tv.wfc.livestreamsales.features.authorizeduser.di.modules.storage.qualifiers.UserInformationLocalStorage
+import tv.wfc.livestreamsales.features.authorizeduser.di.modules.storage.qualifiers.UserInformationRemoteStorage
+import tv.wfc.livestreamsales.features.authorizeduser.model.user.UserInformation
+import tv.wfc.livestreamsales.features.authorizeduser.storage.userinformation.IUserInformationStorage
 import javax.inject.Inject
 
 class UserInformationRepository @Inject constructor(
@@ -99,7 +99,7 @@ class UserInformationRepository @Inject constructor(
                         isUserInformationSavedLocally = true
                     } else{
                         applicationErrorsLogger.logError(
-                            Exception("Failed to save user information in local storage")
+                            Exception("Failed to save user information to local storage")
                         )
                     }
                 },

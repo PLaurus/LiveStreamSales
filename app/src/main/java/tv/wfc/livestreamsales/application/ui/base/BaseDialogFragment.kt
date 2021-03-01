@@ -10,13 +10,13 @@ import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import com.laurus.p.tools.activity.getWindowSize
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import tv.wfc.contentloader.ContentLoaderView
 import tv.wfc.contentloader.viewmodel.IToBePreparedViewModel
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.LiveStreamSalesApplication
 import tv.wfc.livestreamsales.application.di.AppComponent
-import tv.wfc.livestreamsales.application.tools.activity.getWindowSize
 
 abstract class BaseDialogFragment(
     @LayoutRes

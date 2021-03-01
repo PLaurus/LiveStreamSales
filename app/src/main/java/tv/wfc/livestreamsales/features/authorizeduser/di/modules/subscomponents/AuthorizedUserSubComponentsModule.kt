@@ -6,7 +6,7 @@ import tv.wfc.livestreamsales.features.livebroadcast.di.LiveBroadcastComponent
 import tv.wfc.livestreamsales.features.mainappcontent.di.MainAppContentComponent
 import tv.wfc.livestreamsales.features.mainpage.di.MainPageComponent
 import tv.wfc.livestreamsales.features.productorder.di.ProductOrderComponent
-import tv.wfc.livestreamsales.features.settings.di.SettingsComponent
+import tv.wfc.livestreamsales.features.usersettings.di.UserSettingsComponent
 
 @Module(subcomponents = [
     MainAppContentComponent::class,
@@ -14,6 +14,6 @@ import tv.wfc.livestreamsales.features.settings.di.SettingsComponent
     MainPageComponent::class,
     LiveBroadcastComponent::class,
     ProductOrderComponent::class,
-    SettingsComponent::class
+    UserSettingsComponent::class
 ])
 class AuthorizedUserSubComponentsModule

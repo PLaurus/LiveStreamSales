@@ -1,3 +1,5 @@
+include ':Tools'
+include ':EditTextFormatters'
 include ':AutoFillTextView'
 include ':ContentLoader'
 include ':codeview'

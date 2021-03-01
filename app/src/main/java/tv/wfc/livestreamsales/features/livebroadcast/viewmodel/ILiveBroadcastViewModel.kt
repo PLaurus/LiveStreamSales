@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
+import com.laurus.p.tools.livedata.LiveEvent
 import tv.wfc.contentloader.viewmodel.IToBePreparedViewModel
 import tv.wfc.livestreamsales.application.tools.exoplayer.PlaybackState
-import tv.wfc.livestreamsales.application.tools.livedata.LiveEvent
 
 interface ILiveBroadcastViewModel: IToBePreparedViewModel {
     val isDataBeingRefreshed: LiveData<Boolean>
