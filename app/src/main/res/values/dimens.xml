@@ -34,5 +34,9 @@
     <dimen name="liveBroadcast_messageInput_cornerRadius">10dp</dimen>
     <dimen name="liveBroadcast_messageInput_strokeWidth">4dp</dimen>
 
+    <!-- Product Order -->
+    <dimen name="productOrder_selectableSpecification_chipHeight">32dp</dimen>
+    <dimen name="productOrder_selectableSpecification_colorChipWidth">32dp</dimen>
+    <dimen name="productOrder_selectableSpecification_colorChip_width">2dp</dimen>
 
 </resources>

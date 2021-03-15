@@ -2,6 +2,9 @@
     <!-- Application -->
     <string name="app_name">LiveStreamSales</string>
 
+    <!-- Product Specifications -->
+    <string name="product_specification_name_color">Цвет</string>
+
     <!-- Generic player strings-->
     <string name="player_error_generic">Воспроизведение не удалось</string>
     <string name="player_error_querying_decoders">Невозможно запросить декодеры устройства</string>

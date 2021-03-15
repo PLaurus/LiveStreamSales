@@ -12,7 +12,7 @@ import com.laurus.p.tools.context.getDrawableCompat
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
+import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
 import tv.wfc.livestreamsales.databinding.ItemBroadcastAnnouncementPageBinding
 
 class AnnouncementViewHolder(
@@ -25,12 +25,12 @@ class AnnouncementViewHolder(
 
     private var announcementImageLoaderDisposable: Disposable? = null
 
-    fun bind(broadcastInformation: BroadcastInformation){
+    fun bind(broadcast: Broadcast){
         clearView()
 
-        bindAnnouncementImage(broadcastInformation.imageUrl)
-        bindAnnouncementDate(broadcastInformation.startsAt)
-        bindAnnouncementTime(broadcastInformation.startsAt)
+        bindAnnouncementImage(broadcast.imageUrl)
+        bindAnnouncementDate(broadcast.startsAt)
+        bindAnnouncementTime(broadcast.startsAt)
     }
 
     private fun clearView(){

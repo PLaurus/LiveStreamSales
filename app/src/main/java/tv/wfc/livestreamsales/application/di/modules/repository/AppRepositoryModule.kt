@@ -9,8 +9,8 @@ import tv.wfc.livestreamsales.application.repository.authorization.Authorization
 import tv.wfc.livestreamsales.application.repository.authorization.IAuthorizationRepository
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.BroadcastsInformationRepository
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
-import tv.wfc.livestreamsales.application.repository.productsinformation.IProductsInformationRepository
-import tv.wfc.livestreamsales.application.repository.productsinformation.ProductsInformationRepository
+import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
+import tv.wfc.livestreamsales.application.repository.products.ProductsRepository
 
 @Module
 abstract class AppRepositoryModule {
@@ -34,7 +34,7 @@ abstract class AppRepositoryModule {
 
     @ApplicationScope
     @Binds
-    internal abstract fun provideProductsInformationRepository(
-        productsInformationRepository: ProductsInformationRepository
-    ): IProductsInformationRepository
+    internal abstract fun provideProductsRepository(
+        productsRepository: ProductsRepository
+    ): IProductsRepository
 }

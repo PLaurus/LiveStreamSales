@@ -1,3 +1,4 @@
+include ':RecyclerViewItemDecorators'
 include ':Tools'
 include ':EditTextFormatters'
 include ':AutoFillTextView'

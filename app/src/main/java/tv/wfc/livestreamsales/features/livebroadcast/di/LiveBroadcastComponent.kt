@@ -5,8 +5,8 @@ import dagger.BindsInstance
 import dagger.Subcomponent
 import tv.wfc.livestreamsales.features.livebroadcast.di.modules.api.LiveBroadcastApiModule
 import tv.wfc.livestreamsales.features.livebroadcast.di.modules.exoplayer.ExoPlayerModule
-import tv.wfc.livestreamsales.features.livebroadcast.di.modules.repository.LiveBroadcastRepositoryModule
-import tv.wfc.livestreamsales.features.livebroadcast.di.modules.storage.LiveBroadcastStorageModule
+import tv.wfc.livestreamsales.features.livebroadcast.di.modules.repository.RepositoryModule
+import tv.wfc.livestreamsales.features.livebroadcast.di.modules.storage.StorageModule
 import tv.wfc.livestreamsales.features.livebroadcast.di.modules.viewmodel.LiveBroadcastViewModelModule
 import tv.wfc.livestreamsales.features.livebroadcast.di.qualifiers.LiveBroadcastFragment
 import tv.wfc.livestreamsales.features.livebroadcast.di.scope.LiveBroadcastFeatureScope
@@ -16,8 +16,8 @@ import tv.wfc.livestreamsales.features.livebroadcast.di.scope.LiveBroadcastFeatu
     LiveBroadcastViewModelModule::class,
     ExoPlayerModule::class,
     LiveBroadcastApiModule::class,
-    LiveBroadcastStorageModule::class,
-    LiveBroadcastRepositoryModule::class
+    StorageModule::class,
+    RepositoryModule::class
 ])
 interface LiveBroadcastComponent {
     @Subcomponent.Factory

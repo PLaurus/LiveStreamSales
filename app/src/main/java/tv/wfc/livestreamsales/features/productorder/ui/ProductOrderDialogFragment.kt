@@ -4,12 +4,15 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.load
 import coil.request.Disposable
 import com.jakewharton.rxbinding4.view.clicks
+import com.laurus.p.recyclerviewitemdecorators.GapBetweenItems
 import com.laurus.p.tools.floatKtx.format
 import com.laurus.p.tools.string.strikeThrough
 import io.reactivex.rxjava3.core.Observable
@@ -20,12 +23,20 @@ import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.LiveStreamSalesApplication
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
+import tv.wfc.livestreamsales.application.model.products.specification.Specification
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.ui.base.BaseDialogFragment
 import tv.wfc.livestreamsales.databinding.DialogProductOrderBinding
 import tv.wfc.livestreamsales.features.productorder.di.ProductOrderComponent
+import tv.wfc.livestreamsales.features.productorder.di.modules.diffutils.qualifiers.ProductBoxDataDiffUtilItemCallback
 import tv.wfc.livestreamsales.features.productorder.di.modules.diffutils.qualifiers.ProductSpecificationsDiffUtilItemCallback
+import tv.wfc.livestreamsales.features.productorder.model.ProductBoxData
+import tv.wfc.livestreamsales.features.productorder.model.ProductInCart
+import tv.wfc.livestreamsales.features.productorder.model.SelectableSpecification
+import tv.wfc.livestreamsales.features.productorder.ui.adapters.cart.ProductsInCartAdapter
+import tv.wfc.livestreamsales.features.productorder.ui.adapters.products.ProductBoxesAdapter
 import tv.wfc.livestreamsales.features.productorder.ui.adapters.productspecifications.ProductSpecificationsAdapter
+import tv.wfc.livestreamsales.features.productorder.ui.adapters.selectablespecifications.SelectableSpecificationsAdapter
 import tv.wfc.livestreamsales.features.productorder.viewmodel.IProductOrderViewModel
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -58,13 +69,24 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
 
     @Inject
     @ProductSpecificationsDiffUtilItemCallback
-    lateinit var productSpecificationsDiffUtilItemCallback: DiffUtil.ItemCallback<Pair<String, String?>>
+    lateinit var productSpecificationsDiffUtilItemCallback: DiffUtil.ItemCallback<Specification<*>>
+
+    @Inject
+    @ProductBoxDataDiffUtilItemCallback
+    lateinit var productBoxDataDiffUtilItemCallback: DiffUtil.ItemCallback<ProductBoxData>
+
+    @Inject
+    lateinit var selectableSpecificationsDiffUtilItemCallback: DiffUtil.ItemCallback<SelectableSpecification<*>>
+
+    @Inject
+    lateinit var productInCartDiffUtilItemCallback: DiffUtil.ItemCallback<ProductInCart>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         initializeProductOrderComponent()
         injectDependencies()
         prepareViewModel(navigationArguments.liveBroadcastId)
+        dialogHeightAdaptationType = DialogDimensionAdaptationType.MAX_SIZE
     }
 
     override fun onContentViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -78,11 +100,19 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
         initializeHeaderLayout()
         initializeOneProductImage()
         initializeOneProductNameText()
+        initializeSeveralProductsRecyclerView()
         initializeSeveralProductsDescriptionText()
         initializeProductSpecificationsLayout()
         initializeProductSpecificationsRecyclerView()
-        initializeProductPriceText()
-        initializeProductOldPriceText()
+        initializeSelectableSpecificationsRecyclerView()
+        initializeProductVariantPriceLayout()
+        initializeProductVariantPriceText()
+        initializeProductVariantOldPriceText()
+        initializeAmountSelectionLayout()
+        initializeProductVariantAmountText()
+        initializeDecreaseProductVariantAmountButton()
+        initializeIncreaseProductVariantAmountButton()
+        initializeCartRecyclerView()
     }
 
     override fun onDataPreparationFailure() {
@@ -153,12 +183,10 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
         viewBinding?.oneProductImage?.run {
             scaleType = ImageView.ScaleType.CENTER_CROP
 
-            viewModel.selectedProduct.observe(viewLifecycleOwner, { product ->
+            viewModel.currentProductGroupImageUrl.observe(viewLifecycleOwner, { imageUrl ->
                 oneProductImageLoaderDisposable?.dispose()
 
-                val productUrl = product.imageUrl
-
-                oneProductImageLoaderDisposable = load(productUrl, imageLoader) {
+                oneProductImageLoaderDisposable = load(imageUrl, imageLoader) {
                     listener(
                         onSuccess = { _, _ -> showOneProductImage() },
                         onError = { _, throwable ->
@@ -173,8 +201,22 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
 
     private fun initializeOneProductNameText(){
         viewBinding?.oneProductName?.run{
-            viewModel.selectedProduct.observe(viewLifecycleOwner, { product ->
-                text = product.name
+            viewModel.currentProductGroupName.observe(viewLifecycleOwner, { productName ->
+                text = productName
+            })
+        }
+    }
+
+    private fun initializeSeveralProductsRecyclerView(){
+        viewBinding?.severalProductsRecyclerView?.apply {
+            adapter = ProductBoxesAdapter(
+                productBoxDataDiffUtilItemCallback,
+                imageLoader,
+                viewModel::selectProductGroupByPosition
+            )
+
+            viewModel.productBoxesData.observe(viewLifecycleOwner, { productBoxesData ->
+                (adapter as ProductBoxesAdapter).submitList(productBoxesData)
             })
         }
     }
@@ -188,13 +230,17 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
                     showSeveralProductsDescriptionText()
                 }
             })
+
+            viewModel.currentProductGroupName.observe(viewLifecycleOwner, { productName ->
+                text = productName
+            })
         }
     }
 
     private fun initializeProductSpecificationsLayout(){
         viewBinding?.productSpecificationsLayout?.run{
-            viewModel.selectedProduct.observe(viewLifecycleOwner, { product ->
-                if (product.characteristics == null || product.characteristics.isEmpty()) {
+            viewModel.currentProductGroupSpecifications.observe(viewLifecycleOwner, { productSpecifications ->
+                if (productSpecifications.isEmpty()) {
                     hideProductSpecificationsLayout()
                 } else {
                     showProductSpecificationsLayout()
@@ -206,39 +252,114 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
     private fun initializeProductSpecificationsRecyclerView(){
         viewBinding?.productSpecificationsRecyclerView?.run {
             adapter = ProductSpecificationsAdapter(productSpecificationsDiffUtilItemCallback)
+            overScrollMode = RecyclerView.OVER_SCROLL_NEVER
 
-            viewModel.selectedProduct.observe(viewLifecycleOwner, { product ->
-                val specifications = product.characteristics?.toList()
-                (adapter as ProductSpecificationsAdapter).submitList(specifications)
+            viewModel.currentProductGroupSpecifications.observe(viewLifecycleOwner, { productSpecifications ->
+                (adapter as ProductSpecificationsAdapter).submitList(productSpecifications)
             })
         }
     }
 
-    private fun initializeProductPriceText(){
-        viewBinding?.productPriceText?.run{
-            viewModel.selectedProduct.observe(viewLifecycleOwner, { product ->
+    private fun initializeSelectableSpecificationsRecyclerView(){
+        viewBinding?.selectableSpecificationsRecyclerView?.run {
+            addItemDecoration(GapBetweenItems(resources.getDimensionPixelSize(R.dimen.contentMargin)))
+            overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+
+            adapter = SelectableSpecificationsAdapter(selectableSpecificationsDiffUtilItemCallback){ selectableSpecIndex, valueIndex ->
+                viewModel.filter(selectableSpecIndex, valueIndex)
+            }
+
+            viewModel.currentSelectableSpecifications.observe(viewLifecycleOwner, { selectableSpecifications ->
+                (adapter as SelectableSpecificationsAdapter).submitList(selectableSpecifications.toList())
+            })
+        }
+    }
+
+    private fun initializeProductVariantPriceLayout(){
+        viewBinding?.productVariantPriceLayout?.apply {
+            viewModel.selectedProductPrice.observe(viewLifecycleOwner, { price ->
+                if(price != null) {
+                    showProductVariantPriceLayout()
+                } else{
+                    hideProductVariantPriceLayout()
+                }
+            })
+        }
+    }
+
+    private fun initializeProductVariantPriceText(){
+        viewBinding?.productVariantPriceText?.apply {
+            viewModel.selectedProductPrice.observe(viewLifecycleOwner, Observer{ price ->
                 text = resources.getString(
                     R.string.fragment_product_order_price,
-                    product.price.format()
+                    price?.format() ?: return@Observer
                 )
             })
         }
     }
 
-    private fun initializeProductOldPriceText(){
-        viewBinding?.productOldPriceText?.run {
-            viewModel.selectedProduct.observe(viewLifecycleOwner, { product ->
-                val productOldPrice = product.oldPrice
-
-                if (productOldPrice == null) {
-                    hideProductOldPriceText()
+    private fun initializeProductVariantOldPriceText(){
+        viewBinding?.productVariantOldPriceText?.run {
+            viewModel.selectedProductOldPrice.observe(viewLifecycleOwner, { oldPrice ->
+                if (oldPrice == null) {
+                    hideProductVariantOldPriceText()
                 } else {
                     text = getString(
                         R.string.fragment_product_order_price,
-                        productOldPrice.format()
+                        oldPrice.format()
                     ).strikeThrough()
-                    showProductOldPriceText()
+                    showProductVariantOldPriceText()
                 }
+            })
+        }
+    }
+
+    private fun initializeAmountSelectionLayout(){
+        viewBinding?.amountSelectionLayout?.apply {
+            viewModel.isProductSelected.observe(viewLifecycleOwner, { isProductVariantFiltered ->
+                if(isProductVariantFiltered){
+                    show()
+                } else{
+                    hide()
+                }
+            })
+        }
+    }
+
+    private fun initializeProductVariantAmountText(){
+        viewBinding?.productsVariantAmountText?.apply {
+            viewModel.selectedProductAmount.observe(viewLifecycleOwner, { amount ->
+                text = amount.toString()
+            })
+        }
+    }
+
+    private fun initializeDecreaseProductVariantAmountButton(){
+        viewBinding?.decreaseProductVariantAmountButton?.setOnClickListener {
+            viewModel.decreaseSelectedProductAmount()
+        }
+    }
+
+    private fun initializeIncreaseProductVariantAmountButton(){
+        viewBinding?.increaseProductVariantAmountButton?.setOnClickListener {
+            viewModel.increaseSelectedProductAmount()
+        }
+    }
+
+    private fun initializeCartRecyclerView(){
+        viewBinding?.cartRecyclerView?.run{
+            adapter = ProductsInCartAdapter(
+                productInCartDiffUtilItemCallback,
+                imageLoader,
+                viewModel::deleteProductFromCart
+            ) { /*Select product in cart*/ }
+
+            viewModel.cart.observe(viewLifecycleOwner, { cart ->
+                if(cart.isNotEmpty()){
+                    show()
+                } else hide()
+
+                (adapter as ProductsInCartAdapter).submitList(cart)
             })
         }
     }
@@ -308,17 +429,38 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
         viewBinding?.productSpecificationsLayout?.visibility = viewVisibility
     }
 
-    private fun showProductOldPriceText(){
+    private fun showProductVariantPriceLayout(){
+        changeProductVariantPriceLayoutVisibility(toVisible = true)
+    }
+
+    private fun hideProductVariantPriceLayout(){
+        changeProductVariantPriceLayoutVisibility(toVisible = false)
+    }
+
+    private fun changeProductVariantPriceLayoutVisibility(toVisible: Boolean){
+        val viewVisibility = if(toVisible) View.VISIBLE else View.GONE
+        viewBinding?.productVariantPriceLayout?.visibility = viewVisibility
+    }
+
+    private fun showProductVariantOldPriceText(){
         changeProductOldPriceTextVisibility(toVisible = true)
     }
 
-    private fun hideProductOldPriceText(){
+    private fun hideProductVariantOldPriceText(){
         changeProductOldPriceTextVisibility(toVisible = false)
     }
 
     private fun changeProductOldPriceTextVisibility(toVisible: Boolean){
         val viewVisibility = if(toVisible) View.VISIBLE else View.GONE
-        viewBinding?.productOldPriceText?.visibility = viewVisibility
+        viewBinding?.productVariantOldPriceText?.visibility = viewVisibility
+    }
+
+    private fun View.show(){
+        this.visibility = View.VISIBLE
+    }
+
+    private fun View.hide(toGone: Boolean = true){
+        visibility = if(toGone) View.GONE else View.INVISIBLE
     }
 
     private fun dismissAfterDelay(){

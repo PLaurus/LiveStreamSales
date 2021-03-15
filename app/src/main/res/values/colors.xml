@@ -48,4 +48,7 @@
     <color name="order_amountSelector_background">#F2F2F7</color>
     <color name="order_amountSelector_border">#E5E5EA</color>
     <color name="order_colorBox_border">#E5E5EA</color>
+
+    <!-- Product Order Fragment - Product Box Item -->
+    <color name="productOrder_productBoxItem_placeholderTint">#000000</color>
 </resources>

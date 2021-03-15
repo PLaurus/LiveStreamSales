@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import com.laurus.p.tools.viewpager2.onPageSelected
 import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
+import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
 import tv.wfc.livestreamsales.databinding.FragmentMainPageBinding
 import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserFragment
 import tv.wfc.livestreamsales.features.home.ui.HomeFragmentDirections
@@ -51,7 +51,7 @@ class MainPageFragment: AuthorizedUserFragment(R.layout.fragment_main_page) {
     lateinit var imageLoader: ImageLoader
 
     @Inject
-    lateinit var broadcastsDiffUtilCallback: DiffUtil.ItemCallback<BroadcastInformation>
+    lateinit var broadcastsDiffUtilCallback: DiffUtil.ItemCallback<Broadcast>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

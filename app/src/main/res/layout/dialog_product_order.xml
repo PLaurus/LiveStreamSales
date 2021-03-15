@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/screenPadding"
-    android:clipToPadding="false">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:id="@+id/headerLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/screenPadding"
+        android:paddingEnd="@dimen/screenPadding"
+        android:paddingTop="@dimen/screenPadding"
+        android:paddingBottom="@dimen/contentMargin"
+        android:background="@android:color/white"
+        android:elevation="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/closeButton"
@@ -26,341 +34,341 @@
             app:iconTint="@color/colorPrimaryText"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/headerLayout"
+            android:id="@+id/oneProductHeaderLayout"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="80dp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/closeButton"
-            app:layout_constraintHeight_percent="0.12">
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:visibility="gone">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/oneProductHeaderLayout"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/oneProductImage"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:visibility="gone"
+                android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                tools:srcCompat="@color/colorSecondary"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/oneProductName"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/contentMargin"
+                android:textSize="@dimen/headerTextSize"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/oneProductImage"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:visibility="visible">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/oneProductImage"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1:1"
-                    tools:srcCompat="@color/colorSecondary"/>
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/oneProductName"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="@dimen/contentMargin"
-                    android:textSize="@dimen/headerTextSize"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@id/oneProductImage"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    tools:text="Потрясающее предложение на новый iPhone 12 Pro (512Гб)"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/severalProductsHeaderLayout"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:visibility="gone">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/previousAvailableProductButton"
-                    style="@style/Theme.LiveStreamSales.MaterialButton.IconOnly.Circle.Transparent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minWidth="1dp"
-                    android:minHeight="1dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:icon="@drawable/ic_baseline_chevron_left_24"
-                    app:iconTint="@color/colorPrimaryText"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/availableProductsRecyclerView"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintStart_toEndOf="@id/previousAvailableProductButton"
-                    app:layout_constraintEnd_toStartOf="@id/nextAvailableProductButton"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:orientation="horizontal"
-                    tools:itemCount="4"
-                    tools:listitem="@layout/item_available_product_image"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/nextAvailableProductButton"
-                    style="@style/Theme.LiveStreamSales.MaterialButton.IconOnly.Circle.Transparent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minWidth="1dp"
-                    android:minHeight="1dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:icon="@drawable/ic_baseline_chevron_right_24"
-                    app:iconTint="@color/colorPrimaryText"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                tools:text="Потрясающее предложение на новый iPhone 12 Pro (512Гб)"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/severalProductsDescriptionText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/contentMargin"
-            android:textSize="@dimen/headerTextSize"
-            android:textStyle="bold"
-            android:maxLines="3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/headerLayout"
-            tools:text="Потрясающее предложение Робот-пылесос iRobot iRobot iRobot Roomba i7"/>
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/productSpecificationsLayout"
+            android:id="@+id/severalProductsHeaderLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/contentMargin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/severalProductsDescriptionText">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/productSpecificationsTitleText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/fragment_product_order_specifications_title"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/closeButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:visibility="visible">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/productSpecificationsRecyclerView"
+                android:id="@+id/severalProductsRecyclerView"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:scrollbars="vertical"
-                android:fadeScrollbars="false"
+                android:layout_height="80dp"
+                android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/productSpecificationsTitleText"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHeight_max="200dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/severalProductsDescriptionText"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:itemCount="6"
-                tools:listitem="@layout/item_product_specification"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/productPriceText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/contentMargin"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/productSpecificationsLayout"
-            tools:text="1 000 000 руб."/>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/productOldPriceText"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/contentMargin"
-            android:layout_marginTop="8dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/productPriceText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/productPriceText"
-            app:layout_constraintBottom_toBottomOf="@id/productPriceText"
-            app:layout_constraintVertical_bias="1"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="4sp"
-            tools:text="1 000 000 руб."/>
-
-        <View
-            android:id="@+id/firstDivider"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@color/colorSecondaryText"
-            android:layout_marginTop="@dimen/contentMargin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/productPriceText"/>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/productsAmountTitleText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/fragment_product_order_products_amount"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/productsAmountSelectorLayout"
-            app:layout_constraintBottom_toBottomOf="@id/productsAmountSelectorLayout"/>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/productsAmountSelectorLayout"
-            android:layout_width="140dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="@dimen/contentMargin"
-            android:layout_marginStart="@dimen/contentMargin"
-            app:layout_constraintStart_toEndOf="@id/productsAmountTitleText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/firstDivider">
-
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:backgroundImage="@color/order_amountSelector_background"
-                app:roundingBorderWidth="1dp"
-                app:roundingBorderColor="@color/order_amountSelector_border"
-                app:roundedCornerRadius="@dimen/card_cornerRadius"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/reduceAmountButton"
-                style="@style/Theme.LiveStreamSales.MaterialButton.IconOnly.Circle.Transparent"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginVertical="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/productsAmountText"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:icon="@drawable/ic_baseline_remove_24"
-                app:iconTint="@color/colorPrimaryText"/>
+                tools:itemCount="4"
+                tools:listitem="@layout/list_item_product_order_product_box"/>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/productsAmountText"
+                android:id="@+id/severalProductsDescriptionText"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginVertical="8dp"
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:maxLength="3"
-                android:gravity="center"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintWidth_percent="0.5"
-                app:autoSizeTextType="uniform"
-                tools:text="1"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/increaseAmount"
-                style="@style/Theme.LiveStreamSales.MaterialButton.IconOnly.Circle.Transparent"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginVertical="8dp"
-                app:layout_constraintStart_toEndOf="@id/productsAmountText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:icon="@drawable/ic_baseline_add_24"
-                app:iconTint="@color/colorPrimaryText"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/productColorTitleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/fragment_product_order_product_color"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/colorSelectionRecyclerView"
-            app:layout_constraintBottom_toBottomOf="@id/colorSelectionRecyclerView"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/colorSelectionRecyclerView"
-            android:layout_width="0dp"
-            android:layout_height="38dp"
-            android:layout_marginTop="@dimen/contentMargin"
-            app:layout_constraintStart_toStartOf="@id/productsAmountSelectorLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/productsAmountSelectorLayout"
-            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:orientation="horizontal"
-            tools:listitem="@layout/item_color_box"
-            tools:itemCount="4"/>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/severalProductsCartLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/contentMargin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/colorSelectionRecyclerView"
-            app:layout_constraintBottom_toTopOf="@id/buyProductsButton"
-            app:layout_constraintVertical_bias="0">
-
-            <View
-                android:id="@+id/secondDivider"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="@color/colorSecondaryText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/cartRecyclerView"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
+                android:textSize="@dimen/headerTextSize"
+                android:textStyle="bold"
+                android:maxLines="3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/secondDivider"
-                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:orientation="horizontal"
-                tools:listitem="@layout/item_product_in_cart"
-                tools:itemCount="4"/>
+                app:layout_constraintTop_toBottomOf="@id/severalProductsRecyclerView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="Потрясающее предложение Робот-пылесос iRobot iRobot iRobot Roomba i7"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buyProductsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Theme.LiveStreamSales.BigMaterialButton"
-            android:text="@string/fragment_product_order_buy"
-            android:textStyle="bold"
-            android:textAllCaps="false"
-            android:paddingHorizontal="32dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.core.widget.NestedScrollView>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingStart="@dimen/screenPadding"
+        android:paddingEnd="@dimen/screenPadding"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerLayout"
+        app:layout_constraintBottom_toTopOf="@id/footerLayout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/productSpecificationsLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/contentMargin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/productSpecificationsTitleText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_product_order_specifications_title"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/productSpecificationsRecyclerView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical"
+                    android:fadeScrollbars="false"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productSpecificationsTitleText"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHeight_max="200dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="6"
+                    tools:listitem="@layout/item_product_specification"/>
+
+                <View
+                    android:id="@+id/productVariantDivider"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/contentMargin"
+                    android:background="@color/colorSecondaryText"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productSpecificationsRecyclerView"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/productVariantLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/contentMargin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/productSpecificationsLayout">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/selectableSpecificationsRecyclerView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="6"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/productVariantPriceLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/contentMargin"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/selectableSpecificationsRecyclerView"
+                    tools:visibility="visible">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/productVariantPriceText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="1 000 000 руб."/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/productVariantOldPriceText"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="@dimen/contentMargin"
+                        android:layout_marginTop="8dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@id/productVariantPriceText"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/productVariantPriceText"
+                        app:layout_constraintBottom_toBottomOf="@id/productVariantPriceText"
+                        app:layout_constraintVertical_bias="1"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMinTextSize="4sp"
+                        tools:text="1 000 000 руб."/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/amountSelectionLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/contentMargin"
+                    android:layout_marginBottom="@dimen/contentMargin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productVariantPriceLayout"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/productsAmountTitleText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fragment_product_order_products_amount"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/productsAmountSelectorLayout"
+                        app:layout_constraintBottom_toBottomOf="@id/productsAmountSelectorLayout"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/productsAmountSelectorLayout"
+                        android:layout_width="140dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="@dimen/contentMargin"
+                        app:layout_constraintStart_toEndOf="@id/productsAmountTitleText"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:backgroundImage="@color/order_amountSelector_background"
+                            app:roundingBorderWidth="1dp"
+                            app:roundingBorderColor="@color/order_amountSelector_border"
+                            app:roundedCornerRadius="@dimen/card_cornerRadius"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/decreaseProductVariantAmountButton"
+                            style="@style/Theme.LiveStreamSales.MaterialButton.IconOnly.Circle.Transparent"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginVertical="8dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/products_variant_amount_text"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:icon="@drawable/ic_baseline_remove_24"
+                            app:iconTint="@color/colorPrimaryText"/>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/products_variant_amount_text"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginVertical="8dp"
+                            android:textStyle="bold"
+                            android:maxLines="1"
+                            android:maxLength="3"
+                            android:gravity="center"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintWidth_percent="0.5"
+                            app:autoSizeTextType="uniform"
+                            tools:text="1"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/increaseProductVariantAmountButton"
+                            style="@style/Theme.LiveStreamSales.MaterialButton.IconOnly.Circle.Transparent"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginVertical="8dp"
+                            app:layout_constraintStart_toEndOf="@id/products_variant_amount_text"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:icon="@drawable/ic_baseline_add_24"
+                            app:iconTint="@color/colorPrimaryText"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/footerLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:elevation="8dp"
+        android:paddingStart="@dimen/screenPadding"
+        android:paddingEnd="@dimen/screenPadding"
+        android:paddingBottom="@dimen/screenPadding"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cartRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/contentMargin"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/buyButton"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_product_in_cart"
+            tools:itemCount="4"
+            tools:visibility="visible"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/contentMargin"
+            android:text="@string/fragment_product_order_buy"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cartRecyclerView"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

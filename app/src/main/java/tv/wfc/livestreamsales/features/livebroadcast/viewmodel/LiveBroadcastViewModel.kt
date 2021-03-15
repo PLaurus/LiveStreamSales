@@ -24,13 +24,13 @@ import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
-import tv.wfc.livestreamsales.application.model.Product
-import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
+import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
-import tv.wfc.livestreamsales.application.repository.productsinformation.IProductsInformationRepository
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.tools.exoplayer.PlaybackState
+import tv.wfc.livestreamsales.application.model.products.ProductGroup
 import tv.wfc.livestreamsales.features.livebroadcast.repository.IBroadcastAnalyticsRepository
+import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -43,11 +43,11 @@ class LiveBroadcastViewModel @Inject constructor(
     private val imageLoader: ImageLoader,
     private val broadcastsInformationRepository: IBroadcastsInformationRepository,
     private val broadcastAnalyticsRepository: IBroadcastAnalyticsRepository,
-    private val productsInformationRepository: IProductsInformationRepository,
+    private val productsRepository: IProductsRepository,
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): ViewModel(), ILiveBroadcastViewModel {
     private val disposables = CompositeDisposable()
-    private val productsSubject = PublishSubject.create<List<Product>>()
+    private val productsSubject = PublishSubject.create<List<ProductGroup>>()
 
     private var broadcastId: Long? = null
     private var userIsWatchingBroadcastDisposable: Disposable? = null
@@ -79,7 +79,7 @@ class LiveBroadcastViewModel @Inject constructor(
         productsSubject
             .observeOn(mainThreadScheduler)
             .filter{ it.isNotEmpty() }
-            .map{ it[0].price }
+            .map{ it[0].productVariants[0].price }
             .subscribeBy(
                 onNext = ::setValue,
                 onError = applicationErrorsLogger::logError
@@ -91,8 +91,8 @@ class LiveBroadcastViewModel @Inject constructor(
         productsSubject
             .observeOn(mainThreadScheduler)
             .filter{ it.isNotEmpty() }
-            .filter{ it[0].oldPrice != null }
-            .map{ it[0].oldPrice!! }
+            .filter{ it[0].productVariants[0].oldPrice != null }
+            .map{ it[0].productVariants[0].oldPrice!! }
             .subscribeBy(
                 onNext = ::setValue,
                 onError = applicationErrorsLogger::logError
@@ -201,9 +201,9 @@ class LiveBroadcastViewModel @Inject constructor(
             }
     }
 
-    private fun prepareImage(broadcastInformation: BroadcastInformation): Completable{
+    private fun prepareImage(broadcast: Broadcast): Completable{
         return Completable.create { emitter ->
-            val imageUri = broadcastInformation.imageUrl
+            val imageUri = broadcast.imageUrl
 
             if(imageUri == null)
                 emitter.onComplete()
@@ -227,16 +227,16 @@ class LiveBroadcastViewModel @Inject constructor(
         }
     }
 
-    private fun prepareBroadcastTitle(broadcastInformation: BroadcastInformation): Completable{
+    private fun prepareBroadcastTitle(broadcast: Broadcast): Completable{
         return Completable.create { emitter ->
-            this.broadcastTitle.value = broadcastInformation.title
+            this.broadcastTitle.value = broadcast.title
             emitter.onComplete()
         }
     }
 
-    private fun prepareViewersCount(broadcastInformation: BroadcastInformation): Completable{
+    private fun prepareViewersCount(broadcast: Broadcast): Completable{
         return Completable.create { emitter ->
-            val viewersCount = broadcastInformation.viewersCount
+            val viewersCount = broadcast.viewersCount
 
             if(viewersCount != null){
                 this.viewersCount.value = viewersCount
@@ -247,20 +247,20 @@ class LiveBroadcastViewModel @Inject constructor(
     }
 
     private fun prepareBroadcastDescription(
-        broadcastInformation: BroadcastInformation
+        broadcast: Broadcast
     ): Completable{
         return Completable.create{ emitter ->
-            broadcastDescription.value =  broadcastInformation.description
+            broadcastDescription.value =  broadcast.description
             emitter.onComplete()
         }
     }
 
     private fun prepareBroadcastMediaItem(
-        broadcastInformation: BroadcastInformation
+        broadcast: Broadcast
     ): Completable{
         return Completable.fromRunnable{
             val previousManifestUri = broadcastMediaItem.value?.playbackProperties?.uri?.toString()
-            val newBroadcastManifestUri = broadcastInformation.manifestUrl
+            val newBroadcastManifestUri = broadcast.manifestUrl
 
             if(newBroadcastManifestUri != null &&
                 newBroadcastManifestUri == previousManifestUri) return@fromRunnable
@@ -274,7 +274,7 @@ class LiveBroadcastViewModel @Inject constructor(
     private fun prepareProductsInformation(broadcastId: Long): Completable{
         return Completable
             .create { emitter ->
-                val disposable = productsInformationRepository
+                val disposable = productsRepository
                     .getProducts(broadcastId)
                     .lastOrError()
                     .doOnError(applicationErrorsLogger::logError)

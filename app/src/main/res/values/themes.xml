@@ -66,7 +66,7 @@
         <item name="android:minWidth">48dip</item>
         <item name="android:minHeight">48dip</item>
         <item name="shapeAppearanceOverlay">
-            @style/Theme.LiveStreamSales.ShapeAppearanceOverlay.Button.Circle
+            @style/Theme.LiveStreamSales.ShapeAppearanceOverlay.Circle
         </item>
 
     </style>
@@ -85,11 +85,14 @@
 
     </style>
 
-    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.Button.Circle" parent="">
-
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.Circle" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
+    </style>
 
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.ProductBox" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">25%</item>
     </style>
 
 </resources>

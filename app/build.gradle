@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "tv.wfc.livestreamsales"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -132,4 +132,5 @@ dependencies {
     implementation project(':AutoFillTextView')
     implementation project(':EditTextFormatters')
     implementation project(':Tools')
+    implementation project(':RecyclerViewItemDecorators')
 }

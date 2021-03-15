@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import tv.wfc.livestreamsales.R
+import tv.wfc.livestreamsales.application.model.products.specification.Specification
 
 class ProductSpecificationsAdapter(
-    diffUtilItemCallback: DiffUtil.ItemCallback<Pair<String, String?>>
-): ListAdapter<Pair<String, String?>, ProductSpecificationViewHolder>(diffUtilItemCallback) {
+    diffUtilItemCallback: DiffUtil.ItemCallback<Specification<*>>
+): ListAdapter<Specification<*>, ProductSpecificationViewHolder>(diffUtilItemCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

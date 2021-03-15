@@ -8,8 +8,10 @@ import tv.wfc.livestreamsales.application.storage.authorization.local.Authorizat
 import tv.wfc.livestreamsales.application.storage.authorization.local.IAuthorizationLocalStorage
 import tv.wfc.livestreamsales.application.storage.authorization.remote.AuthorizationRemoteStorage
 import tv.wfc.livestreamsales.application.storage.authorization.remote.IAuthorizationRemoteStorage
-import tv.wfc.livestreamsales.application.storage.broadcastsinformation.IBroadcastsInformationStorage
-import tv.wfc.livestreamsales.application.storage.productsinformation.IProductsInformationStorage
+import tv.wfc.livestreamsales.application.storage.broadcastsinformation.IBroadcastsStorage
+import tv.wfc.livestreamsales.application.storage.products.IProductsStorage
+import tv.wfc.livestreamsales.application.di.modules.storage.qualifiers.ProductsLocalStorage
+import tv.wfc.livestreamsales.application.di.modules.storage.qualifiers.ProductsRemoteStorage
 
 @Module
 abstract class AppStorageModule {
@@ -32,24 +34,24 @@ abstract class AppStorageModule {
     @Binds
     @BroadcastsInformationRemoteStorage
     internal abstract fun provideBroadcastsInformationRemoteStorage(
-        broadcastsInformationRemoteStorage: tv.wfc.livestreamsales.application.storage.broadcastsinformation.remote.BroadcastsInformationRemoteStorage
-    ): IBroadcastsInformationStorage
+        broadcastsRemoteStorage: tv.wfc.livestreamsales.application.storage.broadcastsinformation.remote.BroadcastsRemoteStorage
+    ): IBroadcastsStorage
 
     @Binds
     @BroadcastsInformationLocalStorage
     internal abstract fun provideBroadcastsInformationLocalStorage(
-        broadcastsInformationLocalStorage: tv.wfc.livestreamsales.application.storage.broadcastsinformation.local.BroadcastsInformationLocalStorage
-    ): IBroadcastsInformationStorage
+        broadcastsInformationLocalStorage: tv.wfc.livestreamsales.application.storage.broadcastsinformation.local.BroadcastsLocalStorage
+    ): IBroadcastsStorage
 
     @Binds
-    @ProductsInformationRemoteStorage
-    internal abstract fun provideProductsInformationRemoteStorage(
-        productsInformationRemoteStorage: tv.wfc.livestreamsales.application.storage.productsinformation.remote.ProductsInformationRemoteStorage
-    ): IProductsInformationStorage
+    @ProductsRemoteStorage
+    internal abstract fun provideProductsRemoteStorage(
+        productsInformationRemoteStorage: tv.wfc.livestreamsales.application.storage.products.remote.ProductsRemoteStorage
+    ): IProductsStorage
 
     @Binds
-    @ProductsInformationLocalStorage
-    internal abstract fun provideProductsInformationLocalStorage(
-        productsInformationLocalStorage: tv.wfc.livestreamsales.application.storage.productsinformation.local.ProductsInformationLocalStorage
-    ): IProductsInformationStorage
+    @ProductsLocalStorage
+    internal abstract fun provideProductsLocalStorage(
+        productsInformationLocalStorage: tv.wfc.livestreamsales.application.storage.products.local.ProductsLocalStorage
+    ): IProductsStorage
 }

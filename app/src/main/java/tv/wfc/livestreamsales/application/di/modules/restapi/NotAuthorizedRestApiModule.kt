@@ -3,7 +3,7 @@ package tv.wfc.livestreamsales.application.di.modules.restapi
 import dagger.Module
 import dagger.Provides
 import tv.wfc.livestreamsales.features.rest.IApiProvider
-import tv.wfc.livestreamsales.features.rest.api.notauthorized.IBroadcastsInformationApi
+import tv.wfc.livestreamsales.features.rest.api.notauthorized.IBroadcastsApi
 import tv.wfc.livestreamsales.features.rest.api.notauthorized.ILogInApi
 import tv.wfc.livestreamsales.features.rest.api.notauthorized.IProductsApi
 
@@ -17,8 +17,8 @@ class NotAuthorizedRestApiModule {
     @Provides
     internal fun provideBroadcastsInformationApi(
         apiProvider: IApiProvider
-    ): IBroadcastsInformationApi {
-        return apiProvider.createApi(IBroadcastsInformationApi::class.java)
+    ): IBroadcastsApi {
+        return apiProvider.createApi(IBroadcastsApi::class.java)
     }
 
     @Provides

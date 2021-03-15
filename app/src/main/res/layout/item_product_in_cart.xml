@@ -5,33 +5,70 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_marginHorizontal="8dp"
-    tools:maxHeight="100dp">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="4dp"
+    tools:background="@android:color/white">
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/imageCard"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1"
-        app:roundedCornerRadius="@dimen/card_cornerRadius"
-        app:actualImageScaleType="centerCrop"
-        app:roundingBorderWidth="1dp"
-        app:roundingBorderColor="#000000"
-        tools:backgroundImage="@color/colorSecondary"/>
+        app:layout_constraintDimensionRatio="1:1"
+        app:shapeAppearance="@style/Theme.LiveStreamSales.ShapeAppearanceOverlay.ProductBox"
+        app:strokeColor="@color/colorSecondaryText"
+        app:strokeWidth="2dp">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:scaleType="fitCenter"
+            tools:srcCompat="@drawable/ic_baseline_home_24"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/removeFromCartButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        style="@style/Theme.LiveStreamSales.MaterialButton.IconOnly.Circle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHeight_percent="0.3"
         app:layout_constraintDimensionRatio="1:1"
-        app:srcCompat="@drawable/drawable_remove_product_from_order"/>
+        app:icon="@drawable/ic_baseline_delete_24"
+        app:iconSize="16dp"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/amountLayout"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:cardBackgroundColor="@color/colorSecondary"
+        app:shapeAppearance="@style/Theme.LiveStreamSales.ShapeAppearanceOverlay.Circle">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/amountText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:textColor="@color/colorOnPrimary"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="2sp"
+            tools:text="23"/>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

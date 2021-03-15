@@ -10,7 +10,7 @@ import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
-import tv.wfc.livestreamsales.application.model.broadcastinformation.BroadcastInformation
+import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import javax.inject.Inject
@@ -27,9 +27,9 @@ class MainPageViewModel @Inject constructor(
 
     override val isDataBeingRefreshed = MutableLiveData(false)
 
-    override val liveBroadcasts = MutableLiveData<List<BroadcastInformation>>()
+    override val liveBroadcasts = MutableLiveData<List<Broadcast>>()
 
-    override val announcements = MutableLiveData<List<BroadcastInformation>>()
+    override val announcements = MutableLiveData<List<Broadcast>>()
 
     init{
         prepareData()
@@ -100,7 +100,7 @@ class MainPageViewModel @Inject constructor(
     private fun getBroadcastsFromRepository(
         onComplete: (() -> Unit)? = null,
         onError: ((Throwable) -> Unit)? = null,
-        onNext: ((List<BroadcastInformation>) -> Unit)? = null
+        onNext: ((List<Broadcast>) -> Unit)? = null
     ): Disposable{
         return broadcastsInformationRepository
             .getBroadcasts()
@@ -119,13 +119,13 @@ class MainPageViewModel @Inject constructor(
             )
     }
 
-    private fun updateBroadcastsInformation(broadcasts: List<BroadcastInformation>){
+    private fun updateBroadcastsInformation(broadcasts: List<Broadcast>){
         val liveBroadcasts = broadcasts.filter{ broadcastInformation ->
-            broadcastInformation.startsAt?.isBeforeNow == true
+            broadcastInformation.startsAt.isBeforeNow
         }
 
         val broadcastAnnouncements = broadcasts.filter{ broadcastInformation ->
-            broadcastInformation.startsAt?.isAfterNow == true
+            broadcastInformation.startsAt.isAfterNow
         }
 
         this.liveBroadcasts.value = liveBroadcasts
