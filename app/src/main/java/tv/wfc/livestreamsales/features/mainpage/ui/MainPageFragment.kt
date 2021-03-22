@@ -45,7 +45,7 @@ class MainPageFragment: AuthorizedUserFragment(R.layout.fragment_main_page) {
     private lateinit var mainPageComponent: MainPageComponent
 
     @Inject
-    override lateinit var viewModel: IMainPageViewModel
+    lateinit var viewModel: IMainPageViewModel
 
     @Inject
     lateinit var imageLoader: ImageLoader
@@ -59,27 +59,23 @@ class MainPageFragment: AuthorizedUserFragment(R.layout.fragment_main_page) {
         injectDependencies()
     }
 
-    override fun onContentViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onContentViewCreated(view, savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         bindView(view)
-    }
-
-    override fun onDataIsPrepared() {
-        super.onDataIsPrepared()
-        initializeSwipeRefreshLayout()
-        initializeNoLiveBroadcastsText()
-        initializeLiveBroadcastTitleText()
-        initializeDescriptionBackground()
-        initializeLiveBroadcastsViewPager()
-        initializeLiveBroadcastsPageIndicator()
-        initializeNoAnnouncementsText()
-        initializeAnnouncementsViewPager()
-        initializeAnnouncementsPageIndicator()
+        initializeContentLoader()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         unbindView()
+    }
+
+    private fun initializeMainPageComponent(){
+        mainPageComponent = authorizedUserComponent.mainPageComponent().create(this)
+    }
+
+    private fun injectDependencies(){
+        mainPageComponent.inject(this)
     }
 
     private fun bindView(view: View){
@@ -90,12 +86,24 @@ class MainPageFragment: AuthorizedUserFragment(R.layout.fragment_main_page) {
         viewBinding = null
     }
 
-    private fun initializeMainPageComponent(){
-        mainPageComponent = authorizedUserComponent.mainPageComponent().create(this)
+    private fun initializeContentLoader(){
+        viewBinding?.contentLoader?.apply {
+            clearPreparationListeners()
+            attachViewModel(viewLifecycleOwner, viewModel)
+            addOnDataIsPreparedListener(::onDataIsPrepared)
+        }
     }
 
-    private fun injectDependencies(){
-        mainPageComponent.inject(this)
+    private fun onDataIsPrepared() {
+        initializeSwipeRefreshLayout()
+        initializeNoLiveBroadcastsText()
+        initializeLiveBroadcastTitleText()
+        initializeDescriptionBackground()
+        initializeLiveBroadcastsViewPager()
+        initializeLiveBroadcastsPageIndicator()
+        initializeNoAnnouncementsText()
+        initializeAnnouncementsViewPager()
+        initializeAnnouncementsPageIndicator()
     }
 
     private fun initializeSwipeRefreshLayout(){

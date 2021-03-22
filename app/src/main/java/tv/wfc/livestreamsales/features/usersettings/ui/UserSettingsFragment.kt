@@ -44,7 +44,7 @@ class UserSettingsFragment: AuthorizedUserFragment(R.layout.fragment_settings) {
     private lateinit var userSettingsComponent: UserSettingsComponent
 
     @Inject
-    override lateinit var viewModel: IUserSettingsViewModel
+    lateinit var viewModel: IUserSettingsViewModel
 
     @Inject
     @ComputationScheduler
@@ -59,29 +59,15 @@ class UserSettingsFragment: AuthorizedUserFragment(R.layout.fragment_settings) {
         injectDependencies()
     }
 
-    override fun onContentViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onContentViewCreated(view, savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         bindView(view)
-        initializeOperationProgressView()
-        initializeNameEditText()
-        initializeSurnameNameEditText()
-        initializePhoneNumberEditText()
-        initializeEmailEditText()
-        initializeSaveUserPersonalInformationButton()
-        initializeCardNumberEditText()
+        initializeContentLoader()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         unbindView()
-    }
-
-    private fun bindView(view: View){
-        viewBinding = FragmentSettingsBinding.bind(view)
-    }
-
-    private fun unbindView(){
-        viewBinding = null
     }
 
     private fun initializeUserSettingsComponent(){
@@ -92,12 +78,40 @@ class UserSettingsFragment: AuthorizedUserFragment(R.layout.fragment_settings) {
         userSettingsComponent.inject(this)
     }
 
+    private fun bindView(view: View){
+        viewBinding = FragmentSettingsBinding.bind(view)
+    }
+
+    private fun unbindView(){
+        viewBinding = null
+    }
+
+    private fun initializeContentLoader(){
+        viewBinding?.contentLoader?.apply {
+            clearPreparationListeners()
+            attachViewModel(viewLifecycleOwner, viewModel)
+            addOnDataIsPreparedListener(::onDataIsPrepared)
+        }
+    }
+
+    private fun onDataIsPrepared() {
+        initializeOperationProgressView()
+        initializeNameEditText()
+        initializeSurnameNameEditText()
+        initializePhoneNumberEditText()
+        initializeEmailEditText()
+        initializeSaveUserPersonalInformationButton()
+        initializeCardNumberEditText()
+    }
+
     private fun initializeOperationProgressView(){
+        val contentLoader = viewBinding?.contentLoader
+
         viewModel.isProcessingData.observe(viewLifecycleOwner, { dataSavingState ->
             if(dataSavingState == true){
-                showOperationProgress()
+                contentLoader?.showOperationProgress()
             } else{
-                hideOperationProgress()
+                contentLoader?.hideOperationProgress()
             }
         })
     }

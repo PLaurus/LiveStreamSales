@@ -1,7 +1,10 @@
 package tv.wfc.livestreamsales.features.mainappcontent.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import tv.wfc.livestreamsales.NavigationGraphRootDirections
 import tv.wfc.livestreamsales.R
@@ -17,7 +20,7 @@ class MainAppContentActivity : AuthorizedUserActivity() {
         findNavController(R.id.mainAppContentNavigationHostFragment)
     }
 
-    private lateinit var viewBinding: ActivityMainAppContentBinding
+    lateinit var viewBinding: ActivityMainAppContentBinding
 
     lateinit var mainAppContentComponent: MainAppContentComponent
         private set
@@ -30,12 +33,29 @@ class MainAppContentActivity : AuthorizedUserActivity() {
         injectDependencies()
         super.onCreate(savedInstanceState)
         bindView()
+        initializeViews()
         observeIsUserLoggedOut()
     }
 
     override fun onDestroy() {
         disposables.dispose()
         super.onDestroy()
+    }
+
+    fun hideToolbar(){
+        viewBinding.appBarLayout.visibility = View.GONE
+    }
+
+    fun showToolbar(){
+        viewBinding.appBarLayout.visibility = View.VISIBLE
+    }
+
+    fun setToolbarTitle(title: String){
+        viewBinding.toolbar.title = title
+    }
+
+    fun clearToolbarTitle(){
+        viewBinding.toolbar.title = ""
     }
 
     private fun initializeMainActivityComponent(){
@@ -51,6 +71,10 @@ class MainAppContentActivity : AuthorizedUserActivity() {
         setContentView(viewBinding.root)
     }
 
+    private fun initializeViews(){
+        initializeToolbar()
+    }
+
     private fun observeIsUserLoggedOut(){
         mainAppContentViewModel.isUserLoggedIn.observe(this, { isUserLoggedIn ->
             manageLogOutNavigation(isUserLoggedIn)
@@ -60,6 +84,13 @@ class MainAppContentActivity : AuthorizedUserActivity() {
     private fun manageLogOutNavigation(isUserLoggedIn: Boolean){
         if(!isUserLoggedIn){
             navigateToAuthorization()
+        }
+    }
+
+    private fun initializeToolbar(){
+        viewBinding.toolbar.apply {
+            val appBarConfiguration = AppBarConfiguration(navigationController.graph)
+            setupWithNavController(navigationController, appBarConfiguration)
         }
     }
 

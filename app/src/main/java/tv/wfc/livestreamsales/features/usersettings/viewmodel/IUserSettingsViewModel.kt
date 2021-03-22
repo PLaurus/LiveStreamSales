@@ -1,9 +1,9 @@
 package tv.wfc.livestreamsales.features.usersettings.viewmodel
 
 import androidx.lifecycle.LiveData
-import tv.wfc.contentloader.viewmodel.IToBePreparedViewModel
+import tv.wfc.contentloader.viewmodel.INeedPreparationViewModel
 
-interface IUserSettingsViewModel: IToBePreparedViewModel{
+interface IUserSettingsViewModel: INeedPreparationViewModel{
     val name: LiveData<String>
     val surname: LiveData<String>
     val phoneNumber: LiveData<String>

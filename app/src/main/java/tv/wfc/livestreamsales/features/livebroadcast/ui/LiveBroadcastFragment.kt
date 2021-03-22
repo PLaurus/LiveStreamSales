@@ -33,6 +33,7 @@ import tv.wfc.livestreamsales.databinding.FragmentLiveBroadcastBinding
 import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserFragment
 import tv.wfc.livestreamsales.features.livebroadcast.di.LiveBroadcastComponent
 import tv.wfc.livestreamsales.features.livebroadcast.viewmodel.ILiveBroadcastViewModel
+import tv.wfc.livestreamsales.features.mainappcontent.ui.MainAppContentActivity
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -75,7 +76,7 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
     lateinit var applicationErrorsLogger: IApplicationErrorsLogger
 
     @Inject
-    override lateinit var viewModel: ILiveBroadcastViewModel
+    lateinit var viewModel: ILiveBroadcastViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -84,29 +85,16 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
         prepareViewModel(navigationArguments.liveBroadcastId)
     }
 
-    override fun onContentViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onContentViewCreated(view, savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         bindView(view)
-    }
-
-    override fun onDataIsPrepared() {
-        super.onDataIsPrepared()
-        initializeImage()
-        initializeBroadcastTitleText()
-        initializeViewersCountText()
-        initializeBroadcastDescriptionText()
-        initializePlayer()
-        initializePlayerView()
-        initializeBuyButton()
-        initializeSendMessageButton()
-        initializeMessageInput()
-        initializePriceText()
-        initializeOldPriceText()
-        showBroadcastInformationTemporarily()
+        initializeContentLoader()
     }
 
     override fun onStart() {
         super.onStart()
+        (requireActivity() as MainAppContentActivity).hideToolbar()
+
         if(Util.SDK_INT > 23){
             resumePlayerLifecycle()
         }
@@ -127,15 +115,17 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
     }
 
     override fun onStop() {
-        super.onStop()
+        (requireActivity() as MainAppContentActivity).showToolbar()
+
         if (Util.SDK_INT > 23) {
             pausePlayerLifecycle()
         }
+        super.onStop()
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         unbindView()
+        super.onDestroyView()
     }
 
     private fun initializeLiveBroadcastComponent(){
@@ -146,16 +136,39 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
         liveBroadcastComponent.inject(this)
     }
 
-    private fun prepareViewModel(broadcastId: Long){
-        viewModel.prepareData(broadcastId)
-    }
-
     private fun bindView(view: View){
         viewBinding = FragmentLiveBroadcastBinding.bind(view)
     }
 
     private fun unbindView(){
         viewBinding = null
+    }
+
+    private fun initializeContentLoader(){
+        viewBinding?.contentLoader?.apply {
+            clearPreparationListeners()
+            attachViewModel(viewLifecycleOwner, viewModel)
+            addOnDataIsPreparedListener(::onDataIsPrepared)
+        }
+    }
+
+    private fun onDataIsPrepared() {
+        initializeImage()
+        initializeBroadcastTitleText()
+        initializeViewersCountText()
+        initializeBroadcastDescriptionText()
+        initializePlayer()
+        initializePlayerView()
+        initializeBuyButton()
+        initializeSendMessageButton()
+        initializeMessageInput()
+        initializePriceText()
+        initializeOldPriceText()
+        showBroadcastInformationTemporarily()
+    }
+
+    private fun prepareViewModel(broadcastId: Long){
+        viewModel.prepareData(broadcastId)
     }
 
     private fun initializeImage(){

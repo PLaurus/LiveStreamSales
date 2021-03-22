@@ -6,10 +6,10 @@ import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.laurus.p.tools.livedata.LiveEvent
-import tv.wfc.contentloader.viewmodel.IToBePreparedViewModel
+import tv.wfc.contentloader.viewmodel.INeedPreparationViewModel
 import tv.wfc.livestreamsales.application.tools.exoplayer.PlaybackState
 
-interface ILiveBroadcastViewModel: IToBePreparedViewModel {
+interface ILiveBroadcastViewModel: INeedPreparationViewModel {
     val isDataBeingRefreshed: LiveData<Boolean>
     val image: LiveData<Drawable>
     val broadcastTitle: LiveData<String>

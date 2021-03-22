@@ -75,7 +75,7 @@
     <string name="dialog_product_order_title">Заказ</string>
 
     <!-- Phone number input fragment -->
-    <string name="fragment_phone_number_input_title">Номер телефона</string>
+    <string name="fragment_phone_number_input_title">Вход</string>
     <string name="fragment_phone_number_input_enter_phone_number">Введите ваш номер телефона</string>
     <string name="fragment_phone_number_input_phone_number_hint">Номер телефона</string>
     <string name="fragment_phone_number_input_send_code_button">Отправить код</string>
@@ -91,7 +91,7 @@
     </string>
 
     <!-- Phone number confirmation fragment -->
-    <string name="fragment_phone_number_confirmation_title">Подтверждение номера</string>
+    <string name="fragment_phone_number_confirmation_title">Подтверждение</string>
     <string name="fragment_phone_number_confirmation_enter_code">Введите код</string>
     <string name="fragment_phone_number_confirmation_code_is_sent">
         Мы отправили код на номер %s

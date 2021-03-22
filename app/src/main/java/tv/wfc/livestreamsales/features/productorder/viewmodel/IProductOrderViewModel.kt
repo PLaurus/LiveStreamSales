@@ -1,13 +1,13 @@
 package tv.wfc.livestreamsales.features.productorder.viewmodel
 
 import androidx.lifecycle.LiveData
-import tv.wfc.contentloader.viewmodel.IToBePreparedViewModel
+import tv.wfc.contentloader.viewmodel.INeedPreparationViewModel
 import tv.wfc.livestreamsales.application.model.products.specification.Specification
 import tv.wfc.livestreamsales.features.productorder.model.ProductBoxData
 import tv.wfc.livestreamsales.features.productorder.model.ProductInCart
 import tv.wfc.livestreamsales.features.productorder.model.SelectableSpecification
 
-interface IProductOrderViewModel: IToBePreparedViewModel{
+interface IProductOrderViewModel: INeedPreparationViewModel{
     val productsCount: LiveData<Int>
     val productBoxesData: LiveData<List<ProductBoxData>>
     val currentProductGroupName: LiveData<String>

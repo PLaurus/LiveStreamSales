@@ -1,12 +1,14 @@
 package tv.wfc.contentloader
 
+import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.LifecycleOwner
-import tv.wfc.contentloader.viewmodel.IToBePreparedViewModel
+import tv.wfc.contentloader.viewmodel.INeedPreparationViewModel
 
 interface IContentLoaderView {
-    fun attachViewModel(viewLifecycleOwner: LifecycleOwner, viewModel: IToBePreparedViewModel)
+    fun attachViewModel(viewLifecycleOwner: LifecycleOwner, viewModel: INeedPreparationViewModel)
     fun attachContentView(@LayoutRes layoutResId: Int)
+    fun attachContentView(view: View)
     fun showContent()
     fun showContentLoadingProgress()
     fun showContentLoadingError()

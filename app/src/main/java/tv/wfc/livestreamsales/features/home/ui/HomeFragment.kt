@@ -13,6 +13,7 @@ import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserFrag
 import tv.wfc.livestreamsales.features.home.di.HomeComponent
 import tv.wfc.livestreamsales.features.home.ui.adapters.HomePagesAdapter
 import tv.wfc.livestreamsales.features.home.viewmodel.IHomeViewModel
+import tv.wfc.livestreamsales.features.mainappcontent.ui.MainAppContentActivity
 import javax.inject.Inject
 
 class HomeFragment: AuthorizedUserFragment(R.layout.fragment_home) {
@@ -20,7 +21,7 @@ class HomeFragment: AuthorizedUserFragment(R.layout.fragment_home) {
         private set
 
     @Inject
-    override lateinit var viewModel: IHomeViewModel
+    lateinit var viewModel: IHomeViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -28,20 +29,15 @@ class HomeFragment: AuthorizedUserFragment(R.layout.fragment_home) {
         injectDependencies()
     }
 
-    override fun onContentViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onContentViewCreated(view, savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         bindView(view)
-    }
-
-    override fun onDataIsPrepared() {
-        super.onDataIsPrepared()
-        initializeViewPager()
-        initializeBottomNavigation()
+        initializeContentLoader()
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         unbindView()
+        super.onDestroyView()
     }
 
     private var viewBinding: FragmentHomeBinding? = null
@@ -50,14 +46,30 @@ class HomeFragment: AuthorizedUserFragment(R.layout.fragment_home) {
         override fun onPageSelected(position: Int) {
             val bottomNavigation = viewBinding?.bottomNavigation ?: return
 
-            val menuItem = when(position){
-                0 -> bottomNavigation.menu.findItem(R.id.mainPage)
-                1 -> bottomNavigation.menu.findItem(R.id.notificationsPage)
-                2 -> bottomNavigation.menu.findItem(R.id.categoriesPage)
-                3 -> bottomNavigation.menu.findItem(R.id.settingsPage)
+            val title: String
+            val menuItem: MenuItem
+
+            when(position){
+                0 -> {
+                    title = resources.getString(R.string.main_page_title)
+                    menuItem = bottomNavigation.menu.findItem(R.id.mainPage)
+                }
+                1 -> {
+                    title = resources.getString(R.string.fragment_notifications_title)
+                    menuItem = bottomNavigation.menu.findItem(R.id.notificationsPage)
+                }
+                2 -> {
+                    title = resources.getString(R.string.fragment_categories_title)
+                    menuItem = bottomNavigation.menu.findItem(R.id.categoriesPage)
+                }
+                3 -> {
+                    title = resources.getString(R.string.fragment_settings_title)
+                    menuItem = bottomNavigation.menu.findItem(R.id.settingsPage)
+                }
                 else -> return
             }
 
+            (requireActivity() as MainAppContentActivity).setToolbarTitle(title)
             menuItem.isChecked = true
         }
     }
@@ -66,13 +78,31 @@ class HomeFragment: AuthorizedUserFragment(R.layout.fragment_home) {
         override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
             val viewPager = viewBinding?.viewPager ?: return false
 
-            viewPager.currentItem = when(menuItem.itemId){
-                R.id.mainPage -> 0
-                R.id.notificationsPage -> 1
-                R.id.categoriesPage -> 2
-                R.id.settingsPage -> 3
+            val title: String
+            val currentPage: Int
+
+            when(menuItem.itemId){
+                R.id.mainPage -> {
+                    title = resources.getString(R.string.main_page_title)
+                    currentPage = 0
+                }
+                R.id.notificationsPage -> {
+                    title = resources.getString(R.string.fragment_notifications_title)
+                    currentPage = 1
+                }
+                R.id.categoriesPage -> {
+                    title = resources.getString(R.string.fragment_categories_title)
+                    currentPage = 2
+                }
+                R.id.settingsPage -> {
+                    title = resources.getString(R.string.fragment_settings_title)
+                    currentPage = 3
+                }
                 else -> return false
             }
+
+            (requireActivity() as MainAppContentActivity).setToolbarTitle(title)
+            viewPager.currentItem = currentPage
 
             return true
         }
@@ -92,6 +122,19 @@ class HomeFragment: AuthorizedUserFragment(R.layout.fragment_home) {
 
     private fun unbindView(){
         viewBinding = null
+    }
+
+    private fun initializeContentLoader(){
+        viewBinding?.contentLoader?.apply {
+            clearPreparationListeners()
+            attachViewModel(viewLifecycleOwner, viewModel)
+            addOnDataIsPreparedListener(::onDataIsPrepared)
+        }
+    }
+
+    private fun onDataIsPrepared() {
+        initializeViewPager()
+        initializeBottomNavigation()
     }
 
     private fun initializeViewPager(){

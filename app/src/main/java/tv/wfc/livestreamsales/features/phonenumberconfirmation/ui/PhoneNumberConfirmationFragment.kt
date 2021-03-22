@@ -42,7 +42,7 @@ class PhoneNumberConfirmationFragment: LogInFragment(R.layout.fragment_phone_num
         private set
 
     @Inject
-    override lateinit var viewModel: IPhoneNumberConfirmationViewModel
+    lateinit var viewModel: IPhoneNumberConfirmationViewModel
 
     @Inject
     @MainThreadScheduler
@@ -57,20 +57,10 @@ class PhoneNumberConfirmationFragment: LogInFragment(R.layout.fragment_phone_num
         injectDependencies()
     }
 
-    override fun onContentViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onContentViewCreated(view, savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         bindView(view)
-    }
-
-    override fun onDataIsPrepared() {
-        super.onDataIsPrepared()
-        manageNavigation()
-        initializeOperationProgressView()
-        initializeCodeIsSentText()
-        initializeCodeEditText()
-        initializeNewCodeTimerText()
-        initializeRequestCodeButton()
-        initializeTermsOfTheOfferText()
+        initializeContentLoader()
     }
 
     override fun onDestroyView() {
@@ -96,6 +86,24 @@ class PhoneNumberConfirmationFragment: LogInFragment(R.layout.fragment_phone_num
         viewBinding = null
     }
 
+    private fun initializeContentLoader(){
+        viewBinding?.contentLoader?.apply {
+            clearPreparationListeners()
+            attachViewModel(viewLifecycleOwner, viewModel)
+            addOnDataIsPreparedListener(::onDataIsPrepared)
+        }
+    }
+
+    private fun onDataIsPrepared() {
+        manageNavigation()
+        initializeOperationProgressView()
+        initializeCodeIsSentText()
+        initializeCodeEditText()
+        initializeNewCodeTimerText()
+        initializeRequestCodeButton()
+        initializeTermsOfTheOfferText()
+    }
+
     private fun manageNavigation(){
         viewModel.phoneNumberConfirmationResult.observe(viewLifecycleOwner,{ phoneNumberConfirmationResult ->
             if(phoneNumberConfirmationResult is PhoneNumberConfirmationResult.PhoneNumberIsConfirmed){
@@ -107,11 +115,13 @@ class PhoneNumberConfirmationFragment: LogInFragment(R.layout.fragment_phone_num
     }
 
     private fun initializeOperationProgressView(){
+        val contentLoader = viewBinding?.contentLoader
+
         viewModel.isCodeBeingChecked.observe(viewLifecycleOwner,{ isCodeBeingChecked ->
             if(isCodeBeingChecked){
-                showOperationProgress()
+                contentLoader?.showOperationProgress()
             } else{
-                hideOperationProgress()
+                contentLoader?.hideOperationProgress()
             }
         })
     }

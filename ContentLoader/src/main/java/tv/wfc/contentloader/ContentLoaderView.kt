@@ -12,7 +12,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import tv.wfc.contentloader.databinding.LayoutContentLoaderBinding
 import tv.wfc.contentloader.model.ViewModelPreparationState
-import tv.wfc.contentloader.viewmodel.IToBePreparedViewModel
+import tv.wfc.contentloader.viewmodel.INeedPreparationViewModel
 
 class ContentLoaderView @JvmOverloads constructor(
     context: Context,
@@ -36,7 +36,7 @@ class ContentLoaderView @JvmOverloads constructor(
     private val onDataIsPreparedListeners = mutableSetOf<() -> Unit>()
     private val onDataPreparationFailureListeners = mutableSetOf<() -> Unit>()
 
-    private var toBePreparedViewModel: IToBePreparedViewModel? = null
+    private var needPreparationViewModel: INeedPreparationViewModel? = null
 
     var contentView: View = viewBinding.contentContainer
         private set
@@ -65,31 +65,53 @@ class ContentLoaderView @JvmOverloads constructor(
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
+    override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
+        //super.addView(child, index, params)
+        val childViewId = child?.id ?: return
+
+        if(childViewId == R.id.contentContainer ||
+            childViewId == R.id.contentIsNotLoadedMessage ||
+            childViewId == R.id.contentProgressContainer ||
+            childViewId == R.id.operationProgressContainer
+        ){
+            return super.addView(child, index, params)
+        }
+
+        return viewBinding.contentContainer.addView(child, index, params)
+    }
+
     override fun attachViewModel(
         viewLifecycleOwner: LifecycleOwner,
-        viewModel: IToBePreparedViewModel
+        viewModel: INeedPreparationViewModel
     ) {
-        toBePreparedViewModel?.dataPreparationState?.removeObserver(viewModelPreparationStateObserver)
+        needPreparationViewModel?.dataPreparationState?.removeObserver(viewModelPreparationStateObserver)
         viewModel.dataPreparationState.observe(viewLifecycleOwner, viewModelPreparationStateObserver)
-        toBePreparedViewModel = viewModel
+        needPreparationViewModel = viewModel
     }
 
     override fun attachContentView(
         @LayoutRes
         layoutResId: Int
     ) {
+        val contentView = layoutInflater.inflate(
+            layoutResId,
+            viewBinding.contentContainer,
+            false
+        )
+
+        attachContentView(contentView)
+    }
+
+    override fun attachContentView(view: View) {
         clearContentView()
 
         viewBinding.contentContainer.apply{
-            val contentView = layoutInflater.inflate(layoutResId, this, false).apply{
-                layoutParams.apply {
-                    width = ViewGroup.LayoutParams.MATCH_PARENT
-                    height = ViewGroup.LayoutParams.MATCH_PARENT
-                }
+            addView(view)
+            view.updateLayoutParams {
+                width = ViewGroup.LayoutParams.MATCH_PARENT
+                height = ViewGroup.LayoutParams.MATCH_PARENT
             }
-
-            addView(contentView)
-            this@ContentLoaderView.contentView = contentView
+            this@ContentLoaderView.contentView = view
             requestLayout()
         }
     }

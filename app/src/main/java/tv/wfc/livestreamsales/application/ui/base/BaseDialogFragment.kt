@@ -13,7 +13,7 @@ import androidx.fragment.app.DialogFragment
 import com.laurus.p.tools.activity.getWindowSize
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import tv.wfc.contentloader.ContentLoaderView
-import tv.wfc.contentloader.viewmodel.IToBePreparedViewModel
+import tv.wfc.contentloader.viewmodel.INeedPreparationViewModel
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.LiveStreamSalesApplication
 import tv.wfc.livestreamsales.application.di.AppComponent
@@ -52,7 +52,7 @@ abstract class BaseDialogFragment(
     protected lateinit var appComponent: AppComponent
         private set
 
-    abstract val viewModel: IToBePreparedViewModel
+    abstract val viewModel: INeedPreparationViewModel
 
     @CallSuper
     override fun onAttach(context: Context) {

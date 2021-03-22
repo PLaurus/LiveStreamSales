@@ -1,9 +1,9 @@
 package tv.wfc.livestreamsales.features.phonenumberinput.viewmodel
 
 import androidx.lifecycle.LiveData
-import tv.wfc.contentloader.viewmodel.IToBePreparedViewModel
+import tv.wfc.contentloader.viewmodel.INeedPreparationViewModel
 
-interface IPhoneNumberInputViewModel: IToBePreparedViewModel {
+interface IPhoneNumberInputViewModel: INeedPreparationViewModel {
     val phoneNumber: LiveData<String>
     val newCodeRequestWaitingTime: LiveData<Long>
     val isCodeRequestAvailable: LiveData<Boolean>

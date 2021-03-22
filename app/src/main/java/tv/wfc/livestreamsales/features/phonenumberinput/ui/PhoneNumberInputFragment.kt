@@ -48,7 +48,7 @@ class PhoneNumberInputFragment: LogInFragment(R.layout.fragment_phone_number_inp
         private set
 
     @Inject
-    override lateinit var viewModel: IPhoneNumberInputViewModel
+    lateinit var viewModel: IPhoneNumberInputViewModel
 
     @Inject
     @MainThreadScheduler
@@ -64,14 +64,10 @@ class PhoneNumberInputFragment: LogInFragment(R.layout.fragment_phone_number_inp
         injectDependencies()
     }
 
-    override fun onContentViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onContentViewCreated(view, savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         bindView(view)
-        initializePhoneNumberEditText()
-        initializeSendCodeButton()
-        initializeNewCodeTimerText()
-        initializeCodeRequestErrorSnackbar()
-        manageNavigation()
+        initializeContentLoader()
     }
 
     override fun onDestroyView() {
@@ -93,6 +89,22 @@ class PhoneNumberInputFragment: LogInFragment(R.layout.fragment_phone_number_inp
 
     private fun unbindView(){
         viewBinding = null
+    }
+
+    private fun initializeContentLoader(){
+        viewBinding?.contentLoader?.apply {
+            clearPreparationListeners()
+            attachViewModel(viewLifecycleOwner, viewModel)
+            addOnDataIsPreparedListener(::onDataIsPrepared)
+        }
+    }
+
+    private fun onDataIsPrepared() {
+        initializePhoneNumberEditText()
+        initializeSendCodeButton()
+        initializeNewCodeTimerText()
+        initializeCodeRequestErrorSnackbar()
+        manageNavigation()
     }
 
     private fun initializePhoneNumberEditText(){
