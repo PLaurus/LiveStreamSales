@@ -29,7 +29,7 @@ android {
         debug {
             debuggable true
             //minifyEnabled true
-            buildConfigField("boolean", "IgnoreRestRequests", "true")
+            buildConfigField("boolean", "IgnoreRestRequests", "false")
             buildConfigField("boolean", "IgnoreRestHostNameVerification", "false")
         }
 
@@ -85,7 +85,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     // ReactiveX + Lifecycle
-    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:2.3.0"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:2.3.1"
 
     // Kotlin coroutines
     def kotlinCoroutineVersion = '1.3.7'

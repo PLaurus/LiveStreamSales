@@ -2,10 +2,6 @@ package tv.wfc.livestreamsales.application.storage.authorization.local
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import tv.wfc.livestreamsales.application.di.modules.sharedpreferences.qualifiers.AuthorizationSharedPreferences
-import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
-import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
-import tv.wfc.livestreamsales.features.authorizeduser.di.AuthorizedUserComponent
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
@@ -14,6 +10,10 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
+import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
+import tv.wfc.livestreamsales.application.di.modules.sharedpreferences.qualifiers.AuthorizationSharedPreferences
+import tv.wfc.livestreamsales.features.authorizeduser.di.AuthorizedUserComponent
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -32,7 +32,7 @@ class AuthorizationLocalStorage @Inject constructor(
         private const val NEXT_CODE_REQUEST_DATE_SHARED_PREFERENCES_KEY = "next_code_request_date"
         private const val NEXT_CODE_REQUEST_TIME_ZONE_SHARED_PREFERENCES_KEY = "next_code_request_date_time_zone"
         private const val DEFAULT_NEXT_CODE_REQUEST_REQUIRED_WAITING_TIME = 60L
-        private const val DEFAULT_CODE_LENGTH = 6
+        private const val DEFAULT_CODE_LENGTH = 4
     }
 
     private val disposables = CompositeDisposable()
