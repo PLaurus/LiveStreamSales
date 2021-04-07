@@ -15,6 +15,8 @@ data class Stream(
     val description: String?,
     @SerializedName("image")
     val image: String?,
+    @SerializedName("manifest")
+    val manifestUrl: String?,
     @SerializedName("products")
     val products: List<Product?>?
 )

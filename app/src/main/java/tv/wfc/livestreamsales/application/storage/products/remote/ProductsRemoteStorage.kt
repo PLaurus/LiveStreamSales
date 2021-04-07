@@ -2,20 +2,22 @@ package tv.wfc.livestreamsales.application.storage.products.remote
 
 import android.content.Context
 import android.graphics.Color
+import androidx.core.graphics.toColorInt
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import tv.wfc.livestreamsales.BuildConfig
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
-import tv.wfc.livestreamsales.application.model.products.ProductGroup
-import tv.wfc.livestreamsales.application.model.products.ProductVariant
-import tv.wfc.livestreamsales.application.storage.products.IProductsStorage
 import tv.wfc.livestreamsales.application.model.exceptions.DataNotReceivedException
 import tv.wfc.livestreamsales.application.model.exceptions.ReceivedDataWithWrongFormatException
+import tv.wfc.livestreamsales.application.model.products.ProductGroup
+import tv.wfc.livestreamsales.application.model.products.ProductVariant
 import tv.wfc.livestreamsales.application.model.products.specification.Specification
+import tv.wfc.livestreamsales.application.storage.products.IProductsStorage
 import tv.wfc.livestreamsales.features.rest.api.notauthorized.IBroadcastsApi
 import tv.wfc.livestreamsales.features.rest.model.broadcasts.Stream
+import tv.wfc.livestreamsales.features.rest.model.products.Property
 import tv.wfc.livestreamsales.features.rest.model.products.Sku
 import javax.inject.Inject
 
@@ -74,20 +76,36 @@ class ProductsRemoteStorage @Inject constructor(
         val productVariantId = 0L
         val productVariantQuantityInStock = inStock ?: return null
         val productVariantPrice = price ?: return null
-        val colorSpecification = Specification.ColorSpecification(
-            context.getString(R.string.product_specification_name_color),
-            Color.parseColor("#FFFFFF")
-        )
-        val productVariantSpecifications = listOf<Specification<*>>(colorSpecification)
+        val specifications = properties?.mapNotNull{ it.toSpecification() } ?: emptyList()
 
         return ProductVariant(
             id = productVariantId,
             quantityInStock = productVariantQuantityInStock,
             price = productVariantPrice,
-            specifications = productVariantSpecifications
+            specifications = specifications
         )
     }
 
+    private fun Property.toSpecification(): Specification<*>? {
+        val specificationType = type ?: return null
+        val name = name ?: return null
+        val value = value ?: return null
+
+        return when(specificationType){
+            "regular" -> {
+                Specification.DescriptiveSpecification(name, value)
+            }
+            "color" -> {
+                try{
+                    val color = colorHex?.toColorInt() ?: return null
+                    Specification.ColorSpecification(name, color)
+                } catch (ex: IllegalArgumentException){
+                    null
+                }
+            }
+            else -> null
+        }
+    }
 
     private fun createDebugProducts(): List<ProductGroup>{
         val product1 = ProductGroup(

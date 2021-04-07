@@ -107,7 +107,7 @@ class BroadcastsRemoteStorage @Inject constructor(
         val broadcastDescription = description ?: return null
         val broadcastStartsAt = startAt ?: return null
         val broadcastImageUrl = image
-        val broadcastManifestUrl = null
+        val broadcastManifestUrl = manifestUrl
         val broadcastViewersCount = null
 
         return Broadcast(

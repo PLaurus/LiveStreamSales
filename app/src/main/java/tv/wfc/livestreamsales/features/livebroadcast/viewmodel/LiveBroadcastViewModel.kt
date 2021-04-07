@@ -190,6 +190,7 @@ class LiveBroadcastViewModel @Inject constructor(
     private fun prepareBroadcastInformation(broadcastId: Long): Completable {
         return broadcastsInformationRepository
             .getBroadcast(broadcastId)
+            .observeOn(mainThreadScheduler)
             .flatMapCompletable{ broadcastInformation ->
                 Completable.merge(listOf(
                     prepareImage(broadcastInformation),
