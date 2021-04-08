@@ -61,8 +61,7 @@ class AuthorizationRepository @Inject constructor(
     }
 
     override fun getRequiredCodeLength(): Single<Int> {
-        return getAndSaveRequiredCodeLengthFromRemote()
-            .switchIfEmpty(authorizationLocalStorage.getRequiredCodeLength())
+        return authorizationLocalStorage.getRequiredCodeLength()
     }
 
     override fun getNextCodeRequestRequiredWaitingTime(): Single<Long> {
