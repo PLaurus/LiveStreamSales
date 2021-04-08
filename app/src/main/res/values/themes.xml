@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="Theme.LiveStreamSales" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.LiveStreamSales" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>

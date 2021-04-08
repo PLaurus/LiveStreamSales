@@ -44,16 +44,8 @@ class AuthorizationRepository @Inject constructor(
     override fun sendConfirmationCodeRequest(phoneNumber: String): Single<Boolean> {
         if(isCodeRequestAvailable.hasValue() && isCodeRequestAvailable.value){
             return authorizationRemoteStorage.sendConfirmationCodeRequest(phoneNumber)
-                .doOnSuccess{ isCodeSent ->
-                    if(isCodeSent){
-                        getAndSaveNextCodeRequestRequiredWaitingTimeFromRemote()
-                            .ignoreElement()
-                            .observeOn(mainThreadScheduler)
-                            .subscribeBy(
-                                onError = applicationErrorsLogger::logError,
-                                onComplete = authorizationLocalStorage::startCodeRequestTimer
-                            )
-                    }
+                .doOnSuccess{ _ ->
+                    authorizationLocalStorage.startCodeRequestTimer()
                 }
         }
 
@@ -65,8 +57,7 @@ class AuthorizationRepository @Inject constructor(
     }
 
     override fun getNextCodeRequestRequiredWaitingTime(): Single<Long> {
-        return getAndSaveNextCodeRequestRequiredWaitingTimeFromRemote()
-            .switchIfEmpty(authorizationLocalStorage.getNextCodeRequestRequiredWaitingTime())
+        return authorizationLocalStorage.getNextCodeRequestRequiredWaitingTime()
     }
 
     override fun confirmPhoneNumber(phoneNumber: String, confirmationCode: Int): Single<PhoneNumberConfirmationResult>{
