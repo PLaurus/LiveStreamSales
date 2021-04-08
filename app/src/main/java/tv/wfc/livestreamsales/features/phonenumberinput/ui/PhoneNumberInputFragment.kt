@@ -2,17 +2,15 @@ package tv.wfc.livestreamsales.features.phonenumberinput.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.telephony.PhoneNumberFormattingTextWatcher
-import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableString
-import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding4.view.clicks
+import com.laurus.p.edittextformatters.PhoneNumberTextFormatter
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.kotlin.addTo
 import tv.wfc.livestreamsales.R
@@ -108,11 +106,14 @@ class PhoneNumberInputFragment: LogInFragment(R.layout.fragment_phone_number_inp
     }
 
     private fun initializePhoneNumberEditText(){
-        viewBinding?.phoneNumberEditText?.apply {
-            setText(viewModel.phoneNumber.value ?: "")
-            addTextChangedListener(
-                PhoneNumberEditTextTextWatcher(PhoneNumberFormattingTextWatcher())
-            )
+        viewBinding?.run{
+            phoneNumberEditText.setText(viewModel.phoneNumber.value ?: "")
+
+            phoneNumberEditText.addTextChangedListener(PhoneNumberTextFormatter{
+                val prefix = phoneNumberLayout.prefixText?.toString()?.replace(" ", "")
+                val phone = prefix + it
+                viewModel.updatePhoneNumber(phone)
+            })
         }
     }
 
@@ -195,16 +196,6 @@ class PhoneNumberInputFragment: LogInFragment(R.layout.fragment_phone_number_inp
             }
 
             text = styledText
-        }
-    }
-
-    private inner class PhoneNumberEditTextTextWatcher(
-        private val phoneNumberFormattingTextWatcher: PhoneNumberFormattingTextWatcher
-    ) : TextWatcher by phoneNumberFormattingTextWatcher{
-        override fun afterTextChanged(s: Editable?) {
-            phoneNumberFormattingTextWatcher.afterTextChanged(s)
-            val newText = s?.toString() ?: ""
-            viewModel.updatePhoneNumber(newText)
         }
     }
 }

@@ -31,15 +31,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/enterPhoneNumberText"
+        app:prefixText="@string/fragment_phone_number_input_phone_number_prefix"
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/phoneNumberEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="phone"
-            android:digits="01234567890 +()-"
-            android:maxLength="20"/>
+            android:inputType="number"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

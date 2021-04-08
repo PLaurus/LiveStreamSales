@@ -78,6 +78,7 @@
     <string name="fragment_phone_number_input_title">Вход</string>
     <string name="fragment_phone_number_input_enter_phone_number">Введите ваш номер телефона</string>
     <string name="fragment_phone_number_input_phone_number_hint">Номер телефона</string>
+    <string name="fragment_phone_number_input_phone_number_prefix">+7 </string>
     <string name="fragment_phone_number_input_send_code_button">Отправить код</string>
     <string name="fragment_phone_number_input_new_code_message">
         Получить новый код можно через %s
