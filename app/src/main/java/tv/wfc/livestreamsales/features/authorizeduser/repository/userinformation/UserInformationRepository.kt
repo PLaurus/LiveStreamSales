@@ -6,8 +6,8 @@ import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
-import tv.wfc.livestreamsales.features.authorizeduser.di.modules.storage.qualifiers.UserInformationLocalStorage
-import tv.wfc.livestreamsales.features.authorizeduser.di.modules.storage.qualifiers.UserInformationRemoteStorage
+import tv.wfc.livestreamsales.application.di.modules.optionals.storage.qualifiers.UserInformationLocalStorage
+import tv.wfc.livestreamsales.application.di.modules.optionals.storage.qualifiers.UserInformationRemoteStorage
 import tv.wfc.livestreamsales.features.authorizeduser.model.user.UserInformation
 import tv.wfc.livestreamsales.features.authorizeduser.storage.userinformation.IUserInformationStorage
 import javax.inject.Inject

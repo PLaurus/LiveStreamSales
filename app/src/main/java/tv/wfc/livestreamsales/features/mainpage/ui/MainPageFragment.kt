@@ -11,8 +11,8 @@ import coil.ImageLoader
 import com.laurus.p.tools.viewpager2.onPageSelected
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
+import tv.wfc.livestreamsales.application.ui.base.BaseFragment
 import tv.wfc.livestreamsales.databinding.FragmentMainPageBinding
-import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserFragment
 import tv.wfc.livestreamsales.features.home.ui.HomeFragmentDirections
 import tv.wfc.livestreamsales.features.mainpage.di.MainPageComponent
 import tv.wfc.livestreamsales.features.mainpage.ui.adapters.announcements.AnnouncementsAdapter
@@ -20,7 +20,7 @@ import tv.wfc.livestreamsales.features.mainpage.ui.adapters.livebroadcast.LiveBr
 import tv.wfc.livestreamsales.features.mainpage.viewmodel.IMainPageViewModel
 import javax.inject.Inject
 
-class MainPageFragment: AuthorizedUserFragment(R.layout.fragment_main_page) {
+class MainPageFragment: BaseFragment(R.layout.fragment_main_page) {
     private val homeNavigationController by lazy{
         findNavController()
     }
@@ -71,7 +71,12 @@ class MainPageFragment: AuthorizedUserFragment(R.layout.fragment_main_page) {
     }
 
     private fun initializeMainPageComponent(){
-        mainPageComponent = authorizedUserComponent.mainPageComponent().create(this)
+        mainPageComponent = authorizedUserComponent
+            ?.mainPageComponent()
+            ?.create(this)
+            ?: appComponent
+                .mainPageComponent()
+                .create(this)
     }
 
     private fun injectDependencies(){

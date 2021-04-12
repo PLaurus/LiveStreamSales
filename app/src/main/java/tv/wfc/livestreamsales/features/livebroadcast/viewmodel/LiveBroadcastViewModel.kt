@@ -11,6 +11,7 @@ import coil.transform.CircleCropTransformation
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
+import com.google.common.base.Optional
 import com.laurus.p.tools.livedata.LiveEvent
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
@@ -42,7 +43,7 @@ class LiveBroadcastViewModel @Inject constructor(
     private val computationScheduler: Scheduler,
     private val imageLoader: ImageLoader,
     private val broadcastsInformationRepository: IBroadcastsInformationRepository,
-    private val broadcastAnalyticsRepository: IBroadcastAnalyticsRepository,
+    private val broadcastAnalyticsRepository: Optional<IBroadcastAnalyticsRepository>,
     private val productsRepository: IProductsRepository,
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): ViewModel(), ILiveBroadcastViewModel {
@@ -296,12 +297,14 @@ class LiveBroadcastViewModel @Inject constructor(
     }
 
     private fun notifyServerUserIsWatchingBroadcast(broadcastId: Long){
-        broadcastAnalyticsRepository.notifyWatchingBroadcast(broadcastId)
-            .observeOn(mainThreadScheduler)
-            .subscribeBy(
-                onError = applicationErrorsLogger::logError
-            )
-            .addTo(disposables)
+        broadcastAnalyticsRepository.orNull()?.run{
+            notifyWatchingBroadcast(broadcastId)
+                .observeOn(mainThreadScheduler)
+                .subscribeBy(
+                    onError = applicationErrorsLogger::logError
+                )
+                .addTo(disposables)
+        }
     }
 
     private fun startAutoRefresh(period: Long, timeUnit: TimeUnit = TimeUnit.SECONDS){

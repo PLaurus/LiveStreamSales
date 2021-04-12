@@ -83,7 +83,7 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        initializeProductOrderComponent()
+        initializeProductOrderComponent(context)
         injectDependencies()
         prepareViewModel(navigationArguments.liveBroadcastId)
         dialogHeightAdaptationType = DialogDimensionAdaptationType.MAX_SIZE
@@ -126,14 +126,18 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
         oneProductImageLoaderDisposable?.dispose()
     }
 
-    private fun initializeProductOrderComponent(){
-        productOrderComponent = (context?.applicationContext as? LiveStreamSalesApplication)
-            ?.appComponent
-            ?.authorizationRepository()
-            ?.authorizedUserComponent
+    private fun initializeProductOrderComponent(context: Context){
+        val appComponent = (context.applicationContext as LiveStreamSalesApplication).appComponent
+        val authorizedUserComponent = appComponent
+            .authorizationRepository()
+            .authorizedUserComponent
+
+        productOrderComponent = authorizedUserComponent
             ?.productOrderComponent()
             ?.create(this)
-            ?: throw IllegalStateException("User MUST be Authorized to use ${this::class.simpleName} class.")
+            ?: appComponent
+                .productOrderComponent()
+                .create(this)
     }
 
     private fun injectDependencies(){

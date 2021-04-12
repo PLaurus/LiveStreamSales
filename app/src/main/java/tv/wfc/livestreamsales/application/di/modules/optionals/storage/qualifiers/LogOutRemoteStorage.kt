@@ -1,4 +1,4 @@
-package tv.wfc.livestreamsales.features.authorizeduser.di.modules.storage.qualifiers
+package tv.wfc.livestreamsales.application.di.modules.optionals.storage.qualifiers
 
 import javax.inject.Qualifier
 

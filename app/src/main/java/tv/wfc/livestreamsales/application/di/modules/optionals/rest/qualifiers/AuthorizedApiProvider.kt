@@ -1,4 +1,4 @@
-package tv.wfc.livestreamsales.features.authorizeduser.di.modules.rest.qualifiers
+package tv.wfc.livestreamsales.application.di.modules.optionals.rest.qualifiers
 
 import javax.inject.Qualifier
 

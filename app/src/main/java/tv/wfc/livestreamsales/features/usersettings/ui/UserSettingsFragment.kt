@@ -17,14 +17,14 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
+import tv.wfc.livestreamsales.application.ui.base.BaseFragment
 import tv.wfc.livestreamsales.databinding.FragmentSettingsBinding
-import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserFragment
 import tv.wfc.livestreamsales.features.usersettings.di.UserSettingsComponent
 import tv.wfc.livestreamsales.features.usersettings.viewmodel.IUserSettingsViewModel
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class UserSettingsFragment: AuthorizedUserFragment(R.layout.fragment_settings) {
+class UserSettingsFragment: BaseFragment(R.layout.fragment_settings) {
     private val cardNumberMaxLength by lazy {
         val digitsCount = resources.getInteger(R.integer.paymentCardEditor_numberEditText_length)
         val spacesCount = 3
@@ -71,7 +71,10 @@ class UserSettingsFragment: AuthorizedUserFragment(R.layout.fragment_settings) {
     }
 
     private fun initializeUserSettingsComponent(){
-        userSettingsComponent = authorizedUserComponent.settingsComponent().create(this)
+        userSettingsComponent = authorizedUserComponent
+            ?.userSettingsComponent()
+            ?.create(this)
+            ?: throw IllegalStateException("User MUST BE authorized to access ${this::class.qualifiedName} class!")
     }
 
     private fun injectDependencies(){

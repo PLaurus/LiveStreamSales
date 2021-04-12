@@ -8,15 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import tv.wfc.livestreamsales.R
+import tv.wfc.livestreamsales.application.ui.base.BaseFragment
 import tv.wfc.livestreamsales.databinding.FragmentHomeBinding
-import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserFragment
 import tv.wfc.livestreamsales.features.home.di.HomeComponent
 import tv.wfc.livestreamsales.features.home.ui.adapters.HomePagesAdapter
 import tv.wfc.livestreamsales.features.home.viewmodel.IHomeViewModel
 import tv.wfc.livestreamsales.features.mainappcontent.ui.MainAppContentActivity
 import javax.inject.Inject
 
-class HomeFragment: AuthorizedUserFragment(R.layout.fragment_home) {
+class HomeFragment: BaseFragment(R.layout.fragment_home) {
     lateinit var homeComponent: HomeComponent
         private set
 
@@ -109,7 +109,12 @@ class HomeFragment: AuthorizedUserFragment(R.layout.fragment_home) {
     }
 
     private fun initializeHomeComponent(){
-        homeComponent = authorizedUserComponent.homeComponent().create(this)
+        homeComponent = authorizedUserComponent
+            ?.homeComponent()
+            ?.create(this)
+            ?: appComponent
+                .homeComponent()
+                .create(this)
     }
 
     private fun injectDependencies(){

@@ -29,15 +29,15 @@ import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
+import tv.wfc.livestreamsales.application.ui.base.BaseFragment
 import tv.wfc.livestreamsales.databinding.FragmentLiveBroadcastBinding
-import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserFragment
 import tv.wfc.livestreamsales.features.livebroadcast.di.LiveBroadcastComponent
 import tv.wfc.livestreamsales.features.livebroadcast.viewmodel.ILiveBroadcastViewModel
 import tv.wfc.livestreamsales.features.mainappcontent.ui.MainAppContentActivity
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broadcast) {
+class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
     private val navigationArguments by navArgs<LiveBroadcastFragmentArgs>()
     private val navigationController by lazy { findNavController() }
     private val broadcastInformationRevealDuration by lazy{
@@ -129,7 +129,12 @@ class LiveBroadcastFragment: AuthorizedUserFragment(R.layout.fragment_live_broad
     }
 
     private fun initializeLiveBroadcastComponent(){
-        liveBroadcastComponent = authorizedUserComponent.liveBroadcastComponent().create(this)
+        liveBroadcastComponent = authorizedUserComponent
+            ?.liveBroadcastComponent()
+            ?.create(this)
+            ?: appComponent
+                .liveBroadcastComponent()
+                .create(this)
     }
 
     private fun injectDependencies(){

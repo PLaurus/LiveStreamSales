@@ -8,7 +8,7 @@ import tv.wfc.livestreamsales.features.rest.api.notauthorized.ILogInApi
 import tv.wfc.livestreamsales.features.rest.api.notauthorized.IProductsApi
 
 @Module
-class NotAuthorizedRestApiModule {
+class ApiModule {
     @Provides
     internal fun provideLogInApi(apiProvider: IApiProvider): ILogInApi {
         return apiProvider.createApi(ILogInApi::class.java)

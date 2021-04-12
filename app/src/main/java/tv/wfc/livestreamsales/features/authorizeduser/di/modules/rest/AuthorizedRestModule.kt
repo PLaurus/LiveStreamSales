@@ -1,6 +1,6 @@
 package tv.wfc.livestreamsales.features.authorizeduser.di.modules.rest
 
-import tv.wfc.livestreamsales.features.authorizeduser.di.modules.rest.qualifiers.AuthorizedApiProvider
+import tv.wfc.livestreamsales.application.di.modules.optionals.rest.qualifiers.AuthorizedApiProvider
 import tv.wfc.livestreamsales.features.authorizeduser.di.scope.AuthorizedUserFeatureScope
 import tv.wfc.livestreamsales.features.rest.IApiProvider
 import tv.wfc.livestreamsales.features.rest.RetrofitApiProvider
@@ -9,22 +9,19 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import tv.wfc.livestreamsales.application.di.modules.optionals.rest.qualifiers.AuthorizedOkHttpClient
+import tv.wfc.livestreamsales.application.di.modules.optionals.rest.qualifiers.AuthorizedRetrofit
 import tv.wfc.livestreamsales.features.authorizeduser.di.qualifiers.AuthorizationToken
 import javax.inject.Named
 
 @Module
 class AuthorizedRestModule {
-    companion object{
-        private const val DEPENDENCY_NAME_AUTHORIZED_OK_HTTP_CLIENT = "AUTHORIZED_OK_HTTP_CLIENT"
-        private const val DEPENDENCY_NAME_AUTHORIZED_RETROFIT = "AUTHORIZED_RETROFIT"
-    }
-
     @AuthorizedUserFeatureScope
     @Provides
-    @Named(DEPENDENCY_NAME_AUTHORIZED_RETROFIT)
+    @AuthorizedRetrofit
     fun provideAuthorizedRetrofit(
         baseRetrofit: Retrofit,
-        @Named(DEPENDENCY_NAME_AUTHORIZED_OK_HTTP_CLIENT)
+        @AuthorizedOkHttpClient
         authorizedOkHttpClient: OkHttpClient
     ): Retrofit{
         return baseRetrofit.newBuilder()
@@ -34,7 +31,7 @@ class AuthorizedRestModule {
 
     @AuthorizedUserFeatureScope
     @Provides
-    @Named(DEPENDENCY_NAME_AUTHORIZED_OK_HTTP_CLIENT)
+    @AuthorizedOkHttpClient
     fun provideAuthorizedOkHttpClient(
         baseOkHttpClient: OkHttpClient,
         authorizationInterceptor: AuthorizationInterceptor
@@ -58,7 +55,7 @@ class AuthorizedRestModule {
     @Provides
     @AuthorizedApiProvider
     fun provideAuthorizedApiProvider(
-        @Named(DEPENDENCY_NAME_AUTHORIZED_RETROFIT)
+        @AuthorizedRetrofit
         authorizedRetrofit: Retrofit
     ): IApiProvider {
         return RetrofitApiProvider(authorizedRetrofit)

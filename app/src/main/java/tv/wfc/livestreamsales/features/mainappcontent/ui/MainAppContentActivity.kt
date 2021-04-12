@@ -8,13 +8,13 @@ import androidx.navigation.ui.setupWithNavController
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import tv.wfc.livestreamsales.NavigationGraphRootDirections
 import tv.wfc.livestreamsales.R
+import tv.wfc.livestreamsales.application.ui.base.BaseActivity
 import tv.wfc.livestreamsales.databinding.ActivityMainAppContentBinding
-import tv.wfc.livestreamsales.features.authorizeduser.ui.base.AuthorizedUserActivity
 import tv.wfc.livestreamsales.features.mainappcontent.di.MainAppContentComponent
 import tv.wfc.livestreamsales.features.mainappcontent.viewmodel.IMainAppContentViewModel
 import javax.inject.Inject
 
-class MainAppContentActivity : AuthorizedUserActivity() {
+class MainAppContentActivity : BaseActivity() {
     private val disposables = CompositeDisposable()
     private val navigationController by lazy{
         findNavController(R.id.mainAppContentNavigationHostFragment)
@@ -59,7 +59,12 @@ class MainAppContentActivity : AuthorizedUserActivity() {
     }
 
     private fun initializeMainActivityComponent(){
-        mainAppContentComponent = authorizedUserComponent.mainAppComponent().create(this)
+        mainAppContentComponent = authorizedUserComponent
+            ?.mainAppContentComponent()
+            ?.create(this)
+            ?: appComponent
+                .mainAppContentComponent()
+                .create(this)
     }
 
     private fun injectDependencies(){
