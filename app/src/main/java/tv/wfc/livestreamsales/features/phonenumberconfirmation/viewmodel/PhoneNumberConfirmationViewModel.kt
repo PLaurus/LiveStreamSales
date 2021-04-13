@@ -3,6 +3,7 @@ package tv.wfc.livestreamsales.features.phonenumberconfirmation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.laurus.p.edittextformatters.PhoneNumberTextFormatter
 import com.laurus.p.tools.livedata.LiveEvent
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
@@ -51,9 +52,16 @@ class PhoneNumberConfirmationViewModel @Inject constructor(
     override val phoneNumber: LiveData<String> = MutableLiveData("").apply {
         loginRepository
             .getLogin()
+            .map(::formatPhoneNumber)
             .observeOn(mainThreadScheduler)
             .subscribe(::setValue)
             .addTo(disposables)
+    }
+
+    private fun formatPhoneNumber(phoneNumberWithCountryCode: String): String{
+        val phoneNumberWithoutCountryCode = phoneNumberWithCountryCode.removePrefix("+7")
+        val formattedPhoneNumber = PhoneNumberTextFormatter().format(phoneNumberWithoutCountryCode)
+        return "+7 $formattedPhoneNumber"
     }
 
     override val code: LiveData<String> = MutableLiveData("").apply {

@@ -110,9 +110,7 @@ class PhoneNumberInputFragment: LogInFragment(R.layout.fragment_phone_number_inp
             phoneNumberEditText.setText(viewModel.phoneNumber.value ?: "")
 
             phoneNumberEditText.addTextChangedListener(PhoneNumberTextFormatter{
-                val prefix = phoneNumberLayout.prefixText?.toString()?.replace(" ", "")
-                val phone = prefix + it
-                viewModel.updatePhoneNumber(phone)
+                viewModel.updatePhoneNumber(it.toString())
             })
         }
     }

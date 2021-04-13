@@ -46,7 +46,7 @@ class PhoneNumberInputViewModel @Inject constructor(
             .observeOn(mainThreadScheduler)
             .doOnNext(::savePhoneNumberToRepository)
             .subscribeBy(
-                onNext = ::setValue,
+                onNext = { it.removePrefix("+7") },
                 onError = applicationErrorsLogger::logError
             )
             .addTo(disposables)
@@ -92,7 +92,7 @@ class PhoneNumberInputViewModel @Inject constructor(
     }
 
     override fun updatePhoneNumber(phoneNumber: String){
-        phoneNumberSubject.onNext(phoneNumber)
+        phoneNumberSubject.onNext("+7$phoneNumber")
     }
 
     private fun savePhoneNumberToRepository(phoneNumber: String){
