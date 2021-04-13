@@ -11,7 +11,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import androidx.annotation.ColorInt
 import androidx.annotation.Px
-import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
 import androidx.core.widget.addTextChangedListener
@@ -22,7 +22,7 @@ class BoxDividedEditText @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-): AppCompatTextView(context, attrs, defStyleAttr){
+): AppCompatEditText(context, attrs, defStyleAttr){
 
     companion object{
         private const val DEFAULT_SQUARE_BOXES = true
@@ -177,12 +177,12 @@ class BoxDividedEditText @JvmOverloads constructor(
 
     init{
         background = null
+        isEnabled = true
+        isFocusable = true
+        isFocusableInTouchMode = true
         setTextIsSelectable(false)
         isCursorVisible = false
-        isFocusable = true
-        isEnabled = true
         isClickable = true
-        isFocusableInTouchMode = true
         inputType = InputType.TYPE_CLASS_NUMBER
 
         context.withStyledAttributes(attrs, R.styleable.BoxDividedEditText, defStyleAttr){
@@ -190,6 +190,7 @@ class BoxDividedEditText @JvmOverloads constructor(
                 R.styleable.BoxDividedEditText_squareBoxes,
                 DEFAULT_SQUARE_BOXES
             )
+
             numberOfBoxes = getInt(
                 R.styleable.BoxDividedEditText_numberOfBoxes,
                 DEFAULT_NUMBER_OF_BOXES
@@ -251,6 +252,7 @@ class BoxDividedEditText @JvmOverloads constructor(
         val heightMeasureMode = MeasureSpec.getMode(heightMeasureSpec)
         val offeredViewWidth = MeasureSpec.getSize(widthMeasureSpec)
         val offeredViewHeight = MeasureSpec.getSize(heightMeasureSpec)
+
         calculateBoxSize(widthMeasureMode, heightMeasureMode, offeredViewWidth, offeredViewHeight)
 
         val viewWidth: Int
@@ -480,10 +482,6 @@ class BoxDividedEditText @JvmOverloads constructor(
 
     private fun updateInputFilters(){
         filters = inputFilters.toTypedArray()
-    }
-
-    override fun isTextSelectable(): Boolean {
-        return false
     }
 
     override fun setTextIsSelectable(selectable: Boolean) {

@@ -137,7 +137,7 @@ class PhoneNumberConfirmationFragment: LogInFragment(R.layout.fragment_phone_num
 
     private fun initializeCodeEditText(){
         viewBinding?.confirmationCodeEditText?.apply {
-            text = viewModel.code.value.toString()
+            setText(viewModel.code.value.toString())
 
             viewModel.codeLength.observe(viewLifecycleOwner,{
                 numberOfBoxes = it
