@@ -1,27 +1,77 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     // Kotlin
-    ext.kotlin_version = "1.4.32"
+    ext.kotlin_version =                "1.4.32"
 
     // Kotlin extensions
-    ext.coreKtxVersion = "1.3.2"
-    ext.collectionKtxVersion = "1.1.0"
-
-    // Navigation
-    ext.navigationVersion = "2.3.4"
+    ext.coreKtxVersion =                "1.3.2"
+    ext.collectionKtxVersion =          "1.1.0"
 
     // UI
-    ext.appCompatVersion = "1.2.0"
-    ext.materialVersion = "1.3.0"
+    ext.appCompatVersion =              "1.2.0"
+    ext.materialVersion =               "1.3.0"
+    ext.constraintLayoutVersion =       "2.0.4"
+    ext.swipeRefreshLayoutVersion =     "1.1.0"
+    ext.frescoVersion =                 "2.3.0"
+    ext.coilVersion =                   "1.1.1"
+    ext.pageIndicatorViewVersion =      "1.0.3"
+    ext.viewPagerDotsIndicatorVersion = "4.1.2"
+
+    // Payment
+    ext.yookassaAndroidSdkVersion =     "5.1.2"
+    ext.yookassaAuthVersion =           "1.0.51"
+
+    // Video player
+    ext.exoPlayerVersion =              "2.13.3"
+
+    // Android navigation
+    ext.navigationVersion =             "2.3.5"
+
+    // ReactiveX
+    ext.rxJavaVersion =                 "3.0.7"
+    ext.rxKotlinVersion =               "3.0.1"
+    ext.rxAndroidVersion =              "3.0.0"
+    ext.rxBindingMaterialVersion =      "4.0.0"
+
+    // Lifecycle extensions
+    ext.lifecycleExtensionsVersion =    "2.2.0"
+
+    // ReactiveX + Lifecycle
+    ext.lifecycleReactiveStreamsKtx =   "2.3.1"
+
+    // Kotlin coroutines
+    ext.kotlinCoroutineVersion =        "1.4.3"
+
+    // Dependency injection
+    ext.daggerVersion =                 "2.28.3"
+    ext.jsr250ApiVersion =              "1.0"
+
+    // Permissions
+    ext.dexterVersion =                 "6.0.1"
+
+    // Date + Time
+    ext.androidJodaVersion =            "2.10.9.1"
+
+    // Serialization
+    ext.gsonVersion =                   "2.8.6"
+
+    // REST API
+    ext.okhttpVersion =                 "4.9.0"
+    ext.retrofitVersion =               "2.9.0"
+    ext.retrofitConverterScalars =      "2.8.1"
+
+    // Google Play Services
+    ext.playServicesBaseVersion =       "17.6.0"
 
     // Tests
-    ext.junitVersion = "4.13.2"
-    ext.androidJunitVersion = "1.1.2"
-    ext.espressoCoreVersion = "3.3.0"
+    ext.junitVersion =                  "4.13.2"
+    ext.androidJunitVersion =           "1.1.2"
+    ext.espressoCoreVersion =           "3.3.0"
 
     repositories {
         google()
         jcenter()
+        maven { url 'https://dl.bintray.com/yoomoney/maven' }
     }
 
     dependencies {
