@@ -3,14 +3,6 @@ package tv.wfc.livestreamsales.application.di.modules.rest
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.TypeAdapter
-import tv.wfc.livestreamsales.BuildConfig
-import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
-import tv.wfc.livestreamsales.application.di.scope.ApplicationScope
-import tv.wfc.livestreamsales.features.rest.IApiProvider
-import tv.wfc.livestreamsales.features.rest.RetrofitApiProvider
-import tv.wfc.livestreamsales.features.rest.errors.IResponseErrorsManager
-import tv.wfc.livestreamsales.features.rest.errors.ResponseErrorsManager
-import tv.wfc.livestreamsales.features.rest.interceptors.RestServerErrorsInterceptor
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -25,18 +17,25 @@ import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
+import tv.wfc.livestreamsales.BuildConfig
+import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
 import tv.wfc.livestreamsales.application.di.modules.rest.qualifiers.*
+import tv.wfc.livestreamsales.application.di.scope.ApplicationScope
 import tv.wfc.livestreamsales.application.tools.gson.typeadapters.DateTimeTypeAdapter
+import tv.wfc.livestreamsales.features.rest.IApiProvider
+import tv.wfc.livestreamsales.features.rest.RetrofitApiProvider
+import tv.wfc.livestreamsales.features.rest.errors.IResponseErrorsManager
+import tv.wfc.livestreamsales.features.rest.errors.ResponseErrorsManager
+import tv.wfc.livestreamsales.features.rest.interceptors.AuthorizationInterceptor
+import tv.wfc.livestreamsales.features.rest.interceptors.IAuthorizationInterceptor
+import tv.wfc.livestreamsales.features.rest.interceptors.RestServerErrorsInterceptor
 import javax.net.ssl.HostnameVerifier
 
 @Module
 abstract class RestModule {
-
     companion object{
-
         @ApplicationScope
         @Provides
-        @JvmStatic
         fun provideBaseRetrofit(
             @RestBaseUrl
             baseUrl: String,
@@ -59,15 +58,14 @@ abstract class RestModule {
         @ApplicationScope
         @Provides
         @RestBaseUrl
-        @JvmStatic
         fun provideRestBaseUrl(): String = "https://stream-api.mywfc.ru/api/"
 
         @ApplicationScope
         @Provides
-        @JvmStatic
-        fun provideBaseOkHttpClient(
+        fun provideOkHttpClient(
             handshakeCertificates: HandshakeCertificates,
             hostnameVerifier: HostnameVerifier,
+            authorizationInterceptor: IAuthorizationInterceptor,
             httpLoggingInterceptor: HttpLoggingInterceptor,
             restServerErrorsInterceptor: RestServerErrorsInterceptor
         ): OkHttpClient{
@@ -77,6 +75,7 @@ abstract class RestModule {
                     handshakeCertificates.trustManager
                 )
                 .hostnameVerifier(hostnameVerifier)
+                .addInterceptor(authorizationInterceptor)
                 .addInterceptor(httpLoggingInterceptor)
                 .addInterceptor(restServerErrorsInterceptor)
                 .build()
@@ -85,7 +84,6 @@ abstract class RestModule {
         @ApplicationScope
         @Provides
         @GsonConverterFactory
-        @JvmStatic
         fun provideGsonConverterFactory(
             @RestGson
             gson: Gson
@@ -95,14 +93,12 @@ abstract class RestModule {
 
         @Provides
         @ScalarsConverterFactory
-        @JvmStatic
         internal fun provideScalarsConverterFactory(): Converter.Factory{
             return retrofit2.converter.scalars.ScalarsConverterFactory.create()
         }
 
         @Provides
         @RestGson
-        @JvmStatic
         internal fun provideGson(
             @RestDateTimeTypeAdapter
             restDateTimeAdapter: TypeAdapter<DateTime>
@@ -115,7 +111,6 @@ abstract class RestModule {
 
         @Provides
         @RestDateTimeTypeAdapter
-        @JvmStatic
         internal fun provideRestDateTimeTypeAdapter(
             @RestDateTimeFormatter
             restDateTimeFormatter: DateTimeFormatter
@@ -125,7 +120,6 @@ abstract class RestModule {
 
         @Provides
         @RestDateTimeFormatter
-        @JvmStatic
         internal fun provideRestDateTimeFormatter(
             @RestDateTimeFormatPattern
             restDateTimeFormatPattern: String
@@ -135,12 +129,10 @@ abstract class RestModule {
 
         @Provides
         @RestDateTimeFormatPattern
-        @JvmStatic
         internal fun provideRestDateTimeFormatPattern(): String = "yyyy-MM-dd'T'HH:mm:ssZ"
 
         @ApplicationScope
         @Provides
-        @JvmStatic
         fun provideCallAdapterFactory(
             @IoScheduler
             scheduler: Scheduler
@@ -150,7 +142,6 @@ abstract class RestModule {
 
         @ApplicationScope
         @Provides
-        @JvmStatic
         fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
             return HttpLoggingInterceptor().apply{
                 level = if(BuildConfig.DEBUG){
@@ -162,7 +153,6 @@ abstract class RestModule {
         }
 
         @Provides
-        @JvmStatic
         fun provideRestServerErrorInterceptor(
             responseErrorsManager: IResponseErrorsManager
         ): RestServerErrorsInterceptor {
@@ -181,4 +171,10 @@ abstract class RestModule {
     abstract fun provideResponseErrorsManager(
         responseErrorsManager: ResponseErrorsManager
     ): IResponseErrorsManager
+
+    @ApplicationScope
+    @Binds
+    abstract fun provideAuthorizationInterceptor(
+        authorizationInterceptor: AuthorizationInterceptor
+    ): IAuthorizationInterceptor
 }

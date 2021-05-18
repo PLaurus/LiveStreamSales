@@ -71,12 +71,7 @@ class MainPageFragment: BaseFragment(R.layout.fragment_main_page) {
     }
 
     private fun initializeMainPageComponent(){
-        mainPageComponent = authorizedUserComponent
-            ?.mainPageComponent()
-            ?.create(this)
-            ?: appComponent
-                .mainPageComponent()
-                .create(this)
+        mainPageComponent = appComponent.mainPageComponent().create(this)
     }
 
     private fun injectDependencies(){

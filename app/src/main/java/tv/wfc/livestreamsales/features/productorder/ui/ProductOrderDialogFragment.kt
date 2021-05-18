@@ -128,16 +128,10 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
 
     private fun initializeProductOrderComponent(context: Context){
         val appComponent = (context.applicationContext as LiveStreamSalesApplication).appComponent
-        val authorizedUserComponent = appComponent
-            .authorizationRepository()
-            .authorizedUserComponent
 
-        productOrderComponent = authorizedUserComponent
-            ?.productOrderComponent()
-            ?.create(this)
-            ?: appComponent
-                .productOrderComponent()
-                .create(this)
+        productOrderComponent = appComponent
+            .productOrderComponent()
+            .create(this)
     }
 
     private fun injectDependencies(){

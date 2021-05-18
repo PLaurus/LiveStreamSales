@@ -3,29 +3,20 @@ package tv.wfc.livestreamsales.application.storage.authorization.local
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.kotlin.addTo
-import io.reactivex.rxjava3.subjects.BehaviorSubject
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
 import tv.wfc.livestreamsales.application.di.modules.sharedpreferences.qualifiers.AuthorizationSharedPreferences
-import tv.wfc.livestreamsales.features.authorizeduser.di.AuthorizedUserComponent
 import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class AuthorizationLocalStorage @Inject constructor(
-    private val authorizedUserComponentFactory: AuthorizedUserComponent.Factory,
     @AuthorizationSharedPreferences
     private val authorizationSharedPreferences: SharedPreferences,
     @IoScheduler
-    private val ioScheduler: Scheduler,
-    @ComputationScheduler
-    private val computationScheduler: Scheduler
+    private val ioScheduler: Scheduler
 ): IAuthorizationLocalStorage {
     companion object{
         private const val TOKEN_SHARED_PREFERENCES_KEY = "authorization_token"
@@ -35,46 +26,17 @@ class AuthorizationLocalStorage @Inject constructor(
         private const val DEFAULT_CODE_LENGTH = 4
     }
 
-    private val disposables = CompositeDisposable()
-    private val isUserLoggedInSubject = BehaviorSubject.create<Boolean>()
-
-    private var nextCodeRequestRequiredWaitingTime = DEFAULT_NEXT_CODE_REQUEST_REQUIRED_WAITING_TIME
+    private var nextCodeRequestMaxWaitingTime = DEFAULT_NEXT_CODE_REQUEST_REQUIRED_WAITING_TIME
     private var codeLength: Int = DEFAULT_CODE_LENGTH
-    private var codeRequestTimer: Disposable? = null
 
-    override val isUserLoggedIn: Observable<Boolean> = isUserLoggedInSubject.distinctUntilChanged()
-
-    override var authorizedUserComponent: AuthorizedUserComponent? = null
-        private set
-
-    override val nextCodeRequestWaitingTime: BehaviorSubject<Long> = BehaviorSubject.create()
-
-    override val isCodeRequestAvailable: BehaviorSubject<Boolean> = BehaviorSubject.createDefault(true).apply {
-        nextCodeRequestWaitingTime
-            .map{ it <= 0 }
-            .distinctUntilChanged()
-            .observeOn(ioScheduler)
-            .subscribe(::onNext)
-            .addTo(disposables)
-    }
-
-    init {
-        recoverDataFromSharedPreferences()
-        startSavingNextCodeRequestWaitingTime()
-    }
-
-    private fun startSavingNextCodeRequestWaitingTime(){
-        nextCodeRequestWaitingTime
-            .observeOn(ioScheduler)
-            .subscribe(::saveNextCodeRequestWaitingTimeToSharedPreferences)
-            .addTo(disposables)
+    override fun getAuthorizationToken(): Maybe<String> = Maybe.fromCallable {
+        authorizationSharedPreferences.getString(TOKEN_SHARED_PREFERENCES_KEY, null)
     }
 
     override fun updateAuthorizationToken(token: String?): Completable {
         return Completable
             .create{ emitter ->
                 saveTokenToSharedPreferences(token)
-                affectTheExistenceOfAuthorizedUserComponent(token)
                 emitter.onComplete()
             }
             .subscribeOn(ioScheduler)
@@ -95,81 +57,30 @@ class AuthorizationLocalStorage @Inject constructor(
             .subscribeOn(ioScheduler)
     }
 
-    override fun saveNextCodeRequestRequiredWaitingTime(timeInSeconds: Long): Completable {
+    override fun saveNextCodeRequestMaxWaitingTime(timeInSeconds: Long): Completable {
         return Completable
             .create{ emitter ->
-                nextCodeRequestRequiredWaitingTime = timeInSeconds
+                nextCodeRequestMaxWaitingTime = timeInSeconds
                 emitter.onComplete()
             }
             .subscribeOn(ioScheduler)
 
     }
 
-    override fun getNextCodeRequestRequiredWaitingTime(): Single<Long> {
+    override fun getNextCodeRequestMaxWaitingTime(): Single<Long> {
         return Single
-            .just(nextCodeRequestRequiredWaitingTime)
+            .just(nextCodeRequestMaxWaitingTime)
             .subscribeOn(ioScheduler)
     }
 
-    override fun startCodeRequestTimer() {
-        startCodeRequestTimer(nextCodeRequestRequiredWaitingTime)
-    }
-
-    private fun recoverDataFromSharedPreferences(){
-        val authorizationToken = getTokenFromSharedPreferences()
-        affectTheExistenceOfAuthorizedUserComponent(authorizationToken)
-
-        val nextCodeRequestWaitingTime = getNextCodeRequestWaitingTimeFromSharedPreferences()
-        startCodeRequestTimer(nextCodeRequestWaitingTime)
-    }
-
-    private fun affectTheExistenceOfAuthorizedUserComponent(token: String?){
-        if(token != null){
-            createAuthorizedUserComponent(token)
-        } else{
-            destroyAuthorizedUserComponent()
-        }
-    }
-
-    private fun saveTokenToSharedPreferences(token: String?){
-        authorizationSharedPreferences.edit{
-            putString(TOKEN_SHARED_PREFERENCES_KEY, token)
-        }
-    }
-
-    private fun getTokenFromSharedPreferences(): String?{
-        return authorizationSharedPreferences.getString(TOKEN_SHARED_PREFERENCES_KEY, null)
-    }
-
-    private fun createAuthorizedUserComponent(token: String){
-        destroyAuthorizedUserComponent()
-        authorizedUserComponent = authorizedUserComponentFactory.create(token)
-        isUserLoggedInSubject.onNext(true)
-    }
-
-    private fun destroyAuthorizedUserComponent(){
-        isUserLoggedInSubject.onNext(false)
-        authorizedUserComponent = null
-    }
-
-    private fun saveNextCodeRequestWaitingTimeToSharedPreferences(leftTimeToWaitInSeconds: Long){
-        val currentDate = GregorianCalendar.getInstance()
-        val dateWhenCodeRequestIsAvailable = currentDate.timeInMillis + leftTimeToWaitInSeconds * 1000
-        val timeZoneId = currentDate.timeZone.id
-
-        authorizationSharedPreferences.edit{
-            putLong(NEXT_CODE_REQUEST_DATE_SHARED_PREFERENCES_KEY, dateWhenCodeRequestIsAvailable)
-            putString(NEXT_CODE_REQUEST_TIME_ZONE_SHARED_PREFERENCES_KEY, timeZoneId)
-        }
-    }
-
-    private fun getNextCodeRequestWaitingTimeFromSharedPreferences(): Long{
+    override fun getNextCodeRequestWaitingTime(): Single<Long> = Single.fromCallable{
         val currentDate = GregorianCalendar.getInstance()
 
         val nextCodeRequestDateInMillis = authorizationSharedPreferences.getLong(
             NEXT_CODE_REQUEST_DATE_SHARED_PREFERENCES_KEY,
             currentDate.timeInMillis
         )
+
         val timeZoneId = authorizationSharedPreferences.getString(
             NEXT_CODE_REQUEST_TIME_ZONE_SHARED_PREFERENCES_KEY,
             currentDate.timeZone.id
@@ -182,24 +93,24 @@ class AuthorizationLocalStorage @Inject constructor(
                 }
 
         val waitingTimeInSeconds = ((nextCodeRequestDate.timeInMillis - currentDate.timeInMillis) / 1000)
-        return waitingTimeInSeconds.coerceIn(0..Long.MAX_VALUE)
+
+        waitingTimeInSeconds.coerceIn(0..Long.MAX_VALUE)
     }
 
-    private fun startCodeRequestTimer(time: Long){
-        codeRequestTimer?.dispose()
+    override fun saveNextCodeRequestWaitingTime(leftTimeToWaitInSeconds: Long): Completable = Completable.fromRunnable{
+        val currentDate = GregorianCalendar.getInstance()
+        val dateWhenCodeRequestIsAvailable = currentDate.timeInMillis + leftTimeToWaitInSeconds * 1000
+        val timeZoneId = currentDate.timeZone.id
 
-        codeRequestTimer = Observable
-            .intervalRange(
-                0L,
-                time + 1,
-                0L,
-                1L,
-                TimeUnit.SECONDS
-            )
-            .map{ time - it }
-            .subscribeOn(computationScheduler)
-            .observeOn(ioScheduler)
-            .subscribe(nextCodeRequestWaitingTime::onNext)
-            .addTo(disposables)
+        authorizationSharedPreferences.edit{
+            putLong(NEXT_CODE_REQUEST_DATE_SHARED_PREFERENCES_KEY, dateWhenCodeRequestIsAvailable)
+            putString(NEXT_CODE_REQUEST_TIME_ZONE_SHARED_PREFERENCES_KEY, timeZoneId)
+        }
+    }
+
+    private fun saveTokenToSharedPreferences(token: String?){
+        authorizationSharedPreferences.edit(commit = true){
+            putString(TOKEN_SHARED_PREFERENCES_KEY, token)
+        }
     }
 }

@@ -17,12 +17,6 @@ abstract class BaseActivity: AppCompatActivity() {
         (application as LiveStreamSalesApplication).appComponent
     }
 
-    protected val authorizedUserComponent by lazy{
-        appComponent
-            .authorizationRepository()
-            .authorizedUserComponent
-    }
-
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
         setRootViewClickable()

@@ -23,7 +23,7 @@ interface ILiveBroadcastViewModel: INeedPreparationViewModel {
     val firstProductPrice: LiveData<Float>
     val firstProductOldPrice: LiveData<Float>
 
-    val playerEventListener: Player.EventListener
+    val playerEventListener: Player.Listener
 
     fun prepareData(broadcastId: Long)
     fun refreshData()

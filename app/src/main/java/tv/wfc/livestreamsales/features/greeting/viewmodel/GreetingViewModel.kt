@@ -10,6 +10,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
+import tv.wfc.livestreamsales.application.manager.IAuthorizationManager
 import tv.wfc.livestreamsales.application.repository.applicationsettings.IApplicationSettingsRepository
 import tv.wfc.livestreamsales.application.repository.authorization.IAuthorizationRepository
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
@@ -20,7 +21,7 @@ import javax.inject.Inject
 class GreetingViewModel @Inject constructor(
     applicationSettingsRepository: IApplicationSettingsRepository,
     private val greetingPageRepository: IGreetingPageRepository,
-    authorizationRepository: IAuthorizationRepository,
+    authorizationManager: IAuthorizationManager,
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler,
     private val applicationErrorsLogger: IApplicationErrorsLogger
@@ -28,7 +29,7 @@ class GreetingViewModel @Inject constructor(
     private val disposables = CompositeDisposable()
 
     private val isUserLoggedInSingle =
-        authorizationRepository
+        authorizationManager
             .isUserLoggedIn
             .first(false)
 

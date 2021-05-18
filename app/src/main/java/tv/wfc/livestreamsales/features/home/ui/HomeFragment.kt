@@ -109,12 +109,7 @@ class HomeFragment: BaseFragment(R.layout.fragment_home) {
     }
 
     private fun initializeHomeComponent(){
-        homeComponent = authorizedUserComponent
-            ?.homeComponent()
-            ?.create(this)
-            ?: appComponent
-                .homeComponent()
-                .create(this)
+        homeComponent = appComponent.homeComponent().create(this)
     }
 
     private fun injectDependencies(){

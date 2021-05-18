@@ -11,7 +11,6 @@ import coil.transform.CircleCropTransformation
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
-import com.google.common.base.Optional
 import com.laurus.p.tools.livedata.LiveEvent
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
@@ -26,12 +25,12 @@ import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
+import tv.wfc.livestreamsales.application.model.products.ProductGroup
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
+import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.tools.exoplayer.PlaybackState
-import tv.wfc.livestreamsales.application.model.products.ProductGroup
 import tv.wfc.livestreamsales.features.livebroadcast.repository.IBroadcastAnalyticsRepository
-import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -43,7 +42,7 @@ class LiveBroadcastViewModel @Inject constructor(
     private val computationScheduler: Scheduler,
     private val imageLoader: ImageLoader,
     private val broadcastsInformationRepository: IBroadcastsInformationRepository,
-    private val broadcastAnalyticsRepository: Optional<IBroadcastAnalyticsRepository>,
+    private val broadcastAnalyticsRepository: IBroadcastAnalyticsRepository,
     private val productsRepository: IProductsRepository,
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): ViewModel(), ILiveBroadcastViewModel {
@@ -101,7 +100,7 @@ class LiveBroadcastViewModel @Inject constructor(
             .addTo(disposables)
     }
 
-    override val playerEventListener = object : Player.EventListener{
+    override val playerEventListener = object : Player.Listener{
         override fun onPlaybackStateChanged(state: Int) {
             playbackState.value = PlaybackState.fromInt(state)
         }
@@ -297,14 +296,10 @@ class LiveBroadcastViewModel @Inject constructor(
     }
 
     private fun notifyServerUserIsWatchingBroadcast(broadcastId: Long){
-        broadcastAnalyticsRepository.orNull()?.run{
-            notifyWatchingBroadcast(broadcastId)
-                .observeOn(mainThreadScheduler)
-                .subscribeBy(
-                    onError = applicationErrorsLogger::logError
-                )
-                .addTo(disposables)
-        }
+        broadcastAnalyticsRepository.notifyWatchingBroadcast(broadcastId)
+            .observeOn(mainThreadScheduler)
+            .subscribeBy(applicationErrorsLogger::logError)
+            .addTo(disposables)
     }
 
     private fun startAutoRefresh(period: Long, timeUnit: TimeUnit = TimeUnit.SECONDS){

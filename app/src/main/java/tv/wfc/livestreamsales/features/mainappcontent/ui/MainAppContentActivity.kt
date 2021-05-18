@@ -59,12 +59,9 @@ class MainAppContentActivity : BaseActivity() {
     }
 
     private fun initializeMainActivityComponent(){
-        mainAppContentComponent = authorizedUserComponent
-            ?.mainAppContentComponent()
-            ?.create(this)
-            ?: appComponent
-                .mainAppContentComponent()
-                .create(this)
+        mainAppContentComponent = appComponent
+            .mainAppContentComponent()
+            .create(this)
     }
 
     private fun injectDependencies(){

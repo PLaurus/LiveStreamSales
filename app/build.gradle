@@ -49,10 +49,6 @@ android {
     }
 }
 
-repositories {
-//    maven { url 'https://dl.bintray.com/yoomoney/maven' }
-}
-
 dependencies {
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
@@ -71,8 +67,8 @@ dependencies {
     implementation "com.tbuonomo.andrui:viewpagerdotsindicator:$viewPagerDotsIndicatorVersion"
 
     // Payment
-    implementation "ru.yoo.sdk.kassa.payments:yookassa-android-sdk:$yookassaAndroidSdkVersion"
-    implementation "ru.yoo.sdk.auth:auth:$yookassaAuthVersion"
+    implementation "ru.yoomoney.sdk.kassa.payments:yookassa-android-sdk:$yookassaAndroidSdkVersion"
+    implementation "ru.yoomoney.sdk.auth:auth:$yookassaAuthVersion"
 
     // Video player
     implementation "com.google.android.exoplayer:exoplayer-core:$exoPlayerVersion"

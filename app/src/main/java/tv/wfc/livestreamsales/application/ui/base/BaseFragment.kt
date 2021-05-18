@@ -13,7 +13,6 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.LiveStreamSalesApplication
 import tv.wfc.livestreamsales.application.di.AppComponent
-import tv.wfc.livestreamsales.features.authorizeduser.di.AuthorizedUserComponent
 
 abstract class BaseFragment(
     @LayoutRes
@@ -25,14 +24,10 @@ abstract class BaseFragment(
     protected lateinit var appComponent: AppComponent
         private set
 
-    protected var authorizedUserComponent: AuthorizedUserComponent? = null
-        private set
-
     @CallSuper
     override fun onAttach(context: Context) {
         super.onAttach(context)
         initializeAppComponent(context)
-        initializeAuthorizedUserComponent()
     }
 
     final override fun onCreateView(
@@ -54,12 +49,6 @@ abstract class BaseFragment(
 
     private fun initializeAppComponent(context: Context){
         appComponent = (context.applicationContext as LiveStreamSalesApplication).appComponent
-    }
-
-    private fun initializeAuthorizedUserComponent(){
-        authorizedUserComponent = appComponent
-            .authorizationRepository()
-            .authorizedUserComponent
     }
 
     private fun View.replaceEmptyBackground(){

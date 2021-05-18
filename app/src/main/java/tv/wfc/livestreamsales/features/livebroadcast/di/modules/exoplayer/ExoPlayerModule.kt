@@ -4,16 +4,13 @@ import android.content.Context
 import com.google.android.exoplayer2.DefaultRenderersFactory
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.RenderersFactory
-import com.google.android.exoplayer2.ext.cronet.CronetDataSourceFactory
+import com.google.android.exoplayer2.ext.cronet.CronetDataSource
 import com.google.android.exoplayer2.ext.cronet.CronetEngineWrapper
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.source.MediaSourceFactory
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.TrackSelector
-import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
-import com.google.android.exoplayer2.upstream.HttpDataSource
+import com.google.android.exoplayer2.upstream.*
 import com.google.android.exoplayer2.util.ErrorMessageProvider
 import dagger.Binds
 import dagger.Module
@@ -104,14 +101,14 @@ abstract class ExoPlayerModule {
             useCronetForNetworking: Boolean
         ): HttpDataSource.Factory{
              return if (useCronetForNetworking) {
-                val cronetEngineWrapper = CronetEngineWrapper(context, false)
+                 val cronetEngineWrapper = CronetEngineWrapper(context, null, false)
 
-                CronetDataSourceFactory(cronetEngineWrapper, Executors.newSingleThreadExecutor())
+                 CronetDataSource.Factory(cronetEngineWrapper, Executors.newSingleThreadExecutor())
             } else {
                 val cookieManager = CookieManager()
                 cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ORIGINAL_SERVER)
                 CookieHandler.setDefault(cookieManager)
-                DefaultHttpDataSourceFactory()
+                DefaultHttpDataSource.Factory()
             }
         }
     }

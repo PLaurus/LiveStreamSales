@@ -1,19 +1,16 @@
 package tv.wfc.livestreamsales.application.storage.authorization.local
 
-import tv.wfc.livestreamsales.features.authorizeduser.di.AuthorizedUserComponent
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 
 interface IAuthorizationLocalStorage {
-    val isUserLoggedIn: Observable<Boolean>
-    val authorizedUserComponent: AuthorizedUserComponent?
-    val nextCodeRequestWaitingTime: Observable<Long>
-    val isCodeRequestAvailable: Observable<Boolean>
+    fun getAuthorizationToken(): Maybe<String>
     fun updateAuthorizationToken(token: String?): Completable
     fun getRequiredCodeLength(): Single<Int>
     fun saveRequiredCodeLength(length: Int): Completable
-    fun saveNextCodeRequestRequiredWaitingTime(timeInSeconds: Long): Completable
-    fun getNextCodeRequestRequiredWaitingTime(): Single<Long>
-    fun startCodeRequestTimer()
+    fun saveNextCodeRequestMaxWaitingTime(timeInSeconds: Long): Completable
+    fun getNextCodeRequestMaxWaitingTime(): Single<Long>
+    fun getNextCodeRequestWaitingTime(): Single<Long>
+    fun saveNextCodeRequestWaitingTime(leftTimeToWaitInSeconds: Long): Completable
 }

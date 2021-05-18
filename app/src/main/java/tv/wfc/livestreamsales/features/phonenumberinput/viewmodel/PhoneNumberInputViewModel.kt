@@ -13,13 +13,13 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
-import tv.wfc.livestreamsales.application.repository.authorization.IAuthorizationRepository
+import tv.wfc.livestreamsales.application.manager.IAuthorizationManager
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.features.login.repository.ILoginRepository
 import javax.inject.Inject
 
 class PhoneNumberInputViewModel @Inject constructor(
-    private val authorizationRepository: IAuthorizationRepository,
+    private val authorizationManager: IAuthorizationManager,
     private val loginRepository: ILoginRepository,
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler,
@@ -33,7 +33,7 @@ class PhoneNumberInputViewModel @Inject constructor(
     private val canRequestCodeSubject = Observable
         .combineLatest(
             isPhoneNumberCorrectSubject,
-            authorizationRepository.isCodeRequestAvailable,
+            authorizationManager.isCodeRequestAvailable,
             { isPhoneNumberCorrect, isCodeRequestAvailable ->
                 isPhoneNumberCorrect && isCodeRequestAvailable
             }
@@ -53,14 +53,14 @@ class PhoneNumberInputViewModel @Inject constructor(
     }
 
     override val newCodeRequestWaitingTime: LiveData<Long> = MutableLiveData(0L).apply{
-        authorizationRepository.nextCodeRequestWaitingTime
+        authorizationManager.nextCodeRequestWaitingTime
             .observeOn(mainThreadScheduler)
             .subscribe(::setValue)
             .addTo(disposables)
     }
 
     override val isCodeRequestAvailable: LiveData<Boolean> = MutableLiveData(false).apply{
-        authorizationRepository.isCodeRequestAvailable
+        authorizationManager.isCodeRequestAvailable
             .observeOn(mainThreadScheduler)
             .subscribe(::setValue)
             .addTo(disposables)
@@ -106,7 +106,7 @@ class PhoneNumberInputViewModel @Inject constructor(
     }
 
     override fun requestConfirmationCode(){
-        authorizationRepository.sendConfirmationCodeRequest(phoneNumberSubject.value)
+        authorizationManager.requestConfirmationCode(phoneNumberSubject.value)
             .subscribeOn(mainThreadScheduler)
             .observeOn(mainThreadScheduler)
             .subscribe(isConfirmationCodeSentSubject::onNext)

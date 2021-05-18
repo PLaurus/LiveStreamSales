@@ -14,6 +14,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
+import tv.wfc.livestreamsales.application.manager.IAuthorizationManager
 import tv.wfc.livestreamsales.application.model.phonenumberconfirmation.PhoneNumberConfirmationResult
 import tv.wfc.livestreamsales.application.repository.authorization.IAuthorizationRepository
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
@@ -21,6 +22,7 @@ import tv.wfc.livestreamsales.features.login.repository.ILoginRepository
 import javax.inject.Inject
 
 class PhoneNumberConfirmationViewModel @Inject constructor(
+    private val authorizationManager: IAuthorizationManager,
     private val authorizationRepository: IAuthorizationRepository,
     private val loginRepository: ILoginRepository,
     @MainThreadScheduler
@@ -113,14 +115,14 @@ class PhoneNumberConfirmationViewModel @Inject constructor(
     }
 
     override val newCodeRequestWaitingTime: LiveData<Long> = MutableLiveData(0L).apply{
-        authorizationRepository.nextCodeRequestWaitingTime
+        authorizationManager.nextCodeRequestWaitingTime
             .observeOn(mainThreadScheduler)
             .subscribe(::setValue)
             .addTo(disposables)
     }
 
     override val isCodeRequestAvailable: LiveData<Boolean> = MutableLiveData(false).apply{
-        authorizationRepository.isCodeRequestAvailable
+        authorizationManager.isCodeRequestAvailable
             .observeOn(mainThreadScheduler)
             .subscribe(::setValue)
             .addTo(disposables)
@@ -142,7 +144,7 @@ class PhoneNumberConfirmationViewModel @Inject constructor(
 
         Single
             .zip(codeSingle, phoneNumberSingle){ code, phoneNumber ->
-                authorizationRepository.confirmPhoneNumber(phoneNumber, code)
+                authorizationManager.confirmPhoneNumber(phoneNumber, code)
             }
             .flatMap { it }
             .doOnSubscribe { isCodeBeingCheckedSubject.onNext(true) }
@@ -167,7 +169,7 @@ class PhoneNumberConfirmationViewModel @Inject constructor(
         loginRepository
             .getLogin()
             .flatMap { phoneNumber ->
-                authorizationRepository.sendConfirmationCodeRequest(phoneNumber)
+                authorizationManager.requestConfirmationCode(phoneNumber)
             }
             .subscribeBy(
                 onError = applicationErrorsLogger::logError

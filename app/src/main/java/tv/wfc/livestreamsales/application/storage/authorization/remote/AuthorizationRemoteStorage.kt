@@ -1,18 +1,19 @@
 package tv.wfc.livestreamsales.application.storage.authorization.remote
 
+import io.reactivex.rxjava3.core.Completable
 import tv.wfc.livestreamsales.BuildConfig
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
 import tv.wfc.livestreamsales.application.model.phonenumberconfirmation.PhoneNumberConfirmationResult
 import tv.wfc.livestreamsales.features.rest.model.api.request.ConfirmPhoneNumberRequestBody
 import tv.wfc.livestreamsales.features.rest.model.api.request.SendConfirmationCodeRequestRequestBody
-import tv.wfc.livestreamsales.features.rest.api.notauthorized.ILogInApi
+import tv.wfc.livestreamsales.features.rest.api.notauthorized.IAuthorizationApi
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class AuthorizationRemoteStorage @Inject constructor(
-    private val logInApi: ILogInApi,
+    private val authorizationApi: IAuthorizationApi,
     @IoScheduler
     private val ioScheduler: Scheduler
 ): IAuthorizationRemoteStorage {
@@ -28,7 +29,7 @@ class AuthorizationRemoteStorage @Inject constructor(
         }
 
         val sendRequestCodeRequestBody = SendConfirmationCodeRequestRequestBody(phoneNumber)
-        val response = logInApi.sendConfirmationCodeRequest(sendRequestCodeRequestBody)
+        val response = authorizationApi.sendConfirmationCodeRequest(sendRequestCodeRequestBody)
 
         return response
             .flatMap{
@@ -44,7 +45,7 @@ class AuthorizationRemoteStorage @Inject constructor(
     }
 
     override fun getRequiredCodeLength(): Maybe<Int> {
-        val response = logInApi.getConfirmationCodeLength()
+        val response = authorizationApi.getConfirmationCodeLength()
 
         return response
             .filter{ it.isSuccessful }
@@ -59,7 +60,7 @@ class AuthorizationRemoteStorage @Inject constructor(
     }
 
     override fun getNextCodeRequestRequiredWaitingTime(): Maybe<Long> {
-        val response = logInApi.getNextCodeRequestRequiredWaitingTime()
+        val response = authorizationApi.getNextCodeRequestRequiredWaitingTime()
 
         return response
             .filter{ it.isSuccessful }
@@ -87,7 +88,7 @@ class AuthorizationRemoteStorage @Inject constructor(
         }
 
         val confirmPhoneNumberRequestBody = ConfirmPhoneNumberRequestBody(phoneNumber, confirmationCode)
-        val response = logInApi.confirmPhoneNumber(confirmPhoneNumberRequestBody)
+        val response = authorizationApi.confirmPhoneNumber(confirmPhoneNumberRequestBody)
 
         return response
             .flatMap{
@@ -108,6 +109,13 @@ class AuthorizationRemoteStorage @Inject constructor(
                     Single.just(PhoneNumberConfirmationResult.PhoneNumberIsNotConfirmed())
                 }
             }
+            .subscribeOn(ioScheduler)
+    }
+
+    override fun logOut(): Completable {
+        return authorizationApi
+            .logOut()
+            .ignoreElement()
             .subscribeOn(ioScheduler)
     }
 }

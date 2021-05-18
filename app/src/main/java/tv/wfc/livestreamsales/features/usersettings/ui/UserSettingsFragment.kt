@@ -71,10 +71,7 @@ class UserSettingsFragment: BaseFragment(R.layout.fragment_settings) {
     }
 
     private fun initializeUserSettingsComponent(){
-        userSettingsComponent = authorizedUserComponent
-            ?.userSettingsComponent()
-            ?.create(this)
-            ?: throw IllegalStateException("User MUST BE authorized to access ${this::class.qualifiedName} class!")
+        userSettingsComponent = appComponent.userSettingsComponent().create(this)
     }
 
     private fun injectDependencies(){

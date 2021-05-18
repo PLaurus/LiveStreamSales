@@ -129,12 +129,7 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
     }
 
     private fun initializeLiveBroadcastComponent(){
-        liveBroadcastComponent = authorizedUserComponent
-            ?.liveBroadcastComponent()
-            ?.create(this)
-            ?: appComponent
-                .liveBroadcastComponent()
-                .create(this)
+        liveBroadcastComponent = appComponent.liveBroadcastComponent().create(this)
     }
 
     private fun injectDependencies(){

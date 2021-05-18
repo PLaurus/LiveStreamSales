@@ -14,8 +14,8 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
-import tv.wfc.livestreamsales.features.authorizeduser.model.user.UserInformation
-import tv.wfc.livestreamsales.features.authorizeduser.repository.userinformation.IUserInformationRepository
+import tv.wfc.livestreamsales.application.model.userinformation.UserInformation
+import tv.wfc.livestreamsales.application.repository.userinformation.IUserInformationRepository
 import javax.inject.Inject
 
 class UserSettingsViewModel @Inject constructor(
