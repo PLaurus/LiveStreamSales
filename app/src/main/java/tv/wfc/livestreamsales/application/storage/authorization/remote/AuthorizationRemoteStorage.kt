@@ -84,7 +84,7 @@ class AuthorizationRemoteStorage @Inject constructor(
      */
     override fun confirmPhoneNumber(phoneNumber: String, confirmationCode: Int): Single<PhoneNumberConfirmationResult>{
         if(BuildConfig.IgnoreRestRequests){
-            return Single.just(PhoneNumberConfirmationResult.PhoneNumberIsConfirmed("1a2b3c4d"))
+            return Single.just(PhoneNumberConfirmationResult.Confirmed("1a2b3c4d"))
         }
 
         val confirmPhoneNumberRequestBody = ConfirmPhoneNumberRequestBody(phoneNumber, confirmationCode)
@@ -97,16 +97,17 @@ class AuthorizationRemoteStorage @Inject constructor(
                 if(body != null){
                     val errorMessage = body.errorMessage
                     val token = body.token
+                    val needUserPersonalInformation = body.isProfileEmpty ?: false
 
-                    val phoneNumberConfirmationResult = if(token != null){
-                        PhoneNumberConfirmationResult.PhoneNumberIsConfirmed(token)
-                    } else{
-                        PhoneNumberConfirmationResult.PhoneNumberIsNotConfirmed(errorMessage)
+                    val phoneNumberConfirmationResult = when{
+                        token != null && needUserPersonalInformation -> PhoneNumberConfirmationResult.ConfirmedButNeedUserPersonalInformation(token)
+                        token != null -> PhoneNumberConfirmationResult.Confirmed(token)
+                        else -> PhoneNumberConfirmationResult.NotConfirmed(errorMessage)
                     }
 
                     Single.just(phoneNumberConfirmationResult)
                 } else{
-                    Single.just(PhoneNumberConfirmationResult.PhoneNumberIsNotConfirmed())
+                    Single.just(PhoneNumberConfirmationResult.NotConfirmed())
                 }
             }
             .subscribeOn(ioScheduler)

@@ -67,6 +67,7 @@
     <string name="fragment_home_live">● Прямой эфир</string>
     <string name="fragment_home_announcement">Анонс</string>
     <string name="fragment_home_coming_soon">Скоро в эфире</string>
+    <string name="fragment_home_promo_banner_text">Привяжи карту и получи бонус!</string>
 
     <!-- Live broadcasts fragment -->
     <string name="fragment_live_broadcasts_title">Прямая трансляция</string>
@@ -119,8 +120,22 @@
         </font>
     </string>
 
-    <!-- Registration fragment -->
-    <string name="fragment_registration_title">Регистрация</string>
+    <!-- Registration. User personal information fragment -->
+    <string name="fragment_registration_user_personal_information_title">Личные данные</string>
+    <string name="fragment_registration_user_personal_information_continue_button">Продолжить</string>
+    <string name="fragment_registration_user_personal_information_field_is_required">Обязательное поле</string>
+    <string name="fragment_registration_user_personal_information_field_contains_illegal_symbols">Поле содержит недопустимые символы</string>
+    <string name="fragment_registration_user_personal_information_field_length_is_too_short">Минимальная длина поля %d</string>
+    <string name="fragment_registration_user_personal_information_field_length_is_too_long">Максимальная длина поля %d</string>
+    <string name="fragment_registration_user_personal_information_email_has_wrong_format">Недопустимый формат почты</string>
+
+    <!-- Registration. Payment card information fragment-->
+    <string name="fragment_registration_payment_card_information_title">Привязка карты</string>
+    <string name="fragment_registration_payment_card_information_description">
+        Привяжите свою карту, чтобы делать заказ не отрываясь от прямого эфира
+    </string>
+    <string name="fragment_registration_payment_card_information_link_card_button">Привязать карту</string>
+    <string name="fragment_registration_payment_card_information_skip_button">Привязать позже</string>
 
     <!-- Settings fragment -->
     <string name="fragment_settings_personal_information">1. Личные данные</string>

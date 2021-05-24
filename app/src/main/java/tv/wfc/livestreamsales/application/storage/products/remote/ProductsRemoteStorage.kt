@@ -9,8 +9,8 @@ import io.reactivex.rxjava3.core.Single
 import tv.wfc.livestreamsales.BuildConfig
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
-import tv.wfc.livestreamsales.application.model.exceptions.DataNotReceivedException
-import tv.wfc.livestreamsales.application.model.exceptions.ReceivedDataWithWrongFormatException
+import tv.wfc.livestreamsales.application.model.exception.storage.NoSuchDataInStorageException
+import tv.wfc.livestreamsales.application.model.exception.storage.ReceivedDataWithWrongFormatException
 import tv.wfc.livestreamsales.application.model.products.ProductGroup
 import tv.wfc.livestreamsales.application.model.products.ProductVariant
 import tv.wfc.livestreamsales.application.model.products.specification.Specification
@@ -38,7 +38,7 @@ class ProductsRemoteStorage @Inject constructor(
 
         return broadcastsApi
             .getBroadcast(broadcastId)
-            .map{ it.data ?: throw DataNotReceivedException() }
+            .map{ it.data ?: throw NoSuchDataInStorageException() }
             .map { getProductsFromStream(it) ?: throw ReceivedDataWithWrongFormatException() }
             .subscribeOn(ioScheduler)
     }

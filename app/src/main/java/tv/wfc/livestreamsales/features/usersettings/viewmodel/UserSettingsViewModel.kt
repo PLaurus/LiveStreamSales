@@ -14,12 +14,12 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
-import tv.wfc.livestreamsales.application.model.userinformation.UserInformation
-import tv.wfc.livestreamsales.application.repository.userinformation.IUserInformationRepository
+import tv.wfc.livestreamsales.application.model.userpersonalinformation.UserPersonalInformation
+import tv.wfc.livestreamsales.application.repository.userpersonalinformation.IUserPersonalInformationRepository
 import javax.inject.Inject
 
 class UserSettingsViewModel @Inject constructor(
-    private val userInformationRepository: IUserInformationRepository,
+    private val userPersonalInformationRepository: IUserPersonalInformationRepository,
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler,
     private val applicationErrorsLogger: IApplicationErrorsLogger
@@ -97,8 +97,8 @@ class UserSettingsViewModel @Inject constructor(
         createUserInformation()?.let{
             saveUserPersonalDataDisposable?.dispose()
 
-            saveUserPersonalDataDisposable = userInformationRepository
-                .saveUserInformation(it)
+            saveUserPersonalDataDisposable = userPersonalInformationRepository
+                .saveUserPersonalInformation(it)
                 .observeOn(mainThreadScheduler)
                 .doOnSubscribe { isUserPersonalInformationBeingSaved.onNext(true) }
                 .doAfterTerminate { isUserPersonalInformationBeingSaved.onNext(false) }
@@ -126,8 +126,8 @@ class UserSettingsViewModel @Inject constructor(
     }
 
     private fun prepareUserInformation(): Completable{
-        return userInformationRepository
-            .getUserInformation()
+        return userPersonalInformationRepository
+            .getUserPersonalInformation()
             .flatMapCompletable {
                 Completable.merge(listOf(
                     prepareName(it),
@@ -138,31 +138,31 @@ class UserSettingsViewModel @Inject constructor(
             }
     }
 
-    private fun prepareName(userInformation: UserInformation): Completable{
+    private fun prepareName(userPersonalInformation: UserPersonalInformation): Completable{
         return Completable.fromRunnable {
-            name.value = userInformation.name
+            name.value = userPersonalInformation.name
         }
     }
 
-    private fun prepareSurname(userInformation: UserInformation): Completable{
+    private fun prepareSurname(userPersonalInformation: UserPersonalInformation): Completable{
         return Completable.fromRunnable {
-            surname.value = userInformation.surname
+            surname.value = userPersonalInformation.surname
         }
     }
 
-    private fun preparePhoneNumber(userInformation: UserInformation): Completable{
+    private fun preparePhoneNumber(userPersonalInformation: UserPersonalInformation): Completable{
         return Completable.fromRunnable {
-            phoneNumber.value = userInformation.phoneNumber
+            phoneNumber.value = userPersonalInformation.phoneNumber
         }
     }
 
-    private fun prepareEmail(userInformation: UserInformation): Completable{
+    private fun prepareEmail(userPersonalInformation: UserPersonalInformation): Completable{
         return Completable.fromRunnable {
-            email.value = userInformation.email
+            email.value = userPersonalInformation.email
         }
     }
 
-    private fun createUserInformation(): UserInformation?{
+    private fun createUserInformation(): UserPersonalInformation?{
         val name = this.name.value
         val surname = this.surname.value
         val phoneNumber = this.phoneNumber.value
@@ -173,6 +173,6 @@ class UserSettingsViewModel @Inject constructor(
         if(phoneNumber.isNullOrEmpty()) return null
         if(email.isNullOrEmpty()) return null
 
-        return UserInformation(name, surname, phoneNumber, email)
+        return UserPersonalInformation(name, surname, phoneNumber, email)
     }
 }

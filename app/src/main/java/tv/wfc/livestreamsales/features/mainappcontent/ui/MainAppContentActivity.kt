@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import tv.wfc.livestreamsales.NavigationGraphRootDirections
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.ui.base.BaseActivity
 import tv.wfc.livestreamsales.databinding.ActivityMainAppContentBinding
@@ -19,8 +19,9 @@ class MainAppContentActivity : BaseActivity() {
     private val navigationController by lazy{
         findNavController(R.id.mainAppContentNavigationHostFragment)
     }
+    private val toolbarNavigationOnClickListeners = mutableListOf<ToolbarNavigationOnClickListener>()
 
-    lateinit var viewBinding: ActivityMainAppContentBinding
+    private lateinit var viewBinding: ActivityMainAppContentBinding
 
     lateinit var mainAppContentComponent: MainAppContentComponent
         private set
@@ -34,7 +35,6 @@ class MainAppContentActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         bindView()
         initializeViews()
-        observeIsUserLoggedOut()
     }
 
     override fun onDestroy() {
@@ -43,11 +43,11 @@ class MainAppContentActivity : BaseActivity() {
     }
 
     fun hideToolbar(){
-        viewBinding.appBarLayout.visibility = View.GONE
+        viewBinding.toolbar.visibility = View.GONE
     }
 
     fun showToolbar(){
-        viewBinding.appBarLayout.visibility = View.VISIBLE
+        viewBinding.toolbar.visibility = View.VISIBLE
     }
 
     fun setToolbarTitle(title: String){
@@ -56,6 +56,14 @@ class MainAppContentActivity : BaseActivity() {
 
     fun clearToolbarTitle(){
         viewBinding.toolbar.title = ""
+    }
+
+    fun addToolbarNavigationOnClickListener(listener: ToolbarNavigationOnClickListener){
+        toolbarNavigationOnClickListeners.add(listener)
+    }
+
+    fun removeToolbarNavigationOnClickListener(listener: ToolbarNavigationOnClickListener){
+        toolbarNavigationOnClickListeners.remove(listener)
     }
 
     private fun initializeMainActivityComponent(){
@@ -77,28 +85,19 @@ class MainAppContentActivity : BaseActivity() {
         initializeToolbar()
     }
 
-    private fun observeIsUserLoggedOut(){
-        mainAppContentViewModel.isUserLoggedIn.observe(this, { isUserLoggedIn ->
-            manageLogOutNavigation(isUserLoggedIn)
-        })
-    }
-
-    private fun manageLogOutNavigation(isUserLoggedIn: Boolean){
-        if(!isUserLoggedIn){
-            navigateToAuthorization()
-        }
-    }
-
     private fun initializeToolbar(){
         viewBinding.toolbar.apply {
             val appBarConfiguration = AppBarConfiguration(navigationController.graph)
             setupWithNavController(navigationController, appBarConfiguration)
+            setNavigationOnClickListener{
+                val actions = toolbarNavigationOnClickListeners.toList()
+                actions.forEach { it.onClick() }
+                NavigationUI.navigateUp(navigationController, appBarConfiguration)
+            }
         }
     }
 
-    private fun navigateToAuthorization(){
-        val action = NavigationGraphRootDirections.actionGlobalAuthorizationGraphDestination()
-        navigationController.navigate(action)
-        finish()
+    fun interface ToolbarNavigationOnClickListener{
+        fun onClick(): Unit
     }
 }

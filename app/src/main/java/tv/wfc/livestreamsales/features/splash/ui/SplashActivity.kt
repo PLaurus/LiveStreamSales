@@ -2,14 +2,13 @@ package tv.wfc.livestreamsales.features.splash.ui
 
 import android.content.Intent
 import android.os.Bundle
-import tv.wfc.livestreamsales.databinding.ActivitySplashBinding
-import tv.wfc.livestreamsales.features.splash.di.SplashComponent
-import tv.wfc.livestreamsales.application.ui.base.BaseActivity
-import tv.wfc.livestreamsales.features.greeting.ui.GreetingActivity
-import tv.wfc.livestreamsales.features.login.ui.LogInActivity
-import tv.wfc.livestreamsales.features.mainappcontent.ui.MainAppContentActivity
-import tv.wfc.livestreamsales.features.splash.viewmodel.ISplashViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import tv.wfc.livestreamsales.application.ui.base.BaseActivity
+import tv.wfc.livestreamsales.databinding.ActivitySplashBinding
+import tv.wfc.livestreamsales.features.greeting.ui.GreetingActivity
+import tv.wfc.livestreamsales.features.mainappcontent.ui.MainAppContentActivity
+import tv.wfc.livestreamsales.features.splash.di.SplashComponent
+import tv.wfc.livestreamsales.features.splash.viewmodel.ISplashViewModel
 import javax.inject.Inject
 
 class SplashActivity: BaseActivity() {
@@ -52,7 +51,6 @@ class SplashActivity: BaseActivity() {
         viewModel.nextDestination.observe(this, { destination ->
             when(destination){
                 ISplashViewModel.Destination.GREETING -> navigateToGreetingActivity()
-                ISplashViewModel.Destination.LOG_IN -> navigateToLogInActivity()
                 ISplashViewModel.Destination.MAIN_APP_CONTENT -> navigateToMainAppContentActivity()
                 else -> Unit
             }
@@ -68,12 +66,6 @@ class SplashActivity: BaseActivity() {
     private fun navigateToMainAppContentActivity(){
         val mainAppContentActivityIntent = Intent(applicationContext, MainAppContentActivity::class.java)
         startActivity(mainAppContentActivityIntent)
-        finish()
-    }
-
-    private fun navigateToLogInActivity(){
-        val logInActivityIntent = Intent(applicationContext, LogInActivity::class.java)
-        startActivity(logInActivityIntent)
         finish()
     }
 }

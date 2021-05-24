@@ -1,0 +1,5 @@
+package tv.wfc.livestreamsales.features.authorization.paymentcardinformation.viewmodel
+
+import tv.wfc.contentloader.viewmodel.INeedPreparationViewModel
+
+interface IRegistrationPaymentCardInformationViewModel: INeedPreparationViewModel

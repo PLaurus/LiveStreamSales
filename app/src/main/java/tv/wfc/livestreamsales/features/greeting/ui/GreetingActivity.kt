@@ -5,22 +5,22 @@ import android.os.Bundle
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding4.view.clicks
-import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
-import tv.wfc.livestreamsales.databinding.ActivityGreetingBinding
-import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
-import tv.wfc.livestreamsales.features.greeting.di.GreetingComponent
-import tv.wfc.livestreamsales.features.greeting.model.GreetingPage
-import tv.wfc.livestreamsales.application.ui.base.BaseActivity
-import tv.wfc.livestreamsales.features.greeting.ui.adapters.greetingpage.GreetingPageViewHolder
-import tv.wfc.livestreamsales.features.login.ui.LogInActivity
-import tv.wfc.livestreamsales.features.mainappcontent.ui.MainAppContentActivity
-import tv.wfc.livestreamsales.features.greeting.viewmodel.IGreetingViewModel
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import tv.wfc.livestreamsales.R
+import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
+import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
+import tv.wfc.livestreamsales.application.ui.base.BaseActivity
+import tv.wfc.livestreamsales.databinding.ActivityGreetingBinding
+import tv.wfc.livestreamsales.features.greeting.di.GreetingComponent
+import tv.wfc.livestreamsales.features.greeting.model.GreetingPage
+import tv.wfc.livestreamsales.features.greeting.ui.adapters.greetingpage.GreetingPageViewHolder
+import tv.wfc.livestreamsales.features.greeting.viewmodel.IGreetingViewModel
+import tv.wfc.livestreamsales.features.mainappcontent.ui.MainAppContentActivity
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -56,11 +56,7 @@ class GreetingActivity: BaseActivity() {
         injectDependencies()
         super.onCreate(savedInstanceState)
         bindView()
-        manageNavigation()
-        initializePagerView()
-        initializePageIndicator()
-        initializeProceedButton()
-        initializeSkipButton()
+        initializeContentLoader()
     }
 
     override fun onDestroy() {
@@ -82,9 +78,41 @@ class GreetingActivity: BaseActivity() {
     }
 
     private fun manageNavigation(){
-        viewModel.nextDestinationEvent.observe(this){ nextDestination ->
-            navigateToNextDestination(nextDestination)
+        viewModel.isShownStateSaved.observe(this){ isShownStateSaved ->
+            if(!isShownStateSaved){
+                val error = Exception("Не удалось сохранить информацию о приветственном экране.")
+                Snackbar
+                    .make(viewBinding.root, error.message!!, Snackbar.LENGTH_SHORT)
+                    .show()
+                applicationErrorsLogger.logError(error)
+            }
+
+            navigateToMainAppContentActivity()
         }
+    }
+
+    private fun initializeContentLoader(){
+        viewBinding.contentLoader.apply {
+            clearPreparationListeners()
+            attachViewModel(this@GreetingActivity, viewModel)
+            addOnDataIsPreparedListener(::onDataIsPrepared)
+
+            viewModel.isAnyOperationInProgress.observe(this@GreetingActivity){ isAnyOperationInProgress ->
+                if(isAnyOperationInProgress){
+                    showOperationProgress()
+                } else {
+                    hideOperationProgress()
+                }
+            }
+        }
+    }
+
+    private fun onDataIsPrepared() {
+        manageNavigation()
+        initializePagerView()
+        initializePageIndicator()
+        initializeProceedButton()
+        initializeSkipButton()
     }
 
     private fun initializePagerView(){
@@ -166,32 +194,19 @@ class GreetingActivity: BaseActivity() {
         val lastPageIndex = (greetingPagesAdapter.itemCount - 1).coerceAtLeast(0)
 
         if(nextPageIndex > lastPageIndex){
-            viewModel.notifyGreetingIsShown()
+            viewModel.saveGreetingIsShown()
         } else {
             pagerView.currentItem = nextPageIndex
         }
     }
 
     private fun onSkipButtonClick(){
-        viewModel.notifyGreetingIsShown()
-    }
-
-    private fun navigateToNextDestination(nextDestination: IGreetingViewModel.Destination){
-        when(nextDestination){
-            IGreetingViewModel.Destination.LOG_IN -> navigateToLogInActivity()
-            IGreetingViewModel.Destination.MAIN_APP_CONTENT -> navigateToMainAppContentActivity()
-        }
+        viewModel.saveGreetingIsShown()
     }
 
     private fun navigateToMainAppContentActivity(){
         val mainAppContentActivityIntent = Intent(applicationContext, MainAppContentActivity::class.java)
         startActivity(mainAppContentActivityIntent)
-        finish()
-    }
-
-    private fun navigateToLogInActivity(){
-        val logInActivityIntent = Intent(applicationContext, LogInActivity::class.java)
-        startActivity(logInActivityIntent)
         finish()
     }
 }

@@ -11,8 +11,8 @@ import tv.wfc.livestreamsales.application.repository.broadcastsinformation.Broad
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
 import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
 import tv.wfc.livestreamsales.application.repository.products.ProductsRepository
-import tv.wfc.livestreamsales.application.repository.userinformation.IUserInformationRepository
-import tv.wfc.livestreamsales.application.repository.userinformation.UserInformationRepository
+import tv.wfc.livestreamsales.application.repository.userpersonalinformation.IUserPersonalInformationRepository
+import tv.wfc.livestreamsales.application.repository.userpersonalinformation.UserPersonalInformationRepository
 import tv.wfc.livestreamsales.features.livebroadcast.repository.BroadcastAnalyticsRepository
 import tv.wfc.livestreamsales.features.livebroadcast.repository.IBroadcastAnalyticsRepository
 
@@ -20,9 +20,9 @@ import tv.wfc.livestreamsales.features.livebroadcast.repository.IBroadcastAnalyt
 abstract class AppRepositoryModule {
     @ApplicationScope
     @Binds
-    internal abstract fun bindUserInformationRepository(
-        userInformationRepository: UserInformationRepository
-    ): IUserInformationRepository
+    internal abstract fun bindUserPersonalInformationRepository(
+        userPersonalInformationRepository: UserPersonalInformationRepository
+    ): IUserPersonalInformationRepository
 
     @ApplicationScope
     @Binds

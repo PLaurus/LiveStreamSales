@@ -32,7 +32,7 @@ class AuthorizationManager @Inject constructor(
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): IAuthorizationManager {
     private val disposables = CompositeDisposable()
-    private val isUserLoggedInSubject = BehaviorSubject.create<Boolean>()
+    private val isUserLoggedInSubject = BehaviorSubject.createDefault(false)
 
     private var codeRequestTimer: Disposable? = null
 
@@ -68,20 +68,35 @@ class AuthorizationManager @Inject constructor(
     }
 
     override fun confirmPhoneNumber(phoneNumber: String, confirmationCode: Int): Single<PhoneNumberConfirmationResult>{
-        return authorizationRepository.confirmPhoneNumber(phoneNumber, confirmationCode)
-            .doOnSuccess { phoneNumberConfirmationResult ->
-                if(phoneNumberConfirmationResult is PhoneNumberConfirmationResult.PhoneNumberIsConfirmed){
-                    val token = phoneNumberConfirmationResult.token
-                    updateAuthorizationState(token)
-                }
+        return authorizationRepository
+            .confirmPhoneNumber(phoneNumber, confirmationCode)
+            .subscribeOn(ioScheduler)
+    }
+
+    override fun logInTemporary(token: String): Completable {
+        return Completable
+            .fromRunnable {
+                authorizationInterceptor.token = token
             }
+            .doOnComplete{ isUserLoggedInSubject.onNext(true) }
+            .subscribeOn(mainThreadScheduler)
+    }
+
+    override fun logIn(token: String): Completable {
+        return logInTemporary(token)
+            .mergeWith(saveTokenToLocalStorage(token))
+            .subscribeOn(ioScheduler)
     }
 
     override fun logOut(): Completable {
-        return authorizationRepository.logOut()
-            .subscribeOn(ioScheduler)
+        val logOutInterceptor = Completable
+            .fromRunnable { authorizationInterceptor.token = null }
+            .subscribeOn(mainThreadScheduler)
+
+        return logOutInterceptor
+            .mergeWith(saveTokenToLocalStorage(null))
             .observeOn(mainThreadScheduler)
-            .doAfterTerminate { updateAuthorizationState(null) }
+            .doOnComplete{ isUserLoggedInSubject.onNext(false) }
     }
 
     private fun recoverDataFromStorage(){
@@ -91,12 +106,12 @@ class AuthorizationManager @Inject constructor(
 
     private fun recoverAuthorizationState(){
         authorizationRepository.getCurrentAuthorizationToken()
+            .toSingle()
+            .flatMapCompletable(::logIn)
+            .onErrorResumeWith{ logOut() }
+            .subscribeOn(ioScheduler)
             .observeOn(mainThreadScheduler)
-            .subscribeBy(
-                onSuccess = ::updateAuthorizationState,
-                onComplete = { updateAuthorizationState(null) },
-                onError = applicationErrorsLogger::logError
-            )
+            .subscribeBy(applicationErrorsLogger::logError)
             .addTo(disposables)
     }
 
@@ -111,22 +126,10 @@ class AuthorizationManager @Inject constructor(
             .addTo(disposables)
     }
 
-    private fun updateAuthorizationState(token: String?){
-        authorizationInterceptor.token = token
-        isUserLoggedInSubject.onNext(!authorizationInterceptor.token.isNullOrBlank())
-        saveTokenToLocalStorage(token)
-    }
-
-    private fun saveTokenToLocalStorage(token: String?){
-        authorizationRepository.updateAuthorizationToken(token)
+    private fun saveTokenToLocalStorage(token: String?): Completable{
+        return authorizationRepository
+            .updateAuthorizationToken(token)
             .subscribeOn(ioScheduler)
-            .observeOn(mainThreadScheduler)
-            .subscribeBy(
-                onComplete = {
-                    Log.d(this::class.java.simpleName, "Saved token to local storage.")
-                },
-                onError = applicationErrorsLogger::logError
-            )
     }
 
     private fun startCodeRequestTimer() {

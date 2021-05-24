@@ -15,7 +15,6 @@ import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import javax.inject.Inject
 
 class SplashViewModel @Inject constructor(
-    private val authorizationManager: IAuthorizationManager,
     private val applicationSettingsRepository: IApplicationSettingsRepository,
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler,
@@ -37,13 +36,7 @@ class SplashViewModel @Inject constructor(
         return applicationSettingsRepository.getIsGreetingShown()
             .flatMap { isGreetingShown ->
                 if(isGreetingShown){
-                    authorizationManager.isUserLoggedIn
-                        .first(false)
-                        .map { isUserLoggedIn ->
-                            if(isUserLoggedIn){
-                                ISplashViewModel.Destination.MAIN_APP_CONTENT
-                            } else ISplashViewModel.Destination.LOG_IN
-                        }
+                    Single.just(ISplashViewModel.Destination.MAIN_APP_CONTENT)
                 } else{
                     Single.just(ISplashViewModel.Destination.GREETING)
                 }

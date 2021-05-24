@@ -10,7 +10,7 @@ import tv.wfc.livestreamsales.application.storage.authorization.remote.Authoriza
 import tv.wfc.livestreamsales.application.storage.authorization.remote.IAuthorizationRemoteStorage
 import tv.wfc.livestreamsales.application.storage.broadcastsinformation.IBroadcastsStorage
 import tv.wfc.livestreamsales.application.storage.products.IProductsStorage
-import tv.wfc.livestreamsales.application.storage.userinformation.IUserInformationStorage
+import tv.wfc.livestreamsales.application.storage.userpersonalinformation.IUserPersonalInformationStorage
 import tv.wfc.livestreamsales.features.livebroadcast.storage.IBroadcastAnalyticsStorage
 
 @Module
@@ -27,15 +27,15 @@ abstract class AppStorageModule {
 
     @Binds
     @UserInformationRemoteStorage
-    internal abstract fun bindUserInformationRemoteStorage(
-        userInformationInformationRemoteStorage: tv.wfc.livestreamsales.application.storage.userinformation.remote.UserInformationRemoteStorage
-    ): IUserInformationStorage
+    internal abstract fun bindUserPersonalInformationRemoteStorage(
+        userPersonalInformationRemoteStorage: tv.wfc.livestreamsales.application.storage.userpersonalinformation.remote.UserPersonalInformationRemoteStorage
+    ): IUserPersonalInformationStorage
 
     @Binds
     @UserInformationLocalStorage
     internal abstract fun bindUserInformationLocalStorage(
-        userInformationInformationLocalStorage: tv.wfc.livestreamsales.application.storage.userinformation.local.UserInformationLocalStorage
-    ): IUserInformationStorage
+        userPersonalInformationLocalStorage: tv.wfc.livestreamsales.application.storage.userpersonalinformation.local.UserPersonalInformationLocalStorage
+    ): IUserPersonalInformationStorage
 
     @Binds
     @BroadcastAnalyticsRemoteStorage

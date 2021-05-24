@@ -39,4 +39,6 @@
     <dimen name="productOrder_selectableSpecification_colorChipWidth">32dp</dimen>
     <dimen name="productOrder_selectableSpecification_colorChip_width">2dp</dimen>
 
+    <dimen name="registrationPage_verticalBias">0.3</dimen>
+
 </resources>

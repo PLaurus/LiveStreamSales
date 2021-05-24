@@ -8,5 +8,7 @@ data class ConfirmPhoneNumberResponseBody(
     @SerializedName("message")
     val errorMessage: String?,
     @SerializedName("token")
-    val token: String?
+    val token: String?,
+    @SerializedName("profile_empty")
+    val isProfileEmpty: Boolean?
 )

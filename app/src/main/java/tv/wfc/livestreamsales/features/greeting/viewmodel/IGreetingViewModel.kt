@@ -1,16 +1,13 @@
 package tv.wfc.livestreamsales.features.greeting.viewmodel
 
 import androidx.lifecycle.LiveData
+import tv.wfc.contentloader.viewmodel.INeedPreparationViewModel
 import tv.wfc.livestreamsales.features.greeting.model.GreetingPage
 
-interface IGreetingViewModel{
+interface IGreetingViewModel: INeedPreparationViewModel{
     val greetingPages: LiveData<Set<GreetingPage>>
-    val nextDestinationEvent: LiveData<Destination>
+    val isAnyOperationInProgress: LiveData<Boolean>
+    val isShownStateSaved: LiveData<Boolean>
 
-    fun notifyGreetingIsShown()
-
-    enum class Destination{
-        LOG_IN,
-        MAIN_APP_CONTENT
-    }
+    fun saveGreetingIsShown()
 }

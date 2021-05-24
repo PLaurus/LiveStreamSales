@@ -7,7 +7,6 @@ interface ISplashViewModel {
 
     enum class Destination{
         GREETING,
-        LOG_IN,
         MAIN_APP_CONTENT
     }
 }

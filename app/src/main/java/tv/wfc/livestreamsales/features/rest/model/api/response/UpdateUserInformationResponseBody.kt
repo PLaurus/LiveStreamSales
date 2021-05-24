@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class UpdateUserInformationResponseBody(
     @SerializedName("success")
-    val isInformationUpdatedSuccessfully: Boolean
+    val isInformationUpdatedSuccessfully: Boolean?
 )

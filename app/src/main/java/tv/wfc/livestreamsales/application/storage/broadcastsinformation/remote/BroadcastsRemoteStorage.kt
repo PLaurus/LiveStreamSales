@@ -7,8 +7,8 @@ import org.joda.time.DateTime
 import tv.wfc.livestreamsales.BuildConfig
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
 import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
-import tv.wfc.livestreamsales.application.model.exceptions.DataNotReceivedException
-import tv.wfc.livestreamsales.application.model.exceptions.ReceivedDataWithWrongFormatException
+import tv.wfc.livestreamsales.application.model.exception.storage.NoSuchDataInStorageException
+import tv.wfc.livestreamsales.application.model.exception.storage.ReceivedDataWithWrongFormatException
 import tv.wfc.livestreamsales.application.storage.broadcastsinformation.IBroadcastsStorage
 import tv.wfc.livestreamsales.features.rest.api.notauthorized.IBroadcastsApi
 import tv.wfc.livestreamsales.features.rest.model.broadcasts.Stream
@@ -45,7 +45,7 @@ class BroadcastsRemoteStorage @Inject constructor(
     private fun getBroadcastFromRemote(broadcastId: Long): Single<Broadcast>{
         return broadcastsApi
             .getBroadcast(broadcastId)
-            .map { it.data ?: throw DataNotReceivedException() }
+            .map { it.data ?: throw NoSuchDataInStorageException() }
             .map { stream ->
                 stream.toBroadcast() ?: throw ReceivedDataWithWrongFormatException() }
             .subscribeOn(ioScheduler)
@@ -54,7 +54,7 @@ class BroadcastsRemoteStorage @Inject constructor(
     private fun getBroadcastsFromRemote(): Single<List<Broadcast>>{
         return broadcastsApi
             .getBroadcasts()
-            .map{ it.data ?: throw DataNotReceivedException() }
+            .map{ it.data ?: throw NoSuchDataInStorageException() }
             .map{ streams -> streams.mapNotNull{ it.toBroadcast() } }
             .subscribeOn(ioScheduler)
     }

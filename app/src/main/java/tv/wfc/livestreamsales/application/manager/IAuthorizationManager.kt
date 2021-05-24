@@ -13,5 +13,7 @@ interface IAuthorizationManager {
     fun checkIsUserLoggedIn(): Boolean
     fun requestConfirmationCode(phoneNumber: String): Single<Boolean>
     fun confirmPhoneNumber(phoneNumber: String, confirmationCode: Int): Single<PhoneNumberConfirmationResult>
+    fun logInTemporary(token: String): Completable
+    fun logIn(token: String): Completable
     fun logOut(): Completable
 }

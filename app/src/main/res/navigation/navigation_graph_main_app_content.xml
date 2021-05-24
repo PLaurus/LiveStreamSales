@@ -1,15 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph_root"
     app:startDestination="@id/homeDestination">
 
     <action
-        android:id="@+id/action_global_authorizationGraphDestination"
-        app:destination="@id/authorizationGraphDestination"
-        app:popUpTo="@id/homeDestination"
-        app:popUpToInclusive="true"/>
+        android:id="@+id/action_global_phoneNumberInputDestination"
+        app:destination="@id/phoneNumberInputDestination"/>
+
+    <fragment
+        android:id="@+id/phoneNumberInputDestination"
+        android:name="tv.wfc.livestreamsales.features.authorization.phonenumberinput.ui.PhoneNumberInputFragment"
+        android:label="@string/fragment_phone_number_input_title"
+        tools:layout="@layout/fragment_phone_number_input">
+
+        <action
+            android:id="@+id/action_phoneNumberInputDestination_to_phoneNumberConfirmationDestination"
+            app:destination="@id/phoneNumberConfirmationDestination"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/stay_as_is"
+            app:popEnterAnim="@anim/stay_as_is"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/phoneNumberConfirmationDestination"
+        android:name="tv.wfc.livestreamsales.features.authorization.phonenumberconfirmation.ui.PhoneNumberConfirmationFragment"
+        android:label="@string/fragment_phone_number_confirmation_title"
+        tools:layout="@layout/fragment_phone_number_confirmation">
+
+        <action
+            android:id="@+id/action_exitAuthorization"
+            app:popUpTo="@id/phoneNumberInputDestination"
+            app:popUpToInclusive="true"
+            app:popEnterAnim="@anim/stay_as_is"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+        <action
+            android:id="@+id/action_phoneNumberConfirmationDestination_to_registrationUserPersonalInformationDestination"
+            app:destination="@id/registrationUserPersonalInformationDestination"
+            app:popUpTo="@id/phoneNumberInputDestination"
+            app:popUpToInclusive="false"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/stay_as_is"
+            app:popEnterAnim="@anim/stay_as_is"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/registrationUserPersonalInformationDestination"
+        android:label="@string/fragment_registration_user_personal_information_title"
+        android:name="tv.wfc.livestreamsales.features.authorization.userpersonalinformation.ui.RegistrationUserPersonalInformationFragment"
+        tools:layout="@layout/fragment_registration_user_personal_information">
+
+        <argument
+            android:name="isRegistrationFlow"
+            android:defaultValue="false"
+            app:argType="boolean"/>
+
+        <argument
+            android:name="token"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
+        <action
+            android:id="@+id/action_registrationUserPersonalInformationDestination_to_registrationPaymentCardInformationDestination"
+            app:destination="@id/registrationPaymentCardInformationDestination"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/stay_as_is"
+            app:popEnterAnim="@anim/stay_as_is"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/registrationPaymentCardInformationDestination"
+        android:label="@string/fragment_registration_payment_card_information_title"
+        android:name="tv.wfc.livestreamsales.features.authorization.paymentcardinformation.ui.RegistrationPaymentCardInformationFragment"
+        tools:layout="@layout/fragment_registration_payment_card_information">
+
+        <action
+            android:id="@+id/action_exitAuthorization"
+            app:popUpTo="@id/phoneNumberInputDestination"
+            app:popUpToInclusive="true"
+            app:popEnterAnim="@anim/stay_as_is"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/homeDestination"
@@ -26,10 +108,6 @@
             app:popExitAnim="@anim/slide_out_right"/>
 
     </fragment>
-
-    <fragment
-        android:id="@+id/cardConfirmationDestination"
-        android:label="@string/fragment_card_confirmation_title"/>
 
     <fragment
         android:id="@+id/liveBroadcastDestination"
@@ -58,10 +136,5 @@
             app:argType="long" />
 
     </dialog>
-
-    <activity
-        android:id="@+id/authorizationGraphDestination"
-        android:name="tv.wfc.livestreamsales.features.login.ui.LogInActivity"
-        tools:layout="@layout/activity_authorization"/>
 
 </navigation>

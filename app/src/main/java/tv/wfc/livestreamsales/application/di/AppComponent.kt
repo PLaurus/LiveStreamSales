@@ -20,7 +20,7 @@ import tv.wfc.livestreamsales.application.di.scope.ApplicationScope
 import tv.wfc.livestreamsales.features.greeting.di.GreetingComponent
 import tv.wfc.livestreamsales.features.home.di.HomeComponent
 import tv.wfc.livestreamsales.features.livebroadcast.di.LiveBroadcastComponent
-import tv.wfc.livestreamsales.features.login.di.LogInComponent
+import tv.wfc.livestreamsales.features.authorization.di.AuthorizationComponent
 import tv.wfc.livestreamsales.features.mainappcontent.di.MainAppContentComponent
 import tv.wfc.livestreamsales.features.mainpage.di.MainPageComponent
 import tv.wfc.livestreamsales.features.productorder.di.ProductOrderComponent
@@ -51,7 +51,7 @@ interface AppComponent {
 
     fun splashComponent(): SplashComponent.Factory
     fun greetingComponent(): GreetingComponent.Factory
-    fun logInComponent(): LogInComponent.Factory
+    fun authorizationComponent(): AuthorizationComponent.Factory
     fun mainAppContentComponent(): MainAppContentComponent.Factory
     fun homeComponent(): HomeComponent.Factory
     fun mainPageComponent(): MainPageComponent.Factory
