@@ -9,6 +9,8 @@ import tv.wfc.livestreamsales.application.repository.authorization.Authorization
 import tv.wfc.livestreamsales.application.repository.authorization.IAuthorizationRepository
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.BroadcastsInformationRepository
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
+import tv.wfc.livestreamsales.application.repository.paymentcardinformation.IPaymentCardInformationRepository
+import tv.wfc.livestreamsales.application.repository.paymentcardinformation.PaymentCardInformationRepository
 import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
 import tv.wfc.livestreamsales.application.repository.products.ProductsRepository
 import tv.wfc.livestreamsales.application.repository.userpersonalinformation.IUserPersonalInformationRepository
@@ -23,6 +25,12 @@ abstract class AppRepositoryModule {
     internal abstract fun bindUserPersonalInformationRepository(
         userPersonalInformationRepository: UserPersonalInformationRepository
     ): IUserPersonalInformationRepository
+
+    @ApplicationScope
+    @Binds
+    internal abstract fun bindPaymentCardInformationRepository(
+        paymentCardInformationRepository: PaymentCardInformationRepository
+    ): IPaymentCardInformationRepository
 
     @ApplicationScope
     @Binds

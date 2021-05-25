@@ -85,7 +85,7 @@
         tools:layout="@layout/fragment_registration_payment_card_information">
 
         <action
-            android:id="@+id/action_exitAuthorization"
+            android:id="@+id/action_exit"
             app:popUpTo="@id/phoneNumberInputDestination"
             app:popUpToInclusive="true"
             app:popEnterAnim="@anim/stay_as_is"

@@ -9,6 +9,7 @@ import tv.wfc.livestreamsales.application.storage.authorization.local.IAuthoriza
 import tv.wfc.livestreamsales.application.storage.authorization.remote.AuthorizationRemoteStorage
 import tv.wfc.livestreamsales.application.storage.authorization.remote.IAuthorizationRemoteStorage
 import tv.wfc.livestreamsales.application.storage.broadcastsinformation.IBroadcastsStorage
+import tv.wfc.livestreamsales.application.storage.paymentcardinformation.IPaymentCardInformationStorage
 import tv.wfc.livestreamsales.application.storage.products.IProductsStorage
 import tv.wfc.livestreamsales.application.storage.userpersonalinformation.IUserPersonalInformationStorage
 import tv.wfc.livestreamsales.features.livebroadcast.storage.IBroadcastAnalyticsStorage
@@ -36,6 +37,12 @@ abstract class AppStorageModule {
     internal abstract fun bindUserInformationLocalStorage(
         userPersonalInformationLocalStorage: tv.wfc.livestreamsales.application.storage.userpersonalinformation.local.UserPersonalInformationLocalStorage
     ): IUserPersonalInformationStorage
+
+    @Binds
+    @PaymentCardInformationRemoteStorage
+    internal abstract fun bindPaymentCardInformationRemoteStorage(
+        paymentCardInformationRemoteStorage: tv.wfc.livestreamsales.application.storage.paymentcardinformation.remote.PaymentCardInformationRemoteStorage
+    ): IPaymentCardInformationStorage
 
     @Binds
     @BroadcastAnalyticsRemoteStorage
