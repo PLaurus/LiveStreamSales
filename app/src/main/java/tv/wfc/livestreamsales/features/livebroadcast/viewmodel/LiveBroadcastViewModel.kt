@@ -24,6 +24,7 @@ import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
+import tv.wfc.livestreamsales.application.manager.IAuthorizationManager
 import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
 import tv.wfc.livestreamsales.application.model.products.ProductGroup
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
@@ -44,6 +45,7 @@ class LiveBroadcastViewModel @Inject constructor(
     private val broadcastsInformationRepository: IBroadcastsInformationRepository,
     private val broadcastAnalyticsRepository: IBroadcastAnalyticsRepository,
     private val productsRepository: IProductsRepository,
+    private val authorizationManager: IAuthorizationManager,
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): ViewModel(), ILiveBroadcastViewModel {
     private val disposables = CompositeDisposable()
@@ -53,6 +55,14 @@ class LiveBroadcastViewModel @Inject constructor(
     private var userIsWatchingBroadcastDisposable: Disposable? = null
 
     override val dataPreparationState = MutableLiveData<ViewModelPreparationState>()
+    override val isUserLoggedIn = MutableLiveData<Boolean>().apply{
+        authorizationManager
+            .isUserLoggedIn
+            .observeOn(mainThreadScheduler)
+            .doOnError(applicationErrorsLogger::logError)
+            .subscribeBy(onNext = ::setValue)
+            .addTo(disposables)
+    }
     override val isDataBeingRefreshed = MutableLiveData(false)
     override val image = MutableLiveData<Drawable>()
     override val broadcastTitle = MutableLiveData<String>()

@@ -25,6 +25,7 @@ import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import tv.wfc.livestreamsales.NavigationGraphRootDirections
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
@@ -253,7 +254,13 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
                 .throttleFirst(1L, TimeUnit.SECONDS, computationScheduler)
                 .observeOn(mainThreadScheduler)
                 .subscribeBy(
-                    onNext = { navigateToProductOrderDestination() },
+                    onNext = {
+                        if(viewModel.isUserLoggedIn.value == true){
+                            navigateToProductOrderDestination()
+                        } else{
+                            navigateToAuthorization()
+                        }
+                    },
                     onError = applicationErrorsLogger::logError
                 )
                 .addTo(viewScopeDisposables)
@@ -367,6 +374,11 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
 
     private fun navigateToProductOrderDestination(){
         val action = LiveBroadcastFragmentDirections.actionLiveBroadcastDestinationToProductOrderDestination(navigationArguments.liveBroadcastId)
+        navigationController.navigate(action)
+    }
+
+    private fun navigateToAuthorization(){
+        val action = NavigationGraphRootDirections.actionGlobalPhoneNumberInputDestination()
         navigationController.navigate(action)
     }
 }

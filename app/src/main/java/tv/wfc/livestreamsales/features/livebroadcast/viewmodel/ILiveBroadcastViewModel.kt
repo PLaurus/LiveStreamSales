@@ -10,6 +10,8 @@ import tv.wfc.contentloader.viewmodel.INeedPreparationViewModel
 import tv.wfc.livestreamsales.application.tools.exoplayer.PlaybackState
 
 interface ILiveBroadcastViewModel: INeedPreparationViewModel {
+    val isUserLoggedIn: LiveData<Boolean>
+
     val isDataBeingRefreshed: LiveData<Boolean>
     val image: LiveData<Drawable>
     val broadcastTitle: LiveData<String>

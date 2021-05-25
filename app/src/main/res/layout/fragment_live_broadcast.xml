@@ -266,7 +266,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:cornerRadius="12dp"/>
+                        app:cornerRadius="12dp"
+                        tools:visibility="visible"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/sendMessageButton"

@@ -8,7 +8,11 @@
 
     <action
         android:id="@+id/action_global_phoneNumberInputDestination"
-        app:destination="@id/phoneNumberInputDestination"/>
+        app:destination="@id/phoneNumberInputDestination"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
 
     <fragment
         android:id="@+id/phoneNumberInputDestination"
@@ -36,8 +40,8 @@
             android:id="@+id/action_exitAuthorization"
             app:popUpTo="@id/phoneNumberInputDestination"
             app:popUpToInclusive="true"
-            app:popEnterAnim="@anim/stay_as_is"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
 
         <action
             android:id="@+id/action_phoneNumberConfirmationDestination_to_registrationUserPersonalInformationDestination"
@@ -88,8 +92,8 @@
             android:id="@+id/action_exit"
             app:popUpTo="@id/phoneNumberInputDestination"
             app:popUpToInclusive="true"
-            app:popEnterAnim="@anim/stay_as_is"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
 
     </fragment>
 
