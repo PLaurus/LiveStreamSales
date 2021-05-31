@@ -7,7 +7,7 @@ import tv.wfc.livestreamsales.application.model.products.specification.Specifica
 import tv.wfc.livestreamsales.features.productorder.di.modules.diffutils.qualifiers.ProductBoxDataDiffUtilItemCallback
 import tv.wfc.livestreamsales.features.productorder.di.modules.diffutils.qualifiers.ProductSpecificationsDiffUtilItemCallback
 import tv.wfc.livestreamsales.features.productorder.model.ProductBoxData
-import tv.wfc.livestreamsales.features.productorder.model.ProductInCart
+import tv.wfc.livestreamsales.application.model.products.order.ProductInCart
 import tv.wfc.livestreamsales.features.productorder.model.SelectableSpecification
 
 @Module

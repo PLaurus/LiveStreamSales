@@ -4,10 +4,11 @@ import androidx.lifecycle.LiveData
 import tv.wfc.contentloader.viewmodel.INeedPreparationViewModel
 import tv.wfc.livestreamsales.application.model.products.specification.Specification
 import tv.wfc.livestreamsales.features.productorder.model.ProductBoxData
-import tv.wfc.livestreamsales.features.productorder.model.ProductInCart
+import tv.wfc.livestreamsales.application.model.products.order.ProductInCart
 import tv.wfc.livestreamsales.features.productorder.model.SelectableSpecification
 
 interface IProductOrderViewModel: INeedPreparationViewModel{
+    val isAnyOperationInProgress: LiveData<Boolean>
     val productsCount: LiveData<Int>
     val productBoxesData: LiveData<List<ProductBoxData>>
     val currentProductGroupName: LiveData<String>
@@ -19,10 +20,12 @@ interface IProductOrderViewModel: INeedPreparationViewModel{
     val selectedProductOldPrice: LiveData<Float?>
     val selectedProductAmount: LiveData<Int?>
     val cart: LiveData<List<ProductInCart>>
+    val areProductsOrderedEvent: LiveData<Unit>
     fun prepareData(broadcastId: Long)
     fun selectProductGroupByPosition(position: Int)
     fun filter(specificationPosition: Int, valuePosition: Int)
     fun decreaseSelectedProductAmount()
     fun increaseSelectedProductAmount()
     fun deleteProductFromCart(productId: Long)
+    fun orderProducts()
 }

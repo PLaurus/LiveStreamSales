@@ -66,6 +66,7 @@ class PhoneNumberInputFragment: BaseFragment(R.layout.fragment_phone_number_inpu
         super.onViewCreated(view, savedInstanceState)
         bindView(view)
         initializeContentLoader()
+        manageNavigation()
     }
 
     override fun onDestroyView() {
@@ -108,7 +109,6 @@ class PhoneNumberInputFragment: BaseFragment(R.layout.fragment_phone_number_inpu
         initializeSendCodeButton()
         initializeNewCodeTimerText()
         initializeCodeRequestErrorSnackbar()
-        manageNavigation()
     }
 
     private fun initializePhoneNumberEditText(){

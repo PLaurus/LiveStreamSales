@@ -9,7 +9,7 @@ import coil.request.ImageRequest
 import com.laurus.p.tools.context.getDrawableCompat
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.databinding.ItemProductInCartBinding
-import tv.wfc.livestreamsales.features.productorder.model.ProductInCart
+import tv.wfc.livestreamsales.application.model.products.order.ProductInCart
 
 class ProductInCartViewHolder(
     view: View,

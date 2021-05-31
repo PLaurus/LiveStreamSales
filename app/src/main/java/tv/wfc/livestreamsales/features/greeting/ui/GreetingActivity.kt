@@ -57,6 +57,7 @@ class GreetingActivity: BaseActivity() {
         super.onCreate(savedInstanceState)
         bindView()
         initializeContentLoader()
+        manageNavigation()
     }
 
     override fun onDestroy() {
@@ -108,7 +109,6 @@ class GreetingActivity: BaseActivity() {
     }
 
     private fun onDataIsPrepared() {
-        manageNavigation()
         initializePagerView()
         initializePageIndicator()
         initializeProceedButton()

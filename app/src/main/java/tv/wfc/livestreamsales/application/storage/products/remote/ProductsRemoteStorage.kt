@@ -73,7 +73,7 @@ class ProductsRemoteStorage @Inject constructor(
     }
 
     private fun Sku.toProductVariant(): ProductVariant?{
-        val productVariantId = 0L
+        val productVariantId = id
         val productVariantQuantityInStock = inStock ?: return null
         val productVariantPrice = price ?: return null
         val specifications = properties?.mapNotNull{ it.toSpecification() } ?: emptyList()

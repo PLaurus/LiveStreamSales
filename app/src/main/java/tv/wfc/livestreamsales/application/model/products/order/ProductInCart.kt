@@ -1,4 +1,4 @@
-package tv.wfc.livestreamsales.features.productorder.model
+package tv.wfc.livestreamsales.application.model.products.order
 
 import tv.wfc.livestreamsales.application.model.products.Product
 

@@ -66,6 +66,7 @@ class RegistrationUserPersonalInformationFragment: BaseFragment(R.layout.fragmen
         bindActivityToolbar()
         bindView(view)
         initializeContentLoader()
+        manageNavigation()
     }
 
     override fun onDestroyView() {
@@ -132,7 +133,6 @@ class RegistrationUserPersonalInformationFragment: BaseFragment(R.layout.fragmen
     }
 
     private fun onDataIsPrepared() {
-        manageNavigation()
         initializeNameEditText()
         initializeNameLayout()
         initializeSurnameEditText()

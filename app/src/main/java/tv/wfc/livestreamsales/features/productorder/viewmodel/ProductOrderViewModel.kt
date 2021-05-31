@@ -1,7 +1,9 @@
 package tv.wfc.livestreamsales.features.productorder.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.laurus.p.tools.livedata.LiveEvent
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
@@ -9,14 +11,16 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.model.products.Product
 import tv.wfc.livestreamsales.application.model.products.ProductGroup
-import tv.wfc.livestreamsales.features.productorder.model.ProductInCart
+import tv.wfc.livestreamsales.application.model.products.order.ProductInCart
 import tv.wfc.livestreamsales.application.model.products.ProductVariant
 import tv.wfc.livestreamsales.application.model.products.specification.Specification
 import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
+import tv.wfc.livestreamsales.application.repository.productsorder.IProductsOrderRepository
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.features.productorder.model.ProductBoxData
 import tv.wfc.livestreamsales.features.productorder.model.SelectableSpecification
@@ -24,11 +28,15 @@ import javax.inject.Inject
 
 class ProductOrderViewModel @Inject constructor(
     private val productsRepository: IProductsRepository,
+    private val productsOrderRepository: IProductsOrderRepository,
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler,
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): ViewModel(), IProductOrderViewModel {
     private val disposables = CompositeDisposable()
+    private val activeOperationsCount = BehaviorSubject.createDefault(0)
+
+    private var orderProductsDisposable: Disposable? = null
 
     private val currentProductVariants = mutableSetOf<ProductVariant>()
 
@@ -44,7 +52,18 @@ class ProductOrderViewModel @Inject constructor(
 
     private lateinit var productGroups: List<ProductGroup>
 
-    override val dataPreparationState = MutableLiveData<ViewModelPreparationState>()
+    override val dataPreparationState = MutableLiveData<ViewModelPreparationState>(ViewModelPreparationState.DataIsNotPrepared)
+
+    override val isAnyOperationInProgress = MutableLiveData(false).apply {
+        activeOperationsCount
+            .observeOn(mainThreadScheduler)
+            .map { it > 0 }
+            .subscribeBy(
+                onNext = ::setValue,
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
 
     override val productsCount = MutableLiveData<Int>()
 
@@ -62,7 +81,8 @@ class ProductOrderViewModel @Inject constructor(
     override val selectedProductPrice = MutableLiveData<Float?>()
     override val selectedProductOldPrice = MutableLiveData<Float?>()
     override val selectedProductAmount = MutableLiveData<Int?>()
-    override val cart = MutableLiveData<List<ProductInCart>>()
+    override val cart = MutableLiveData<List<ProductInCart>>(emptyList())
+    override val areProductsOrderedEvent = LiveEvent<Unit>()
 
     @Synchronized
     override fun prepareData(broadcastId: Long){
@@ -76,7 +96,9 @@ class ProductOrderViewModel @Inject constructor(
                 prepareProductsInformation(broadcastId)
             )
             .observeOn(mainThreadScheduler)
-            .doOnSubscribe { dataPreparationState.value = ViewModelPreparationState.DataIsBeingPrepared }
+            .doOnSubscribe {
+                dataPreparationState.value = ViewModelPreparationState.DataIsBeingPrepared
+            }
             .doOnError(applicationErrorsLogger::logError)
             .subscribeBy(
                 onComplete = {
@@ -188,6 +210,24 @@ class ProductOrderViewModel @Inject constructor(
                 selectProduct(selectedProductVariant)
             }
         }
+    }
+
+    override fun orderProducts() {
+        val cart = this.cart.value ?: return
+        if(cart.isEmpty()) return
+
+        orderProductsDisposable?.dispose()
+
+        orderProductsDisposable = productsOrderRepository
+            .orderProducts(cart)
+            .observeOn(mainThreadScheduler)
+            .doOnSubscribe { incrementActiveOperationsCount() }
+            .doOnTerminate(::decrementActiveOperationsCount)
+            .subscribeBy(
+                onComplete = { areProductsOrderedEvent.value = Unit },
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
     }
 
     private fun selectProduct(product: Product){
@@ -336,7 +376,7 @@ class ProductOrderViewModel @Inject constructor(
     private fun addProductToCart(
         product: Product,
         amount: Int = 1
-    ): ProductInCart{
+    ): ProductInCart {
         val additionalAmount = amount.coerceAtLeast(0)
 
         var productInCart = mutableCart.find{ it.product == product }
@@ -493,4 +533,20 @@ class ProductOrderViewModel @Inject constructor(
     }
 
     // endregion
+
+    @Synchronized
+    private fun incrementActiveOperationsCount(){
+        val currentActiveOperationsCount = activeOperationsCount.value ?: 0
+        val newActiveOperationsCount = currentActiveOperationsCount + 1
+
+        activeOperationsCount.onNext(newActiveOperationsCount)
+    }
+
+    @Synchronized
+    private fun decrementActiveOperationsCount(){
+        val currentActiveOperationsCount = activeOperationsCount.value ?: 0
+        val newActiveOperationsCount = currentActiveOperationsCount - 1
+
+        activeOperationsCount.onNext(newActiveOperationsCount)
+    }
 }

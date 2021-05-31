@@ -60,6 +60,7 @@ class PhoneNumberConfirmationFragment: BaseFragment(R.layout.fragment_phone_numb
         super.onViewCreated(view, savedInstanceState)
         bindView(view)
         initializeContentLoader()
+        manageNavigation()
     }
 
     override fun onDestroyView() {
@@ -95,7 +96,6 @@ class PhoneNumberConfirmationFragment: BaseFragment(R.layout.fragment_phone_numb
     }
 
     private fun onDataIsPrepared() {
-        manageNavigation()
         initializeOperationProgressView()
         initializeCodeIsSentText()
         initializeCodeEditText()

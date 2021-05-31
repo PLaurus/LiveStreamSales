@@ -74,6 +74,21 @@
 
     <!-- Product order dialog -->
     <string name="dialog_product_order_title">Заказ</string>
+    <string name="dialog_product_order_specifications_title">Характеристики:</string>
+    <string name="dialog_product_order_products_amount">Количество</string>
+    <string name="dialog_product_order_product_color">Цвет</string>
+    <string name="dialog_product_order_add_to_cart">Добавить</string>
+    <string name="dialog_product_order_buy">Купить</string>
+    <string name="dialog_product_order_price">%s руб.</string>
+
+    <!-- Products are ordered dialog -->
+    <string name="dialog_products_are_ordered_destination_title">Благодарим за покупку</string>
+    <string name="dialog_products_are_ordered_title">Благодарим за покупку!</string>
+    <string name="dialog_products_are_ordered_description">
+        Заказ был успешно оформлен.
+        Выберите дату и время доставки в разделе \"Мои заказы\"
+    </string>
+    <string name="dialog_products_are_ordered_confirm_button">Понятно</string>
 
     <!-- Phone number input fragment -->
     <string name="fragment_phone_number_input_title">Вход</string>
@@ -189,12 +204,5 @@
     <string name="fragment_live_broadcast_buy">Купить</string>
     <string name="fragment_live_broadcast_price">%.2f руб.</string>
 
-    <!-- Product order fragment -->
-    <string name="fragment_product_order_specifications_title">Характеристики:</string>
-    <string name="fragment_product_order_products_amount">Количество</string>
-    <string name="fragment_product_order_product_color">Цвет</string>
-    <string name="fragment_product_order_add_to_cart">Добавить</string>
-    <string name="fragment_product_order_buy">Купить</string>
-    <string name="fragment_product_order_price">%s руб.</string>
 
 </resources>

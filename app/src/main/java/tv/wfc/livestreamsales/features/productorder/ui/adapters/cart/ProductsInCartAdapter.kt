@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import coil.ImageLoader
 import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.features.productorder.model.ProductInCart
+import tv.wfc.livestreamsales.application.model.products.order.ProductInCart
 
 class ProductsInCartAdapter(
     diffUtilItemCallback: DiffUtil.ItemCallback<ProductInCart>,

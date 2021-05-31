@@ -37,7 +37,7 @@ abstract class BaseFragment(
     ): View? {
         viewScopeDisposables = CompositeDisposable()
 
-        return super.onCreateView(inflater, container, savedInstanceState)?.apply{ //contentLoaderView
+        return super.onCreateView(inflater, container, savedInstanceState)?.apply{
             replaceEmptyBackground()
         }
     }

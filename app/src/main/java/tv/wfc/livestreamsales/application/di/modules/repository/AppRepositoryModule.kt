@@ -13,6 +13,8 @@ import tv.wfc.livestreamsales.application.repository.paymentcardinformation.IPay
 import tv.wfc.livestreamsales.application.repository.paymentcardinformation.PaymentCardInformationRepository
 import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
 import tv.wfc.livestreamsales.application.repository.products.ProductsRepository
+import tv.wfc.livestreamsales.application.repository.productsorder.IProductsOrderRepository
+import tv.wfc.livestreamsales.application.repository.productsorder.ProductsOrderRepository
 import tv.wfc.livestreamsales.application.repository.userpersonalinformation.IUserPersonalInformationRepository
 import tv.wfc.livestreamsales.application.repository.userpersonalinformation.UserPersonalInformationRepository
 import tv.wfc.livestreamsales.features.livebroadcast.repository.BroadcastAnalyticsRepository
@@ -61,4 +63,10 @@ abstract class AppRepositoryModule {
     internal abstract fun bindProductsRepository(
         productsRepository: ProductsRepository
     ): IProductsRepository
+
+    @ApplicationScope
+    @Binds
+    internal abstract fun bindProductsOrderRepository(
+        productsOrderRepository: ProductsOrderRepository
+    ): IProductsOrderRepository
 }

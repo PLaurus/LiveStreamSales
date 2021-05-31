@@ -139,6 +139,20 @@
             android:name="liveBroadcastId"
             app:argType="long" />
 
+        <action
+            android:id="@+id/actionToProductsAreOrderedDestination"
+            app:destination="@id/productsAreOrderedDestination"
+            app:popUpTo="@id/liveBroadcastDestination"
+            app:popUpToInclusive="false"/>
+
+    </dialog>
+
+    <dialog
+        android:id="@+id/productsAreOrderedDestination"
+        android:name="tv.wfc.livestreamsales.features.productsareordered.ui.ProductsAreOrderedDialogFragment"
+        android:label="@string/dialog_products_are_ordered_destination_title"
+        tools:layout="@layout/dialog_products_are_ordered">
+
     </dialog>
 
 </navigation>

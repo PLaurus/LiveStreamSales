@@ -24,6 +24,7 @@ import tv.wfc.livestreamsales.features.authorization.di.AuthorizationComponent
 import tv.wfc.livestreamsales.features.mainappcontent.di.MainAppContentComponent
 import tv.wfc.livestreamsales.features.mainpage.di.MainPageComponent
 import tv.wfc.livestreamsales.features.productorder.di.ProductOrderComponent
+import tv.wfc.livestreamsales.features.productsareordered.di.ProductsAreOrderedComponent
 import tv.wfc.livestreamsales.features.splash.di.SplashComponent
 import tv.wfc.livestreamsales.features.usersettings.di.UserSettingsComponent
 
@@ -58,4 +59,5 @@ interface AppComponent {
     fun liveBroadcastComponent(): LiveBroadcastComponent.Factory
     fun productOrderComponent(): ProductOrderComponent.Factory
     fun userSettingsComponent(): UserSettingsComponent.Factory
+    fun productsAreOrderedComponent(): ProductsAreOrderedComponent.Factory
 }

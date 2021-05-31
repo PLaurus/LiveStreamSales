@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -31,7 +32,7 @@ import tv.wfc.livestreamsales.features.productorder.di.ProductOrderComponent
 import tv.wfc.livestreamsales.features.productorder.di.modules.diffutils.qualifiers.ProductBoxDataDiffUtilItemCallback
 import tv.wfc.livestreamsales.features.productorder.di.modules.diffutils.qualifiers.ProductSpecificationsDiffUtilItemCallback
 import tv.wfc.livestreamsales.features.productorder.model.ProductBoxData
-import tv.wfc.livestreamsales.features.productorder.model.ProductInCart
+import tv.wfc.livestreamsales.application.model.products.order.ProductInCart
 import tv.wfc.livestreamsales.features.productorder.model.SelectableSpecification
 import tv.wfc.livestreamsales.features.productorder.ui.adapters.cart.ProductsInCartAdapter
 import tv.wfc.livestreamsales.features.productorder.ui.adapters.products.ProductBoxesAdapter
@@ -43,6 +44,7 @@ import javax.inject.Inject
 
 
 class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_order){
+    private val navigationController by lazy{ findNavController() }
     private val navigationArguments by navArgs<ProductOrderDialogFragmentArgs>()
 
     private var viewBinding: DialogProductOrderBinding? = null
@@ -51,7 +53,7 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
     private lateinit var productOrderComponent: ProductOrderComponent
 
     @Inject
-    override lateinit var viewModel: IProductOrderViewModel
+    lateinit var viewModel: IProductOrderViewModel
 
     @Inject
     @MainThreadScheduler
@@ -89,35 +91,11 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
         dialogHeightAdaptationType = DialogDimensionAdaptationType.MAX_SIZE
     }
 
-    override fun onContentViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onContentViewCreated(view, savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         bindView(view)
-    }
-
-    override fun onDataIsPrepared() {
-        super.onDataIsPrepared()
-        initializeCloseButton()
-        initializeHeaderLayout()
-        initializeOneProductImage()
-        initializeOneProductNameText()
-        initializeSeveralProductsRecyclerView()
-        initializeSeveralProductsDescriptionText()
-        initializeProductSpecificationsLayout()
-        initializeProductSpecificationsRecyclerView()
-        initializeSelectableSpecificationsRecyclerView()
-        initializeProductVariantPriceLayout()
-        initializeProductVariantPriceText()
-        initializeProductVariantOldPriceText()
-        initializeAmountSelectionLayout()
-        initializeProductVariantAmountText()
-        initializeDecreaseProductVariantAmountButton()
-        initializeIncreaseProductVariantAmountButton()
-        initializeCartRecyclerView()
-    }
-
-    override fun onDataPreparationFailure() {
-        super.onDataPreparationFailure()
-        dismissAfterDelay()
+        initializeContentLoader()
+        manageNavigation()
     }
 
     override fun onDestroyView() {
@@ -148,6 +126,55 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
 
     private fun unbindView(){
         viewBinding = null
+    }
+
+    private fun initializeContentLoader(){
+        viewBinding?.contentLoader?.apply {
+            clearPreparationListeners()
+            attachViewModel(viewLifecycleOwner, viewModel)
+            addOnDataIsPreparedListener(::onDataIsPrepared)
+            addOnDataPreparationFailureListener(::onDataPreparationFailure)
+
+            viewModel.isAnyOperationInProgress.observe(viewLifecycleOwner){ isAnyOperationInProgress ->
+                if(isAnyOperationInProgress){
+                    showOperationProgress()
+                } else {
+                    hideOperationProgress()
+                }
+            }
+        }
+    }
+
+    private fun onDataIsPrepared() {
+        initializeHeaderLayout()
+        initializeOneProductImage()
+        initializeOneProductNameText()
+        initializeSeveralProductsRecyclerView()
+        initializeSeveralProductsDescriptionText()
+        initializeProductSpecificationsLayout()
+        initializeProductSpecificationsRecyclerView()
+        initializeSelectableSpecificationsRecyclerView()
+        initializeProductVariantPriceLayout()
+        initializeProductVariantPriceText()
+        initializeProductVariantOldPriceText()
+        initializeAmountSelectionLayout()
+        initializeProductVariantAmountText()
+        initializeDecreaseProductVariantAmountButton()
+        initializeIncreaseProductVariantAmountButton()
+        initializeCartRecyclerView()
+        initializeBuyButton()
+    }
+
+    private fun onDataPreparationFailure() {
+        dismissAfterDelay()
+    }
+
+    private fun manageNavigation(){
+        initializeCloseButton()
+
+        viewModel.areProductsOrderedEvent.observe(viewLifecycleOwner){
+            navigateToProductsAreOrderedDialog()
+        }
     }
 
     private fun initializeCloseButton(){
@@ -289,7 +316,7 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
         viewBinding?.productVariantPriceText?.apply {
             viewModel.selectedProductPrice.observe(viewLifecycleOwner, Observer{ price ->
                 text = resources.getString(
-                    R.string.fragment_product_order_price,
+                    R.string.dialog_product_order_price,
                     price?.format() ?: return@Observer
                 )
             })
@@ -303,7 +330,7 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
                     hideProductVariantOldPriceText()
                 } else {
                     text = getString(
-                        R.string.fragment_product_order_price,
+                        R.string.dialog_product_order_price,
                         oldPrice.format()
                     ).strikeThrough()
                     showProductVariantOldPriceText()
@@ -359,6 +386,23 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
 
                 (adapter as ProductsInCartAdapter).submitList(cart)
             })
+        }
+    }
+
+    private fun initializeBuyButton(){
+        viewBinding?.buyButton?.run {
+            clicks()
+                .throttleLatest(500L, TimeUnit.MILLISECONDS, computationScheduler)
+                .observeOn(mainThreadScheduler)
+                .subscribeBy(
+                    onNext = { viewModel.orderProducts() },
+                    onError = applicationErrorsLogger::logError
+                )
+                .addTo(viewScopeDisposables)
+
+            viewModel.cart.observe(viewLifecycleOwner){ cart ->
+                isEnabled = cart.isNotEmpty()
+            }
         }
     }
 
@@ -471,5 +515,10 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
                 onComplete = ::dismiss
             )
             .addTo(viewScopeDisposables)
+    }
+
+    private fun navigateToProductsAreOrderedDialog(){
+        val action = ProductOrderDialogFragmentDirections.actionToProductsAreOrderedDestination()
+        navigationController.navigate(action)
     }
 }
