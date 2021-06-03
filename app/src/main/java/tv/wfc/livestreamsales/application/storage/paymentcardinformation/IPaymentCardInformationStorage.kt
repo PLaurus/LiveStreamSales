@@ -1,7 +1,10 @@
 package tv.wfc.livestreamsales.application.storage.paymentcardinformation
 
-import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
+import tv.wfc.livestreamsales.application.model.paymentcardinformation.PaymentCardInformation
+import tv.wfc.livestreamsales.application.model.paymentcardinformation.ResultOfStartingPaymentCardBinding
 
 interface IPaymentCardInformationStorage {
-    fun updatePaymentCardInformation(token: String): Completable
+    fun startPaymentCardBinding(paymentToken: String): Single<ResultOfStartingPaymentCardBinding>
+    fun getPaymentCardInformation(): Single<PaymentCardInformation>
 }

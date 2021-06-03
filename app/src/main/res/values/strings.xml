@@ -144,13 +144,37 @@
     <string name="fragment_registration_user_personal_information_field_length_is_too_long">Максимальная длина поля %d</string>
     <string name="fragment_registration_user_personal_information_email_has_wrong_format">Недопустимый формат почты</string>
 
-    <!-- Registration. Payment card information fragment-->
-    <string name="fragment_registration_payment_card_information_title">Привязка карты</string>
-    <string name="fragment_registration_payment_card_information_description">
+    <!-- Payment card information fragment-->
+    <string name="fragment_payment_card_information_destination_title">Привязка карты</string>
+    <string name="fragment_payment_card_information_description">
         Привяжите свою карту, чтобы делать заказ не отрываясь от прямого эфира
     </string>
-    <string name="fragment_registration_payment_card_information_link_card_button">Привязать карту</string>
-    <string name="fragment_registration_payment_card_information_skip_button">Привязать позже</string>
+    <string name="fragment_payment_card_information_title_text">Привязанная карта:</string>
+    <string name="fragment_payment_card_information_number_text">•••• •••• •••• %s</string>
+    <string name="fragment_payment_card_information_link_card_button">Привязать карту</string>
+    <string name="fragment_payment_card_information_link_another_card_button">Привязать другую карту</string>
+    <string name="fragment_payment_card_information_skip_button">Привязать позже</string>
+    <string name="fragment_payment_card_information_yookassa_card_binding_title">Привязка карты</string>
+    <string name="fragment_payment_card_information_yookassa_card_binding_subtitle">Списание 1 руб. для привязки карты</string>
+    <string name="fragment_payment_card_information_binding_default_error">Не удалось привязать карту</string>
+    <string name="fragment_payment_card_information_binding_3ds_canceled_error">Подтверждение карты было отменено</string>
+    <string name="fragment_payment_card_information_binding_3ds_unknown_error">Не удалось подтвердить привязку карты</string>
+    <string name="fragment_payment_card_information_binding_3ds_host_lookup_error">Ошибка поиска имени хоста сервера или прокси-сервера</string>
+    <string name="fragment_payment_card_information_binding_3ds_unsupported_auth_scheme_error">Схема авторизации не поддерживается</string>
+    <string name="fragment_payment_card_information_binding_3ds_authentication_error">3ds не удалось авторизовать пользователся на сервере</string>
+    <string name="fragment_payment_card_information_binding_3ds_proxy_authentication_error">3ds не удалось авторизовать пользователся на прокси-сервере</string>
+    <string name="fragment_payment_card_information_binding_3ds_connect_error">3ds не удалось подключиться к серверу</string>
+    <string name="fragment_payment_card_information_binding_3ds_io_error">3ds не удалось отправить или получить данные с сервера</string>
+    <string name="fragment_payment_card_information_binding_3ds_timeout_error">Время подключения истекло</string>
+    <string name="fragment_payment_card_information_binding_3ds_redirect_loop_error">Ошибка. Слишком много перенаправлений</string>
+    <string name="fragment_payment_card_information_binding_3ds_unsupported_scheme_error">Ошибка. Схема URI не поддерживается</string>
+    <string name="fragment_payment_card_information_binding_3ds_failed_ssl_handshake_error">3ds не удалось установить безопасное соединение</string>
+    <string name="fragment_payment_card_information_binding_3ds_bad_url_error">3ds получил некорректную ссылку подтверждения</string>
+    <string name="fragment_payment_card_information_binding_3ds_file_error">Не удалось обработать файл</string>
+    <string name="fragment_payment_card_information_binding_3ds_file_not_found_error">Файл не найден</string>
+    <string name="fragment_payment_card_information_binding_3ds_too_many_requests_error">Слишком много запросов во время загрузки</string>
+    <string name="fragment_payment_card_information_binding_3ds_unsafe_resource_error">Загрузка ресурса была отменена в целях безопасности</string>
+    <string name="fragment_payment_card_information_binding_3ds_not_http_url_error">Ошибка. Небезопасный протокол передачи данных</string>
 
     <!-- Settings fragment -->
     <string name="fragment_settings_personal_information">1. Личные данные</string>

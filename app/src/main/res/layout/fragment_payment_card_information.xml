@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<tv.wfc.contentloader.ContentLoaderView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contentLoader"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/screenPadding"
+    android:clipToPadding="false">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/boundPaymentCardTitleText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_payment_card_information_title_text"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/headerTextSize"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/boundPaymentCardText"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:visibility="gone"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/boundPaymentCardText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/contentMargin"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/headerTextSize"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/boundPaymentCardTitleText"
+        app:layout_constraintBottom_toTopOf="@id/descriptionText"
+        tools:text="•••• •••• •••• 1488"
+        tools:visibility="gone"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/descriptionText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/contentMargin"
+        android:text="@string/fragment_payment_card_information_description"
+        android:textColor="@color/colorSecondaryText"
+        android:textSize="@dimen/textSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/boundPaymentCardText"
+        app:layout_constraintBottom_toTopOf="@id/linkPaymentCardButton"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/linkPaymentCardButton"
+        style="@style/Theme.LiveStreamSales.BigMaterialButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/contentMargin"
+        android:text="@string/fragment_payment_card_information_link_card_button"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descriptionText"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/skipButton"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_payment_card_information_skip_button"
+        android:textAllCaps="false"
+        android:textColor="@color/colorSecondaryText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</tv.wfc.contentloader.ContentLoaderView>

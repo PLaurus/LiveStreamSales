@@ -84,9 +84,9 @@
 
     <fragment
         android:id="@+id/registrationPaymentCardInformationDestination"
-        android:label="@string/fragment_registration_payment_card_information_title"
-        android:name="tv.wfc.livestreamsales.features.authorization.paymentcardinformation.ui.RegistrationPaymentCardInformationFragment"
-        tools:layout="@layout/fragment_registration_payment_card_information">
+        android:label="@string/fragment_payment_card_information_destination_title"
+        android:name="tv.wfc.livestreamsales.features.paymentcardinformation.ui.PaymentCardInformationFragment"
+        tools:layout="@layout/fragment_payment_card_information">
 
         <action
             android:id="@+id/action_exit"

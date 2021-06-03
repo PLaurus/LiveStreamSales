@@ -29,12 +29,17 @@ android {
         debug {
             debuggable true
             //minifyEnabled true
+            buildConfigField("String", "YOO_KASSA_CLIENT_APPLICATION_KEY", "\"test_Nzk3NTQ1kYF1Pqhqr2tcjS7kBRC3hIaCffHRNPKktIg\"")
+            buildConfigField("String", "YOO_KASSA_SHOP_ID", "\"797545\"")
             buildConfigField("boolean", "IgnoreRestRequests", "false")
             buildConfigField("boolean", "IgnoreRestHostNameVerification", "false")
         }
 
         release {
+            debuggable false
             //minifyEnabled true
+            buildConfigField("String", "YOO_KASSA_CLIENT_APPLICATION_KEY", "\"test_Nzk3NTQ1kYF1Pqhqr2tcjS7kBRC3hIaCffHRNPKktIg\"")
+            buildConfigField("String", "YOO_KASSA_SHOP_ID", "\"797545\"")
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

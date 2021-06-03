@@ -7,6 +7,7 @@ import tv.wfc.livestreamsales.features.livebroadcast.di.LiveBroadcastComponent
 import tv.wfc.livestreamsales.features.authorization.di.AuthorizationComponent
 import tv.wfc.livestreamsales.features.mainappcontent.di.MainAppContentComponent
 import tv.wfc.livestreamsales.features.mainpage.di.MainPageComponent
+import tv.wfc.livestreamsales.features.paymentcardinformation.di.PaymentCardInformationComponent
 import tv.wfc.livestreamsales.features.productorder.di.ProductOrderComponent
 import tv.wfc.livestreamsales.features.productsareordered.di.ProductsAreOrderedComponent
 import tv.wfc.livestreamsales.features.splash.di.SplashComponent
@@ -22,6 +23,7 @@ import tv.wfc.livestreamsales.features.usersettings.di.UserSettingsComponent
     LiveBroadcastComponent::class,
     ProductOrderComponent::class,
     UserSettingsComponent::class,
-    ProductsAreOrderedComponent::class
+    ProductsAreOrderedComponent::class,
+    PaymentCardInformationComponent::class
 ])
 class AppSubComponentsModule
