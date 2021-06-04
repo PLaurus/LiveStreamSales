@@ -88,6 +88,7 @@ class MainAppContentActivity : BaseActivity() {
     private fun initializeToolbar(){
         viewBinding.toolbar.apply {
             val appBarConfiguration = AppBarConfiguration(navigationController.graph)
+            setSupportActionBar(this) // Must be called before toolbar.setupWithNavController!
             setupWithNavController(navigationController, appBarConfiguration)
             setNavigationOnClickListener{
                 val actions = toolbarNavigationOnClickListeners.toList()

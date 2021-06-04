@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.webkit.WebViewClient
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.laurus.p.tools.livedata.LiveEvent
@@ -66,7 +67,15 @@ class PaymentCardInformationViewModel @Inject constructor(
     override val paymentCardBindingParameters: LiveData<PaymentParameters> = MutableLiveData(createPaymentCardBindingParameters())
     override val paymentCardBindingError = LiveEvent<String?>()
     override val paymentCardBindingConfirmationUrl = LiveEvent<String?>()
-    override val isPaymentCardBound = MutableLiveData<Boolean>()
+    override val isPaymentCardBound = MediatorLiveData<Boolean>().apply{
+        addSource(paymentCardBindingState){ state ->
+            when(state){
+                IPaymentCardInformationViewModel.CardBindingState.Bound -> true
+                else -> false
+            }
+        }
+    }
+    override val paymentCardBindingState = MutableLiveData<IPaymentCardInformationViewModel.CardBindingState>()
     override val boundPaymentCardNumber = MutableLiveData<String?>()
 
     init{
@@ -96,7 +105,7 @@ class PaymentCardInformationViewModel @Inject constructor(
         waitUntilCardIsBoundDisposable = Single
             .create<PaymentCardInformation>{ emitter ->
                 val disposables = CompositeDisposable()
-                val maxAttemptsCount = 30
+                val maxAttemptsCount = 3
                 val secondsToWaitBeforeNextAttempt = 5L
                 var currentAttemptsCount = 0
                 var isFirstAttempt = true
@@ -147,11 +156,12 @@ class PaymentCardInformationViewModel @Inject constructor(
             .doOnError(applicationErrorsLogger::logError)
             .subscribeBy(
                 onSuccess = { paymentCardInformation ->
-                    this.isPaymentCardBound.value = paymentCardInformation.isBoundToAccount
-                    this.boundPaymentCardNumber.value = paymentCardInformation.cardNumber
+                    this.paymentCardBindingState.value = IPaymentCardInformationViewModel.CardBindingState.Bound
+                    this.boundPaymentCardNumber.value = context.getString(R.string.fragment_payment_card_information_number_text, paymentCardInformation.cardNumber)
                 },
                 onError = {
-                    paymentCardBindingError.value = it.message
+                    this.boundPaymentCardNumber.value = context.getString(R.string.fragment_payment_card_information_card_will_be_bound_soon)
+                    this.paymentCardBindingState.value = IPaymentCardInformationViewModel.CardBindingState.WillBeBoundSoon
                 }
             )
             .addTo(disposables)
@@ -265,8 +275,11 @@ class PaymentCardInformationViewModel @Inject constructor(
             .observeOn(mainThreadScheduler)
             .flatMapCompletable { paymentCardInformation ->
                 Completable.fromRunnable {
-                    this.isPaymentCardBound.value = paymentCardInformation.isBoundToAccount
-                    this.boundPaymentCardNumber.value = paymentCardInformation.cardNumber
+                    this.paymentCardBindingState.value = when(paymentCardInformation.isBoundToAccount){
+                        true -> IPaymentCardInformationViewModel.CardBindingState.Bound
+                        else -> IPaymentCardInformationViewModel.CardBindingState.NotBound
+                    }
+                    this.boundPaymentCardNumber.value = context.getString(R.string.fragment_payment_card_information_number_text, paymentCardInformation.cardNumber)
                 }
             }
     }

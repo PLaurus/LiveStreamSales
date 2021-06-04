@@ -2,6 +2,9 @@
     <!-- Application -->
     <string name="app_name">LiveStreamSales</string>
 
+    <!-- Menu exit -->
+    <string name="menu_exit_exit_button_title">Закрыть</string>
+
     <!-- Product Specifications -->
     <string name="product_specification_name_color">Цвет</string>
 
@@ -151,6 +154,7 @@
     </string>
     <string name="fragment_payment_card_information_title_text">Привязанная карта:</string>
     <string name="fragment_payment_card_information_number_text">•••• •••• •••• %s</string>
+    <string name="fragment_payment_card_information_card_will_be_bound_soon">Карта скоро будет привязана</string>
     <string name="fragment_payment_card_information_link_card_button">Привязать карту</string>
     <string name="fragment_payment_card_information_link_another_card_button">Привязать другую карту</string>
     <string name="fragment_payment_card_information_skip_button">Привязать позже</string>

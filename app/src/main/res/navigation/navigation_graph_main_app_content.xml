@@ -41,7 +41,7 @@
             app:popUpTo="@id/phoneNumberInputDestination"
             app:popUpToInclusive="true"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
+            app:popExitAnim="@anim/fade_out" />
 
         <action
             android:id="@+id/action_phoneNumberConfirmationDestination_to_registrationUserPersonalInformationDestination"
@@ -74,7 +74,9 @@
 
         <action
             android:id="@+id/action_registrationUserPersonalInformationDestination_to_registrationPaymentCardInformationDestination"
-            app:destination="@id/registrationPaymentCardInformationDestination"
+            app:destination="@id/paymentCardInformationDestination"
+            app:popUpTo="@id/phoneNumberInputDestination"
+            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/stay_as_is"
             app:popEnterAnim="@anim/stay_as_is"
@@ -83,17 +85,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/registrationPaymentCardInformationDestination"
+        android:id="@+id/paymentCardInformationDestination"
         android:label="@string/fragment_payment_card_information_destination_title"
         android:name="tv.wfc.livestreamsales.features.paymentcardinformation.ui.PaymentCardInformationFragment"
         tools:layout="@layout/fragment_payment_card_information">
-
-        <action
-            android:id="@+id/action_exit"
-            app:popUpTo="@id/phoneNumberInputDestination"
-            app:popUpToInclusive="true"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
 
     </fragment>
 

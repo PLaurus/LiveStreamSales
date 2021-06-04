@@ -11,9 +11,17 @@ interface IPaymentCardInformationViewModel: INeedPreparationViewModel{
     val paymentCardBindingError: LiveData<String?>
     val paymentCardBindingConfirmationUrl: LiveData<String?>
     val isPaymentCardBound: LiveData<Boolean>
+    val paymentCardBindingState: LiveData<CardBindingState>
     val boundPaymentCardNumber: LiveData<String?>
 
     fun startPaymentCardBinding(tokenizationResultIntent: Intent)
     fun waitUntilCardIsBound()
     fun notify3dsErrorOccurred(`3dsResultIntent`: Intent)
+
+    enum class CardBindingState{
+        NotBound,
+        BindingFlowStarted,
+        WillBeBoundSoon,
+        Bound
+    }
 }

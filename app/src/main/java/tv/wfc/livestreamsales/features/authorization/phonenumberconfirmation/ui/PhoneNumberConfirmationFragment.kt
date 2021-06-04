@@ -109,6 +109,7 @@ class PhoneNumberConfirmationFragment: BaseFragment(R.layout.fragment_phone_numb
             val action = when(phoneNumberConfirmationResult){
                 is PhoneNumberConfirmationResult.Confirmed -> {
                     PhoneNumberConfirmationFragmentDirections.actionExitAuthorization()
+                    //PhoneNumberConfirmationFragmentDirections.actionPhoneNumberConfirmationDestinationToRegistrationUserPersonalInformationDestination(isRegistrationFlow = true, viewModel.authorizationToken.value)
                 }
                 is PhoneNumberConfirmationResult.ConfirmedButNeedUserPersonalInformation -> {
                     PhoneNumberConfirmationFragmentDirections.actionPhoneNumberConfirmationDestinationToRegistrationUserPersonalInformationDestination(isRegistrationFlow = true, viewModel.authorizationToken.value)

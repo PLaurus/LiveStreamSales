@@ -5,6 +5,9 @@ import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
@@ -62,6 +65,18 @@ class PaymentCardInformationFragment: BaseFragment(R.layout.fragment_payment_car
         bindView(view)
         initializeContentLoader()
         manageNavigation()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_exit, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.close -> exit()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -174,10 +189,11 @@ class PaymentCardInformationFragment: BaseFragment(R.layout.fragment_payment_car
                 )
                 .addTo(viewScopeDisposables)
 
-            viewModel.isPaymentCardBound.observe(viewLifecycleOwner){ isPaymentCardBound ->
-                text = when(isPaymentCardBound){
-                    true -> getString(R.string.fragment_payment_card_information_link_another_card_button)
-                    false -> getString(R.string.fragment_payment_card_information_link_card_button)
+            viewModel.paymentCardBindingState.observe(viewLifecycleOwner){ state ->
+                text = when(state){
+                    IPaymentCardInformationViewModel.CardBindingState.Bound,
+                    IPaymentCardInformationViewModel.CardBindingState.WillBeBoundSoon -> getString(R.string.fragment_payment_card_information_link_another_card_button)
+                    else -> getString(R.string.fragment_payment_card_information_link_card_button)
                 }
             }
         }
@@ -205,23 +221,28 @@ class PaymentCardInformationFragment: BaseFragment(R.layout.fragment_payment_car
 
     private fun initializeBoundPaymentCardTitleText(){
         viewBinding?.boundPaymentCardTitleText?.apply{
-            viewModel.isPaymentCardBound.observe(viewLifecycleOwner){ isPaymentCardBound ->
-                visibility = if(isPaymentCardBound) View.VISIBLE else View.GONE
+            viewModel.paymentCardBindingState.observe(viewLifecycleOwner){ state ->
+                visibility = when(state) {
+                    IPaymentCardInformationViewModel.CardBindingState.Bound,
+                    IPaymentCardInformationViewModel.CardBindingState.WillBeBoundSoon -> View.VISIBLE
+                    else -> View.GONE
+                }
             }
         }
     }
 
     private fun initializeBoundPaymentCardText(){
         viewBinding?.boundPaymentCardText?.apply{
-            viewModel.isPaymentCardBound.observe(viewLifecycleOwner){ isPaymentCardBound ->
-                visibility = if(isPaymentCardBound) View.VISIBLE else View.GONE
+            viewModel.paymentCardBindingState.observe(viewLifecycleOwner){ state ->
+                visibility = when(state) {
+                    IPaymentCardInformationViewModel.CardBindingState.Bound,
+                    IPaymentCardInformationViewModel.CardBindingState.WillBeBoundSoon -> View.VISIBLE
+                    else -> View.GONE
+                }
             }
 
             viewModel.boundPaymentCardNumber.observe(viewLifecycleOwner){ paymentCardNumber ->
-
-                text = paymentCardNumber?.let{
-                    getString(R.string.fragment_payment_card_information_number_text, paymentCardNumber)
-                } ?: ""
+                text = paymentCardNumber ?: ""
             }
         }
     }
@@ -250,8 +271,6 @@ class PaymentCardInformationFragment: BaseFragment(R.layout.fragment_payment_car
     }
 
     private fun exit(){
-        val action = PaymentCardInformationFragmentDirections.actionExit()
-
-        navigationController.navigate(action)
+        navigationController.navigateUp()
     }
 }

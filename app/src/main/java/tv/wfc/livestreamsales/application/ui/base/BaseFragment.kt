@@ -36,6 +36,7 @@ abstract class BaseFragment(
         savedInstanceState: Bundle?
     ): View? {
         viewScopeDisposables = CompositeDisposable()
+        setHasOptionsMenu(true)
 
         return super.onCreateView(inflater, container, savedInstanceState)?.apply{
             replaceEmptyBackground()
