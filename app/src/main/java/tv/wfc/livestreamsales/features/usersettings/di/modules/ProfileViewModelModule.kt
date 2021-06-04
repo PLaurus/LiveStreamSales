@@ -8,31 +8,30 @@ import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 import tv.wfc.livestreamsales.application.di.modules.viewmodelprovider.mapkeys.ViewModelKey
-import tv.wfc.livestreamsales.features.usersettings.di.scope.UserSettingsFeature
-import tv.wfc.livestreamsales.features.usersettings.viewmodel.IUserSettingsViewModel
-import tv.wfc.livestreamsales.features.usersettings.viewmodel.UserSettingsViewModel
+import tv.wfc.livestreamsales.features.usersettings.di.scope.ProfileFeature
+import tv.wfc.livestreamsales.features.usersettings.viewmodel.IProfileViewModel
+import tv.wfc.livestreamsales.features.usersettings.viewmodel.ProfileViewModel
 
 @Module
-abstract class UserSettingsViewModelModule {
+abstract class ProfileViewModelModule {
     companion object{
-        @UserSettingsFeature
+        @ProfileFeature
         @Provides
-        @JvmStatic
-        fun provideISettingsViewModel(
+        fun provideIProfileViewModel(
             fragment: Fragment,
             viewModelProviderFactory: ViewModelProvider.Factory
-        ): IUserSettingsViewModel {
+        ): IProfileViewModel {
             return ViewModelProvider(
                 fragment,
                 viewModelProviderFactory
-            )[UserSettingsViewModel::class.java]
+            )[ProfileViewModel::class.java]
         }
     }
 
     @Binds
     @IntoMap
-    @ViewModelKey(UserSettingsViewModel::class)
-    abstract fun bindSettingsViewModelIntoMap(
-        userSettingsViewModel: UserSettingsViewModel
+    @ViewModelKey(ProfileViewModel::class)
+    abstract fun bindProfileViewModelIntoMap(
+        userSettingsViewModel: ProfileViewModel
     ): ViewModel
 }

@@ -59,12 +59,12 @@
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
     </string>
 
-    <!-- Main fragment -->
-    <string name="fragment_main_title">@string/app_name</string>
-    <string name="fragment_main_home_button">Главная</string>
-    <string name="fragment_main_notifications_button">Напоминания</string>
-    <string name="fragment_main_category_button">Категории</string>
-    <string name="fragment_main_settings_button">Настройки</string>
+    <!-- Home fragment -->
+    <string name="fragment_home_destination_title">@string/app_name</string>
+    <string name="fragment_home_main_page_button">Главная</string>
+    <string name="fragment_home_notifications_button">Напоминания</string>
+    <string name="fragment_home_my_orders_button">Мои заказы</string>
+    <string name="fragment_home_profile_button">Профиль</string>
 
     <!-- Home fragment -->
     <string name="fragment_home_live">● Прямой эфир</string>
@@ -180,9 +180,23 @@
     <string name="fragment_payment_card_information_binding_3ds_unsafe_resource_error">Загрузка ресурса была отменена в целях безопасности</string>
     <string name="fragment_payment_card_information_binding_3ds_not_http_url_error">Ошибка. Небезопасный протокол передачи данных</string>
 
-    <!-- Settings fragment -->
-    <string name="fragment_settings_personal_information">1. Личные данные</string>
-    <string name="fragment_settings_payment_card_title">2. Платёжная карта</string>
+    <!-- Profile fragment -->
+    <string name="fragment_profile_destination_title">Профиль</string>
+    <string name="fragment_profile_user_personal_information_title">1. Личные данные</string>
+    <string name="fragment_profile_name_input_hint">Имя</string>
+    <string name="fragment_profile_surname_input_hint">Фамилия</string>
+    <string name="fragment_profile_phone_number_hint">Номер телефона</string>
+    <string name="fragment_profile_email_hint">E-mail</string>
+    <string name="fragment_profile_update_user_personal_information_button">Сохранить</string>
+    <string name="fragment_profile_user_personal_information_is_saved">Данные пользователя изменены</string>
+    <string name="fragment_profile_field_is_required">Обязательное поле</string>
+    <string name="fragment_profile_field_contains_illegal_symbols">Поле содержит недопустимые символы</string>
+    <string name="fragment_profile_field_length_is_too_short">Минимальная длина поля %d</string>
+    <string name="fragment_profile_field_length_is_too_long">Максимальная длина поля %d</string>
+    <string name="fragment_profile_email_has_wrong_format">Недопустимый формат почты</string>
+    <string name="fragment_profile_payment_information_title">2. Способ оплаты</string>
+    <string name="fragment_profile_change_payment_information_button">Изменить способ оплаты</string>
+    <string name="fragment_profile_log_out_button">Выйти</string>
 
     <!-- User personal information fragment -->
     <string name="fragment_user_personal_information_name_input_hint">Имя</string>
@@ -218,11 +232,8 @@
     <!-- Notifications fragment -->
     <string name="fragment_notifications_title">Напоминания</string>
 
-    <!-- Categories fragment -->
-    <string name="fragment_categories_title">Категории</string>
-
-    <!-- Settings fragment -->
-    <string name="fragment_settings_title">Настройки</string>
+    <!-- My orders fragment -->
+    <string name="fragment_my_orders_title">Мои заказы</string>
 
     <!-- Live broadcast fragment -->
     <string name="fragment_live_broadcast_viewers_count">%d онлайн</string>

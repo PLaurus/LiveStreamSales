@@ -7,28 +7,28 @@
     <item
         android:id="@+id/mainPage"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="@string/fragment_main_home_button"
+        android:title="@string/fragment_home_main_page_button"
         android:enabled="true"
         app:showAsAction="ifRoom|withText"/>
 
     <item
         android:id="@+id/notificationsPage"
         android:icon="@drawable/ic_baseline_notifications_none_24"
-        android:title="@string/fragment_main_notifications_button"
+        android:title="@string/fragment_home_notifications_button"
         android:enabled="false"
         app:showAsAction="ifRoom|withText"/>
 
     <item
-        android:id="@+id/categoriesPage"
-        android:icon="@drawable/ic_baseline_filter_alt_24"
-        android:title="@string/fragment_main_category_button"
-        android:enabled="false"
+        android:id="@+id/myOrdersPage"
+        android:icon="@drawable/ic_baseline_bag_24"
+        android:title="@string/fragment_home_my_orders_button"
+        android:enabled="true"
         app:showAsAction="ifRoom|withText"/>
 
     <item
-        android:id="@+id/settingsPage"
-        android:icon="@drawable/ic_baseline_settings_24"
-        android:title="@string/fragment_main_settings_button"
+        android:id="@+id/profilePage"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="@string/fragment_home_profile_button"
         android:enabled="true"
         app:showAsAction="ifRoom|withText"/>
 

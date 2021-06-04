@@ -95,12 +95,20 @@
     <fragment
         android:id="@+id/homeDestination"
         android:name="tv.wfc.livestreamsales.features.home.ui.HomeFragment"
-        android:label="@string/fragment_main_title"
+        android:label="@string/fragment_home_destination_title"
         tools:layout="@layout/fragment_home">
 
         <action
             android:id="@+id/action_homeDestination_to_liveBroadcastDestination"
             app:destination="@id/liveBroadcastDestination"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/stay_as_is"
+            app:popEnterAnim="@anim/stay_as_is"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+        <action
+            android:id="@+id/action_to_paymentCardInformationDestination"
+            app:destination="@id/paymentCardInformationDestination"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/stay_as_is"
             app:popEnterAnim="@anim/stay_as_is"

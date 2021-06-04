@@ -11,7 +11,7 @@ import tv.wfc.livestreamsales.features.paymentcardinformation.di.PaymentCardInfo
 import tv.wfc.livestreamsales.features.productorder.di.ProductOrderComponent
 import tv.wfc.livestreamsales.features.productsareordered.di.ProductsAreOrderedComponent
 import tv.wfc.livestreamsales.features.splash.di.SplashComponent
-import tv.wfc.livestreamsales.features.usersettings.di.UserSettingsComponent
+import tv.wfc.livestreamsales.features.usersettings.di.ProfileComponent
 
 @Module(subcomponents = [
     SplashComponent::class,
@@ -22,7 +22,7 @@ import tv.wfc.livestreamsales.features.usersettings.di.UserSettingsComponent
     MainPageComponent::class,
     LiveBroadcastComponent::class,
     ProductOrderComponent::class,
-    UserSettingsComponent::class,
+    ProfileComponent::class,
     ProductsAreOrderedComponent::class,
     PaymentCardInformationComponent::class
 ])

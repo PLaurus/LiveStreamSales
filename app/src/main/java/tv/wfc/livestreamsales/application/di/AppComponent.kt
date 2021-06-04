@@ -27,7 +27,7 @@ import tv.wfc.livestreamsales.features.paymentcardinformation.di.PaymentCardInfo
 import tv.wfc.livestreamsales.features.productorder.di.ProductOrderComponent
 import tv.wfc.livestreamsales.features.productsareordered.di.ProductsAreOrderedComponent
 import tv.wfc.livestreamsales.features.splash.di.SplashComponent
-import tv.wfc.livestreamsales.features.usersettings.di.UserSettingsComponent
+import tv.wfc.livestreamsales.features.usersettings.di.ProfileComponent
 
 @ApplicationScope
 @Component(modules = [
@@ -59,7 +59,7 @@ interface AppComponent {
     fun mainPageComponent(): MainPageComponent.Factory
     fun liveBroadcastComponent(): LiveBroadcastComponent.Factory
     fun productOrderComponent(): ProductOrderComponent.Factory
-    fun userSettingsComponent(): UserSettingsComponent.Factory
+    fun profileComponent(): ProfileComponent.Factory
     fun productsAreOrderedComponent(): ProductsAreOrderedComponent.Factory
     fun paymentCardInformationComponent(): PaymentCardInformationComponent.Factory
 }

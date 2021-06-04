@@ -1,14 +1,13 @@
-package tv.wfc.livestreamsales.features.authorization.userpersonalinformation.ui
+package tv.wfc.livestreamsales.features.usersettings.ui
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import androidx.activity.addCallback
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding4.view.clicks
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.kotlin.addTo
@@ -18,30 +17,23 @@ import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.Comput
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.ui.base.BaseFragment
-import tv.wfc.livestreamsales.databinding.FragmentRegistrationUserPersonalInformationBinding
-import tv.wfc.livestreamsales.features.authorization.userpersonalinformation.di.RegistrationUserPersonalInformationComponent
-import tv.wfc.livestreamsales.features.authorization.userpersonalinformation.viewmodel.IRegistrationUserPersonalInformationViewModel
-import tv.wfc.livestreamsales.features.mainappcontent.ui.MainAppContentActivity
+import tv.wfc.livestreamsales.databinding.FragmentProfileBinding
+import tv.wfc.livestreamsales.features.home.ui.HomeFragment
+import tv.wfc.livestreamsales.features.home.ui.HomeFragmentDirections
+import tv.wfc.livestreamsales.features.usersettings.di.ProfileComponent
+import tv.wfc.livestreamsales.features.usersettings.viewmodel.IProfileViewModel
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class RegistrationUserPersonalInformationFragment: BaseFragment(R.layout.fragment_registration_user_personal_information) {
+class ProfileFragment: BaseFragment(R.layout.fragment_profile) {
     private val navigationController by lazy { findNavController() }
-    private val navigationArguments by navArgs<RegistrationUserPersonalInformationFragmentArgs>()
 
-    private val onToolbarBackPressed = object: MainAppContentActivity.ToolbarNavigationOnClickListener{
-        override fun onClick() {
-            (requireActivity() as MainAppContentActivity).removeToolbarNavigationOnClickListener(this)
-            viewModel.logOut()
-        }
-    }
+    private var viewBinding: FragmentProfileBinding? = null
 
-    private var viewBinding: FragmentRegistrationUserPersonalInformationBinding? = null
-
-    private lateinit var registrationUserPersonalInformationComponent: RegistrationUserPersonalInformationComponent
+    private lateinit var profileComponent: ProfileComponent
 
     @Inject
-    lateinit var viewModel: IRegistrationUserPersonalInformationViewModel
+    lateinit var viewModel: IProfileViewModel
 
     @Inject
     @MainThreadScheduler
@@ -56,60 +48,34 @@ class RegistrationUserPersonalInformationFragment: BaseFragment(R.layout.fragmen
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        createRegistrationUserPersonalInformationComponent()
+        createProfileComponent()
         injectDependencies()
-        setIsViewModelInRegistrationMode()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bindActivityToolbar()
         bindView(view)
         initializeContentLoader()
         manageNavigation()
     }
 
     override fun onDestroyView() {
-        unbindActivityToolbar()
         unbindView()
         super.onDestroyView()
     }
 
-    private fun createRegistrationUserPersonalInformationComponent(){
-        val authorizationComponent = appComponent
-            .authorizationComponent()
-            .create()
-
-        registrationUserPersonalInformationComponent = authorizationComponent
-            .registrationUserPersonalInformationComponent()
+    private fun createProfileComponent(){
+        profileComponent = appComponent
+            .profileComponent()
             .create(this)
     }
 
     private fun injectDependencies(){
-        registrationUserPersonalInformationComponent.inject(this)
-    }
-
-    private fun setIsViewModelInRegistrationMode(){
-        if(navigationArguments.isRegistrationFlow){
-            val authorizationToken = navigationArguments.token
-            if(authorizationToken != null){
-                viewModel.setViewModelToRegistrationFlow(authorizationToken)
-            }
-        }
-    }
-
-    private fun bindActivityToolbar(){
-        if(!navigationArguments.isRegistrationFlow) return
-        (requireActivity() as MainAppContentActivity).addToolbarNavigationOnClickListener(onToolbarBackPressed)
-    }
-
-    private fun unbindActivityToolbar(){
-        if(!navigationArguments.isRegistrationFlow) return
-        (requireActivity() as MainAppContentActivity).removeToolbarNavigationOnClickListener(onToolbarBackPressed)
+        profileComponent.inject(this)
     }
 
     private fun bindView(view: View){
-        viewBinding = FragmentRegistrationUserPersonalInformationBinding.bind(view)
+        viewBinding = FragmentProfileBinding.bind(view)
     }
 
     private fun unbindView(){
@@ -140,23 +106,16 @@ class RegistrationUserPersonalInformationFragment: BaseFragment(R.layout.fragmen
         initializePhoneNumberEditText()
         initializeEmailEditText()
         initializeEmailLayout()
-        initializeContinueButton()
+        initializeUpdateUserPersonalInformationButton()
+        initializeChangePaymentInformationButton()
+        initializeLogOutButton()
+        initializeSnackBar()
     }
 
     private fun manageNavigation(){
         viewModel.isUserAuthorized.observe(viewLifecycleOwner, { isUserAuthorized ->
-            if(!isUserAuthorized) navigationController.navigateUp()
+            if(!isUserAuthorized) navigateToMainPage()
         })
-
-        viewModel.isUserPersonalInformationSaved.observe(viewLifecycleOwner){
-            navigateToPaymentCardInformation()
-        }
-
-        if(navigationArguments.isRegistrationFlow){
-            requireActivity().onBackPressedDispatcher.addCallback(this){
-                viewModel.logOut()
-            }
-        }
     }
 
     private fun initializeNameEditText(){
@@ -176,10 +135,10 @@ class RegistrationUserPersonalInformationFragment: BaseFragment(R.layout.fragmen
     private fun initializeNameLayout(){
         viewModel.nameError.observe(viewLifecycleOwner, { nameError ->
             val errorMessage = when(nameError){
-                is IRegistrationUserPersonalInformationViewModel.NameError.FieldIsRequired -> getString(R.string.fragment_registration_user_personal_information_field_is_required)
-                is IRegistrationUserPersonalInformationViewModel.NameError.FieldContainsIllegalSymbols -> getString(R.string.fragment_registration_user_personal_information_field_contains_illegal_symbols)
-                is IRegistrationUserPersonalInformationViewModel.NameError.LengthIsTooShort -> getString(R.string.fragment_registration_user_personal_information_field_length_is_too_short, nameError.minLength)
-                is IRegistrationUserPersonalInformationViewModel.NameError.LengthIsTooLong -> getString(R.string.fragment_registration_user_personal_information_field_length_is_too_long, nameError.maxLength)
+                is IProfileViewModel.NameError.FieldIsRequired -> getString(R.string.fragment_profile_field_is_required)
+                is IProfileViewModel.NameError.FieldContainsIllegalSymbols -> getString(R.string.fragment_profile_field_contains_illegal_symbols)
+                is IProfileViewModel.NameError.LengthIsTooShort -> getString(R.string.fragment_profile_field_length_is_too_short, nameError.minLength)
+                is IProfileViewModel.NameError.LengthIsTooLong -> getString(R.string.fragment_profile_field_length_is_too_long, nameError.maxLength)
                 else -> null
             }
 
@@ -207,9 +166,9 @@ class RegistrationUserPersonalInformationFragment: BaseFragment(R.layout.fragmen
     private fun initializeSurnameLayout(){
         viewModel.surnameError.observe(viewLifecycleOwner, { surnameError ->
             val errorMessage = when(surnameError){
-                is IRegistrationUserPersonalInformationViewModel.SurnameError.FieldContainsIllegalSymbols -> getString(R.string.fragment_registration_user_personal_information_field_contains_illegal_symbols)
-                is IRegistrationUserPersonalInformationViewModel.SurnameError.LengthIsTooShort -> getString(R.string.fragment_registration_user_personal_information_field_length_is_too_short, surnameError.minLength)
-                is IRegistrationUserPersonalInformationViewModel.SurnameError.LengthIsTooLong -> getString(R.string.fragment_registration_user_personal_information_field_length_is_too_long, surnameError.maxLength)
+                is IProfileViewModel.SurnameError.FieldContainsIllegalSymbols -> getString(R.string.fragment_profile_field_contains_illegal_symbols)
+                is IProfileViewModel.SurnameError.LengthIsTooShort -> getString(R.string.fragment_profile_field_length_is_too_short, surnameError.minLength)
+                is IProfileViewModel.SurnameError.LengthIsTooLong -> getString(R.string.fragment_profile_field_length_is_too_long, surnameError.maxLength)
                 else -> null
             }
 
@@ -247,10 +206,10 @@ class RegistrationUserPersonalInformationFragment: BaseFragment(R.layout.fragmen
     private fun initializeEmailLayout(){
         viewModel.emailError.observe(viewLifecycleOwner, { emailError ->
             val errorMessage = when(emailError){
-                is IRegistrationUserPersonalInformationViewModel.EmailError.FieldIsRequired -> getString(R.string.fragment_registration_user_personal_information_field_is_required)
-                is IRegistrationUserPersonalInformationViewModel.EmailError.IllegalEmailFormat -> getString(R.string.fragment_registration_user_personal_information_email_has_wrong_format)
-                is IRegistrationUserPersonalInformationViewModel.EmailError.LengthIsTooShort -> getString(R.string.fragment_registration_user_personal_information_field_length_is_too_short, emailError.minLength)
-                is IRegistrationUserPersonalInformationViewModel.EmailError.LengthIsTooLong -> getString(R.string.fragment_registration_user_personal_information_field_length_is_too_long, emailError.maxLength)
+                is IProfileViewModel.EmailError.FieldIsRequired -> getString(R.string.fragment_profile_field_is_required)
+                is IProfileViewModel.EmailError.IllegalEmailFormat -> getString(R.string.fragment_profile_email_has_wrong_format)
+                is IProfileViewModel.EmailError.LengthIsTooShort -> getString(R.string.fragment_profile_field_length_is_too_short, emailError.minLength)
+                is IProfileViewModel.EmailError.LengthIsTooLong -> getString(R.string.fragment_profile_field_length_is_too_long, emailError.maxLength)
                 else -> null
             }
 
@@ -261,8 +220,8 @@ class RegistrationUserPersonalInformationFragment: BaseFragment(R.layout.fragmen
         })
     }
 
-    private fun initializeContinueButton(){
-        viewBinding?.continueButton?.run{
+    private fun initializeUpdateUserPersonalInformationButton(){
+        viewBinding?.updateUserPersonalInformationButton?.run{
             viewModel.isCurrentUserPersonalInformationCorrect.observe(viewLifecycleOwner){ isUserPersonalInformationCorrect ->
                 isEnabled = isUserPersonalInformationCorrect
             }
@@ -278,8 +237,52 @@ class RegistrationUserPersonalInformationFragment: BaseFragment(R.layout.fragmen
         }
     }
 
+    private fun initializeChangePaymentInformationButton(){
+        viewBinding?.changePaymentInformationButton?.run{
+            clicks()
+                .throttleLatest(500L, TimeUnit.MILLISECONDS, computationScheduler)
+                .observeOn(mainThreadScheduler)
+                .doOnError(applicationErrorsLogger::logError)
+                .subscribeBy(
+                    onNext = { navigateToPaymentCardInformation() }
+                )
+                .addTo(viewScopeDisposables)
+        }
+    }
+
+    private fun initializeLogOutButton(){
+        viewBinding?.logOutButton?.run{
+            clicks()
+                .throttleLatest(500L, TimeUnit.MILLISECONDS, computationScheduler)
+                .observeOn(mainThreadScheduler)
+                .doOnError(applicationErrorsLogger::logError)
+                .subscribeBy(
+                    onNext = { viewModel.logOut() }
+                )
+                .addTo(viewScopeDisposables)
+        }
+    }
+
+    private fun initializeSnackBar(){
+        val rootView = viewBinding?.root ?: return
+
+        viewModel.isUserPersonalInformationSaved.observe(viewLifecycleOwner){
+            Snackbar
+                .make(
+                    rootView,
+                    R.string.fragment_profile_user_personal_information_is_saved,
+                    Snackbar.LENGTH_LONG
+                )
+                .show()
+        }
+    }
+
+    private fun navigateToMainPage(){
+        (parentFragment as HomeFragment).navigateToMainPage()
+    }
+
     private fun navigateToPaymentCardInformation(){
-        val action = RegistrationUserPersonalInformationFragmentDirections.actionRegistrationUserPersonalInformationDestinationToRegistrationPaymentCardInformationDestination()
+        val action = HomeFragmentDirections.actionToPaymentCardInformationDestination()
         navigationController.navigate(action)
     }
 }

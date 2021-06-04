@@ -28,6 +28,9 @@ import javax.inject.Inject
 class HomeFragment: BaseFragment(R.layout.fragment_home) {
     private val navigationController by lazy { findNavController() }
 
+    private var viewBinding: FragmentHomeBinding? = null
+    private var activePageIndex = 0
+
     lateinit var homeComponent: HomeComponent
         private set
 
@@ -58,69 +61,53 @@ class HomeFragment: BaseFragment(R.layout.fragment_home) {
         super.onDestroyView()
     }
 
-    private var viewBinding: FragmentHomeBinding? = null
+    fun navigateToMainPage(){
+        navigateToPage(0)
+    }
+
+    fun navigateToNotificationsPage(){
+        navigateToPage(1)
+    }
+
+    fun navigateToMyOrdersPage(){
+        if(viewModel.isUserAuthorized.value == true){
+            navigateToPage(2)
+        } else{
+            navigateToPage(activePageIndex)
+            navigateToPhoneNumberInputDestination()
+        }
+    }
+
+    fun navigateToProfilePage(){
+        if(viewModel.isUserAuthorized.value == true){
+            navigateToPage(3)
+        } else{
+            navigateToPage(activePageIndex)
+            navigateToPhoneNumberInputDestination()
+        }
+    }
 
     private val onPageSelectedFromViewPager = object: ViewPager2.OnPageChangeCallback(){
         override fun onPageSelected(position: Int) {
-            val bottomNavigation = viewBinding?.bottomNavigation ?: return
-
-            val title: String
-            val menuItem: MenuItem
-
             when(position){
-                0 -> {
-                    title = resources.getString(R.string.main_page_title)
-                    menuItem = bottomNavigation.menu.findItem(R.id.mainPage)
-                }
-                1 -> {
-                    title = resources.getString(R.string.fragment_notifications_title)
-                    menuItem = bottomNavigation.menu.findItem(R.id.notificationsPage)
-                }
-                2 -> {
-                    title = resources.getString(R.string.fragment_categories_title)
-                    menuItem = bottomNavigation.menu.findItem(R.id.categoriesPage)
-                }
-                3 -> {
-                    title = resources.getString(R.string.fragment_settings_title)
-                    menuItem = bottomNavigation.menu.findItem(R.id.settingsPage)
-                }
+                0 -> navigateToMainPage()
+                1 -> navigateToNotificationsPage()
+                2 -> navigateToMyOrdersPage()
+                3 -> navigateToProfilePage()
                 else -> return
             }
-
-            (requireActivity() as MainAppContentActivity).setToolbarTitle(title)
-            menuItem.isChecked = true
         }
     }
 
     private val onNavigationItemSelected = object : BottomNavigationView.OnNavigationItemSelectedListener{
         override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
-            val viewPager = viewBinding?.viewPager ?: return false
-
-            val title: String
-            val currentPage: Int
-
             when(menuItem.itemId){
-                R.id.mainPage -> {
-                    title = resources.getString(R.string.main_page_title)
-                    currentPage = 0
-                }
-                R.id.notificationsPage -> {
-                    title = resources.getString(R.string.fragment_notifications_title)
-                    currentPage = 1
-                }
-                R.id.categoriesPage -> {
-                    title = resources.getString(R.string.fragment_categories_title)
-                    currentPage = 2
-                }
-                R.id.settingsPage -> {
-                    title = resources.getString(R.string.fragment_settings_title)
-                    currentPage = 3
-                }
+                R.id.mainPage -> navigateToMainPage()
+                R.id.notificationsPage -> navigateToNotificationsPage()
+                R.id.myOrdersPage -> navigateToMyOrdersPage()
+                R.id.profilePage -> navigateToProfilePage()
                 else -> return false
             }
-
-            (requireActivity() as MainAppContentActivity).setToolbarTitle(title)
-            viewPager.currentItem = currentPage
 
             return true
         }
@@ -197,5 +184,36 @@ class HomeFragment: BaseFragment(R.layout.fragment_home) {
     private fun navigateToPhoneNumberInputDestination(){
         val action = NavigationGraphRootDirections.actionGlobalPhoneNumberInputDestination()
         navigationController.navigate(action)
+    }
+
+    private fun navigateToPage(pagePosition: Int){
+        viewBinding?.run{
+            val menuItemId: Int
+            val title: String
+
+            when(pagePosition){
+                0 -> {
+                    menuItemId = R.id.mainPage
+                    title = resources.getString(R.string.main_page_title)
+                }
+                1 -> {
+                    menuItemId = R.id.notificationsPage
+                    title = resources.getString(R.string.fragment_notifications_title)
+                }
+                2 -> {
+                    menuItemId = R.id.myOrdersPage
+                    title = resources.getString(R.string.fragment_my_orders_title)
+                }
+                else -> {
+                    menuItemId = R.id.profilePage
+                    title = resources.getString(R.string.fragment_profile_destination_title)
+                }
+            }
+
+            activePageIndex = pagePosition
+            viewPager.currentItem = pagePosition
+            bottomNavigation.menu.findItem(menuItemId).isChecked = true
+            (requireActivity() as MainAppContentActivity).setToolbarTitle(title)
+        }
     }
 }
