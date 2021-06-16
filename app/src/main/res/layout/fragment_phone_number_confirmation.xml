@@ -14,7 +14,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/fragment_phone_number_confirmation_enter_code"
-        android:textSize="@dimen/headerTextSize"
+        android:textSize="@dimen/textSize_big"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

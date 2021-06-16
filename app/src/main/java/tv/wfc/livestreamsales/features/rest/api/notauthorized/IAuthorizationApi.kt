@@ -1,11 +1,11 @@
 package tv.wfc.livestreamsales.features.rest.api.notauthorized
 
-import tv.wfc.livestreamsales.features.rest.model.api.request.ConfirmPhoneNumberRequestBody
-import tv.wfc.livestreamsales.features.rest.model.api.request.SendConfirmationCodeRequestRequestBody
-import tv.wfc.livestreamsales.features.rest.model.api.response.ConfirmPhoneNumberResponseBody
-import tv.wfc.livestreamsales.features.rest.model.api.response.GetConfirmationCodeLengthResponseBody
-import tv.wfc.livestreamsales.features.rest.model.api.response.GetNextCodeRequestRequiredWaitingTimeResponseBody
-import tv.wfc.livestreamsales.features.rest.model.api.response.SendCodeResponseBody
+import tv.wfc.livestreamsales.features.rest.model.api.confirmphonenumber.ConfirmPhoneNumberRequestBody
+import tv.wfc.livestreamsales.features.rest.model.api.sendconfirmationcoderequest.SendConfirmationCodeRequestRequestBody
+import tv.wfc.livestreamsales.features.rest.model.api.confirmphonenumber.ConfirmPhoneNumberResponseBody
+import tv.wfc.livestreamsales.features.rest.model.api.getconfirmationcodelength.GetConfirmationCodeLengthResponseBody
+import tv.wfc.livestreamsales.features.rest.model.api.getnextcoderequestrequiredwaitingtime.GetNextCodeRequestRequiredWaitingTimeResponseBody
+import tv.wfc.livestreamsales.features.rest.model.api.sendconfirmationcoderequest.SendConfirmationCodeResponseBody
 import tv.wfc.livestreamsales.features.rest.api.base.IApi
 import io.reactivex.rxjava3.core.Single
 import retrofit2.Response
@@ -17,7 +17,7 @@ interface IAuthorizationApi: IApi {
     @POST("login")
     fun sendConfirmationCodeRequest(
         @Body sendConfirmationCodeRequestRequestBody: SendConfirmationCodeRequestRequestBody
-    ): Single<Response<SendCodeResponseBody>>
+    ): Single<Response<SendConfirmationCodeResponseBody>>
 
     @POST("sms")
     fun confirmPhoneNumber(

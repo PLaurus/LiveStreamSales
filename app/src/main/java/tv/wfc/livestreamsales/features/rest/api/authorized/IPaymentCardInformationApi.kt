@@ -5,9 +5,9 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import tv.wfc.livestreamsales.features.rest.api.base.IAuthorizedApi
-import tv.wfc.livestreamsales.features.rest.model.api.request.BindPaymentCardRequestBody
-import tv.wfc.livestreamsales.features.rest.model.api.response.BindPaymentCardResponseBody
-import tv.wfc.livestreamsales.features.rest.model.api.response.GetPaymentCardInformationResponseBody
+import tv.wfc.livestreamsales.features.rest.model.api.bindpaymentcard.BindPaymentCardRequestBody
+import tv.wfc.livestreamsales.features.rest.model.api.bindpaymentcard.BindPaymentCardResponseBody
+import tv.wfc.livestreamsales.features.rest.model.api.getpaymentcardinformation.GetPaymentCardInformationResponseBody
 
 interface IPaymentCardInformationApi: IAuthorizedApi {
     @POST("credit-card")

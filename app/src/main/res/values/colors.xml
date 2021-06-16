@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Transparency -->
+    <color name="colorTransparent">#00000000</color>
+
     <!-- Primary brand colors. -->
     <color name="colorPrimary">#FF0000</color>
     <color name="colorPrimaryVariant">#BA0000</color>
@@ -53,4 +56,14 @@
 
     <!-- Product Order Fragment - Product Box Item -->
     <color name="productOrder_productBoxItem_placeholderTint">#000000</color>
+
+    <!-- My orders fragment -->
+    <color name="myOrders_orderStatus_created">@color/colorPrimary</color>
+    <color name="myOrders_orderStatus_in_progress">#0ACF83</color>
+    <color name="myOrders_orderStatus_done">#000000</color>
+
+    <!-- Order information fragment -->
+    <color name="orderInformation_orderStatus_created">@color/myOrders_orderStatus_created</color>
+    <color name="orderInformation_orderStatus_in_progress">@color/myOrders_orderStatus_in_progress</color>
+    <color name="orderInformation_orderStatus_done">@color/myOrders_orderStatus_done</color>
 </resources>

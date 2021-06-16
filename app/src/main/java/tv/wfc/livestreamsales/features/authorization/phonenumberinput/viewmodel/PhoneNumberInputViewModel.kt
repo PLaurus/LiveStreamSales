@@ -69,7 +69,8 @@ class PhoneNumberInputViewModel @Inject constructor(
             .addTo(disposables)
     }
 
-    override val isConfirmationCodeSent: LiveData<Boolean> = LiveEvent<Boolean>().apply{
+    override val isConfirmationCodeSent: LiveData<Boolean> = LiveEvent<Boolean>()
+        .apply{
         isConfirmationCodeSentSubject
             .observeOn(mainThreadScheduler)
             .subscribe(::setValue)

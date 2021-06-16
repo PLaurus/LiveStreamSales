@@ -202,7 +202,7 @@ class HomeFragment: BaseFragment(R.layout.fragment_home) {
                 }
                 2 -> {
                     menuItemId = R.id.myOrdersPage
-                    title = resources.getString(R.string.fragment_my_orders_title)
+                    title = resources.getString(R.string.fragment_my_orders_destination_title)
                 }
                 else -> {
                     menuItemId = R.id.profilePage

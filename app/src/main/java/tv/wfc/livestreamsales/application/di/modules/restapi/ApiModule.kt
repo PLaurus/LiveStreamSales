@@ -5,7 +5,7 @@ import dagger.Provides
 import tv.wfc.livestreamsales.features.rest.IApiProvider
 import tv.wfc.livestreamsales.features.rest.api.authorized.IBroadcastAnalyticsApi
 import tv.wfc.livestreamsales.features.rest.api.authorized.IPaymentCardInformationApi
-import tv.wfc.livestreamsales.features.rest.api.authorized.IProductsOrderApi
+import tv.wfc.livestreamsales.features.rest.api.authorized.IProductsOrdersApi
 import tv.wfc.livestreamsales.features.rest.api.authorized.IUserPersonalInformationApi
 import tv.wfc.livestreamsales.features.rest.api.notauthorized.IAuthorizationApi
 import tv.wfc.livestreamsales.features.rest.api.notauthorized.IBroadcastsApi
@@ -56,7 +56,7 @@ class ApiModule {
     @Provides
     internal fun provideProductsOrderApi(
         apiProvider: IApiProvider
-    ): IProductsOrderApi{
-        return apiProvider.createApi(IProductsOrderApi::class.java)
+    ): IProductsOrdersApi{
+        return apiProvider.createApi(IProductsOrdersApi::class.java)
     }
 }

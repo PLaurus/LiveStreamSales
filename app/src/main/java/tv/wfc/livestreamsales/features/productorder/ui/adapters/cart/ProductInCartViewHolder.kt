@@ -9,7 +9,7 @@ import coil.request.ImageRequest
 import com.laurus.p.tools.context.getDrawableCompat
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.databinding.ItemProductInCartBinding
-import tv.wfc.livestreamsales.application.model.products.order.ProductInCart
+import tv.wfc.livestreamsales.application.model.orders.OrderedProduct
 
 class ProductInCartViewHolder(
     view: View,
@@ -22,14 +22,14 @@ class ProductInCartViewHolder(
 
     private var imageLoaderDisposable: Disposable? = null
 
-    fun bind(productInCart: ProductInCart){
+    fun bind(orderedProduct: OrderedProduct){
         clearData()
 
-        val productId = productInCart.product.id
+        val productId = orderedProduct.product.id
 
         initializeDeleteButton(productId)
-        initializeImageView(productId, productInCart.product.image)
-        initializeAmountText(productInCart.amount)
+        initializeImageView(productId, orderedProduct.product.image)
+        initializeAmountText(orderedProduct.amount)
     }
 
     private fun clearData(){

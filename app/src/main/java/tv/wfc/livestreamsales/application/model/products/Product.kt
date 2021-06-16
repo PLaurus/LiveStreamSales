@@ -6,7 +6,7 @@ data class Product(
     val id: Long,
     val name: String,
     val price: Float,
-    val quantityInStock: Int,
+    val quantityInStock: Int? = null,
     val specifications: List<Specification<*>> = emptyList(),
     val oldPrice: Float? = null,
     val description: String? = null,

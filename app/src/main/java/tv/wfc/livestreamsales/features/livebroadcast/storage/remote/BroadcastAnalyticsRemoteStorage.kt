@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Scheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
 import tv.wfc.livestreamsales.features.livebroadcast.storage.IBroadcastAnalyticsStorage
 import tv.wfc.livestreamsales.features.rest.api.authorized.IBroadcastAnalyticsApi
-import tv.wfc.livestreamsales.features.rest.model.api.request.NotifyWatchingBroadcastRequestBody
+import tv.wfc.livestreamsales.features.rest.model.api.notifywatchingbroadcast.NotifyWatchingBroadcastRequestBody
 import javax.inject.Inject
 
 class BroadcastAnalyticsRemoteStorage @Inject constructor(

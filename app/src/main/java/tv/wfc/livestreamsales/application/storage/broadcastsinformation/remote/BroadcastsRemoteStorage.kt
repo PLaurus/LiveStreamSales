@@ -11,7 +11,7 @@ import tv.wfc.livestreamsales.application.model.exception.storage.NoSuchDataInSt
 import tv.wfc.livestreamsales.application.model.exception.storage.ReceivedDataWithWrongFormatException
 import tv.wfc.livestreamsales.application.storage.broadcastsinformation.IBroadcastsStorage
 import tv.wfc.livestreamsales.features.rest.api.notauthorized.IBroadcastsApi
-import tv.wfc.livestreamsales.features.rest.model.broadcasts.Stream
+import tv.wfc.livestreamsales.features.rest.model.api.getbroadcasts.Stream
 import javax.inject.Inject
 
 class BroadcastsRemoteStorage @Inject constructor(

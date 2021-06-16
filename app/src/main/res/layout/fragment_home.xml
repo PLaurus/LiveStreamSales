@@ -39,7 +39,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="@dimen/screenPadding"
-            android:textSize="@dimen/headerTextSize"
+            android:textSize="@dimen/textSize_big"
             android:textColor="@color/colorOnSecondary"
             android:textStyle="bold"
             android:text="@string/fragment_home_promo_banner_text"

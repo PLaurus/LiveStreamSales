@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import coil.ImageLoader
 import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.application.model.products.order.ProductInCart
+import tv.wfc.livestreamsales.application.model.orders.OrderedProduct
 
 class ProductsInCartAdapter(
-    diffUtilItemCallback: DiffUtil.ItemCallback<ProductInCart>,
+    diffUtilItemCallback: DiffUtil.ItemCallback<OrderedProduct>,
     private val imageLoader: ImageLoader,
     private val onDeleteProductFromCart: (productId: Long) -> Unit,
     private val onProductInCartSelected: (productId: Long) -> Unit
-): ListAdapter<ProductInCart, ProductInCartViewHolder>(diffUtilItemCallback) {
+): ListAdapter<OrderedProduct, ProductInCartViewHolder>(diffUtilItemCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductInCartViewHolder {
         val productInCartView = LayoutInflater
             .from(parent.context)

@@ -3,7 +3,7 @@ package tv.wfc.livestreamsales.application.storage.userpersonalinformation.remot
 import tv.wfc.livestreamsales.BuildConfig
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
 import tv.wfc.livestreamsales.application.model.userpersonalinformation.UserPersonalInformation
-import tv.wfc.livestreamsales.features.rest.model.api.request.UpdateUserPersonalInformationRequestBody
+import tv.wfc.livestreamsales.features.rest.model.api.updateuserpersonalinformation.UpdateUserPersonalInformationRequestBody
 import tv.wfc.livestreamsales.features.rest.api.authorized.IUserPersonalInformationApi
 import tv.wfc.livestreamsales.application.storage.userpersonalinformation.IUserPersonalInformationStorage
 import io.reactivex.rxjava3.core.Completable
@@ -171,7 +171,7 @@ class UserPersonalInformationRemoteStorage @Inject constructor(
             .subscribeOn(ioScheduler)
     }
 
-    private fun tv.wfc.livestreamsales.features.rest.model.userpersonalinformation.UserPersonalInformation.toApplicationUserPersonalInformation(): UserPersonalInformation?{
+    private fun tv.wfc.livestreamsales.features.rest.model.api.getuserpersonalinformation.UserPersonalInformation.toApplicationUserPersonalInformation(): UserPersonalInformation?{
         val name = name
         val surname = surname
         val phoneNumber = phoneNumber ?: return null

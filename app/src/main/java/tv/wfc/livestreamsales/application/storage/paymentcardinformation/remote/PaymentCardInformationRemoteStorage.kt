@@ -9,11 +9,11 @@ import tv.wfc.livestreamsales.application.model.paymentcardinformation.PaymentCa
 import tv.wfc.livestreamsales.application.model.paymentcardinformation.ResultOfStartingPaymentCardBinding
 import tv.wfc.livestreamsales.application.storage.paymentcardinformation.IPaymentCardInformationStorage
 import tv.wfc.livestreamsales.features.rest.api.authorized.IPaymentCardInformationApi
-import tv.wfc.livestreamsales.features.rest.model.api.request.BindPaymentCardRequestBody
-import tv.wfc.livestreamsales.features.rest.model.api.response.BindPaymentCardResponseBody
+import tv.wfc.livestreamsales.features.rest.model.api.bindpaymentcard.BindPaymentCardRequestBody
+import tv.wfc.livestreamsales.features.rest.model.api.bindpaymentcard.BindPaymentCardResponseBody
 import javax.inject.Inject
 
-private typealias RemotePaymentCardInformation = tv.wfc.livestreamsales.features.rest.model.paymentcardinformation.PaymentCardInformation
+private typealias RemotePaymentCardInformation = tv.wfc.livestreamsales.features.rest.model.api.getpaymentcardinformation.PaymentCardInformation
 
 class PaymentCardInformationRemoteStorage @Inject constructor(
     private val paymentCardInformationApi: IPaymentCardInformationApi,

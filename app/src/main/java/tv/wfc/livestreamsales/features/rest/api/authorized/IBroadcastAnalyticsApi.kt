@@ -5,7 +5,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 import tv.wfc.livestreamsales.features.rest.api.base.IAuthorizedApi
-import tv.wfc.livestreamsales.features.rest.model.api.request.NotifyWatchingBroadcastRequestBody
+import tv.wfc.livestreamsales.features.rest.model.api.notifywatchingbroadcast.NotifyWatchingBroadcastRequestBody
 
 interface IBroadcastAnalyticsApi: IAuthorizedApi {
     @POST("notify_watching_broadcast")

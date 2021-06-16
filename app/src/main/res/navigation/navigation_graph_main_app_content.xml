@@ -114,6 +114,18 @@
             app:popEnterAnim="@anim/stay_as_is"
             app:popExitAnim="@anim/slide_out_right"/>
 
+        <action
+            android:id="@+id/action_to_needPaymentInformationDestination"
+            app:destination="@id/needPaymentInformationDestination"/>
+
+        <action
+            android:id="@+id/action_to_orderInformationDestination"
+            app:destination="@id/orderInformationDestination"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/stay_as_is"
+            app:popEnterAnim="@anim/stay_as_is"
+            app:popExitAnim="@anim/slide_out_right"/>
+
     </fragment>
 
     <fragment
@@ -129,6 +141,18 @@
         <argument
             android:name="liveBroadcastId"
             app:argType="long" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/orderInformationDestination"
+        android:name="tv.wfc.livestreamsales.features.orderinformation.ui.OrderInformationFragment"
+        android:label="@string/fragment_order_information_destination_title"
+        tools:layout="@layout/fragment_order_information">
+
+        <argument
+            android:name="orderId"
+            app:argType="long"/>
 
     </fragment>
 
@@ -155,6 +179,24 @@
         android:name="tv.wfc.livestreamsales.features.productsareordered.ui.ProductsAreOrderedDialogFragment"
         android:label="@string/dialog_products_are_ordered_destination_title"
         tools:layout="@layout/dialog_products_are_ordered">
+
+    </dialog>
+
+    <dialog
+        android:id="@+id/needPaymentInformationDestination"
+        android:name="tv.wfc.livestreamsales.features.needpaymentinformation.ui.NeedPaymentInformationDialogFragment"
+        android:label="@string/dialog_need_payment_information_destination_title"
+        tools:layout="@layout/dialog_need_payment_information">
+
+        <action
+            android:id="@+id/action_to_paymentCardInformationDestination"
+            app:destination="@id/paymentCardInformationDestination"
+            app:popUpTo="@id/needPaymentInformationDestination"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/stay_as_is"
+            app:popEnterAnim="@anim/stay_as_is"
+            app:popExitAnim="@anim/slide_out_right"/>
 
     </dialog>
 

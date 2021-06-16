@@ -18,7 +18,7 @@
 
         <!-- Text -->
         <item name="android:textColor">@color/colorPrimaryText</item>
-        <item name="android:textSize">@dimen/textSize</item>
+        <item name="android:textSize">@dimen/textSize_default</item>
 
         <!-- Text input layout -->
         <item name="boxCornerRadiusTopStart">@dimen/textInputLayout_cornerRadius</item>

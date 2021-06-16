@@ -5,9 +5,9 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import tv.wfc.livestreamsales.features.rest.api.base.IApi
-import tv.wfc.livestreamsales.features.rest.model.api.response.GetBroadcastResponseBody
-import tv.wfc.livestreamsales.features.rest.model.api.response.GetBroadcastViewersCountResponseBody
-import tv.wfc.livestreamsales.features.rest.model.api.response.GetBroadcastsResponseBody
+import tv.wfc.livestreamsales.features.rest.model.api.getbroadcasts.GetBroadcastResponseBody
+import tv.wfc.livestreamsales.features.rest.model.api.getbroadcastviewerscount.GetBroadcastViewersCountResponseBody
+import tv.wfc.livestreamsales.features.rest.model.api.getbroadcasts.GetBroadcastsResponseBody
 
 interface IBroadcastsApi: IApi {
     @GET("stream")

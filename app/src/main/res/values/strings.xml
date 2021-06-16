@@ -93,6 +93,11 @@
     </string>
     <string name="dialog_products_are_ordered_confirm_button">Понятно</string>
 
+    <string name="dialog_need_payment_information_destination_title">Привяжите карту</string>
+    <string name="dialog_need_payment_information_title">Привяжите карту!</string>
+    <string name="dialog_need_payment_information_description">Чтобы продолжить, необходимо привязать карту</string>
+    <string name="dialog_need_payment_information_confirm_button">Продолжить</string>
+
     <!-- Phone number input fragment -->
     <string name="fragment_phone_number_input_title">Вход</string>
     <string name="fragment_phone_number_input_enter_phone_number">Введите ваш номер телефона</string>
@@ -233,7 +238,38 @@
     <string name="fragment_notifications_title">Напоминания</string>
 
     <!-- My orders fragment -->
-    <string name="fragment_my_orders_title">Мои заказы</string>
+    <string name="fragment_my_orders_destination_title">Мои заказы</string>
+    <string name="fragment_my_orders_order_number_text">№%s</string>
+    <string name="fragment_my_orders_creation_date_title_text">дата заказа</string>
+    <string name="fragment_my_orders_delivery_date_title_text">дата доставки</string>
+    <string name="fragment_my_orders_order_status_created">оформлен</string>
+    <string name="fragment_my_orders_order_status_in_progress">в работе</string>
+    <string name="fragment_my_orders_order_status_done">завершен</string>
+    <string name="fragment_my_orders_short_order_information_text">Краткая информация о заказе</string>
+    <string name="fragment_my_orders_short_order_information_delivery_address">г. %s, ул. %s, д. %s, кв. %s, этаж %s</string>
+    <string name="fragment_my_orders_short_order_information_delivery_address_not_entered">не указан</string>
+    <string name="fragment_my_orders_sum_title_text">Сумма</string>
+    <string name="fragment_my_orders_sum_text">%.2f руб.</string>
+    <string name="fragment_my_orders_complete_the_order_button">Завершить оформление заказа</string>
+    <string name="fragment_my_orders_show_more_information_about_order_button">Подробнее</string>
+
+    <!-- Order information fragment -->
+    <string name="fragment_order_information_destination_title">Информация о заказе</string>
+    <string name="fragment_order_information_order_number_toolbar_title">№%s</string>
+    <string name="fragment_order_information_order_status_created">@string/fragment_my_orders_order_status_created</string>
+    <string name="fragment_order_information_order_status_in_progress">@string/fragment_my_orders_order_status_in_progress</string>
+    <string name="fragment_order_information_order_status_done">@string/fragment_my_orders_order_status_done</string>
+    <string name="fragment_order_information_creation_date_title_text">@string/fragment_my_orders_creation_date_title_text</string>
+    <string name="fragment_order_information_delivery_date_title_text">@string/fragment_my_orders_delivery_date_title_text</string>
+    <string name="fragment_order_information_order_information_text">Информация о заказе</string>
+    <string name="fragment_order_information_delivery_address_title_text">Адрес доставки</string>
+    <string name="fragment_order_information_delivery_address_text">г. %s, ул. %s, д. %s, кв. %s, этаж %s</string>
+    <string name="fragment_order_information_delivery_address_not_entered">не указан</string>
+    <string name="fragment_order_information_full_delivery_date_title_text">Плановая дата доставки</string>
+    <string name="fragment_order_information_order_recipient_title_text">Получатель</string>
+    <string name="fragment_order_information_sum_title_text">Сумма заказа</string>
+    <string name="fragment_order_information_sum_text">%.2f руб.</string>
+    <string name="fragment_order_information_ordered_products_title_text">Состав заказа</string>
 
     <!-- Live broadcast fragment -->
     <string name="fragment_live_broadcast_viewers_count">%d онлайн</string>

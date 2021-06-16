@@ -1,6 +1,5 @@
 package tv.wfc.livestreamsales.features.productorder.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.laurus.p.tools.livedata.LiveEvent
@@ -16,7 +15,7 @@ import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.model.products.Product
 import tv.wfc.livestreamsales.application.model.products.ProductGroup
-import tv.wfc.livestreamsales.application.model.products.order.ProductInCart
+import tv.wfc.livestreamsales.application.model.orders.OrderedProduct
 import tv.wfc.livestreamsales.application.model.products.ProductVariant
 import tv.wfc.livestreamsales.application.model.products.specification.Specification
 import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
@@ -42,7 +41,7 @@ class ProductOrderViewModel @Inject constructor(
 
     private val selectableSpecificationsByProductGroup = mutableMapOf<ProductGroup, MutableList<SelectableSpecification<*>>>()
 
-    private val mutableCart = mutableListOf<ProductInCart>()
+    private val mutableCart = mutableListOf<OrderedProduct>()
 
     private var dataPreparationDisposable: Disposable? = null
 
@@ -81,7 +80,7 @@ class ProductOrderViewModel @Inject constructor(
     override val selectedProductPrice = MutableLiveData<Float?>()
     override val selectedProductOldPrice = MutableLiveData<Float?>()
     override val selectedProductAmount = MutableLiveData<Int?>()
-    override val cart = MutableLiveData<List<ProductInCart>>(emptyList())
+    override val cart = MutableLiveData<List<OrderedProduct>>(emptyList())
     override val areProductsOrderedEvent = LiveEvent<Unit>()
 
     @Synchronized
@@ -376,18 +375,20 @@ class ProductOrderViewModel @Inject constructor(
     private fun addProductToCart(
         product: Product,
         amount: Int = 1
-    ): ProductInCart {
+    ): OrderedProduct {
         val additionalAmount = amount.coerceAtLeast(0)
 
         var productInCart = mutableCart.find{ it.product == product }
 
         productInCart = if(productInCart != null){
             val currentAmount = productInCart.amount
-            val newAmount = (currentAmount + additionalAmount).coerceAtMost(product.quantityInStock)
+            val newAmount = (currentAmount + additionalAmount).run {
+                product.quantityInStock?.let(::coerceAtMost) ?: this
+            }
             mutableCart.remove(productInCart)
             productInCart.copy(amount = newAmount)
         } else{
-            ProductInCart(product, additionalAmount)
+            OrderedProduct(product, additionalAmount)
         }
 
         mutableCart.add(productInCart)
@@ -400,9 +401,9 @@ class ProductOrderViewModel @Inject constructor(
     private fun removeProductFromCart(
         product: Product,
         amount: Int = 1
-    ): ProductInCart?{
+    ): OrderedProduct?{
         val amountToRemove = amount.coerceAtLeast(0)
-        val result: ProductInCart?
+        val result: OrderedProduct?
 
         val productInCart = mutableCart.find{ it.product == product }
 
@@ -425,8 +426,8 @@ class ProductOrderViewModel @Inject constructor(
         return result
     }
 
-    private fun removeProductFromCart(productInCart: ProductInCart){
-        mutableCart.remove(productInCart)
+    private fun removeProductFromCart(orderedProduct: OrderedProduct){
+        mutableCart.remove(orderedProduct)
         cart.value = mutableCart.toList()
     }
 

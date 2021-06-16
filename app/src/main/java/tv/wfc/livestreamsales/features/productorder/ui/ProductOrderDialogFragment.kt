@@ -32,7 +32,7 @@ import tv.wfc.livestreamsales.features.productorder.di.ProductOrderComponent
 import tv.wfc.livestreamsales.features.productorder.di.modules.diffutils.qualifiers.ProductBoxDataDiffUtilItemCallback
 import tv.wfc.livestreamsales.features.productorder.di.modules.diffutils.qualifiers.ProductSpecificationsDiffUtilItemCallback
 import tv.wfc.livestreamsales.features.productorder.model.ProductBoxData
-import tv.wfc.livestreamsales.application.model.products.order.ProductInCart
+import tv.wfc.livestreamsales.application.model.orders.OrderedProduct
 import tv.wfc.livestreamsales.features.productorder.model.SelectableSpecification
 import tv.wfc.livestreamsales.features.productorder.ui.adapters.cart.ProductsInCartAdapter
 import tv.wfc.livestreamsales.features.productorder.ui.adapters.products.ProductBoxesAdapter
@@ -81,7 +81,7 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
     lateinit var selectableSpecificationsDiffUtilItemCallback: DiffUtil.ItemCallback<SelectableSpecification<*>>
 
     @Inject
-    lateinit var productInCartDiffUtilItemCallback: DiffUtil.ItemCallback<ProductInCart>
+    lateinit var orderedProductDiffUtilItemCallback: DiffUtil.ItemCallback<OrderedProduct>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -374,7 +374,7 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
     private fun initializeCartRecyclerView(){
         viewBinding?.cartRecyclerView?.run{
             adapter = ProductsInCartAdapter(
-                productInCartDiffUtilItemCallback,
+                orderedProductDiffUtilItemCallback,
                 imageLoader,
                 viewModel::deleteProductFromCart
             ) { /*Select product in cart*/ }

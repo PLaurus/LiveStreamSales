@@ -18,7 +18,6 @@ abstract class HomeViewModelModule {
     companion object{
         @HomeFeatureScope
         @Provides
-        @JvmStatic
         internal fun provideIHomeViewModel(
             @HomeFragment
             fragment: Fragment,

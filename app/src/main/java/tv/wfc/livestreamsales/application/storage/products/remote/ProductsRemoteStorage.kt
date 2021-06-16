@@ -16,12 +16,13 @@ import tv.wfc.livestreamsales.application.model.products.ProductVariant
 import tv.wfc.livestreamsales.application.model.products.specification.Specification
 import tv.wfc.livestreamsales.application.storage.products.IProductsStorage
 import tv.wfc.livestreamsales.features.rest.api.notauthorized.IBroadcastsApi
-import tv.wfc.livestreamsales.features.rest.model.broadcasts.Stream
-import tv.wfc.livestreamsales.features.rest.model.products.Property
-import tv.wfc.livestreamsales.features.rest.model.products.Sku
+import tv.wfc.livestreamsales.features.rest.model.api.getbroadcasts.Product
+import tv.wfc.livestreamsales.features.rest.model.api.getbroadcasts.Stream
+import tv.wfc.livestreamsales.features.rest.model.api.getbroadcasts.Property
+import tv.wfc.livestreamsales.features.rest.model.api.getbroadcasts.Sku
 import javax.inject.Inject
 
-private typealias RemoteProduct = tv.wfc.livestreamsales.features.rest.model.products.Product
+private typealias RemoteProduct = Product
 
 class ProductsRemoteStorage @Inject constructor(
     private val context: Context,

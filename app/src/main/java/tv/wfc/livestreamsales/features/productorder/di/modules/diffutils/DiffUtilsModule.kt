@@ -7,7 +7,7 @@ import tv.wfc.livestreamsales.application.model.products.specification.Specifica
 import tv.wfc.livestreamsales.features.productorder.di.modules.diffutils.qualifiers.ProductBoxDataDiffUtilItemCallback
 import tv.wfc.livestreamsales.features.productorder.di.modules.diffutils.qualifiers.ProductSpecificationsDiffUtilItemCallback
 import tv.wfc.livestreamsales.features.productorder.model.ProductBoxData
-import tv.wfc.livestreamsales.application.model.products.order.ProductInCart
+import tv.wfc.livestreamsales.application.model.orders.OrderedProduct
 import tv.wfc.livestreamsales.features.productorder.model.SelectableSpecification
 
 @Module
@@ -72,18 +72,18 @@ class DiffUtilsModule {
     }
 
     @Provides
-    fun provideProductInCartDiffUtilItemCallback(): DiffUtil.ItemCallback<ProductInCart>{
-        return object: DiffUtil.ItemCallback<ProductInCart>(){
+    fun provideProductInCartDiffUtilItemCallback(): DiffUtil.ItemCallback<OrderedProduct>{
+        return object: DiffUtil.ItemCallback<OrderedProduct>(){
             override fun areItemsTheSame(
-                oldItem: ProductInCart,
-                newItem: ProductInCart
+                oldItem: OrderedProduct,
+                newItem: OrderedProduct
             ): Boolean {
-                return oldItem.product == newItem.product
+                return oldItem.product.id == newItem.product.id
             }
 
             override fun areContentsTheSame(
-                oldItem: ProductInCart,
-                newItem: ProductInCart
+                oldItem: OrderedProduct,
+                newItem: OrderedProduct
             ): Boolean {
                 return oldItem == newItem
             }

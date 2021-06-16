@@ -4,8 +4,8 @@ import io.reactivex.rxjava3.core.Completable
 import tv.wfc.livestreamsales.BuildConfig
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
 import tv.wfc.livestreamsales.application.model.phonenumberconfirmation.PhoneNumberConfirmationResult
-import tv.wfc.livestreamsales.features.rest.model.api.request.ConfirmPhoneNumberRequestBody
-import tv.wfc.livestreamsales.features.rest.model.api.request.SendConfirmationCodeRequestRequestBody
+import tv.wfc.livestreamsales.features.rest.model.api.confirmphonenumber.ConfirmPhoneNumberRequestBody
+import tv.wfc.livestreamsales.features.rest.model.api.sendconfirmationcoderequest.SendConfirmationCodeRequestRequestBody
 import tv.wfc.livestreamsales.features.rest.api.notauthorized.IAuthorizationApi
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Scheduler

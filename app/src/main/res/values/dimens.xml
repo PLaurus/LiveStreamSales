@@ -10,11 +10,14 @@
     <!-- Shared -->
     <dimen name="screenPadding">16dp</dimen>
     <dimen name="contentMargin">16dp</dimen>
-    <dimen name="headerTextSize">20sp</dimen>
-    <dimen name="textSize">16sp</dimen>
     <dimen name="textInputLayout_cornerRadius">16dp</dimen>
     <dimen name="card_cornerRadius">16dp</dimen>
     <dimen name="card_elevation">5dp</dimen>
+
+    <!-- Text size -->
+    <dimen name="textSize_small">12sp</dimen>
+    <dimen name="textSize_default">16sp</dimen>
+    <dimen name="textSize_big">20sp</dimen>
 
     <!-- Big material button -->
     <dimen name="bigButton_cornerRadius">16dp</dimen>
@@ -40,5 +43,14 @@
     <dimen name="productOrder_selectableSpecification_colorChip_width">2dp</dimen>
 
     <dimen name="registrationPage_verticalBias">0.3</dimen>
+
+    <!-- My orders fragment -->
+    <dimen name="myOrders_orderStatus_paddingVertical">4dp</dimen>
+    <dimen name="myOrders_orderStatus_paddingHorizontal">16dp</dimen>
+
+    <!-- Order Information fragment -->
+    <dimen name="orderInformation_orderStatus_paddingVertical">@dimen/myOrders_orderStatus_paddingVertical</dimen>
+    <dimen name="orderInformation_orderStatus_paddingHorizontal">@dimen/myOrders_orderStatus_paddingHorizontal</dimen>
+    <dimen name="orderInformation_relativeText_marginVertical">8dp</dimen>
 
 </resources>
