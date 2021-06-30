@@ -177,10 +177,12 @@ class RegistrationUserPersonalInformationViewModel @Inject constructor(
             )
             .observeOn(mainThreadScheduler)
             .doOnSubscribe { dataPreparationState.value = ViewModelPreparationState.DataIsBeingPrepared }
-            .doOnError(applicationErrorsLogger::logError)
             .subscribeBy(
                 onComplete = { dataPreparationState.value = ViewModelPreparationState.DataIsPrepared },
-                onError = { dataPreparationState.value = ViewModelPreparationState.FailedToPrepareData(it.message) }
+                onError = {
+                    dataPreparationState.value = ViewModelPreparationState.FailedToPrepareData(it.message)
+                    applicationErrorsLogger.logError(it)
+                }
             )
             .addTo(disposables)
     }
@@ -306,7 +308,7 @@ class RegistrationUserPersonalInformationViewModel @Inject constructor(
     }
 
     private fun String.checkContainsOnlyLetters(): Boolean{
-        return Pattern.matches("^([а-яА-я]*|[a-zA-Z]*)$", this)
+        return Pattern.matches("^([а-яА-яёЁ]*|[a-zA-Z]*)$", this)
     }
 
     @Synchronized

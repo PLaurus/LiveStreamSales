@@ -61,8 +61,7 @@ class MyOrdersViewModel @Inject constructor(
             .observeOn(mainThreadScheduler)
             .doOnSubscribe { isDataBeingRefreshed.value = true }
             .doOnTerminate { isDataBeingRefreshed.value = false }
-            .doOnError(applicationErrorsLogger::logError)
-            .subscribe()
+            .subscribeBy(applicationErrorsLogger::logError)
             .addTo(disposables)
     }
 
@@ -79,7 +78,6 @@ class MyOrdersViewModel @Inject constructor(
             .observeOn(mainThreadScheduler)
             .doOnSubscribe { incrementActiveOperationsCount() }
             .doOnTerminate(::decrementActiveOperationsCount)
-            .doOnError(applicationErrorsLogger::logError)
             .subscribeBy(
                 onSuccess = { isCardBoundToAccount ->
                     nextDestinationEvent.value = if(isCardBoundToAccount){
@@ -87,7 +85,8 @@ class MyOrdersViewModel @Inject constructor(
                     } else{
                         IMyOrdersViewModel.NextDestination.NeedPaymentInformation
                     }
-                }
+                },
+                onError = applicationErrorsLogger::logError
             )
             .addTo(disposables)
     }
@@ -122,10 +121,12 @@ class MyOrdersViewModel @Inject constructor(
             )
             .observeOn(mainThreadScheduler)
             .doOnSubscribe { dataPreparationState.value = ViewModelPreparationState.DataIsBeingPrepared }
-            .doOnError(applicationErrorsLogger::logError)
             .subscribeBy(
                 onComplete = { dataPreparationState.value = ViewModelPreparationState.DataIsPrepared },
-                onError = { dataPreparationState.value = ViewModelPreparationState.FailedToPrepareData(it.message) }
+                onError = {
+                    dataPreparationState.value = ViewModelPreparationState.FailedToPrepareData(it.message)
+                    applicationErrorsLogger.logError(it)
+                }
             )
             .addTo(disposables)
     }

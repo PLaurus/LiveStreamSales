@@ -1,14 +1,12 @@
 package tv.wfc.livestreamsales.application.ui.base
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.laurus.p.tools.activity.getWindowSize
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -68,9 +66,14 @@ abstract class BaseDialogFragment(
     ): View? {
         viewScopeDisposables = CompositeDisposable()
 
-        return inflater
+        val view = inflater
             .inflate(contentLayoutId, container, false)
             .apply { replaceEmptyBackground() }
+
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+
+        return view
     }
 
     override fun onResume() {
@@ -94,7 +97,8 @@ abstract class BaseDialogFragment(
     }
 
     private fun View.setDefaultBackground(){
-        setBackgroundColor(ContextCompat.getColor(context, R.color.defaultFragmentBackground))
+        setBackgroundResource(R.drawable.drawable_dialog_rounded_corners)
+        clipToOutline = true
     }
 
     private fun adaptDialogSize(

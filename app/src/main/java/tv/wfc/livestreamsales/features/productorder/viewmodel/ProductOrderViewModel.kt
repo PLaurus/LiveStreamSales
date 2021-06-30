@@ -1,5 +1,6 @@
 package tv.wfc.livestreamsales.features.productorder.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.laurus.p.tools.livedata.LiveEvent
@@ -81,6 +82,7 @@ class ProductOrderViewModel @Inject constructor(
     override val selectedProductOldPrice = MutableLiveData<Float?>()
     override val selectedProductAmount = MutableLiveData<Int?>()
     override val cart = MutableLiveData<List<OrderedProduct>>(emptyList())
+    override val orderedProductsFinalPrice = MutableLiveData(0f)
     override val areProductsOrderedEvent = LiveEvent<Unit>()
 
     @Synchronized
@@ -98,13 +100,13 @@ class ProductOrderViewModel @Inject constructor(
             .doOnSubscribe {
                 dataPreparationState.value = ViewModelPreparationState.DataIsBeingPrepared
             }
-            .doOnError(applicationErrorsLogger::logError)
             .subscribeBy(
                 onComplete = {
                     dataPreparationState.value = ViewModelPreparationState.DataIsPrepared
                 },
                 onError = {
                     dataPreparationState.value = ViewModelPreparationState.FailedToPrepareData()
+                    applicationErrorsLogger.logError(it)
                 }
             )
             .addTo(disposables)
@@ -394,8 +396,14 @@ class ProductOrderViewModel @Inject constructor(
         mutableCart.add(productInCart)
 
         cart.value = mutableCart.toList()
+        orderedProductsFinalPrice.value = mutableCart.calculatePrice()
 
         return productInCart
+    }
+
+    private fun List<OrderedProduct>.calculatePrice(): Float{
+        return map { it.product.price * it.amount }
+            .reduceOrNull { sum, nextPrice -> sum + nextPrice } ?: 0f
     }
 
     private fun removeProductFromCart(
@@ -423,12 +431,15 @@ class ProductOrderViewModel @Inject constructor(
             cart.value = mutableCart.toList()
         } else result = null
 
+        orderedProductsFinalPrice.value = mutableCart.calculatePrice()
+
         return result
     }
 
     private fun removeProductFromCart(orderedProduct: OrderedProduct){
         mutableCart.remove(orderedProduct)
         cart.value = mutableCart.toList()
+        orderedProductsFinalPrice.value = mutableCart.calculatePrice()
     }
 
     // endregion

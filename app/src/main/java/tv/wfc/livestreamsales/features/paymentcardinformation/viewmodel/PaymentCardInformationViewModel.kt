@@ -153,7 +153,6 @@ class PaymentCardInformationViewModel @Inject constructor(
             }
             .doOnSubscribe { incrementActiveOperationsCount() }
             .doOnTerminate(::decrementActiveOperationsCount)
-            .doOnError(applicationErrorsLogger::logError)
             .subscribeBy(
                 onSuccess = { paymentCardInformation ->
                     this.paymentCardBindingState.value = IPaymentCardInformationViewModel.CardBindingState.Bound
@@ -162,6 +161,7 @@ class PaymentCardInformationViewModel @Inject constructor(
                 onError = {
                     this.boundPaymentCardNumber.value = context.getString(R.string.fragment_payment_card_information_card_will_be_bound_soon)
                     this.paymentCardBindingState.value = IPaymentCardInformationViewModel.CardBindingState.WillBeBoundSoon
+                    applicationErrorsLogger.logError(it)
                 }
             )
             .addTo(disposables)
@@ -257,13 +257,13 @@ class PaymentCardInformationViewModel @Inject constructor(
             )
             .observeOn(mainThreadScheduler)
             .doOnSubscribe { dataPreparationState.value = ViewModelPreparationState.DataIsBeingPrepared }
-            .doOnError(applicationErrorsLogger::logError)
             .subscribeBy(
                 onComplete = {
                     dataPreparationState.value = ViewModelPreparationState.DataIsPrepared
                 },
                 onError = {
                     dataPreparationState.value = ViewModelPreparationState.FailedToPrepareData()
+                    applicationErrorsLogger.logError(it)
                 }
             )
             .addTo(disposables)

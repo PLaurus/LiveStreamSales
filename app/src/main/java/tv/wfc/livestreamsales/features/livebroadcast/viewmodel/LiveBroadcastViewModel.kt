@@ -59,8 +59,10 @@ class LiveBroadcastViewModel @Inject constructor(
         authorizationManager
             .isUserLoggedIn
             .observeOn(mainThreadScheduler)
-            .doOnError(applicationErrorsLogger::logError)
-            .subscribeBy(onNext = ::setValue)
+            .subscribeBy(
+                onNext = ::setValue,
+                onError = applicationErrorsLogger::logError
+            )
             .addTo(disposables)
     }
     override val isDataBeingRefreshed = MutableLiveData(false)
@@ -145,13 +147,13 @@ class LiveBroadcastViewModel @Inject constructor(
             .observeOn(mainThreadScheduler)
             .doOnSubscribe { dataPreparationState.value = ViewModelPreparationState.DataIsBeingPrepared }
             .doOnComplete { startAutoRefresh(10L) }
-            .doOnError(applicationErrorsLogger::logError)
             .subscribeBy(
                 onComplete = {
                     dataPreparationState.value = ViewModelPreparationState.DataIsPrepared
                 },
                 onError = {
                     dataPreparationState.value = ViewModelPreparationState.FailedToPrepareData()
+                    applicationErrorsLogger.logError(it)
                 }
             )
             .addTo(disposables)
@@ -288,11 +290,13 @@ class LiveBroadcastViewModel @Inject constructor(
                 val disposable = productsRepository
                     .getProducts(broadcastId)
                     .lastOrError()
-                    .doOnError(applicationErrorsLogger::logError)
                     .doOnTerminate { emitter.onComplete() }
                     .subscribeBy(
                         onSuccess = productsSubject::onNext,
-                        onError = { productsSubject.onNext(emptyList()) }
+                        onError = {
+                            productsSubject.onNext(emptyList())
+                            applicationErrorsLogger.logError(it)
+                        }
                     )
 
                 emitter.setDisposable(disposable)

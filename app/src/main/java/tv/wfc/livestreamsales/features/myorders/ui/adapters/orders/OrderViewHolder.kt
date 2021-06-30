@@ -294,9 +294,9 @@ class OrderViewHolder(
             editOrderButtonDisposable = clicks()
                 .throttleLatest(500L, TimeUnit.MILLISECONDS, computationScheduler)
                 .observeOn(mainThreadScheduler)
-                .doOnError(applicationErrorsLogger::logError)
                 .subscribeBy(
-                    onNext = { onCompleteTheOrderButtonClicked?.invoke(orderId) }
+                    onNext = { onCompleteTheOrderButtonClicked?.invoke(orderId) },
+                    onError = applicationErrorsLogger::logError
                 )
                 .addTo(holderOwnerDisposables)
         }
@@ -322,9 +322,9 @@ class OrderViewHolder(
             showMoreInformationAboutOrderButtonDisposable = clicks()
                 .throttleLatest(500L, TimeUnit.MILLISECONDS, computationScheduler)
                 .observeOn(mainThreadScheduler)
-                .doOnError(applicationErrorsLogger::logError)
                 .subscribeBy(
-                    onNext = { onShowMoreInformationAboutOrderButtonClicked?.invoke(orderId) }
+                    onNext = { onShowMoreInformationAboutOrderButtonClicked?.invoke(orderId) },
+                    onError = applicationErrorsLogger::logError
                 )
                 .addTo(holderOwnerDisposables)
         }
@@ -339,6 +339,6 @@ class OrderViewHolder(
 
     private fun getFormattedDate(dateTime: DateTime): String{
         val currentTimeZone = DateTimeZone.getDefault()
-        return dateTime.withZone(currentTimeZone).toString("dd.MM.yyyy")
+        return dateTime.withZone(currentTimeZone).toString("dd MMMM")
     }
 }

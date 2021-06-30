@@ -7,6 +7,7 @@ import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
@@ -39,6 +40,7 @@ import tv.wfc.livestreamsales.features.productorder.ui.adapters.products.Product
 import tv.wfc.livestreamsales.features.productorder.ui.adapters.productspecifications.ProductSpecificationsAdapter
 import tv.wfc.livestreamsales.features.productorder.ui.adapters.selectablespecifications.SelectableSpecificationsAdapter
 import tv.wfc.livestreamsales.features.productorder.viewmodel.IProductOrderViewModel
+import tv.wfc.livestreamsales.features.productorder.viewmodel.ProductOrderViewModel
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -163,6 +165,8 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
         initializeIncreaseProductVariantAmountButton()
         initializeCartRecyclerView()
         initializeBuyButton()
+        initializeSumTitleText()
+        initializeSumText()
     }
 
     private fun onDataPreparationFailure() {
@@ -403,6 +407,29 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
             viewModel.cart.observe(viewLifecycleOwner){ cart ->
                 isEnabled = cart.isNotEmpty()
             }
+        }
+    }
+
+    private fun initializeSumTitleText(){
+        viewBinding?.sumTitleText?.run {
+            viewModel.cart.observe(viewLifecycleOwner){ cart ->
+                visibility = if(cart.isNotEmpty()) View.VISIBLE else View.GONE
+            }
+        }
+    }
+
+    private fun initializeSumText(){
+        viewBinding?.sumText?.run{
+            viewModel.cart.observe(viewLifecycleOwner){ cart ->
+                visibility = if(cart.isNotEmpty()) View.VISIBLE else View.GONE
+            }
+
+            viewModel.orderedProductsFinalPrice.observe(viewLifecycleOwner, Observer { sum ->
+                text = resources.getString(
+                    R.string.dialog_product_order_price,
+                    sum?.format() ?: return@Observer
+                )
+            })
         }
     }
 

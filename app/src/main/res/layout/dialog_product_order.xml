@@ -335,8 +335,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:elevation="8dp"
-        android:paddingStart="@dimen/screenPadding"
-        android:paddingEnd="@dimen/screenPadding"
+        android:paddingHorizontal="@dimen/screenPadding"
         android:paddingBottom="@dimen/screenPadding"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -371,6 +370,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cartRecyclerView"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/sumTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/contentMargin"
+            android:layout_marginEnd="4dp"
+            android:text="@string/dialog_product_order_sum"
+            android:textSize="@dimen/textSize_default"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintStart_toEndOf="@id/buyButton"
+            app:layout_constraintEnd_toStartOf="@id/sumText"
+            app:layout_constraintTop_toTopOf="@id/sumText"
+            app:layout_constraintBottom_toBottomOf="@id/sumText"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintHorizontal_bias="1"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/sumText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/contentMargin"
+            android:textSize="@dimen/textSize_default"
+            android:textColor="@color/colorPrimaryText"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/sumTitleText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cartRecyclerView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constrainedWidth="true"
+            app:layout_constrainedHeight="true"
+            tools:text="10000000000000 руб."/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

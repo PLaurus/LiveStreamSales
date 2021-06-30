@@ -82,6 +82,7 @@
     <string name="dialog_product_order_product_color">Цвет</string>
     <string name="dialog_product_order_add_to_cart">Добавить</string>
     <string name="dialog_product_order_buy">Купить</string>
+    <string name="dialog_product_order_sum">Итого:</string>
     <string name="dialog_product_order_price">%s руб.</string>
 
     <!-- Products are ordered dialog -->
@@ -93,10 +94,16 @@
     </string>
     <string name="dialog_products_are_ordered_confirm_button">Понятно</string>
 
+    <!-- Need payment information dialog -->
     <string name="dialog_need_payment_information_destination_title">Привяжите карту</string>
     <string name="dialog_need_payment_information_title">Привяжите карту!</string>
     <string name="dialog_need_payment_information_description">Чтобы продолжить, необходимо привязать карту</string>
     <string name="dialog_need_payment_information_confirm_button">Продолжить</string>
+
+    <!-- Order is confirmed dialog -->
+    <string name="dialog_order_is_confirmed_destination_title">Заказ подтверждён</string>
+    <string name="dialog_order_is_confirmed_title_text">Заказ подтверждён</string>
+    <string name="dialog_order_is_confirmed_ok_button">Ок</string>
 
     <!-- Phone number input fragment -->
     <string name="fragment_phone_number_input_title">Вход</string>
@@ -270,6 +277,38 @@
     <string name="fragment_order_information_sum_title_text">Сумма заказа</string>
     <string name="fragment_order_information_sum_text">%.2f руб.</string>
     <string name="fragment_order_information_ordered_products_title_text">Состав заказа</string>
+
+    <!-- Order editing fragment -->
+    <string name="fragment_order_editing_destination_title">Подтверждение заказа</string>
+    <string name="fragment_order_editing_order_number_toolbar_title">№%s</string>
+    <string name="fragment_order_editing_order_status_created">@string/fragment_my_orders_order_status_created</string>
+    <string name="fragment_order_editing_order_status_in_progress">@string/fragment_my_orders_order_status_in_progress</string>
+    <string name="fragment_order_editing_order_status_done">@string/fragment_my_orders_order_status_done</string>
+    <string name="fragment_order_editing_delivery_address_title_text">Адрес доставки</string>
+    <string name="fragment_order_editing_delivery_address_text_not_entered">необходимо указать</string>
+    <string name="fragment_order_editing_delivery_address_text_floor_not_entered">не указан</string>
+    <string name="fragment_order_editing_delivery_address_text_entered">г. %s, ул. %s, д. %s, кв. %s, этаж %s</string>
+    <string name="fragment_order_editing_delivery_date_title_text">Дата доставки</string>
+    <string name="fragment_order_editing_delivery_time_title_text">Время доставки</string>
+    <string name="fragment_order_editing_delivery_date_text_not_entered">необходимо указать</string>
+    <string name="fragment_order_editing_order_recipient_title_text">Получатель</string>
+    <string name="fragment_order_editing_order_recipient_text_not_entered">необходимо указать</string>
+    <string name="fragment_order_editing_your_order_title_text">Ваш заказ</string>
+    <string name="fragment_order_editing_sum_title_text">Сумма заказа</string>
+    <string name="fragment_order_editing_sum_text">%.2f руб.</string>
+    <string name="fragment_order_editing_confirm_order_button">Подтвердить заказ</string>
+
+    <!-- Order delivery address editing fragment -->
+    <string name="fragment_order_delivery_address_editing_destination_title">Адрес доставки</string>
+    <string name="fragment_order_delivery_address_editing_address_title_text">Адрес</string>
+    <string name="fragment_order_delivery_address_editing_city_hint">Город</string>
+    <string name="fragment_order_delivery_address_editing_street_hint">Улица</string>
+    <string name="fragment_order_delivery_address_editing_building_hint">Дом</string>
+    <string name="fragment_order_delivery_address_editing_flat_hint">Квартира</string>
+    <string name="fragment_order_delivery_address_editing_floor_hint">Этаж</string>
+    <string name="fragment_order_delivery_address_editing_field_is_required">Обязательное поле</string>
+    <string name="fragment_order_delivery_address_editing_field_contains_illegal_symbols">Поле содержит недопустимые символы</string>
+    <string name="fragment_order_delivery_address_editing_save_address_button">Сохранить</string>
 
     <!-- Live broadcast fragment -->
     <string name="fragment_live_broadcast_viewers_count">%d онлайн</string>

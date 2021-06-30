@@ -1,4 +1,4 @@
-package tv.wfc.livestreamsales.features.rest.model.api.getorders
+package tv.wfc.livestreamsales.features.rest.api.authorized.productsorders.models
 
 import com.google.gson.annotations.SerializedName
 import org.joda.time.DateTime

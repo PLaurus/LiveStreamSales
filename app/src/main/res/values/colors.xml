@@ -66,4 +66,10 @@
     <color name="orderInformation_orderStatus_created">@color/myOrders_orderStatus_created</color>
     <color name="orderInformation_orderStatus_in_progress">@color/myOrders_orderStatus_in_progress</color>
     <color name="orderInformation_orderStatus_done">@color/myOrders_orderStatus_done</color>
+
+    <!-- Order editing fragment -->
+    <color name="orderEditing_orderStatus_created">@color/myOrders_orderStatus_created</color>
+    <color name="orderEditing_orderStatus_in_progress">@color/myOrders_orderStatus_in_progress</color>
+    <color name="orderEditing_orderStatus_done">@color/myOrders_orderStatus_done</color>
+
 </resources>

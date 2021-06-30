@@ -242,9 +242,9 @@ class ProfileFragment: BaseFragment(R.layout.fragment_profile) {
             clicks()
                 .throttleLatest(500L, TimeUnit.MILLISECONDS, computationScheduler)
                 .observeOn(mainThreadScheduler)
-                .doOnError(applicationErrorsLogger::logError)
                 .subscribeBy(
-                    onNext = { navigateToPaymentCardInformation() }
+                    onNext = { navigateToPaymentCardInformation() },
+                    onError = applicationErrorsLogger::logError
                 )
                 .addTo(viewScopeDisposables)
         }
@@ -255,9 +255,9 @@ class ProfileFragment: BaseFragment(R.layout.fragment_profile) {
             clicks()
                 .throttleLatest(500L, TimeUnit.MILLISECONDS, computationScheduler)
                 .observeOn(mainThreadScheduler)
-                .doOnError(applicationErrorsLogger::logError)
                 .subscribeBy(
-                    onNext = { viewModel.logOut() }
+                    onNext = { viewModel.logOut() },
+                    onError = applicationErrorsLogger::logError
                 )
                 .addTo(viewScopeDisposables)
         }

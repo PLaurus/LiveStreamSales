@@ -68,6 +68,11 @@ class MyOrdersFragment: BaseFragment(R.layout.fragment_my_orders){
         manageNavigation()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshData()
+    }
+
     override fun onDestroyView() {
         unbindView()
         super.onDestroyView()
@@ -170,7 +175,8 @@ class MyOrdersFragment: BaseFragment(R.layout.fragment_my_orders){
     }
 
     private fun navigateToOrderEditingDestination(orderId: Long){
-
+        val action = HomeFragmentDirections.actionToOrderEditingDestination(orderId)
+        navigationController.navigate(action)
     }
 
     private fun navigateToOrderInformationDestination(orderId: Long){

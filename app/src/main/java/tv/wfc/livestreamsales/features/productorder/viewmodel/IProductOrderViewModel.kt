@@ -20,6 +20,7 @@ interface IProductOrderViewModel: INeedPreparationViewModel{
     val selectedProductOldPrice: LiveData<Float?>
     val selectedProductAmount: LiveData<Int?>
     val cart: LiveData<List<OrderedProduct>>
+    val orderedProductsFinalPrice: LiveData<Float>
     val areProductsOrderedEvent: LiveData<Unit>
     fun prepareData(broadcastId: Long)
     fun selectProductGroupByPosition(position: Int)

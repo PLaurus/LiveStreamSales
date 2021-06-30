@@ -126,6 +126,14 @@
             app:popEnterAnim="@anim/stay_as_is"
             app:popExitAnim="@anim/slide_out_right"/>
 
+        <action
+            android:id="@+id/action_to_orderEditingDestination"
+            app:destination="@id/orderEditingDestination"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/stay_as_is"
+            app:popEnterAnim="@anim/stay_as_is"
+            app:popExitAnim="@anim/slide_out_right"/>
+
     </fragment>
 
     <fragment
@@ -153,6 +161,48 @@
         <argument
             android:name="orderId"
             app:argType="long"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/orderEditingDestination"
+        android:name="tv.wfc.livestreamsales.features.orderediting.ui.orderediting.OrderEditingFragment"
+        android:label="@string/fragment_order_editing_destination_title"
+        tools:layout="@layout/fragment_order_editing">
+
+        <argument
+            android:name="orderId"
+            app:argType="long"/>
+
+        <action
+            android:id="@+id/action_to_orderDeliveryAddressEditingDestination"
+            app:destination="@id/orderDeliveryAddressEditingDestination"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/stay_as_is"
+            app:popEnterAnim="@anim/stay_as_is"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+        <action
+            android:id="@+id/action_to_orderIsConfirmedDestination"
+            app:destination="@id/orderIsConfirmedDestination"
+            app:popUpTo="@id/orderEditingDestination"
+            app:popUpToInclusive="true"/>
+
+    </fragment>
+
+    <dialog
+        android:id="@+id/orderIsConfirmedDestination"
+        android:name="tv.wfc.livestreamsales.features.orderisconfirmed.ui.OrderIsConfirmedDialogFragment"
+        android:label="@string/dialog_order_is_confirmed_destination_title"
+        tools:layout="@layout/dialog_order_is_confirmed">
+
+    </dialog>
+
+    <fragment
+        android:id="@+id/orderDeliveryAddressEditingDestination"
+        android:name="tv.wfc.livestreamsales.features.orderediting.ui.deliveryaddressediting.OrderDeliveryAddressEditingFragment"
+        android:label="@string/fragment_order_delivery_address_editing_destination_title"
+        tools:layout="@layout/fragment_order_delivery_address_editing">
 
     </fragment>
 

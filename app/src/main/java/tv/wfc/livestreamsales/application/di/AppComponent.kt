@@ -25,7 +25,10 @@ import tv.wfc.livestreamsales.features.mainappcontent.di.MainAppContentComponent
 import tv.wfc.livestreamsales.features.mainpage.di.MainPageComponent
 import tv.wfc.livestreamsales.features.myorders.di.MyOrdersComponent
 import tv.wfc.livestreamsales.features.needpaymentinformation.di.NeedPaymentInformationComponent
+import tv.wfc.livestreamsales.features.orderediting.di.OrderDeliveryAddressEditingComponent
+import tv.wfc.livestreamsales.features.orderediting.di.OrderEditingComponent
 import tv.wfc.livestreamsales.features.orderinformation.di.OrderInformationComponent
+import tv.wfc.livestreamsales.features.orderisconfirmed.di.OrderIsConfirmedComponent
 import tv.wfc.livestreamsales.features.paymentcardinformation.di.PaymentCardInformationComponent
 import tv.wfc.livestreamsales.features.productorder.di.ProductOrderComponent
 import tv.wfc.livestreamsales.features.productsareordered.di.ProductsAreOrderedComponent
@@ -68,4 +71,7 @@ interface AppComponent {
     fun myOrdersComponent(): MyOrdersComponent.Factory
     fun needPaymentInformationComponent(): NeedPaymentInformationComponent.Factory
     fun orderInformationComponent(): OrderInformationComponent.Factory
+    fun orderEditingComponent(): OrderEditingComponent.Factory
+    fun orderDeliveryAddressEditingComponent() : OrderDeliveryAddressEditingComponent.Factory
+    fun orderIsConfirmedComponent(): OrderIsConfirmedComponent.Factory
 }

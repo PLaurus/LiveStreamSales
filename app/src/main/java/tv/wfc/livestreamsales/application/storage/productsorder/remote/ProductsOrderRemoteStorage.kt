@@ -1,6 +1,5 @@
 package tv.wfc.livestreamsales.application.storage.productsorder.remote
 
-import com.google.gson.annotations.SerializedName
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
@@ -14,18 +13,19 @@ import tv.wfc.livestreamsales.application.model.orders.Order
 import tv.wfc.livestreamsales.application.model.orders.OrderRecipient
 import tv.wfc.livestreamsales.application.model.orders.OrderedProduct
 import tv.wfc.livestreamsales.application.model.products.Product
+import tv.wfc.livestreamsales.application.model.storage.StorageDataUpdateResult
 import tv.wfc.livestreamsales.application.storage.productsorder.IProductsOrderStorage
-import tv.wfc.livestreamsales.features.rest.api.authorized.IProductsOrdersApi
+import tv.wfc.livestreamsales.features.rest.api.authorized.productsorders.IProductsOrdersApi
+import tv.wfc.livestreamsales.features.rest.api.authorized.productsorders.confirmorder.ConfirmOrderRequestBody
 import tv.wfc.livestreamsales.features.rest.model.api.editorderaddress.EditOrderAddressRequestBody
-import tv.wfc.livestreamsales.features.rest.model.api.editorderdeliverydate.EditOrderDeliveryDateRequestBody
 import tv.wfc.livestreamsales.features.rest.model.api.orderproducts.OrderProductsRequestBody
 import javax.inject.Inject
 
-private typealias RemoteOrder = tv.wfc.livestreamsales.features.rest.model.api.getorders.Order
-private typealias RemoteOrderedProduct = tv.wfc.livestreamsales.features.rest.model.api.getorders.OrderedProduct
-private typealias RemoteProduct = tv.wfc.livestreamsales.features.rest.model.api.getorders.Product
-private typealias RemoteAddress = tv.wfc.livestreamsales.features.rest.model.api.getorders.Address
-private typealias RemoteOrderRecipient = tv.wfc.livestreamsales.features.rest.model.api.getorders.OrderRecipient
+private typealias RemoteOrder = tv.wfc.livestreamsales.features.rest.api.authorized.productsorders.models.Order
+private typealias RemoteOrderedProduct = tv.wfc.livestreamsales.features.rest.api.authorized.productsorders.models.OrderedProduct
+private typealias RemoteProduct = tv.wfc.livestreamsales.features.rest.api.authorized.productsorders.models.Product
+private typealias RemoteAddress = tv.wfc.livestreamsales.features.rest.api.authorized.productsorders.models.Address
+private typealias RemoteOrderRecipient = tv.wfc.livestreamsales.features.rest.api.authorized.productsorders.models.OrderRecipient
 
 class ProductsOrderRemoteStorage @Inject constructor(
     private val productsOrdersApi: IProductsOrdersApi,
@@ -65,29 +65,28 @@ class ProductsOrderRemoteStorage @Inject constructor(
 
     }
 
-    override fun updateOrderDeliveryAddress(orderId: Long, deliveryAddress: Address): Completable {
-        val editOrderAddressRequestBody = deliveryAddress.toEditOrderAddressRequestBody()
-        return productsOrdersApi
-            .editOrderAddress(orderId, editOrderAddressRequestBody)
-            .flatMapCompletable {
-                when(it.isOrderUpdated){
-                    true -> Completable.complete()
-                    false -> Completable.error(FailedToUpdateDataInStorageException())
-                    else -> Completable.error(ReceivedDataWithWrongFormatException())
-                }
-            }
-            .subscribeOn(ioScheduler)
-    }
+    override fun confirmOrder(
+        orderId: Long,
+        deliveryAddress: Address,
+        deliveryDate: DateTime
+    ): Single<StorageDataUpdateResult> {
+        val confirmOrderRequestBody = ConfirmOrderRequestBody(
+            deliveryDate = deliveryDate,
+            deliveryAddress = deliveryAddress.toRemoteAddress()
+        )
 
-    override fun updateOrderDeliveryDate(orderId: Long, deliveryDate: DateTime): Completable {
-        val editOrderDeliveryDateRequestBody = EditOrderDeliveryDateRequestBody(deliveryDate)
         return productsOrdersApi
-            .editOrderDeliveryDate(orderId, editOrderDeliveryDateRequestBody)
-            .flatMapCompletable {
-                when(it.isOrderUpdated){
-                    true -> Completable.complete()
-                    false -> Completable.error(FailedToUpdateDataInStorageException())
-                    else -> Completable.error(ReceivedDataWithWrongFormatException())
+            .confirmOrder(orderId, confirmOrderRequestBody)
+            .flatMap {
+                if(it.isOrderConfirmed == null){
+                    Single.error(ReceivedDataWithWrongFormatException())
+                } else{
+                    Single.just(
+                        StorageDataUpdateResult(
+                            it.isOrderConfirmed,
+                            it.message
+                        )
+                    )
                 }
             }
             .subscribeOn(ioScheduler)
@@ -167,6 +166,10 @@ class ProductsOrderRemoteStorage @Inject constructor(
             flat,
             floor
         )
+    }
+
+    private fun Address.toRemoteAddress(): RemoteAddress{
+        return RemoteAddress(city, street, building, flat, floor)
     }
 
     private fun RemoteOrderRecipient.toApplicationOrderRecipient(): OrderRecipient?{

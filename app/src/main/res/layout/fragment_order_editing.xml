@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tv.wfc.contentloader.ContentLoaderView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contentLoader"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/confirmOrderButtonContainer">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/screenPadding"
+            android:clipToPadding="false">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/orderStatusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/screenPadding"
+                android:paddingVertical="@dimen/orderEditing_orderStatus_paddingVertical"
+                android:paddingHorizontal="@dimen/orderEditing_orderStatus_paddingHorizontal"
+                android:textSize="@dimen/textSize_default"
+                android:textColor="@color/colorOnPrimary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/fragment_order_editing_order_status_in_progress"
+                tools:background="@color/orderEditing_orderStatus_in_progress"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/editDeliveryAddressButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/contentMargin"
+                android:paddingHorizontal="@dimen/screenPadding"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/orderStatusText">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/deliveryAddressTitleText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orderEditing_relativeText_marginVertical"
+                    android:layout_marginEnd="@dimen/contentMargin"
+                    android:text="@string/fragment_order_editing_delivery_address_title_text"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/textSize_default"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/addressChevronRightImage"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/deliveryAddressText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/orderEditing_relativeText_marginVertical"
+                    android:layout_marginEnd="@dimen/contentMargin"
+                    android:text="@string/fragment_order_editing_delivery_address_text_not_entered"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="@dimen/textSize_small"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/addressChevronRightImage"
+                    app:layout_constraintTop_toBottomOf="@id/deliveryAddressTitleText"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/addressChevronRightImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:srcCompat="@drawable/ic_baseline_chevron_right_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/editDeliveryDateButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/contentMargin"
+                android:paddingHorizontal="@dimen/screenPadding"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editDeliveryAddressButton">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/deliveryDateTitleText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orderEditing_relativeText_marginVertical"
+                    android:layout_marginEnd="@dimen/contentMargin"
+                    android:text="@string/fragment_order_editing_delivery_date_title_text"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/textSize_default"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/deliveryDateChevronRightImage"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/deliveryDateText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/orderEditing_relativeText_marginVertical"
+                    android:layout_marginEnd="@dimen/contentMargin"
+                    android:text="@string/fragment_order_editing_delivery_date_text_not_entered"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="@dimen/textSize_small"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/deliveryDateChevronRightImage"
+                    app:layout_constraintTop_toBottomOf="@id/deliveryDateTitleText"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/deliveryDateChevronRightImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:srcCompat="@drawable/ic_baseline_chevron_right_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/editOrderRecipientButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/contentMargin"
+                android:paddingHorizontal="@dimen/screenPadding"
+                android:background="?android:attr/selectableItemBackground"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editDeliveryDateButton">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/orderRecipientTitleText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/orderEditing_relativeText_marginVertical"
+                    android:layout_marginEnd="@dimen/contentMargin"
+                    android:text="@string/fragment_order_editing_order_recipient_title_text"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/textSize_default"
+                    android:textColor="@color/colorSecondaryText"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/orderRecipientChevronRightImage"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/orderRecipientText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/orderEditing_relativeText_marginVertical"
+                    android:layout_marginEnd="@dimen/contentMargin"
+                    android:text="@string/fragment_order_editing_order_recipient_text_not_entered"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="@dimen/textSize_small"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/orderRecipientChevronRightImage"
+                    app:layout_constraintTop_toBottomOf="@id/orderRecipientTitleText"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/orderRecipientChevronRightImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:srcCompat="@drawable/ic_baseline_chevron_right_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/yourOrderTitleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/contentMargin"
+                android:layout_marginHorizontal="@dimen/screenPadding"
+                android:text="@string/fragment_order_editing_your_order_title_text"
+                android:textStyle="bold"
+                android:textSize="@dimen/textSize_big"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editOrderRecipientButton"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/orderedProductsRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/contentMargin"
+                android:layout_marginHorizontal="@dimen/screenPadding"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/yourOrderTitleText"
+                tools:listitem="@layout/list_item_order_editing_ordered_product"
+                tools:itemCount="2"/>
+
+            <View
+                android:id="@+id/dividerView1"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/colorSecondaryText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/orderedProductsRecyclerView"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/sumTitleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/screenPadding"
+                android:layout_marginEnd="@dimen/contentMargin"
+                android:layout_marginTop="@dimen/contentMargin"
+                android:text="@string/fragment_order_information_sum_title_text"
+                android:textSize="@dimen/textSize_default"
+                android:textColor="@color/colorPrimaryText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/sumText"
+                app:layout_constraintTop_toBottomOf="@id/dividerView1"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/sumText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/screenPadding"
+                android:layout_marginTop="@dimen/contentMargin"
+                android:textSize="@dimen/textSize_default"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dividerView1"
+                tools:text="128000 руб."/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/confirmOrderButtonContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:elevation="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/confirmOrderButton"
+            style="@style/Theme.LiveStreamSales.BigMaterialButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/contentMargin"
+            android:layout_marginBottom="@dimen/screenPadding"
+            android:layout_marginHorizontal="@dimen/screenPadding"
+            android:text="@string/fragment_order_editing_confirm_order_button"
+            android:textAllCaps="false"
+            android:enabled="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</tv.wfc.contentloader.ContentLoaderView>

@@ -87,7 +87,7 @@
             <View
                 android:id="@+id/dividerView1"
                 android:layout_width="0dp"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:layout_marginTop="@dimen/contentMargin"
                 android:background="@color/colorSecondaryText"
                 app:layout_constraintStart_toStartOf="parent"
@@ -192,7 +192,7 @@
             <View
                 android:id="@+id/dividerView2"
                 android:layout_width="0dp"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:layout_marginTop="@dimen/contentMargin"
                 android:background="@color/colorSecondaryText"
                 app:layout_constraintStart_toStartOf="parent"
@@ -220,7 +220,7 @@
                 android:layout_marginEnd="@dimen/screenPadding"
                 android:layout_marginTop="@dimen/contentMargin"
                 android:textSize="@dimen/textSize_default"
-                android:textColor="@color/colorPrimaryText"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dividerView2"
@@ -229,7 +229,7 @@
             <View
                 android:id="@+id/dividerView3"
                 android:layout_width="0dp"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:layout_marginTop="@dimen/contentMargin"
                 android:background="@color/colorSecondaryText"
                 app:layout_constraintStart_toStartOf="parent"

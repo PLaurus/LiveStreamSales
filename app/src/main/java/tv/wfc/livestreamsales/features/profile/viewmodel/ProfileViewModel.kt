@@ -161,10 +161,12 @@ class ProfileViewModel @Inject constructor(
             )
             .observeOn(mainThreadScheduler)
             .doOnSubscribe { dataPreparationState.value = ViewModelPreparationState.DataIsBeingPrepared }
-            .doOnError(applicationErrorsLogger::logError)
             .subscribeBy(
                 onComplete = { dataPreparationState.value = ViewModelPreparationState.DataIsPrepared },
-                onError = { dataPreparationState.value = ViewModelPreparationState.FailedToPrepareData(it.message) }
+                onError = {
+                    dataPreparationState.value = ViewModelPreparationState.FailedToPrepareData(it.message)
+                    applicationErrorsLogger.logError(it)
+                }
             )
             .addTo(disposables)
     }

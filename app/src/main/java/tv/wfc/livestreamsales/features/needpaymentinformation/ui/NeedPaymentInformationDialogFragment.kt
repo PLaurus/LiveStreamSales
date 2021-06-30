@@ -107,8 +107,10 @@ class NeedPaymentInformationDialogFragment: BaseDialogFragment(R.layout.dialog_n
             clicks()
                 .throttleLatest(500L, TimeUnit.MILLISECONDS, computationScheduler)
                 .observeOn(mainThreadScheduler)
-                .doOnError(applicationErrorsLogger::logError)
-                .subscribeBy(onNext = { exit() })
+                .subscribeBy(
+                    onNext = { exit() },
+                    onError = applicationErrorsLogger::logError
+                )
                 .addTo(viewScopeDisposables)
         }
     }
@@ -118,8 +120,10 @@ class NeedPaymentInformationDialogFragment: BaseDialogFragment(R.layout.dialog_n
             clicks()
                 .throttleLatest(500L, TimeUnit.MILLISECONDS, computationScheduler)
                 .observeOn(mainThreadScheduler)
-                .doOnError(applicationErrorsLogger::logError)
-                .subscribeBy(onNext = { navigateToPaymentCardInformationDestination() })
+                .subscribeBy(
+                    onNext = { navigateToPaymentCardInformationDestination()},
+                    onError = applicationErrorsLogger::logError
+                )
                 .addTo(viewScopeDisposables)
         }
     }

@@ -181,7 +181,7 @@ class OrderInformationFragment: BaseFragment(R.layout.fragment_order_information
     private fun initializeCreationDateText(){
         viewBinding?.creationDateText?.run{
             viewModel.orderCreationDate.observe(viewLifecycleOwner){ orderCreationDate ->
-                text = orderCreationDate.toString("dd.MM")
+                text = orderCreationDate.toString("dd MMMM")
             }
         }
     }
@@ -201,7 +201,7 @@ class OrderInformationFragment: BaseFragment(R.layout.fragment_order_information
                     visibility = View.GONE
                     text = ""
                 } else{
-                    text = orderDeliveryDate.toString("dd.MM")
+                    text = orderDeliveryDate.toString("dd MMMM")
                     visibility = View.VISIBLE
                 }
             }
@@ -218,7 +218,7 @@ class OrderInformationFragment: BaseFragment(R.layout.fragment_order_information
 
     private fun initializeDeliveryAddressText(){
         viewBinding?.deliveryAddressText?.run {
-            val notEnteredText = context.getString(R.string.fragment_my_orders_short_order_information_delivery_address_not_entered)
+            val notEnteredText = context.getString(R.string.fragment_order_information_delivery_address_not_entered)
 
             viewModel.deliveryAddress.observe(viewLifecycleOwner){ deliveryAddress ->
                 if(deliveryAddress != null){
@@ -252,7 +252,7 @@ class OrderInformationFragment: BaseFragment(R.layout.fragment_order_information
         viewBinding?.fullDeliveryDateText?.run{
             viewModel.orderDeliveryDate.observe(viewLifecycleOwner){ orderDeliveryDate ->
                 if(orderDeliveryDate != null){
-                    text = orderDeliveryDate.toString("dd.MM.yyyy - HH:mm")
+                    text = orderDeliveryDate.toString("dd MMMM yyyy - HH:mm")
                     visibility = View.VISIBLE
                 }
                 else{

@@ -48,9 +48,14 @@
     <dimen name="myOrders_orderStatus_paddingVertical">4dp</dimen>
     <dimen name="myOrders_orderStatus_paddingHorizontal">16dp</dimen>
 
-    <!-- Order Information fragment -->
+    <!-- Order information fragment -->
     <dimen name="orderInformation_orderStatus_paddingVertical">@dimen/myOrders_orderStatus_paddingVertical</dimen>
     <dimen name="orderInformation_orderStatus_paddingHorizontal">@dimen/myOrders_orderStatus_paddingHorizontal</dimen>
     <dimen name="orderInformation_relativeText_marginVertical">8dp</dimen>
+
+    <!-- Order editing fragment -->
+    <dimen name="orderEditing_orderStatus_paddingVertical">@dimen/myOrders_orderStatus_paddingVertical</dimen>
+    <dimen name="orderEditing_orderStatus_paddingHorizontal">@dimen/myOrders_orderStatus_paddingHorizontal</dimen>
+    <dimen name="orderEditing_relativeText_marginVertical">8dp</dimen>
 
 </resources>

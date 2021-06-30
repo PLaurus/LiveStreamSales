@@ -32,6 +32,11 @@ class NeedPaymentInformationViewModel @Inject constructor(
             .addTo(disposables)
     }
 
+    override fun onCleared() {
+        disposables.dispose()
+        super.onCleared()
+    }
+
     @Synchronized
     private fun incrementActiveOperationsCount(){
         val currentActiveOperationsCount = activeOperationsCount.value ?: 0

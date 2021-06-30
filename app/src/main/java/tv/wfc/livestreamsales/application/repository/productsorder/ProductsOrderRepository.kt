@@ -9,6 +9,7 @@ import tv.wfc.livestreamsales.application.di.modules.storage.qualifiers.Products
 import tv.wfc.livestreamsales.application.model.address.Address
 import tv.wfc.livestreamsales.application.model.orders.Order
 import tv.wfc.livestreamsales.application.model.orders.OrderedProduct
+import tv.wfc.livestreamsales.application.model.storage.StorageDataUpdateResult
 import tv.wfc.livestreamsales.application.storage.productsorder.IProductsOrderStorage
 import javax.inject.Inject
 
@@ -36,15 +37,13 @@ class ProductsOrderRepository @Inject constructor(
             .subscribeOn(ioScheduler)
     }
 
-    override fun updateOrderDeliveryAddress(orderId: Long, deliveryAddress: Address): Completable {
+    override fun confirmOrder(
+        orderId: Long,
+        deliveryAddress: Address,
+        deliveryDate: DateTime
+    ): Single<StorageDataUpdateResult> {
         return productsOrderRemoteStorage
-            .updateOrderDeliveryAddress(orderId, deliveryAddress)
-            .subscribeOn(ioScheduler)
-    }
-
-    override fun updateOrderDeliveryDate(orderId: Long, deliveryDate: DateTime): Completable {
-        return productsOrderRemoteStorage
-            .updateOrderDeliveryDate(orderId, deliveryDate)
+            .confirmOrder(orderId, deliveryAddress, deliveryDate)
             .subscribeOn(ioScheduler)
     }
 }
