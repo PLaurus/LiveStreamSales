@@ -10,5 +10,8 @@ data class PaymentCardInformation(
      * Made for simplicity. This is like to call [cardNumber] != null
      */
     @SerializedName("is_binding")
-    val isBoundToAccount: Boolean?
+    val isBoundToAccount: Boolean?,
+
+    @SerializedName("binding_status")
+    val bindingState: String? // pending, waiting_for_capture, succeeded and canceled
 )

@@ -40,14 +40,24 @@ class PaymentCardInformationRemoteStorage @Inject constructor(
 
     private fun RemotePaymentCardInformation.toLocalPaymentCardInformation(): PaymentCardInformation?{
         val isBoundToAccount = this.isBoundToAccount ?: return null
-        val cardNumber = this.cardNumber
 
         if(cardNumber == null && isBoundToAccount) return null
 
         return PaymentCardInformation(
             isBoundToAccount,
-            cardNumber
+            cardNumber,
+            bindingState.toBindingState()
         )
+    }
+
+    private fun String?.toBindingState(): PaymentCardInformation.BindingState?{
+        return when(this){
+            "pending" -> PaymentCardInformation.BindingState.PENDING
+            "waiting_for_capture" -> PaymentCardInformation.BindingState.WAITING_FOR_CAPTURE
+            "succeeded" -> PaymentCardInformation.BindingState.SUCCEEDED
+            "canceled" -> PaymentCardInformation.BindingState.CANCELED
+            else -> null
+        }
     }
 
     private fun BindPaymentCardResponseBody.toResultOfStartingPaymentCardBinding(): ResultOfStartingPaymentCardBinding?{

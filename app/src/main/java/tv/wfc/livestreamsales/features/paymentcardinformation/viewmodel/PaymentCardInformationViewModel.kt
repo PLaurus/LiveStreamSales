@@ -4,13 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.webkit.WebViewClient
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.laurus.p.tools.livedata.LiveEvent
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.addTo
@@ -24,6 +23,7 @@ import ru.yoomoney.sdk.kassa.payments.checkoutParameters.SavePaymentMethod
 import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.BuildConfig
 import tv.wfc.livestreamsales.R
+import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.model.exception.threedsecure.YooKassa3DSecureException
@@ -41,17 +41,26 @@ class PaymentCardInformationViewModel @Inject constructor(
     private val paymentCardInformationRepository: IPaymentCardInformationRepository,
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler,
+    @ComputationScheduler
+    private val computationScheduler: Scheduler,
     @IoScheduler
     private val ioScheduler: Scheduler,
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): ViewModel(), IPaymentCardInformationViewModel {
     private val disposables = CompositeDisposable()
     private val activeOperationsCount = BehaviorSubject.createDefault(0)
+    private val dataRefreshmentObservable = Completable
+        .mergeArray(
+            preparePaymentCardInformation()
+        )
+        .observeOn(mainThreadScheduler)
 
     private var dataPreparationDisposable: Disposable? = null
-    private var waitUntilCardIsBoundDisposable: Disposable? = null
+    private var dataRefreshmentDisposable: Disposable? = null
+    private var automaticDataRefreshmentDisposable: Disposable? = null
 
     override val dataPreparationState = MutableLiveData<ViewModelPreparationState>(ViewModelPreparationState.DataIsNotPrepared)
+    override val isDataBeingRefreshed = MutableLiveData<Boolean>()
 
     override val isAnyOperationInProgress = MutableLiveData<Boolean>().apply {
         activeOperationsCount
@@ -67,19 +76,28 @@ class PaymentCardInformationViewModel @Inject constructor(
     override val paymentCardBindingParameters: LiveData<PaymentParameters> = MutableLiveData(createPaymentCardBindingParameters())
     override val paymentCardBindingError = LiveEvent<String?>()
     override val paymentCardBindingConfirmationUrl = LiveEvent<String?>()
-    override val isPaymentCardBound = MediatorLiveData<Boolean>().apply{
-        addSource(paymentCardBindingState){ state ->
-            when(state){
-                IPaymentCardInformationViewModel.CardBindingState.Bound -> true
-                else -> false
-            }
-        }
-    }
     override val paymentCardBindingState = MutableLiveData<IPaymentCardInformationViewModel.CardBindingState>()
-    override val boundPaymentCardNumber = MutableLiveData<String?>()
 
     init{
         prepareData()
+        refreshDataAutomatically(quietly = true)
+    }
+
+    override fun refreshData(){
+        isDataBeingRefreshed.value = true
+
+        if(dataPreparationState.value != ViewModelPreparationState.DataIsPrepared){
+            prepareData()
+            isDataBeingRefreshed.value = false
+            return
+        }
+
+        dataRefreshmentDisposable?.dispose()
+
+        dataRefreshmentDisposable = dataRefreshmentObservable
+            .doOnTerminate { isDataBeingRefreshed.value = false }
+            .subscribeBy(applicationErrorsLogger::logError)
+            .addTo(disposables)
     }
 
     override fun startPaymentCardBinding(tokenizationResultIntent: Intent) {
@@ -95,74 +113,6 @@ class PaymentCardInformationViewModel @Inject constructor(
             .subscribeBy(
                 onSuccess = ::processResultOfPaymentCardBinding,
                 onError = applicationErrorsLogger::logError
-            )
-            .addTo(disposables)
-    }
-
-    override fun waitUntilCardIsBound() {
-        waitUntilCardIsBoundDisposable?.dispose()
-
-        waitUntilCardIsBoundDisposable = Single
-            .create<PaymentCardInformation>{ emitter ->
-                val disposables = CompositeDisposable()
-                val maxAttemptsCount = 3
-                val secondsToWaitBeforeNextAttempt = 5L
-                var currentAttemptsCount = 0
-                var isFirstAttempt = true
-
-                emitter.setDisposable(disposables)
-
-                fun checkIsPaymentCardBound(){
-                    paymentCardInformationRepository
-                        .getPaymentCardInformation()
-                        .run {
-                            if(isFirstAttempt){
-                                isFirstAttempt = false
-                                this
-                            } else{
-                                delaySubscription(secondsToWaitBeforeNextAttempt, TimeUnit.SECONDS)
-                            }
-                        }
-                        .observeOn(mainThreadScheduler)
-                        .doOnSubscribe{ ++currentAttemptsCount }
-                        .subscribeBy(
-                            onSuccess = { paymentCardInformation ->
-                                when(paymentCardInformation.isBoundToAccount){
-                                    true -> emitter.onSuccess(paymentCardInformation)
-                                    false -> {
-                                        if(currentAttemptsCount < maxAttemptsCount){
-                                            checkIsPaymentCardBound()
-                                        } else{
-                                            val errorMessage = context.getString(R.string.fragment_payment_card_information_binding_default_error)
-
-                                            try{
-                                                throw Exception(errorMessage)
-                                            } catch(ex: Exception) {
-                                                emitter.onError(ex)
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            onError = applicationErrorsLogger::logError
-                        )
-                        .addTo(disposables)
-                }
-
-                checkIsPaymentCardBound()
-            }
-            .doOnSubscribe { incrementActiveOperationsCount() }
-            .doOnTerminate(::decrementActiveOperationsCount)
-            .subscribeBy(
-                onSuccess = { paymentCardInformation ->
-                    this.paymentCardBindingState.value = IPaymentCardInformationViewModel.CardBindingState.Bound
-                    this.boundPaymentCardNumber.value = context.getString(R.string.fragment_payment_card_information_number_text, paymentCardInformation.cardNumber)
-                },
-                onError = {
-                    this.boundPaymentCardNumber.value = context.getString(R.string.fragment_payment_card_information_card_will_be_bound_soon)
-                    this.paymentCardBindingState.value = IPaymentCardInformationViewModel.CardBindingState.WillBeBoundSoon
-                    applicationErrorsLogger.logError(it)
-                }
             )
             .addTo(disposables)
     }
@@ -249,6 +199,7 @@ class PaymentCardInformationViewModel @Inject constructor(
 
     @Synchronized
     private fun prepareData(){
+        dataRefreshmentDisposable?.dispose()
         dataPreparationDisposable?.dispose()
 
         dataPreparationDisposable = Completable
@@ -269,17 +220,55 @@ class PaymentCardInformationViewModel @Inject constructor(
             .addTo(disposables)
     }
 
+    private fun refreshDataQuietly(){
+        if(dataPreparationDisposable?.isDisposed == false) return
+
+        dataRefreshmentDisposable?.dispose()
+
+        dataRefreshmentDisposable = dataRefreshmentObservable
+            .subscribeBy(applicationErrorsLogger::logError)
+            .addTo(disposables)
+    }
+
+    private fun refreshDataAutomatically(
+        initialDelay: Long = 3L,
+        period: Long = 3L,
+        timeUnit: TimeUnit = TimeUnit.SECONDS,
+        quietly: Boolean = false
+    ){
+        automaticDataRefreshmentDisposable?.dispose()
+
+        automaticDataRefreshmentDisposable = Observable
+            .interval(initialDelay, period, timeUnit, computationScheduler)
+            .observeOn(mainThreadScheduler)
+            .subscribeBy(
+                onNext = {
+                    if(dataPreparationDisposable?.isDisposed != false){
+                        if(quietly) refreshDataQuietly() else refreshData()
+                    }
+                },
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
+
     private fun preparePaymentCardInformation(): Completable{
         return paymentCardInformationRepository
             .getPaymentCardInformation()
             .observeOn(mainThreadScheduler)
             .flatMapCompletable { paymentCardInformation ->
                 Completable.fromRunnable {
-                    this.paymentCardBindingState.value = when(paymentCardInformation.isBoundToAccount){
-                        true -> IPaymentCardInformationViewModel.CardBindingState.Bound
+                    val isCardBound = paymentCardInformation.isBoundToAccount
+                    val cardNumber = paymentCardInformation.cardNumber
+                    val paymentCardBindingState = paymentCardInformation.bindingState
+
+                    this.paymentCardBindingState.value = when{
+                        isCardBound && cardNumber != null -> IPaymentCardInformationViewModel.CardBindingState.Bound(cardNumber)
+                        paymentCardBindingState == PaymentCardInformation.BindingState.WAITING_FOR_CAPTURE -> {
+                            IPaymentCardInformationViewModel.CardBindingState.WillBeBoundSoon
+                        }
                         else -> IPaymentCardInformationViewModel.CardBindingState.NotBound
                     }
-                    this.boundPaymentCardNumber.value = context.getString(R.string.fragment_payment_card_information_number_text, paymentCardInformation.cardNumber)
                 }
             }
     }
@@ -305,7 +294,7 @@ class PaymentCardInformationViewModel @Inject constructor(
     private fun processResultOfPaymentCardBinding(resultOfStartingPaymentCardBinding: ResultOfStartingPaymentCardBinding){
         val isBindingFlowStarted = resultOfStartingPaymentCardBinding.isBindingFlowStarted
         val defaultErrorMessage = context.getString(R.string.fragment_payment_card_information_binding_default_error)
-        var errorMessage: String? = null //?: context.getString(R.string.fragment_registration_payment_card_information_binding_default_error)
+        var errorMessage: String? = null
         val confirmationUrl = resultOfStartingPaymentCardBinding.confirmationUrl
 
         if(!isBindingFlowStarted){

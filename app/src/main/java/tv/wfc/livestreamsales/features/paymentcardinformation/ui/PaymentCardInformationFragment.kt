@@ -63,6 +63,7 @@ class PaymentCardInformationFragment: BaseFragment(R.layout.fragment_payment_car
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindView(view)
+        initializeSwipeRefreshLayout()
         initializeContentLoader()
         manageNavigation()
     }
@@ -105,7 +106,7 @@ class PaymentCardInformationFragment: BaseFragment(R.layout.fragment_payment_car
             REQUEST_CODE_3D_SECURE -> {
                 when(resultCode){
                     RESULT_OK -> {
-                        viewModel.waitUntilCardIsBound()
+                        viewModel.refreshData()
                     }
                     RESULT_CANCELED -> {
                         Snackbar
@@ -146,6 +147,18 @@ class PaymentCardInformationFragment: BaseFragment(R.layout.fragment_payment_car
 
     private fun unbindView(){
         viewBinding = null
+    }
+
+    private fun initializeSwipeRefreshLayout(){
+        viewBinding?.swipeRefreshLayout?.run{
+            viewModel.isDataBeingRefreshed.observe(viewLifecycleOwner){ isDataBeingRefreshed ->
+                isRefreshing = isDataBeingRefreshed
+            }
+
+            setOnRefreshListener {
+                viewModel.refreshData()
+            }
+        }
     }
 
     private fun initializeContentLoader(){
@@ -191,7 +204,7 @@ class PaymentCardInformationFragment: BaseFragment(R.layout.fragment_payment_car
 
             viewModel.paymentCardBindingState.observe(viewLifecycleOwner){ state ->
                 text = when(state){
-                    IPaymentCardInformationViewModel.CardBindingState.Bound,
+                    is IPaymentCardInformationViewModel.CardBindingState.Bound,
                     IPaymentCardInformationViewModel.CardBindingState.WillBeBoundSoon -> getString(R.string.fragment_payment_card_information_link_another_card_button)
                     else -> getString(R.string.fragment_payment_card_information_link_card_button)
                 }
@@ -223,7 +236,7 @@ class PaymentCardInformationFragment: BaseFragment(R.layout.fragment_payment_car
         viewBinding?.boundPaymentCardTitleText?.apply{
             viewModel.paymentCardBindingState.observe(viewLifecycleOwner){ state ->
                 visibility = when(state) {
-                    IPaymentCardInformationViewModel.CardBindingState.Bound,
+                    is IPaymentCardInformationViewModel.CardBindingState.Bound,
                     IPaymentCardInformationViewModel.CardBindingState.WillBeBoundSoon -> View.VISIBLE
                     else -> View.GONE
                 }
@@ -234,15 +247,23 @@ class PaymentCardInformationFragment: BaseFragment(R.layout.fragment_payment_car
     private fun initializeBoundPaymentCardText(){
         viewBinding?.boundPaymentCardText?.apply{
             viewModel.paymentCardBindingState.observe(viewLifecycleOwner){ state ->
-                visibility = when(state) {
-                    IPaymentCardInformationViewModel.CardBindingState.Bound,
-                    IPaymentCardInformationViewModel.CardBindingState.WillBeBoundSoon -> View.VISIBLE
-                    else -> View.GONE
+                when(state) {
+                    is IPaymentCardInformationViewModel.CardBindingState.Bound ->{
+                        visibility = View.VISIBLE
+                        text = context.getString(
+                            R.string.fragment_payment_card_information_number_text,
+                            state.cardNumber
+                        )
+                    }
+                    IPaymentCardInformationViewModel.CardBindingState.WillBeBoundSoon -> {
+                        visibility = View.VISIBLE
+                        text = context.getString(R.string.fragment_payment_card_information_card_will_be_bound_soon)
+                    }
+                    else -> {
+                        text = ""
+                        visibility = View.GONE
+                    }
                 }
-            }
-
-            viewModel.boundPaymentCardNumber.observe(viewLifecycleOwner){ paymentCardNumber ->
-                text = paymentCardNumber ?: ""
             }
         }
     }
