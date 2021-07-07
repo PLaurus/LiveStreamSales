@@ -178,6 +178,9 @@ class RegistrationUserPersonalInformationFragment: BaseFragment(R.layout.fragmen
             val errorMessage = when(nameError){
                 is IRegistrationUserPersonalInformationViewModel.NameError.FieldIsRequired -> getString(R.string.fragment_registration_user_personal_information_field_is_required)
                 is IRegistrationUserPersonalInformationViewModel.NameError.FieldContainsIllegalSymbols -> getString(R.string.fragment_registration_user_personal_information_field_contains_illegal_symbols)
+                is IRegistrationUserPersonalInformationViewModel.NameError.StartsWithWhitespace -> getString(R.string.fragment_registration_user_personal_information_field_starts_with_whitespace)
+                is IRegistrationUserPersonalInformationViewModel.NameError.EndsWithWhitespace -> getString(R.string.fragment_registration_user_personal_information_field_ends_with_whitespace)
+                is IRegistrationUserPersonalInformationViewModel.NameError.RepetitiveWhitespaces -> getString(R.string.fragment_registration_user_personal_information_field_repetitive_whitespaces)
                 is IRegistrationUserPersonalInformationViewModel.NameError.LengthIsTooShort -> getString(R.string.fragment_registration_user_personal_information_field_length_is_too_short, nameError.minLength)
                 is IRegistrationUserPersonalInformationViewModel.NameError.LengthIsTooLong -> getString(R.string.fragment_registration_user_personal_information_field_length_is_too_long, nameError.maxLength)
                 else -> null
@@ -208,6 +211,9 @@ class RegistrationUserPersonalInformationFragment: BaseFragment(R.layout.fragmen
         viewModel.surnameError.observe(viewLifecycleOwner, { surnameError ->
             val errorMessage = when(surnameError){
                 is IRegistrationUserPersonalInformationViewModel.SurnameError.FieldContainsIllegalSymbols -> getString(R.string.fragment_registration_user_personal_information_field_contains_illegal_symbols)
+                is IRegistrationUserPersonalInformationViewModel.SurnameError.StartsWithWhitespace -> getString(R.string.fragment_registration_user_personal_information_field_starts_with_whitespace)
+                is IRegistrationUserPersonalInformationViewModel.SurnameError.EndsWithWhitespace -> getString(R.string.fragment_registration_user_personal_information_field_ends_with_whitespace)
+                is IRegistrationUserPersonalInformationViewModel.SurnameError.RepetitiveWhitespaces -> getString(R.string.fragment_registration_user_personal_information_field_repetitive_whitespaces)
                 is IRegistrationUserPersonalInformationViewModel.SurnameError.LengthIsTooShort -> getString(R.string.fragment_registration_user_personal_information_field_length_is_too_short, surnameError.minLength)
                 is IRegistrationUserPersonalInformationViewModel.SurnameError.LengthIsTooLong -> getString(R.string.fragment_registration_user_personal_information_field_length_is_too_long, surnameError.maxLength)
                 else -> null

@@ -137,6 +137,9 @@ class ProfileFragment: BaseFragment(R.layout.fragment_profile) {
             val errorMessage = when(nameError){
                 is IProfileViewModel.NameError.FieldIsRequired -> getString(R.string.fragment_profile_field_is_required)
                 is IProfileViewModel.NameError.FieldContainsIllegalSymbols -> getString(R.string.fragment_profile_field_contains_illegal_symbols)
+                is IProfileViewModel.NameError.StartsWithWhitespace -> getString(R.string.fragment_profile_field_starts_with_whitespace)
+                is IProfileViewModel.NameError.EndsWithWhitespace -> getString(R.string.fragment_profile_field_ends_with_whitespace)
+                is IProfileViewModel.NameError.RepetitiveWhitespaces -> getString(R.string.fragment_profile_field_repetitive_whitespaces)
                 is IProfileViewModel.NameError.LengthIsTooShort -> getString(R.string.fragment_profile_field_length_is_too_short, nameError.minLength)
                 is IProfileViewModel.NameError.LengthIsTooLong -> getString(R.string.fragment_profile_field_length_is_too_long, nameError.maxLength)
                 else -> null
@@ -167,6 +170,9 @@ class ProfileFragment: BaseFragment(R.layout.fragment_profile) {
         viewModel.surnameError.observe(viewLifecycleOwner, { surnameError ->
             val errorMessage = when(surnameError){
                 is IProfileViewModel.SurnameError.FieldContainsIllegalSymbols -> getString(R.string.fragment_profile_field_contains_illegal_symbols)
+                is IProfileViewModel.SurnameError.StartsWithWhitespace -> getString(R.string.fragment_profile_field_starts_with_whitespace)
+                is IProfileViewModel.SurnameError.EndsWithWhitespace -> getString(R.string.fragment_profile_field_ends_with_whitespace)
+                is IProfileViewModel.SurnameError.RepetitiveWhitespaces -> getString(R.string.fragment_profile_field_repetitive_whitespaces)
                 is IProfileViewModel.SurnameError.LengthIsTooShort -> getString(R.string.fragment_profile_field_length_is_too_short, surnameError.minLength)
                 is IProfileViewModel.SurnameError.LengthIsTooLong -> getString(R.string.fragment_profile_field_length_is_too_long, surnameError.maxLength)
                 else -> null

@@ -28,12 +28,18 @@ interface IProfileViewModel: INeedPreparationViewModel{
     sealed class NameError{
         object FieldIsRequired: NameError()
         object FieldContainsIllegalSymbols: NameError()
+        object StartsWithWhitespace: NameError()
+        object EndsWithWhitespace: NameError()
+        object RepetitiveWhitespaces: NameError()
         data class LengthIsTooShort(val minLength: Int): NameError()
         data class LengthIsTooLong(val maxLength: Int): NameError()
     }
 
     sealed class SurnameError{
         object FieldContainsIllegalSymbols: SurnameError()
+        object StartsWithWhitespace: SurnameError()
+        object EndsWithWhitespace: SurnameError()
+        object RepetitiveWhitespaces: SurnameError()
         data class LengthIsTooShort(val minLength: Int): SurnameError()
         data class LengthIsTooLong(val maxLength: Int): SurnameError()
     }

@@ -155,6 +155,9 @@
     <string name="fragment_registration_user_personal_information_continue_button">Продолжить</string>
     <string name="fragment_registration_user_personal_information_field_is_required">Обязательное поле</string>
     <string name="fragment_registration_user_personal_information_field_contains_illegal_symbols">Поле содержит недопустимые символы</string>
+    <string name="fragment_registration_user_personal_information_field_starts_with_whitespace">@string/fragment_profile_field_starts_with_whitespace</string>
+    <string name="fragment_registration_user_personal_information_field_ends_with_whitespace">@string/fragment_profile_field_ends_with_whitespace</string>
+    <string name="fragment_registration_user_personal_information_field_repetitive_whitespaces">@string/fragment_profile_field_repetitive_whitespaces</string>
     <string name="fragment_registration_user_personal_information_field_length_is_too_short">Минимальная длина поля %d</string>
     <string name="fragment_registration_user_personal_information_field_length_is_too_long">Максимальная длина поля %d</string>
     <string name="fragment_registration_user_personal_information_email_has_wrong_format">Недопустимый формат почты</string>
@@ -203,6 +206,9 @@
     <string name="fragment_profile_user_personal_information_is_saved">Данные пользователя изменены</string>
     <string name="fragment_profile_field_is_required">Обязательное поле</string>
     <string name="fragment_profile_field_contains_illegal_symbols">Поле содержит недопустимые символы</string>
+    <string name="fragment_profile_field_starts_with_whitespace">Поле начинается с пробела</string>
+    <string name="fragment_profile_field_ends_with_whitespace">Поле заканчивается на пробел</string>
+    <string name="fragment_profile_field_repetitive_whitespaces">Повторяющиеся пробелы</string>
     <string name="fragment_profile_field_length_is_too_short">Минимальная длина поля %d</string>
     <string name="fragment_profile_field_length_is_too_long">Максимальная длина поля %d</string>
     <string name="fragment_profile_email_has_wrong_format">Недопустимый формат почты</string>

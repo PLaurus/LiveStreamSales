@@ -106,7 +106,6 @@ class ProfileViewModel @Inject constructor(
         surnameError.value = checkSurname(surname)
         if(this.surname.value == surname) return
         this.surname.value = surname
-
     }
 
     override fun updateEmail(email: String?) {
@@ -267,6 +266,9 @@ class ProfileViewModel @Inject constructor(
     private fun checkName(name: String?): IProfileViewModel.NameError?{
         if(name.isNullOrEmpty()) return IProfileViewModel.NameError.FieldIsRequired
         if(!name.checkContainsOnlyLetters()) return IProfileViewModel.NameError.FieldContainsIllegalSymbols
+        if(name.startsWith(' ')) return IProfileViewModel.NameError.StartsWithWhitespace
+        if(name.endsWith(' ')) return IProfileViewModel.NameError.EndsWithWhitespace
+        if(name.contains("\\s{2,}".toRegex())) return IProfileViewModel.NameError.RepetitiveWhitespaces
         minNameLength?.let { if(name.length < it) return IProfileViewModel.NameError.LengthIsTooShort(it) }
         maxNameLength?.let { if(name.length > it) return IProfileViewModel.NameError.LengthIsTooLong(it) }
 
@@ -276,6 +278,9 @@ class ProfileViewModel @Inject constructor(
     private fun checkSurname(surname: String?): IProfileViewModel.SurnameError? {
         if(surname == null) return null
         if(!surname.checkContainsOnlyLetters()) return IProfileViewModel.SurnameError.FieldContainsIllegalSymbols
+        if(surname.startsWith(' ')) return IProfileViewModel.SurnameError.StartsWithWhitespace
+        if(surname.endsWith(' ')) return IProfileViewModel.SurnameError.EndsWithWhitespace
+        if(surname.contains("\\s{2,}".toRegex())) return IProfileViewModel.SurnameError.RepetitiveWhitespaces
         minSurnameLength?.let { if(surname.length < it) return IProfileViewModel.SurnameError.LengthIsTooShort(it) }
         maxSurnameLength?.let { if(surname.length > it) return IProfileViewModel.SurnameError.LengthIsTooLong(it) }
 
@@ -292,7 +297,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun String.checkContainsOnlyLetters(): Boolean{
-        return Pattern.matches("^([а-яА-я]*|[a-zA-Z]*)$", this)
+        return Pattern.matches("^([а-яА-я ]*|[a-zA-Z ]*)$", this)
     }
 
     @Synchronized

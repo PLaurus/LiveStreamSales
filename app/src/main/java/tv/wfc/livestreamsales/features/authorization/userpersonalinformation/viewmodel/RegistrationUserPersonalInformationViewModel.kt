@@ -112,7 +112,6 @@ class RegistrationUserPersonalInformationViewModel @Inject constructor(
         surnameError.value = checkSurname(surname)
         if(this.surname.value == surname) return
         this.surname.value = surname
-
     }
 
     override fun updateEmail(email: String?) {
@@ -283,6 +282,9 @@ class RegistrationUserPersonalInformationViewModel @Inject constructor(
     private fun checkName(name: String?): IRegistrationUserPersonalInformationViewModel.NameError?{
         if(name.isNullOrEmpty()) return IRegistrationUserPersonalInformationViewModel.NameError.FieldIsRequired
         if(!name.checkContainsOnlyLetters()) return IRegistrationUserPersonalInformationViewModel.NameError.FieldContainsIllegalSymbols
+        if(name.startsWith(' ')) return IRegistrationUserPersonalInformationViewModel.NameError.StartsWithWhitespace
+        if(name.endsWith(' ')) return IRegistrationUserPersonalInformationViewModel.NameError.EndsWithWhitespace
+        if(name.contains("\\s{2,}".toRegex())) return IRegistrationUserPersonalInformationViewModel.NameError.RepetitiveWhitespaces
         minNameLength?.let { if(name.length < it) return IRegistrationUserPersonalInformationViewModel.NameError.LengthIsTooShort(it) }
         maxNameLength?.let { if(name.length > it) return IRegistrationUserPersonalInformationViewModel.NameError.LengthIsTooLong(it) }
 
@@ -292,6 +294,9 @@ class RegistrationUserPersonalInformationViewModel @Inject constructor(
     private fun checkSurname(surname: String?): IRegistrationUserPersonalInformationViewModel.SurnameError? {
         if(surname == null) return null
         if(!surname.checkContainsOnlyLetters()) return IRegistrationUserPersonalInformationViewModel.SurnameError.FieldContainsIllegalSymbols
+        if(surname.startsWith(' ')) return IRegistrationUserPersonalInformationViewModel.SurnameError.StartsWithWhitespace
+        if(surname.endsWith(' ')) return IRegistrationUserPersonalInformationViewModel.SurnameError.EndsWithWhitespace
+        if(surname.contains("\\s{2,}".toRegex())) return IRegistrationUserPersonalInformationViewModel.SurnameError.RepetitiveWhitespaces
         minSurnameLength?.let { if(surname.length < it) return IRegistrationUserPersonalInformationViewModel.SurnameError.LengthIsTooShort(it) }
         maxSurnameLength?.let { if(surname.length > it) return IRegistrationUserPersonalInformationViewModel.SurnameError.LengthIsTooLong(it) }
 
@@ -308,7 +313,7 @@ class RegistrationUserPersonalInformationViewModel @Inject constructor(
     }
 
     private fun String.checkContainsOnlyLetters(): Boolean{
-        return Pattern.matches("^([а-яА-яёЁ]*|[a-zA-Z]*)$", this)
+        return Pattern.matches("^([а-яА-яёЁ ]*|[a-zA-Z ]*)$", this)
     }
 
     @Synchronized
