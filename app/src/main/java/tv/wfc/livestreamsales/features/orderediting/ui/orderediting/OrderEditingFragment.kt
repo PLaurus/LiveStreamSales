@@ -175,16 +175,22 @@ class OrderEditingFragment: BaseFragment(R.layout.fragment_order_editing){
         viewBinding?.orderStatusText?.run{
             viewModel.orderStatus.observe(viewLifecycleOwner){ orderStatus ->
                 when(orderStatus){
-                    Order.Status.JUST_MADE -> {
+                    Order.Status.NOT_PAID -> {
                         visibility = View.VISIBLE
-                        text = getString(R.string.fragment_order_editing_order_status_created)
-                        val backgroundColor = ContextCompat.getColor(context, R.color.orderEditing_orderStatus_created)
+                        text = getString(R.string.fragment_order_editing_order_status_not_paid)
+                        val backgroundColor = ContextCompat.getColor(context, R.color.orderEditing_orderStatus_notPaid)
+                        setBackgroundColor(backgroundColor)
+                    }
+                    Order.Status.PAID -> {
+                        visibility = View.VISIBLE
+                        text = getString(R.string.fragment_order_editing_order_status_paid)
+                        val backgroundColor = ContextCompat.getColor(context, R.color.orderEditing_orderStatus_paid)
                         setBackgroundColor(backgroundColor)
                     }
                     Order.Status.IN_PROGRESS -> {
                         visibility = View.VISIBLE
                         text = getString(R.string.fragment_order_editing_order_status_in_progress)
-                        val backgroundColor = ContextCompat.getColor(context, R.color.orderEditing_orderStatus_in_progress)
+                        val backgroundColor = ContextCompat.getColor(context, R.color.orderEditing_orderStatus_inProgress)
                         setBackgroundColor(backgroundColor)
                     }
                     Order.Status.DONE -> {

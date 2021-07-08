@@ -75,7 +75,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/creationDateTitleText"
         tools:text="@string/fragment_my_orders_order_status_in_progress"
-        tools:background="@color/myOrders_orderStatus_in_progress"/>
+        tools:background="@color/myOrders_orderStatus_inProgress"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/orderedProductsRecyclerView"

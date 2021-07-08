@@ -123,7 +123,8 @@ class ProductsOrderRemoteStorage @Inject constructor(
 
     private fun String.toStatus(): Order.Status?{
         return when(this){
-            "created" -> Order.Status.JUST_MADE
+            "paid" -> Order.Status.PAID
+            "not_paid" -> Order.Status.NOT_PAID
             "in_progress" -> Order.Status.IN_PROGRESS
             "done" -> Order.Status.DONE
             else -> null

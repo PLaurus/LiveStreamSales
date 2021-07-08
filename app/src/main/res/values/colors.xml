@@ -58,18 +58,21 @@
     <color name="productOrder_productBoxItem_placeholderTint">#000000</color>
 
     <!-- My orders fragment -->
-    <color name="myOrders_orderStatus_created">@color/colorPrimary</color>
-    <color name="myOrders_orderStatus_in_progress">#0ACF83</color>
+    <color name="myOrders_orderStatus_notPaid">@color/myOrders_orderStatus_paid</color>
+    <color name="myOrders_orderStatus_paid">@color/colorPrimary</color>
+    <color name="myOrders_orderStatus_inProgress">#0ACF83</color>
     <color name="myOrders_orderStatus_done">#000000</color>
 
     <!-- Order information fragment -->
-    <color name="orderInformation_orderStatus_created">@color/myOrders_orderStatus_created</color>
-    <color name="orderInformation_orderStatus_in_progress">@color/myOrders_orderStatus_in_progress</color>
+    <color name="orderInformation_orderStatus_notPaid">@color/myOrders_orderStatus_notPaid</color>
+    <color name="orderInformation_orderStatus_paid">@color/myOrders_orderStatus_paid</color>
+    <color name="orderInformation_orderStatus_inProgress">@color/myOrders_orderStatus_inProgress</color>
     <color name="orderInformation_orderStatus_done">@color/myOrders_orderStatus_done</color>
 
     <!-- Order editing fragment -->
-    <color name="orderEditing_orderStatus_created">@color/myOrders_orderStatus_created</color>
-    <color name="orderEditing_orderStatus_in_progress">@color/myOrders_orderStatus_in_progress</color>
+    <color name="orderEditing_orderStatus_notPaid">@color/myOrders_orderStatus_notPaid</color>
+    <color name="orderEditing_orderStatus_paid">@color/myOrders_orderStatus_paid</color>
+    <color name="orderEditing_orderStatus_inProgress">@color/myOrders_orderStatus_inProgress</color>
     <color name="orderEditing_orderStatus_done">@color/myOrders_orderStatus_done</color>
 
 </resources>

@@ -128,13 +128,17 @@ class OrderViewHolder(
     private fun initializeOrderStatusText(order: Order){
         viewBinding.orderStatusText.run{
             when(order.status){
-                Order.Status.JUST_MADE -> {
-                    text = context.getString(R.string.fragment_my_orders_order_status_created)
-                    setBackgroundColor(ContextCompat.getColor(context, R.color.myOrders_orderStatus_created))
+                Order.Status.NOT_PAID -> {
+                    text = context.getString(R.string.fragment_my_orders_order_status_not_paid)
+                    setBackgroundColor(ContextCompat.getColor(context, R.color.myOrders_orderStatus_notPaid))
+                }
+                Order.Status.PAID -> {
+                    text = context.getString(R.string.fragment_my_orders_order_status_paid)
+                    setBackgroundColor(ContextCompat.getColor(context, R.color.myOrders_orderStatus_paid))
                 }
                 Order.Status.IN_PROGRESS -> {
                     text = context.getString(R.string.fragment_my_orders_order_status_in_progress)
-                    setBackgroundColor(ContextCompat.getColor(context, R.color.myOrders_orderStatus_in_progress))
+                    setBackgroundColor(ContextCompat.getColor(context, R.color.myOrders_orderStatus_inProgress))
                 }
                 Order.Status.DONE -> {
                     text = context.getString(R.string.fragment_my_orders_order_status_done)
@@ -284,7 +288,8 @@ class OrderViewHolder(
     private fun initializeCompleteTheOrderButton(order: Order){
         viewBinding.completeTheOrderButton.run {
             visibility = when(order.status){
-                Order.Status.JUST_MADE -> View.VISIBLE
+                Order.Status.PAID,
+                Order.Status.NOT_PAID -> View.VISIBLE
                 else -> View.GONE
             }
 
@@ -312,8 +317,9 @@ class OrderViewHolder(
     private fun initializeShowMoreInformationAboutOrderButton(order: Order){
         viewBinding.showMoreInformationAboutOrderButton.run {
             visibility = when(order.status){
-                Order.Status.JUST_MADE -> View.GONE
-                else -> View.VISIBLE
+                Order.Status.IN_PROGRESS,
+                Order.Status.DONE -> View.VISIBLE
+                else -> View.GONE
             }
 
             val orderId = order.id

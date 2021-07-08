@@ -255,7 +255,8 @@
     <string name="fragment_my_orders_order_number_text">№%s</string>
     <string name="fragment_my_orders_creation_date_title_text">дата заказа</string>
     <string name="fragment_my_orders_delivery_date_title_text">дата доставки</string>
-    <string name="fragment_my_orders_order_status_created">оформлен</string>
+    <string name="fragment_my_orders_order_status_not_paid">не оплачен</string>
+    <string name="fragment_my_orders_order_status_paid">оформлен</string>
     <string name="fragment_my_orders_order_status_in_progress">в работе</string>
     <string name="fragment_my_orders_order_status_done">завершен</string>
     <string name="fragment_my_orders_short_order_information_text">Краткая информация о заказе</string>
@@ -269,7 +270,8 @@
     <!-- Order information fragment -->
     <string name="fragment_order_information_destination_title">Информация о заказе</string>
     <string name="fragment_order_information_order_number_toolbar_title">№%s</string>
-    <string name="fragment_order_information_order_status_created">@string/fragment_my_orders_order_status_created</string>
+    <string name="fragment_order_information_order_status_not_paid">@string/fragment_my_orders_order_status_not_paid</string>
+    <string name="fragment_order_information_order_status_paid">@string/fragment_my_orders_order_status_paid</string>
     <string name="fragment_order_information_order_status_in_progress">@string/fragment_my_orders_order_status_in_progress</string>
     <string name="fragment_order_information_order_status_done">@string/fragment_my_orders_order_status_done</string>
     <string name="fragment_order_information_creation_date_title_text">@string/fragment_my_orders_creation_date_title_text</string>
@@ -287,7 +289,8 @@
     <!-- Order editing fragment -->
     <string name="fragment_order_editing_destination_title">Подтверждение заказа</string>
     <string name="fragment_order_editing_order_number_toolbar_title">№%s</string>
-    <string name="fragment_order_editing_order_status_created">@string/fragment_my_orders_order_status_created</string>
+    <string name="fragment_order_editing_order_status_not_paid">@string/fragment_my_orders_order_status_not_paid</string>
+    <string name="fragment_order_editing_order_status_paid">@string/fragment_my_orders_order_status_paid</string>
     <string name="fragment_order_editing_order_status_in_progress">@string/fragment_my_orders_order_status_in_progress</string>
     <string name="fragment_order_editing_order_status_done">@string/fragment_my_orders_order_status_done</string>
     <string name="fragment_order_editing_delivery_address_title_text">Адрес доставки</string>
@@ -323,6 +326,5 @@
     <string name="fragment_live_broadcast_send_message">Отправить</string>
     <string name="fragment_live_broadcast_buy">Купить</string>
     <string name="fragment_live_broadcast_price">%.2f руб.</string>
-
 
 </resources>
