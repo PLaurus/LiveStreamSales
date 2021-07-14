@@ -90,11 +90,6 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.ProductBox" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">25%</item>
-    </style>
-
     <!-- ShapeAppearanceOverlay - Corners -->
     <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners" parent="">
         <item name="cornerFamily">rounded</item>

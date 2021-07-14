@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
-        app:shapeAppearance="@style/Theme.LiveStreamSales.ShapeAppearanceOverlay.ProductBox"
+        app:shapeAppearance="@style/Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners24"
         app:strokeColor="@color/colorSecondaryText"
         app:strokeWidth="2dp">
 
