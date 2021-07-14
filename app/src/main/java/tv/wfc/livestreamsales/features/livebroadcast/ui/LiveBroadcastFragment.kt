@@ -6,6 +6,9 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.RenderersFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -16,10 +19,11 @@ import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.util.ErrorMessageProvider
 import com.google.android.exoplayer2.util.Util
 import com.jakewharton.rxbinding4.view.clicks
-import com.laurus.p.tools.string.strikeThrough
 import com.laurus.p.tools.view.hideSmoothly
 import com.laurus.p.tools.view.matchRootView
 import com.laurus.p.tools.view.revealSmoothly
+import com.laurus.p.tools.viewpager2.goToNextPage
+import com.laurus.p.tools.viewpager2.goToPreviousPage
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.Disposable
@@ -29,10 +33,12 @@ import tv.wfc.livestreamsales.NavigationGraphRootDirections
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
+import tv.wfc.livestreamsales.application.model.products.Product
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.ui.base.BaseFragment
 import tv.wfc.livestreamsales.databinding.FragmentLiveBroadcastBinding
 import tv.wfc.livestreamsales.features.livebroadcast.di.LiveBroadcastComponent
+import tv.wfc.livestreamsales.features.livebroadcast.ui.adapters.products.ProductsAdapter
 import tv.wfc.livestreamsales.features.livebroadcast.viewmodel.ILiveBroadcastViewModel
 import tv.wfc.livestreamsales.features.mainappcontent.ui.MainAppContentActivity
 import java.util.concurrent.TimeUnit
@@ -52,6 +58,12 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
     private var player: SimpleExoPlayer? = null
 
     private lateinit var liveBroadcastComponent: LiveBroadcastComponent
+
+    @Inject
+    lateinit var productsDiffUtilItemCallback: DiffUtil.ItemCallback<Product>
+
+    @Inject
+    lateinit var imageLoader: ImageLoader
 
     @Inject
     lateinit var playerErrorMessageProvider: ErrorMessageProvider<ExoPlaybackException>
@@ -157,14 +169,14 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
         initializeImage()
         initializeBroadcastTitleText()
         initializeViewersCountText()
-        initializeBroadcastDescriptionText()
+        initializePreviousProductButton()
+        initializeProductsViewPager()
+        initializeNextProductButton()
         initializePlayer()
         initializePlayerView()
         initializeBuyButton()
         initializeSendMessageButton()
         initializeMessageInput()
-        initializePriceText()
-        initializeOldPriceText()
         showBroadcastInformationTemporarily()
     }
 
@@ -193,10 +205,45 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
         })
     }
 
-    private fun initializeBroadcastDescriptionText(){
-        viewModel.broadcastDescription.observe(viewLifecycleOwner, { description ->
-            viewBinding?.broadcastDescriptionText?.text = description
-        })
+    private fun initializePreviousProductButton(){
+        viewBinding?.run{
+            previousProductButton.clicks()
+                .throttleLatest(500L, TimeUnit.MILLISECONDS, computationScheduler)
+                .observeOn(mainThreadScheduler)
+                .subscribeBy(
+                    onNext = { productsViewPager.goToPreviousPage() },
+                    onError = applicationErrorsLogger::logError
+                )
+                .addTo(viewScopeDisposables)
+        }
+    }
+
+    private fun initializeProductsViewPager(){
+        viewBinding?.productsViewPager?.run {
+            adapter = ProductsAdapter(
+                productsDiffUtilItemCallback,
+                imageLoader
+            )
+
+            (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+
+            viewModel.products.observe(viewLifecycleOwner){ products ->
+                (adapter as ProductsAdapter).submitList(products)
+            }
+        }
+    }
+
+    private fun initializeNextProductButton(){
+        viewBinding?.run{
+            nextProductButton.clicks()
+                .throttleLatest(500L, TimeUnit.MILLISECONDS, computationScheduler)
+                .observeOn(mainThreadScheduler)
+                .subscribeBy(
+                    onNext = { productsViewPager.goToNextPage() },
+                    onError = applicationErrorsLogger::logError
+                )
+                .addTo(viewScopeDisposables)
+        }
     }
 
     private fun initializePlayerView(){
@@ -290,40 +337,6 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
         }
     }
 
-    private fun initializePriceText(){
-        viewBinding?.productPriceText?.apply {
-            viewModel.firstProductPrice.observe(viewLifecycleOwner, { price ->
-                if(price != null){
-                    visibility = View.VISIBLE
-                    text = resources.getString(
-                        R.string.fragment_live_broadcast_price,
-                        price
-                    )
-                } else{
-                    visibility = View.GONE
-                }
-            })
-        }
-    }
-
-    private fun initializeOldPriceText(){
-        viewBinding?.apply {
-            viewModel.firstProductOldPrice.observe(viewLifecycleOwner, { oldPrice ->
-                if(oldPrice != null && productPriceText.visibility == View.VISIBLE){
-                    productOldPriceText.apply {
-                        text = resources.getString(
-                            R.string.fragment_live_broadcast_price,
-                            oldPrice
-                        ).strikeThrough()
-                        visibility = View.VISIBLE
-                    }
-                } else {
-                    productOldPriceText.visibility = View.GONE
-                }
-            })
-        }
-    }
-
     private fun resumePlayerLifecycle(){
         viewBinding?.playerView?.onResume()
     }
@@ -361,14 +374,14 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
     private fun showBroadcastInformation(){
         viewBinding?.apply {
             headerLayout.revealSmoothly(broadcastInformationRevealDuration)
-            streamInformationLayout.revealSmoothly(broadcastInformationRevealDuration)
+            productsLayout.revealSmoothly(broadcastInformationRevealDuration)
         }
     }
 
     private fun hideBroadcastInformation(){
         viewBinding?.apply {
             headerLayout.hideSmoothly(broadcastInformationHideDuration)
-            streamInformationLayout.hideSmoothly(broadcastInformationHideDuration)
+            productsLayout.hideSmoothly(broadcastInformationHideDuration)
         }
     }
 

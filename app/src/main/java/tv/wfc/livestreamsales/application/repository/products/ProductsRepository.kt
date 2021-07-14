@@ -21,16 +21,16 @@ class ProductsRepository @Inject constructor(
 ): IProductsRepository {
     private val disposables = CompositeDisposable()
 
-    override fun getProducts(broadcastId: Long): Observable<List<ProductGroup>> {
+    override fun getProductGroups(broadcastId: Long): Observable<List<ProductGroup>> {
         return productsInformationLocalStorage
-            .getProducts(broadcastId)
+            .getProductGroups(broadcastId)
             .onErrorComplete().toObservable()
             .concatWith(getAndSaveProductsFromRemote(broadcastId).toObservable())
     }
 
     private fun getAndSaveProductsFromRemote(broadcastId: Long): Single<List<ProductGroup>> {
         return productsInformationRemoteStorage
-            .getProducts(broadcastId)
+            .getProductGroups(broadcastId)
             .doOnSuccess { saveProductsLocally(broadcastId, it) }
     }
 

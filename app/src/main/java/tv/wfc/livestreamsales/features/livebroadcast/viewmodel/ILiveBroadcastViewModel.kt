@@ -7,6 +7,7 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.laurus.p.tools.livedata.LiveEvent
 import tv.wfc.contentloader.viewmodel.INeedPreparationViewModel
+import tv.wfc.livestreamsales.application.model.products.Product
 import tv.wfc.livestreamsales.application.tools.exoplayer.PlaybackState
 
 interface ILiveBroadcastViewModel: INeedPreparationViewModel {
@@ -22,8 +23,7 @@ interface ILiveBroadcastViewModel: INeedPreparationViewModel {
     val onPlayerError: LiveEvent<ExoPlaybackException>
 
     val broadcastHasProducts: LiveData<Boolean>
-    val firstProductPrice: LiveData<Float>
-    val firstProductOldPrice: LiveData<Float>
+    val products: LiveData<List<Product>>
 
     val playerEventListener: Player.Listener
 

@@ -5,6 +5,6 @@ import io.reactivex.rxjava3.core.Single
 import tv.wfc.livestreamsales.application.model.products.ProductGroup
 
 interface IProductsStorage {
-    fun getProducts(broadcastId: Long): Single<List<ProductGroup>>
+    fun getProductGroups(broadcastId: Long): Single<List<ProductGroup>>
     fun saveProducts(broadcastId: Long, productGroups: List<ProductGroup>): Completable
 }

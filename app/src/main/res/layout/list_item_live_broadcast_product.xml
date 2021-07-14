@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_height="66dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/productImageContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/productImageCard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:shapeAppearance="@style/Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners24"
+            app:strokeColor="@color/colorSecondaryText"
+            app:strokeWidth="2dp"
+            app:cardElevation="4dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/productImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:scaleType="fitCenter"
+                tools:srcCompat="@drawable/ic_baseline_home_24"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/productsAmountLayout"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintEnd_toEndOf="@id/productImageCard"
+            app:layout_constraintTop_toTopOf="@id/productImageCard"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:shapeAppearance="@style/Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners50"
+            app:cardElevation="8dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/productsAmountText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:textColor="@color/colorOnPrimary"
+                android:textStyle="bold"
+                android:gravity="center"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="2sp"
+                tools:text="23"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/productNameText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/contentMargin"
+        android:textSize="@dimen/textSize_default"
+        android:textColor="@color/colorOnPrimary"
+        android:textStyle="bold"
+        android:gravity="start|center"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:shadowColor="@color/colorLiveBroadcast_shadow"
+        android:shadowRadius="@dimen/liveBroadcast_shadowRadius"
+        android:shadowDx="@dimen/liveBroadcast_shadowDx"
+        android:shadowDy="@dimen/liveBroadcast_shadowDy"
+        app:layout_constraintStart_toEndOf="@id/productImageContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/productPriceText"
+        tools:text="Потрясающее предложение на новый Телефон 12 Про Фессор"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/productPriceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/contentMargin"
+        android:textSize="@dimen/textSize_big"
+        android:textStyle="bold"
+        android:textColor="@color/colorSecondary"
+        android:shadowColor="@color/colorLiveBroadcast_shadow"
+        android:shadowRadius="@dimen/liveBroadcast_shadowRadius"
+        android:shadowDx="@dimen/liveBroadcast_shadowDx"
+        android:shadowDy="@dimen/liveBroadcast_shadowDy"
+        app:layout_constraintStart_toEndOf="@id/productImageContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintHorizontal_bias="1"
+        tools:text="78 030,00 руб."/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

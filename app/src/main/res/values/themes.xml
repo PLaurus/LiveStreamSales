@@ -95,4 +95,109 @@
         <item name="cornerSize">25%</item>
     </style>
 
+    <!-- ShapeAppearanceOverlay - Corners -->
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners" parent="">
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners2" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">2%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners4" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">4%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners6" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">6%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners8" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">8%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners10" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">10%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners12" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">12%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners14" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">14%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners16" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">16%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners18" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">18%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners20" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">20%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners22" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">22%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners24" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">24%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners26" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">26%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners28" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">28%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners30" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">30%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners32" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">32%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners34" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">34%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners36" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">36%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners38" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">38%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners40" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">40%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners42" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">40%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners44" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">40%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners46" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">46%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners48" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">48%</item>
+    </style>
+
+    <style name="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners50" parent="Theme.LiveStreamSales.ShapeAppearanceOverlay.RoundedCorners">
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>

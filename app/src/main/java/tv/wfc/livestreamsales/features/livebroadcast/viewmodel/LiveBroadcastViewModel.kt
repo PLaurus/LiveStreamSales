@@ -26,7 +26,7 @@ import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.Comput
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.manager.IAuthorizationManager
 import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
-import tv.wfc.livestreamsales.application.model.products.ProductGroup
+import tv.wfc.livestreamsales.application.model.products.Product
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
 import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
@@ -49,7 +49,7 @@ class LiveBroadcastViewModel @Inject constructor(
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): ViewModel(), ILiveBroadcastViewModel {
     private val disposables = CompositeDisposable()
-    private val productsSubject = PublishSubject.create<List<ProductGroup>>()
+    private val productsSubject = PublishSubject.create<List<Product>>()
 
     private var broadcastId: Long? = null
     private var userIsWatchingBroadcastDisposable: Disposable? = null
@@ -86,25 +86,9 @@ class LiveBroadcastViewModel @Inject constructor(
             )
             .addTo(disposables)
     }
-
-    override val firstProductPrice: LiveData<Float> = MutableLiveData<Float>().apply {
+    override val products = MutableLiveData<List<Product>>().apply{
         productsSubject
             .observeOn(mainThreadScheduler)
-            .filter{ it.isNotEmpty() }
-            .map{ it[0].productVariants[0].price }
-            .subscribeBy(
-                onNext = ::setValue,
-                onError = applicationErrorsLogger::logError
-            )
-            .addTo(disposables)
-    }
-
-    override val firstProductOldPrice: LiveData<Float> = MutableLiveData<Float>().apply {
-        productsSubject
-            .observeOn(mainThreadScheduler)
-            .filter{ it.isNotEmpty() }
-            .filter{ it[0].productVariants[0].oldPrice != null }
-            .map{ it[0].productVariants[0].oldPrice!! }
             .subscribeBy(
                 onNext = ::setValue,
                 onError = applicationErrorsLogger::logError
@@ -288,8 +272,18 @@ class LiveBroadcastViewModel @Inject constructor(
         return Completable
             .create { emitter ->
                 val disposable = productsRepository
-                    .getProducts(broadcastId)
+                    .getProductGroups(broadcastId)
                     .lastOrError()
+                    .map{ productGroups ->
+                        productGroups
+                            .map{ productGroup -> productGroup.toProducts() }
+                            .map{ products -> products.toMutableList() }
+                            .reduce{ result, nextProducts ->
+                                result.apply{
+                                    addAll(nextProducts)
+                                }
+                            }
+                    }
                     .doOnTerminate { emitter.onComplete() }
                     .subscribeBy(
                         onSuccess = productsSubject::onNext,

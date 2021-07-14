@@ -14,7 +14,7 @@ class ProductsLocalStorage @Inject constructor(
 ): IProductsStorage {
     private val products = mutableMapOf<Long, List<ProductGroup>>()
 
-    override fun getProducts(broadcastId: Long): Single<List<ProductGroup>> {
+    override fun getProductGroups(broadcastId: Long): Single<List<ProductGroup>> {
         return Single
             .fromCallable { products.getValue(broadcastId) }
             .subscribeOn(ioScheduler)

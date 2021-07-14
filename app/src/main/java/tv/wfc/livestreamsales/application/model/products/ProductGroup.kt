@@ -8,4 +8,17 @@ data class ProductGroup(
     val image: String? = null,
     val description: String? = null,
     val specifications: List<Specification<*>> = emptyList()
-)
+){
+    fun toProducts(): List<Product> {
+        val products = mutableListOf<Product>()
+
+        productVariants.forEach { productVariant ->
+            val productId = productVariant.id
+            Product.create(this, productId)?.let{ product ->
+                products.add(product)
+            }
+        }
+
+        return products
+    }
+}

@@ -1,6 +1,5 @@
 package tv.wfc.livestreamsales.features.productorder.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.laurus.p.tools.livedata.LiveEvent
@@ -271,7 +270,7 @@ class ProductOrderViewModel @Inject constructor(
 
     private fun getProductGroupsFromRemote(broadcastId: Long): Single<List<ProductGroup>>{
         return productsRepository
-            .getProducts(broadcastId)
+            .getProductGroups(broadcastId)
             .lastOrError()
             .filter{ it.isNotEmpty() }
             .toSingle()

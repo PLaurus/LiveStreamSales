@@ -14,3 +14,11 @@ fun ViewPager2.onPageSelected(callback: (position: Int) -> Unit): ViewPager2.OnP
 
     return callbackObject
 }
+
+fun ViewPager2.goToNextPage(){
+    currentItem += 1
+}
+
+fun ViewPager2.goToPreviousPage(){
+    currentItem -= 1
+}

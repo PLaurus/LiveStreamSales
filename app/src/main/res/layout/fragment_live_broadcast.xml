@@ -6,7 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:background="#888888">
 
     <com.google.android.exoplayer2.ui.StyledPlayerView
         android:id="@+id/playerView"
@@ -97,92 +98,54 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/streamInformationLayout"
+            android:id="@+id/productsLayout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_height="66dp"
+            android:layout_marginTop="@dimen/contentMargin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/headerLayout">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/broadcastDescriptionText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorOnPrimary"
-                android:textSize="@dimen/textSize_default"
-                android:ellipsize="end"
-                android:maxLines="3"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/previousProductButton"
+                style="@style/Theme.LiveStreamSales.MaterialButton.IconOnly.Circle.Transparent"
+                android:layout_width="32dp"
+                android:layout_height="0dp"
                 android:shadowColor="@color/colorLiveBroadcast_shadow"
                 android:shadowRadius="@dimen/liveBroadcast_shadowRadius"
                 android:shadowDx="@dimen/liveBroadcast_shadowDx"
                 android:shadowDy="@dimen/liveBroadcast_shadowDy"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/productsViewPager"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Потрясающее предложение на нового хромого коня с дорогими зубами"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/productPriceText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:textSize="@dimen/textSize_big"
-                android:textColor="@color/colorSecondary"
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:shadowColor="@color/colorLiveBroadcast_shadow"
-                android:shadowRadius="@dimen/liveBroadcast_shadowRadius"
-                android:shadowDx="@dimen/liveBroadcast_shadowDx"
-                android:shadowDy="@dimen/liveBroadcast_shadowDy"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/productOldPriceText"
-                app:layout_constraintTop_toBottomOf="@id/broadcastDescriptionText"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="1 000 000 руб."/>
+                app:icon="@drawable/ic_baseline_chevron_left_24"
+                app:iconTint="@color/colorOnPrimary"/>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/productOldPriceText"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/productsViewPager"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="4dp"
-                android:gravity="bottom"
-                android:textSize="@dimen/textSize_default"
-                android:textColor="@color/colorOnPrimary"
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:maxLength="14"
-                android:shadowColor="@color/colorLiveBroadcast_shadow"
-                android:shadowRadius="@dimen/liveBroadcast_shadowRadius"
-                android:shadowDx="@dimen/liveBroadcast_shadowDx"
-                android:shadowDy="@dimen/liveBroadcast_shadowDy"
-                app:layout_constraintStart_toEndOf="@id/productPriceText"
-                app:layout_constraintEnd_toStartOf="@id/productsBoughtAmountText"
-                app:layout_constraintTop_toTopOf="@id/productPriceText"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="1"
-                app:autoSizeTextType="uniform"
-                app:autoSizeMinTextSize="4sp"
-                tools:text="1 129 990 руб."/>
+                app:layout_constraintStart_toEndOf="@id/previousProductButton"
+                app:layout_constraintEnd_toStartOf="@id/nextProductButton"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/productsBoughtAmountText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/colorOnPrimary"
-                android:gravity="bottom|end"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/nextProductButton"
+                style="@style/Theme.LiveStreamSales.MaterialButton.IconOnly.Circle.Transparent"
+                android:layout_width="32dp"
+                android:layout_height="0dp"
                 android:shadowColor="@color/colorLiveBroadcast_shadow"
                 android:shadowRadius="@dimen/liveBroadcast_shadowRadius"
                 android:shadowDx="@dimen/liveBroadcast_shadowDx"
                 android:shadowDy="@dimen/liveBroadcast_shadowDy"
+                app:layout_constraintStart_toEndOf="@id/productsViewPager"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/broadcastDescriptionText"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintWidth_percent="0.4"
-                app:layout_constraintVertical_bias="1"
-                tools:text="30 товаров куплено"/>
+                app:icon="@drawable/ic_baseline_chevron_right_24"
+                app:iconTint="@color/colorOnPrimary"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -30,7 +30,7 @@ class ProductsRemoteStorage @Inject constructor(
     @IoScheduler
     private val ioScheduler: Scheduler
 ): IProductsStorage {
-    override fun getProducts(broadcastId: Long): Single<List<ProductGroup>> {
+    override fun getProductGroups(broadcastId: Long): Single<List<ProductGroup>> {
         if(BuildConfig.DEBUG && BuildConfig.IgnoreRestRequests){
             return Single
                 .just(createDebugProducts())
