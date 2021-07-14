@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
+import com.laurus.p.tools.floatKtx.format
 import io.reactivex.rxjava3.core.Scheduler
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
@@ -307,7 +308,8 @@ class OrderInformationFragment: BaseFragment(R.layout.fragment_order_information
     private fun initializeSumText(){
         viewBinding?.sumText?.run{
             viewModel.orderSum.observe(viewLifecycleOwner){ orderSum ->
-                text = getString(R.string.fragment_order_information_sum_text, orderSum)
+                val formattedSum = orderSum.format()
+                text = getString(R.string.fragment_order_information_sum_text, formattedSum)
             }
         }
     }

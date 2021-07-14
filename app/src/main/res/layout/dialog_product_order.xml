@@ -211,7 +211,7 @@
                         android:textColor="@color/colorPrimary"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="1 000 000 руб."/>
+                        tools:text="1 000 000,00 руб."/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/productVariantOldPriceText"
@@ -228,7 +228,7 @@
                         app:layout_constraintVertical_bias="1"
                         app:autoSizeTextType="uniform"
                         app:autoSizeMinTextSize="4sp"
-                        tools:text="1 000 000 руб."/>
+                        tools:text="1 000 000,00 руб."/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -401,7 +401,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constrainedWidth="true"
             app:layout_constrainedHeight="true"
-            tools:text="10000000000000 руб."/>
+            tools:text="1 000 000 000 000,00 руб."/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import com.jakewharton.rxbinding4.view.clicks
+import com.laurus.p.tools.floatKtx.format
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
@@ -277,7 +278,8 @@ class OrderViewHolder(
 
     private fun initializeSumText(order: Order){
         viewBinding.sumText.run{
-            text = context.getString(R.string.fragment_my_orders_sum_text, order.orderPrice)
+            val formattedPrice = order.orderPrice.format()
+            text = context.getString(R.string.fragment_my_orders_sum_text, formattedPrice)
         }
     }
 

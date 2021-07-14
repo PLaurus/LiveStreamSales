@@ -90,6 +90,6 @@
         app:layout_constraintTop_toBottomOf="@id/productNameText"
         app:layout_constrainedWidth="true"
         app:layout_constraintHorizontal_bias="1"
-        tools:text="78030 Крон"/>
+        tools:text="78 030,00 руб."/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

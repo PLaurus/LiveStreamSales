@@ -160,7 +160,7 @@
         app:layout_constraintStart_toStartOf="@id/creationDateText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sumTitleText"
-        tools:text="78 030 руб."/>
+        tools:text="78 030,00 руб."/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/editAndShowInformationButtonsLayout"

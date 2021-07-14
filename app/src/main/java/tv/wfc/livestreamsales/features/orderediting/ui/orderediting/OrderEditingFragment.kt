@@ -18,6 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.jakewharton.rxbinding4.view.clicks
+import com.laurus.p.tools.floatKtx.format
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -318,7 +319,8 @@ class OrderEditingFragment: BaseFragment(R.layout.fragment_order_editing){
     private fun initializeSumText(){
         viewBinding?.sumText?.run{
             viewModel.orderSum.observe(viewLifecycleOwner){ orderSum ->
-                text = getString(R.string.fragment_order_information_sum_text, orderSum)
+                val formattedSum = orderSum.format()
+                text = getString(R.string.fragment_order_editing_sum_text, formattedSum)
             }
         }
     }

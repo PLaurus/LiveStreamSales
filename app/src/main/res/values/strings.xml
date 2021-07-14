@@ -263,7 +263,7 @@
     <string name="fragment_my_orders_short_order_information_delivery_address">г. %s, ул. %s, д. %s, кв. %s, этаж %s</string>
     <string name="fragment_my_orders_short_order_information_delivery_address_not_entered">не указан</string>
     <string name="fragment_my_orders_sum_title_text">Сумма</string>
-    <string name="fragment_my_orders_sum_text">%.2f руб.</string>
+    <string name="fragment_my_orders_sum_text">%s руб.</string>
     <string name="fragment_my_orders_complete_the_order_button">Завершить оформление заказа</string>
     <string name="fragment_my_orders_show_more_information_about_order_button">Подробнее</string>
 
@@ -283,7 +283,7 @@
     <string name="fragment_order_information_full_delivery_date_title_text">Плановая дата доставки</string>
     <string name="fragment_order_information_order_recipient_title_text">Получатель</string>
     <string name="fragment_order_information_sum_title_text">Сумма заказа</string>
-    <string name="fragment_order_information_sum_text">%.2f руб.</string>
+    <string name="fragment_order_information_sum_text">%s руб.</string>
     <string name="fragment_order_information_ordered_products_title_text">Состав заказа</string>
 
     <!-- Order editing fragment -->
@@ -304,7 +304,7 @@
     <string name="fragment_order_editing_order_recipient_text_not_entered">необходимо указать</string>
     <string name="fragment_order_editing_your_order_title_text">Ваш заказ</string>
     <string name="fragment_order_editing_sum_title_text">Сумма заказа</string>
-    <string name="fragment_order_editing_sum_text">%.2f руб.</string>
+    <string name="fragment_order_editing_sum_text">%s руб.</string>
     <string name="fragment_order_editing_confirm_order_button">Подтвердить заказ</string>
 
     <!-- Order delivery address editing fragment -->

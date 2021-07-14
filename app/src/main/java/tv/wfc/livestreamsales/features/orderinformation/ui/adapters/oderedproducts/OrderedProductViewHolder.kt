@@ -7,6 +7,7 @@ import coil.ImageLoader
 import coil.request.Disposable
 import coil.request.ImageRequest
 import com.laurus.p.tools.context.getDrawableCompat
+import com.laurus.p.tools.floatKtx.format
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.model.orders.OrderedProduct
 import tv.wfc.livestreamsales.databinding.ListItemOrderInformationOrderedProductBinding
@@ -114,9 +115,11 @@ class OrderedProductViewHolder(
     }
 
     private fun initializeProductPriceText(orderedProduct: OrderedProduct){
+        val formattedPrice = orderedProduct.product.price.format()
+
         viewBinding.productPriceText.text = context.getString(
             R.string.fragment_order_information_sum_text,
-            orderedProduct.product.price
+            formattedPrice
         )
     }
 

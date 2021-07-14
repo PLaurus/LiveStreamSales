@@ -224,7 +224,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dividerView2"
-                tools:text="128000 руб."/>
+                tools:text="128 000,00 руб."/>
 
             <View
                 android:id="@+id/dividerView3"
