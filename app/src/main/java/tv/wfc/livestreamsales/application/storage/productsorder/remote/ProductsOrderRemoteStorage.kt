@@ -1,6 +1,7 @@
 package tv.wfc.livestreamsales.application.storage.productsorder.remote
 
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import org.joda.time.DateTime
@@ -46,6 +47,72 @@ class ProductsOrderRemoteStorage @Inject constructor(
             .subscribeOn(ioScheduler)
     }
 
+    override fun addProductToCart(product: Product, amount: Int): Completable {
+        return Completable
+            .error(NotImplementedError())
+            .subscribeOn(ioScheduler)
+    }
+
+    override fun addProductsToCart(products: List<Product>): Completable {
+        return Completable
+            .error(NotImplementedError())
+            .subscribeOn(ioScheduler)
+    }
+
+    override fun getOrderedProductsFromCartSingle(): Single<List<OrderedProduct>> {
+        return Single
+            .error<List<OrderedProduct>>(NotImplementedError())
+            .subscribeOn(ioScheduler)
+    }
+
+    override fun getOrderedProductsFromCart(): Observable<List<OrderedProduct>> {
+        return Observable
+            .error<List<OrderedProduct>>(NotImplementedError())
+            .subscribeOn(ioScheduler)
+    }
+
+    override fun removeProductFromCart(product: Product, amount: Int): Completable {
+        return Completable
+            .error(NotImplementedError())
+            .subscribeOn(ioScheduler)
+    }
+
+    override fun removeProductFromCart(productId: Long, amount: Int): Completable {
+        return Completable
+            .error(NotImplementedError())
+            .subscribeOn(ioScheduler)
+    }
+
+    override fun removeAllProductUnitsFromCart(product: Product): Completable {
+        return Completable
+            .error(NotImplementedError())
+            .subscribeOn(ioScheduler)
+    }
+
+    override fun removeAllProductUnitsFromCart(productId: Long): Completable {
+        return Completable
+            .error(NotImplementedError())
+            .subscribeOn(ioScheduler)
+    }
+
+    override fun removeAllProductsUnitsFromCart(products: List<Product>): Completable {
+        return Completable
+            .error(NotImplementedError())
+            .subscribeOn(ioScheduler)
+    }
+
+    override fun removeAllProductsUnitsFromCart(vararg productIds: Long): Completable {
+        return Completable
+            .error(NotImplementedError())
+            .subscribeOn(ioScheduler)
+    }
+
+    override fun removeAllProductsUnitsFromCart(): Completable {
+        return Completable
+            .error(NotImplementedError())
+            .subscribeOn(ioScheduler)
+    }
+
     override fun getOrders(): Single<List<Order>> {
         return productsOrdersApi
             .getOrders()
@@ -62,7 +129,6 @@ class ProductsOrderRemoteStorage @Inject constructor(
                 remoteOrder.toApplicationOrder() ?: throw ReceivedDataWithWrongFormatException()
             }
             .subscribeOn(ioScheduler)
-
     }
 
     override fun confirmOrder(

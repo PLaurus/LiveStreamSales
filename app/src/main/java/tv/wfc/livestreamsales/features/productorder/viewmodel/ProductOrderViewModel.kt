@@ -1,21 +1,22 @@
 package tv.wfc.livestreamsales.features.productorder.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.laurus.p.tools.livedata.LiveEvent
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.core.Single
+import com.laurus.p.tools.reactivex.NullablesWrapper
+import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.kotlin.Observables
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
+import tv.wfc.livestreamsales.application.model.orders.OrderedProduct
 import tv.wfc.livestreamsales.application.model.products.Product
 import tv.wfc.livestreamsales.application.model.products.ProductGroup
-import tv.wfc.livestreamsales.application.model.orders.OrderedProduct
 import tv.wfc.livestreamsales.application.model.products.ProductVariant
 import tv.wfc.livestreamsales.application.model.products.specification.Specification
 import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
@@ -41,13 +42,23 @@ class ProductOrderViewModel @Inject constructor(
 
     private val selectableSpecificationsByProductGroup = mutableMapOf<ProductGroup, MutableList<SelectableSpecification<*>>>()
 
-    private val mutableCart = mutableListOf<OrderedProduct>()
+    private val cartSubject = BehaviorSubject.create<List<OrderedProduct>>().apply{
+        productsOrderRepository
+            .getOrderedProductsFromCart()
+            .toFlowable(BackpressureStrategy.LATEST)
+            .observeOn(mainThreadScheduler)
+            .subscribeBy(
+                onNext = ::onNext,
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
+
+    private val selectedProductSubject = BehaviorSubject.create<NullablesWrapper<Product>>()
 
     private var dataPreparationDisposable: Disposable? = null
 
     private var selectedProductGroup: ProductGroup? = null
-
-    private var selectedProduct: Product? = null
 
     private lateinit var productGroups: List<ProductGroup>
 
@@ -76,12 +87,73 @@ class ProductOrderViewModel @Inject constructor(
 
     override val currentSelectableSpecifications = MutableLiveData<List<SelectableSpecification<*>>>()
 
-    override val isProductSelected = MutableLiveData(false)
-    override val selectedProductPrice = MutableLiveData<Float?>()
-    override val selectedProductOldPrice = MutableLiveData<Float?>()
-    override val selectedProductAmount = MutableLiveData<Int?>()
-    override val cart = MutableLiveData<List<OrderedProduct>>(emptyList())
-    override val orderedProductsFinalPrice = MutableLiveData(0f)
+    override val isProductSelected: LiveData<Boolean> = MutableLiveData(false).apply {
+        selectedProductSubject
+            .observeOn(mainThreadScheduler)
+            .map { it.value != null }
+            .distinctUntilChanged()
+            .subscribeBy(
+                onNext = ::setValue,
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
+
+    override val selectedProductPrice: LiveData<Float?> = MutableLiveData<Float?>().apply{
+        selectedProductSubject
+            .observeOn(mainThreadScheduler)
+            .subscribeBy(
+                onNext = { value = it.value?.price },
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
+
+    override val selectedProductOldPrice: LiveData<Float?> = MutableLiveData<Float?>().apply{
+        selectedProductSubject
+            .observeOn(mainThreadScheduler)
+            .subscribeBy(
+                onNext = { value = it.value?.oldPrice },
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
+
+    override val selectedProductAmount: LiveData<Int?> = MutableLiveData<Int?>().apply{
+        Observables.combineLatest(selectedProductSubject, cartSubject)
+            .observeOn(mainThreadScheduler)
+            .subscribeBy(
+                onNext = { (product, cart) ->
+                    value = product.value?.id?.let{ productId ->
+                        cart?.firstOrNull { it.product.id == productId }?.amount ?: 0
+                    }
+                },
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
+
+    override val cart: LiveData<List<OrderedProduct>> = MutableLiveData<List<OrderedProduct>>(emptyList()).apply{
+        cartSubject
+            .observeOn(mainThreadScheduler)
+            .subscribeBy(
+                onNext = ::setValue,
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
+
+    override val orderedProductsFinalPrice: LiveData<Float> = MutableLiveData(0f).apply{
+        cartSubject
+            .observeOn(mainThreadScheduler)
+            .map { it.calculatePrice() }
+            .subscribeBy(
+                onNext = ::setValue,
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
+
     override val areProductsOrderedEvent = LiveEvent<Unit>()
 
     @Synchronized
@@ -93,7 +165,8 @@ class ProductOrderViewModel @Inject constructor(
 
         dataPreparationDisposable = Completable
             .mergeArray(
-                prepareProductsInformation(broadcastId)
+                prepareProductsInformation(broadcastId),
+                prepareCart()
             )
             .observeOn(mainThreadScheduler)
             .doOnSubscribe {
@@ -124,7 +197,7 @@ class ProductOrderViewModel @Inject constructor(
         val selectedProductGroup = this.selectedProductGroup ?: return
         val selectableSpecifications = selectableSpecificationsByProductGroup[selectedProductGroup] ?: return
 
-        if(selectedProduct != null) deselectProductVariant()
+        if(selectedProductSubject != null) deselectProduct()
 
         for(i in selectableSpecifications.lastIndex downTo specificationPosition + 1){
             selectableSpecifications.removeAt(i)
@@ -145,7 +218,7 @@ class ProductOrderViewModel @Inject constructor(
             if(nextSelectableSpecification == null){
                 val filteredProductVariant = filteredProductVariants.firstOrNull()
                 if(filteredProductVariant == null){
-                    deselectProductVariant()
+                    deselectProduct()
                 } else{
                     Product.create(selectedProductGroup, filteredProductVariant.id)?.let{
                         selectProduct(it)
@@ -183,43 +256,32 @@ class ProductOrderViewModel @Inject constructor(
 
     @Synchronized
     override fun decreaseSelectedProductAmount() {
-        val product = selectedProduct ?: return
-
-        val productInCart = removeProductFromCart(product)
-
-        selectedProductAmount.value = productInCart?.amount ?: 0
+        val product = selectedProductSubject.value?.value ?: return
+        removeProductFromCart(product)
     }
 
     @Synchronized
     override fun increaseSelectedProductAmount() {
-        val product = selectedProduct ?: return
-
-        val productInCart = addProductToCart(product)
-
-        selectedProductAmount.value = productInCart.amount
+        val product = selectedProductSubject.value?.value ?: return
+        addProductToCart(product)
     }
 
     @Synchronized
     override fun deleteProductFromCart(productId: Long) {
-        mutableCart.find { it.product.id == productId }?.let{ productInCart ->
-            removeProductFromCart(productInCart)
-
-            val selectedProductVariant = this.selectedProduct
-
-            if(selectedProductVariant?.id == productId){
-                selectProduct(selectedProductVariant)
-            }
-        }
+        productsOrderRepository
+            .removeAllProductUnitsFromCart(productId)
+            .observeOn(mainThreadScheduler)
+            .doOnSubscribe { incrementActiveOperationsCount() }
+            .doOnTerminate { decrementActiveOperationsCount() }
+            .subscribeBy(applicationErrorsLogger::logError)
+            .addTo(disposables)
     }
 
     override fun orderProducts() {
-        val cart = this.cart.value ?: return
-        if(cart.isEmpty()) return
-
         orderProductsDisposable?.dispose()
 
         orderProductsDisposable = productsOrderRepository
-            .orderProducts(cart)
+            .orderProductsFromCart()
             .observeOn(mainThreadScheduler)
             .doOnSubscribe { incrementActiveOperationsCount() }
             .doOnTerminate(::decrementActiveOperationsCount)
@@ -231,31 +293,11 @@ class ProductOrderViewModel @Inject constructor(
     }
 
     private fun selectProduct(product: Product){
-        selectedProduct = product
-        isProductSelected.value = true
-        selectedProductPrice.value = product.price
-        selectedProductOldPrice.value = product.oldPrice
-        updateSelectedProductAmount(product)
+        selectedProductSubject.onNext(NullablesWrapper(product))
     }
 
-    private fun updateSelectedProductAmount(product: Product){
-        val productInCart = mutableCart.find { it.product == product }
-
-        if(productInCart != null){
-            selectedProductAmount.value = productInCart.amount
-            return
-        }
-
-        selectedProductAmount.value = 0
-    }
-
-    private fun deselectProductVariant(){
-        selectedProduct = null
-        isProductSelected.value = false
-
-        selectedProductPrice.value = null
-        selectedProductOldPrice.value = null
-        selectedProductAmount.value = null
+    private fun deselectProduct(){
+        selectedProductSubject.onNext(NullablesWrapper(null))
     }
 
     private fun prepareProductsInformation(broadcastId: Long): Completable{
@@ -266,6 +308,13 @@ class ProductOrderViewModel @Inject constructor(
                     prepareProductsData(products)
                 )
             }
+    }
+
+    private fun prepareCart(): Completable{
+        return cartSubject
+            .observeOn(mainThreadScheduler)
+            .firstOrError()
+            .ignoreElement()
     }
 
     private fun getProductGroupsFromRemote(broadcastId: Long): Single<List<ProductGroup>>{
@@ -299,7 +348,7 @@ class ProductOrderViewModel @Inject constructor(
         currentProductGroupImageUrl.value = newProductGroup.image
         currentProductGroupSpecifications.value = newProductGroup.specifications
 
-        deselectProductVariant()
+        deselectProduct()
         updateCurrentProductVariants(newProductGroup)
         changeSelectableSpecifications(newProductGroup)
     }
@@ -376,28 +425,14 @@ class ProductOrderViewModel @Inject constructor(
     private fun addProductToCart(
         product: Product,
         amount: Int = 1
-    ): OrderedProduct {
-        val additionalAmount = amount.coerceAtLeast(0)
-
-        var productInCart = mutableCart.find{ it.product == product }
-
-        productInCart = if(productInCart != null){
-            val currentAmount = productInCart.amount
-            val newAmount = (currentAmount + additionalAmount).run {
-                product.quantityInStock?.let(::coerceAtMost) ?: this
-            }
-            mutableCart.remove(productInCart)
-            productInCart.copy(amount = newAmount)
-        } else{
-            OrderedProduct(product, additionalAmount)
-        }
-
-        mutableCart.add(productInCart)
-
-        cart.value = mutableCart.toList()
-        orderedProductsFinalPrice.value = mutableCart.calculatePrice()
-
-        return productInCart
+    ) {
+        productsOrderRepository
+            .addProductToCart(product, amount)
+            .observeOn(mainThreadScheduler)
+            .doOnSubscribe { incrementActiveOperationsCount() }
+            .doOnTerminate { decrementActiveOperationsCount() }
+            .subscribeBy(applicationErrorsLogger::logError)
+            .addTo(disposables)
     }
 
     private fun List<OrderedProduct>.calculatePrice(): Float{
@@ -408,37 +443,14 @@ class ProductOrderViewModel @Inject constructor(
     private fun removeProductFromCart(
         product: Product,
         amount: Int = 1
-    ): OrderedProduct?{
-        val amountToRemove = amount.coerceAtLeast(0)
-        val result: OrderedProduct?
-
-        val productInCart = mutableCart.find{ it.product == product }
-
-        if(productInCart != null){
-            val currentAmount = productInCart.amount
-            val newAmount = (currentAmount - amountToRemove).coerceAtLeast(0)
-
-            mutableCart.remove(productInCart)
-
-            if(newAmount <= 0){
-                result = null
-            } else {
-                result = productInCart.copy(amount = newAmount)
-                mutableCart.add(result)
-            }
-
-            cart.value = mutableCart.toList()
-        } else result = null
-
-        orderedProductsFinalPrice.value = mutableCart.calculatePrice()
-
-        return result
-    }
-
-    private fun removeProductFromCart(orderedProduct: OrderedProduct){
-        mutableCart.remove(orderedProduct)
-        cart.value = mutableCart.toList()
-        orderedProductsFinalPrice.value = mutableCart.calculatePrice()
+    ){
+        productsOrderRepository
+            .removeProductFromCart(product, amount)
+            .observeOn(mainThreadScheduler)
+            .doOnSubscribe { incrementActiveOperationsCount() }
+            .doOnTerminate { decrementActiveOperationsCount() }
+            .subscribeBy(applicationErrorsLogger::logError)
+            .addTo(disposables)
     }
 
     // endregion

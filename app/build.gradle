@@ -90,6 +90,7 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxkotlin:$rxKotlinVersion"
     implementation "io.reactivex.rxjava3:rxandroid:$rxAndroidVersion"
     implementation "com.jakewharton.rxbinding4:rxbinding-material:$rxBindingMaterialVersion"
+    implementation "androidx.room:room-rxjava3:$roomVersion"
 
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionsVersion"
@@ -112,7 +113,7 @@ dependencies {
     // Date + Time
     implementation "net.danlew:android.joda:$androidJodaVersion"
 
-    //Serialization
+    // Serialization
     implementation "com.google.code.gson:gson:$gsonVersion"
 
     // REST API
@@ -123,6 +124,10 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-scalars:$retrofitConverterScalars"
     implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion"
+
+    // Local storage
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
 
     // Google Play Services
     implementation "com.google.android.gms:play-services-base:$playServicesBaseVersion"

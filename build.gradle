@@ -60,6 +60,9 @@ buildscript {
     ext.retrofitVersion =               "2.9.0"
     ext.retrofitConverterScalars =      "2.8.1"
 
+    // Local storage
+    ext.roomVersion =                   "2.3.0"
+
     // Google Play Services
     ext.playServicesBaseVersion =       "17.6.0"
 

@@ -86,4 +86,10 @@ abstract class AppStorageModule {
     internal abstract fun bindProductsOrderRemoteStorage(
         productsOrderRemoteStorage: tv.wfc.livestreamsales.application.storage.productsorder.remote.ProductsOrderRemoteStorage
     ): IProductsOrderStorage
+
+    @Binds
+    @ProductsOrderLocalStorage
+    internal abstract fun bindProductsOrderLocalStorage(
+        productsOrderLocalStorage: tv.wfc.livestreamsales.application.storage.productsorder.local.ProductsOrderLocalStorage
+    ): IProductsOrderStorage
 }

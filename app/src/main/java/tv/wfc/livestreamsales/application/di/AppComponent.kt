@@ -5,6 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import tv.wfc.livestreamsales.application.di.modules.certificates.CertificatesModule
 import tv.wfc.livestreamsales.application.di.modules.coil.CoilModule
+import tv.wfc.livestreamsales.application.di.modules.database.DatabaseModule
 import tv.wfc.livestreamsales.application.di.modules.errorslogger.ErrorsLoggerModule
 import tv.wfc.livestreamsales.application.di.modules.manager.ManagersModule
 import tv.wfc.livestreamsales.application.di.modules.reactivex.ReactiveXModule
@@ -41,6 +42,7 @@ import tv.wfc.livestreamsales.features.profile.di.ProfileComponent
     ReactiveXModule::class,
     ErrorsLoggerModule::class,
     RestModule::class,
+    DatabaseModule::class,
     CertificatesModule::class,
     ManagersModule::class,
     SharedPreferencesModule::class,

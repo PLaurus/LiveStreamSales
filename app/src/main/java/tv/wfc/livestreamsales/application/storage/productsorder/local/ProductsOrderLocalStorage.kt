@@ -1,13 +1,13 @@
-package tv.wfc.livestreamsales.application.repository.productsorder
+package tv.wfc.livestreamsales.application.storage.productsorder.local
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import org.joda.time.DateTime
+import tv.wfc.livestreamsales.application.database.tables.CartDao
+import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
-import tv.wfc.livestreamsales.application.di.modules.storage.qualifiers.ProductsOrderLocalStorage
-import tv.wfc.livestreamsales.application.di.modules.storage.qualifiers.ProductsOrderRemoteStorage
 import tv.wfc.livestreamsales.application.model.address.Address
 import tv.wfc.livestreamsales.application.model.orders.Order
 import tv.wfc.livestreamsales.application.model.orders.OrderedProduct
@@ -16,102 +16,103 @@ import tv.wfc.livestreamsales.application.model.storage.StorageDataUpdateResult
 import tv.wfc.livestreamsales.application.storage.productsorder.IProductsOrderStorage
 import javax.inject.Inject
 
-class ProductsOrderRepository @Inject constructor(
-    @ProductsOrderRemoteStorage
-    private val productsOrderRemoteStorage: IProductsOrderStorage,
-    @ProductsOrderLocalStorage
-    private val productsOrderLocalStorage: IProductsOrderStorage,
+class ProductsOrderLocalStorage @Inject constructor(
+    private val cartDao: CartDao,
     @IoScheduler
-    private val ioScheduler: Scheduler
-): IProductsOrderRepository {
+    private val ioScheduler: Scheduler,
+    @ComputationScheduler
+    private val computationScheduler: Scheduler
+): IProductsOrderStorage{
     override fun addProductToCart(product: Product, amount: Int): Completable {
-        return productsOrderLocalStorage
-            .addProductToCart(product, amount)
+        return cartDao
+            .rxAdd(product, amount)
             .subscribeOn(ioScheduler)
     }
 
     override fun addProductsToCart(products: List<Product>): Completable {
-        return productsOrderLocalStorage
-            .addProductsToCart(products)
+        return Single
+            .just(products)
+            .map { it.map(cartDao::rxAdd) }
+            .subscribeOn(computationScheduler)
+            .flatMapCompletable(Completable::merge)
             .subscribeOn(ioScheduler)
     }
 
     override fun getOrderedProductsFromCartSingle(): Single<List<OrderedProduct>> {
-        return productsOrderLocalStorage
-            .getOrderedProductsFromCartSingle()
+        return cartDao
+            .rxGetAllSingle()
             .subscribeOn(ioScheduler)
     }
 
     override fun getOrderedProductsFromCart(): Observable<List<OrderedProduct>> {
-        return productsOrderLocalStorage
-            .getOrderedProductsFromCart()
+        return cartDao
+            .rxGetAll()
             .subscribeOn(ioScheduler)
     }
 
     override fun removeProductFromCart(product: Product, amount: Int): Completable {
-        return productsOrderLocalStorage
-            .removeProductFromCart(product, amount)
+        return cartDao
+            .rxRemove(product, amount)
             .subscribeOn(ioScheduler)
     }
 
     override fun removeProductFromCart(productId: Long, amount: Int): Completable {
-        return productsOrderLocalStorage
-            .removeProductFromCart(productId, amount)
+        return cartDao
+            .rxRemove(productId, amount)
             .subscribeOn(ioScheduler)
     }
 
     override fun removeAllProductUnitsFromCart(product: Product): Completable {
-        return productsOrderLocalStorage
-            .removeAllProductUnitsFromCart(product)
+        return cartDao
+            .rxRemove(product)
             .subscribeOn(ioScheduler)
     }
 
     override fun removeAllProductUnitsFromCart(productId: Long): Completable {
-        return productsOrderLocalStorage
-            .removeAllProductUnitsFromCart(productId)
+        return cartDao
+            .rxRemove(productId)
             .subscribeOn(ioScheduler)
     }
 
     override fun removeAllProductsUnitsFromCart(products: List<Product>): Completable {
-        return productsOrderLocalStorage
-            .removeAllProductsUnitsFromCart()
+        return Single
+            .just(products)
+            .map { it.map(cartDao::rxRemove) }
+            .subscribeOn(computationScheduler)
+            .flatMapCompletable(Completable::merge)
             .subscribeOn(ioScheduler)
     }
 
     override fun removeAllProductsUnitsFromCart(vararg productIds: Long): Completable {
-        return productsOrderLocalStorage
-            .removeAllProductsUnitsFromCart(*productIds)
+        return Single
+            .just(productIds)
+            .map { it.map(cartDao::rxRemove) }
+            .subscribeOn(computationScheduler)
+            .flatMapCompletable(Completable::merge)
             .subscribeOn(ioScheduler)
     }
 
     override fun removeAllProductsUnitsFromCart(): Completable {
-        return productsOrderLocalStorage
-            .removeAllProductsUnitsFromCart()
+        return cartDao
+            .rxDeleteAll()
             .subscribeOn(ioScheduler)
     }
 
     override fun orderProducts(products: List<OrderedProduct>): Completable {
-        return productsOrderRemoteStorage
-            .orderProducts(products)
-            .subscribeOn(ioScheduler)
-    }
-
-    override fun orderProductsFromCart(): Completable {
-        return getOrderedProductsFromCartSingle()
-            .flatMapCompletable (::orderProducts)
-            .andThen(removeAllProductsUnitsFromCart())
+        return Completable
+            .error(NotImplementedError())
             .subscribeOn(ioScheduler)
     }
 
     override fun getOrders(): Single<List<Order>> {
-        return productsOrderRemoteStorage
-            .getOrders()
+        return Single
+            .error<List<Order>>(NotImplementedError())
             .subscribeOn(ioScheduler)
     }
 
     override fun getOrder(id: Long): Single<Order> {
-        return productsOrderRemoteStorage
-            .getOrder(id)
+        return Single
+            .error<Order>(NotImplementedError())
             .subscribeOn(ioScheduler)
     }
 
@@ -120,8 +121,8 @@ class ProductsOrderRepository @Inject constructor(
         deliveryAddress: Address,
         deliveryDate: DateTime
     ): Single<StorageDataUpdateResult> {
-        return productsOrderRemoteStorage
-            .confirmOrder(orderId, deliveryAddress, deliveryDate)
+        return Single
+            .error<StorageDataUpdateResult>(NotImplementedError())
             .subscribeOn(ioScheduler)
     }
 }
