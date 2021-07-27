@@ -23,9 +23,7 @@ data class Order(
 
     private fun calculateOrderPrice(): Float{
         return products
-            .map{ it.product.price }
-            .reduceOrNull{ accumulated, next ->
-                accumulated + next
-            } ?: 0f
+            .map{ it.product.price * it.amount }
+            .reduceOrNull{ accumulated, next -> accumulated + next } ?: 0f
     }
 }

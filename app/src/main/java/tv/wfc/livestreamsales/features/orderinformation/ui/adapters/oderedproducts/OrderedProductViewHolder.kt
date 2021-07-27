@@ -115,11 +115,13 @@ class OrderedProductViewHolder(
     }
 
     private fun initializeProductPriceText(orderedProduct: OrderedProduct){
-        val formattedPrice = orderedProduct.product.price.format()
+        val unitPrice = orderedProduct.product.price
+        val amount = orderedProduct.amount
+        val sumPrice = unitPrice * amount
 
         viewBinding.productPriceText.text = context.getString(
             R.string.fragment_order_information_sum_text,
-            formattedPrice
+            sumPrice.format()
         )
     }
 
