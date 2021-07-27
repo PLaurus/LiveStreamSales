@@ -220,7 +220,6 @@ class OrderDeliveryAddressEditingFragment: BaseFragment(R.layout.fragment_order_
     private fun initializeFlatLayout(){
         viewModel.deliveryFlatError.observe(viewLifecycleOwner, { flatError ->
             val errorMessage = when(flatError){
-                IOrderEditingViewModel.FlatError.FieldIsRequired -> getString(R.string.fragment_order_delivery_address_editing_field_is_required)
                 IOrderEditingViewModel.FlatError.FieldContainsIllegalSymbols -> getString(R.string.fragment_order_delivery_address_editing_field_contains_illegal_symbols)
                 else -> null
             }

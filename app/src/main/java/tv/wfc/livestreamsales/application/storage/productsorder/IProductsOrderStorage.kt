@@ -86,6 +86,6 @@ interface IProductsOrderStorage {
     fun confirmOrder(
         orderId: Long,
         deliveryAddress: Address,
-        deliveryDate: DateTime
+        deliveryDate: DateTime? = null
     ): Single<StorageDataUpdateResult>
 }

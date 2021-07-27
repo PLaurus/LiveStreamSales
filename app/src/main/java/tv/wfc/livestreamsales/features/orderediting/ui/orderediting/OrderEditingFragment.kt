@@ -211,6 +211,7 @@ class OrderEditingFragment: BaseFragment(R.layout.fragment_order_editing){
     private fun initializeDeliveryAddressText(){
         viewBinding?.deliveryAddressText?.run {
             val addressIsNotEnteredText = context.getString(R.string.fragment_order_editing_delivery_address_text_not_entered)
+            val flatIsNotEntered = context.getString(R.string.fragment_order_editing_delivery_address_text_flat_not_entered)
             val floorIsNotEntered = context.getString(R.string.fragment_order_editing_delivery_address_text_floor_not_entered)
 
             viewModel.deliveryAddress.observe(viewLifecycleOwner){ deliveryAddress ->
@@ -220,7 +221,7 @@ class OrderEditingFragment: BaseFragment(R.layout.fragment_order_editing){
                         deliveryAddress.city,
                         deliveryAddress.street,
                         deliveryAddress.building,
-                        deliveryAddress.flat,
+                        deliveryAddress.flat ?: flatIsNotEntered,
                         deliveryAddress.floor ?: floorIsNotEntered
                     )
                 } else addressIsNotEnteredText

@@ -88,5 +88,5 @@ interface IProductsOrderRepository {
 
     fun getOrders(): Single<List<Order>>
     fun getOrder(id: Long): Single<Order>
-    fun confirmOrder(orderId: Long, deliveryAddress: Address, deliveryDate: DateTime): Single<StorageDataUpdateResult>
+    fun confirmOrder(orderId: Long, deliveryAddress: Address, deliveryDate: DateTime? = null): Single<StorageDataUpdateResult>
 }

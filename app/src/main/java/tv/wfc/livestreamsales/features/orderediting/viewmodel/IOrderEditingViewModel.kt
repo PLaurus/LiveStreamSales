@@ -62,7 +62,6 @@ interface IOrderEditingViewModel: INeedPreparationViewModel{
     }
 
     sealed class FlatError{
-        object FieldIsRequired: FlatError()
         object FieldContainsIllegalSymbols: FlatError()
     }
 

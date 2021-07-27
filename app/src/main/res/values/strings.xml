@@ -296,16 +296,18 @@
     <string name="fragment_order_editing_delivery_address_title_text">Адрес доставки</string>
     <string name="fragment_order_editing_delivery_address_text_not_entered">необходимо указать</string>
     <string name="fragment_order_editing_delivery_address_text_floor_not_entered">не указан</string>
+    <string name="fragment_order_editing_delivery_address_text_flat_not_entered">не указана</string>
     <string name="fragment_order_editing_delivery_address_text_entered">г. %s, ул. %s, д. %s, кв. %s, этаж %s</string>
     <string name="fragment_order_editing_delivery_date_title_text">Дата доставки</string>
     <string name="fragment_order_editing_delivery_time_title_text">Время доставки</string>
-    <string name="fragment_order_editing_delivery_date_text_not_entered">необходимо указать</string>
+    <string name="fragment_order_editing_delivery_date_text_not_entered">не указана</string>
     <string name="fragment_order_editing_order_recipient_title_text">Получатель</string>
     <string name="fragment_order_editing_order_recipient_text_not_entered">необходимо указать</string>
     <string name="fragment_order_editing_your_order_title_text">Ваш заказ</string>
     <string name="fragment_order_editing_sum_title_text">Сумма заказа</string>
     <string name="fragment_order_editing_sum_text">%s руб.</string>
     <string name="fragment_order_editing_confirm_order_button">Подтвердить заказ</string>
+    <string name="fragment_order_editing_error_failed_to_confirm_order">Не удалось подтвердить заказ</string>
 
     <!-- Order delivery address editing fragment -->
     <string name="fragment_order_delivery_address_editing_destination_title">Адрес доставки</string>

@@ -1,9 +1,12 @@
 package tv.wfc.livestreamsales.features.orderediting.viewmodel
 
+import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.laurus.p.tools.livedata.LiveEvent
+import com.laurus.p.tools.reactivex.NullablesWrapper
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -14,6 +17,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import tv.wfc.contentloader.model.ViewModelPreparationState
+import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.manager.IAuthorizationManager
 import tv.wfc.livestreamsales.application.model.address.Address
@@ -26,6 +30,7 @@ import java.util.regex.Pattern
 import javax.inject.Inject
 
 class OrderEditingViewModel @Inject constructor(
+    private val applicationContext: Context,
     private val authorizationManager: IAuthorizationManager,
     private val productsOrderRepository: IProductsOrderRepository,
     @MainThreadScheduler
@@ -34,12 +39,17 @@ class OrderEditingViewModel @Inject constructor(
 ): ViewModel(), IOrderEditingViewModel {
     private val disposables = CompositeDisposable()
     private val activeOperationsCount = BehaviorSubject.createDefault(0)
+    private val deliveryCityErrorSubject = BehaviorSubject.create<NullablesWrapper<IOrderEditingViewModel.CityError>>()
+    private val deliveryStreetErrorSubject = BehaviorSubject.create<NullablesWrapper<IOrderEditingViewModel.StreetError>>()
+    private val deliveryBuildingErrorSubject = BehaviorSubject.create<NullablesWrapper<IOrderEditingViewModel.BuildingError>>()
+    private val deliveryFlatErrorSubject = BehaviorSubject.create<NullablesWrapper<IOrderEditingViewModel.FlatError>>()
 
     private var dataPreparationDisposable: Disposable? = null
     private var orderConfirmationDisposable: Disposable? = null
     private var isDataBeingConfirmed: Boolean = false
 
     override val dataPreparationState = MutableLiveData<ViewModelPreparationState>(ViewModelPreparationState.DataIsNotPrepared)
+
     override val isAnyOperationInProgress = MutableLiveData<Boolean>().apply {
         activeOperationsCount
             .observeOn(mainThreadScheduler)
@@ -50,18 +60,64 @@ class OrderEditingViewModel @Inject constructor(
             )
             .addTo(disposables)
     }
+
     override val nextDestinationEvent = LiveEvent<IOrderEditingViewModel.NextDestination>()
     override val orderId = MutableLiveData<Long>()
     override val orderStatus = MutableLiveData<Order.Status>()
     override val deliveryCity = MutableLiveData<String>()
-    override val deliveryCityError = MutableLiveData<IOrderEditingViewModel.CityError?>()
+
+    override val deliveryCityError: LiveData<IOrderEditingViewModel.CityError?> =
+        MutableLiveData<IOrderEditingViewModel.CityError?>().apply{
+            deliveryCityErrorSubject
+                .observeOn(mainThreadScheduler)
+                .subscribeBy(
+                    onNext = { value = it.value },
+                    onError = applicationErrorsLogger::logError
+                )
+                .addTo(disposables)
+        }
+
     override val deliveryStreet = MutableLiveData<String>()
-    override val deliveryStreetError = MutableLiveData<IOrderEditingViewModel.StreetError?>()
+
+    override val deliveryStreetError: LiveData<IOrderEditingViewModel.StreetError?> =
+        MutableLiveData<IOrderEditingViewModel.StreetError?>().apply{
+            deliveryStreetErrorSubject
+                .observeOn(mainThreadScheduler)
+                .subscribeBy(
+                    onNext = { value = it.value },
+                    onError = applicationErrorsLogger::logError
+                )
+                .addTo(disposables)
+        }
+
     override val deliveryBuilding = MutableLiveData<String>()
-    override val deliveryBuildingError = MutableLiveData<IOrderEditingViewModel.BuildingError?>()
+
+    override val deliveryBuildingError: LiveData<IOrderEditingViewModel.BuildingError?> =
+        MutableLiveData<IOrderEditingViewModel.BuildingError?>().apply{
+            deliveryBuildingErrorSubject
+                .observeOn(mainThreadScheduler)
+                .subscribeBy(
+                    onNext = { value = it.value },
+                    onError = applicationErrorsLogger::logError
+                )
+                .addTo(disposables)
+        }
+
     override val deliveryFlat = MutableLiveData<String>()
-    override val deliveryFlatError = MutableLiveData<IOrderEditingViewModel.FlatError?>()
+
+    override val deliveryFlatError: LiveData<IOrderEditingViewModel.FlatError?> =
+        MutableLiveData<IOrderEditingViewModel.FlatError?>().apply{
+            deliveryFlatErrorSubject
+                .observeOn(mainThreadScheduler)
+                .subscribeBy(
+                    onNext = { value = it.value },
+                    onError = applicationErrorsLogger::logError
+                )
+                .addTo(disposables)
+        }
+
     override val deliveryFloor = MutableLiveData<Int?>()
+
     override val deliveryAddress = MediatorLiveData<Address?>().apply{
         val sources = listOf(
             deliveryCity,
@@ -71,18 +127,19 @@ class OrderEditingViewModel @Inject constructor(
             deliveryFloor
         )
 
-        val onChanged: (Any?) -> Unit = { makeAddressFromFields()?.let(::setValue) }
+        val onChanged: (Any?) -> Unit = { value = makeAddressFromFields() }
 
         sources.forEach{ addSource(it, onChanged) }
     }
+
     override val orderDeliveryDateTime = MutableLiveData<DateTime?>()
     override val orderRecipient = MutableLiveData<OrderRecipient?>()
     override val orderSum = MutableLiveData<Float>()
     override val orderedProducts = MutableLiveData<List<OrderedProduct>>()
+
     override val isOrderReadyForConfirmation = MediatorLiveData<Boolean>().apply{
         val sources = listOf(
-            deliveryAddress,
-            orderDeliveryDateTime
+            deliveryAddress
         )
 
         val onChanged: (Any?) -> Unit = {
@@ -93,6 +150,7 @@ class OrderEditingViewModel @Inject constructor(
 
         sources.forEach { addSource(it, onChanged) }
     }
+
     override val genericErrorEvent = LiveEvent<String>()
 
     init{
@@ -121,25 +179,25 @@ class OrderEditingViewModel @Inject constructor(
     }
 
     override fun updateDeliveryCity(city: String?) {
-        deliveryCityError.value = checkDeliveryCity(city)
+        deliveryCityErrorSubject.onNext(NullablesWrapper(checkDeliveryCity(city)))
         if(this.deliveryCity.value == city) return
         this.deliveryCity.value = city
     }
 
     override fun updateDeliveryStreet(street: String?) {
-        deliveryStreetError.value = checkDeliveryStreet(street)
+        deliveryStreetErrorSubject.onNext(NullablesWrapper(checkDeliveryStreet(street)))
         if(this.deliveryStreet.value == street) return
         this.deliveryStreet.value = street
     }
 
     override fun updateDeliveryBuilding(building: String?) {
-        deliveryBuildingError.value = checkDeliveryBuilding(building)
+        deliveryBuildingErrorSubject.onNext(NullablesWrapper(checkDeliveryBuilding(building)))
         if(this.deliveryBuilding.value == building) return
         this.deliveryBuilding.value = building
     }
 
     override fun updateDeliveryFlat(flat: String?) {
-        deliveryFlatError.value = checkDeliveryFlat(flat)
+        deliveryFlatErrorSubject.onNext(NullablesWrapper(checkDeliveryFlat(flat)))
         if(this.deliveryFlat.value == flat) return
         this.deliveryFlat.value = flat
     }
@@ -202,7 +260,7 @@ class OrderEditingViewModel @Inject constructor(
         if(isDataBeingConfirmed) return
         val orderId = orderId.value ?: return
         val deliveryAddress = this.deliveryAddress.value ?: return
-        val deliveryDate = this.orderDeliveryDateTime.value ?: return
+        val deliveryDate = this.orderDeliveryDateTime.value
 
         orderConfirmationDisposable?.dispose()
         orderConfirmationDisposable = productsOrderRepository
@@ -218,7 +276,12 @@ class OrderEditingViewModel @Inject constructor(
 
                     it.message?.let(genericErrorEvent::setValue)
                 },
-                onError = applicationErrorsLogger::logError
+                onError = {
+                    applicationErrorsLogger.logError(it)
+
+                    val failedToConfirmOrderMessage = applicationContext.getString(R.string.fragment_order_editing_error_failed_to_confirm_order)
+                    genericErrorEvent.value = failedToConfirmOrderMessage
+                }
             )
             .addTo(disposables)
     }
@@ -285,10 +348,18 @@ class OrderEditingViewModel @Inject constructor(
     }
 
     private fun checkDeliveryFlat(flat: String?): IOrderEditingViewModel.FlatError?{
-        if(flat.isNullOrEmpty()) return IOrderEditingViewModel.FlatError.FieldIsRequired
-        if(!flat.checkContainsOnlySingleLanguageLetters()) return IOrderEditingViewModel.FlatError.FieldContainsIllegalSymbols
+        if(flat?.checkContainsOnlySingleLanguageLetters() == false) {
+            return IOrderEditingViewModel.FlatError.FieldContainsIllegalSymbols
+        }
 
         return null
+    }
+
+    private fun checkAddressFieldsContainErrors(): Boolean{
+        return deliveryCityErrorSubject.value.value != null ||
+                deliveryStreetErrorSubject.value.value != null ||
+                deliveryBuildingErrorSubject.value.value != null ||
+                deliveryFlatErrorSubject.value.value != null
     }
 
     private fun String.checkContainsOnlySingleLanguageLetters(): Boolean{
@@ -296,13 +367,18 @@ class OrderEditingViewModel @Inject constructor(
     }
 
     private fun makeAddressFromFields(): Address?{
+        if(checkAddressFieldsContainErrors()) return null
         val city = this.deliveryCity.value ?: return null
         val street = this.deliveryStreet.value ?: return null
         val building = this.deliveryBuilding.value ?: return null
-        val flat = this.deliveryFlat.value ?: return null
-        val floor = this.deliveryFloor.value
 
-        return Address(city, street, building, flat, floor)
+        return Address(
+            city,
+            street,
+            building,
+            flat = deliveryFlat.value,
+            floor = deliveryFloor.value
+        )
     }
 
     @Synchronized

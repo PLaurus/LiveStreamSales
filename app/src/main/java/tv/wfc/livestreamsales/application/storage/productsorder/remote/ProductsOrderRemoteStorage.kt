@@ -18,7 +18,6 @@ import tv.wfc.livestreamsales.application.model.storage.StorageDataUpdateResult
 import tv.wfc.livestreamsales.application.storage.productsorder.IProductsOrderStorage
 import tv.wfc.livestreamsales.features.rest.api.authorized.productsorders.IProductsOrdersApi
 import tv.wfc.livestreamsales.features.rest.api.authorized.productsorders.confirmorder.ConfirmOrderRequestBody
-import tv.wfc.livestreamsales.features.rest.model.api.editorderaddress.EditOrderAddressRequestBody
 import tv.wfc.livestreamsales.features.rest.model.api.orderproducts.OrderProductsRequestBody
 import javax.inject.Inject
 
@@ -134,7 +133,7 @@ class ProductsOrderRemoteStorage @Inject constructor(
     override fun confirmOrder(
         orderId: Long,
         deliveryAddress: Address,
-        deliveryDate: DateTime
+        deliveryDate: DateTime?
     ): Single<StorageDataUpdateResult> {
         val confirmOrderRequestBody = ConfirmOrderRequestBody(
             deliveryDate = deliveryDate,
@@ -246,16 +245,6 @@ class ProductsOrderRemoteStorage @Inject constructor(
             name,
             surname,
             email
-        )
-    }
-
-    private fun Address.toEditOrderAddressRequestBody(): EditOrderAddressRequestBody{
-        return EditOrderAddressRequestBody(
-            city,
-            street,
-            building,
-            flat,
-            floor
         )
     }
 }

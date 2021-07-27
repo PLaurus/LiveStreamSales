@@ -118,7 +118,7 @@ class ProductsOrderRepository @Inject constructor(
     override fun confirmOrder(
         orderId: Long,
         deliveryAddress: Address,
-        deliveryDate: DateTime
+        deliveryDate: DateTime?
     ): Single<StorageDataUpdateResult> {
         return productsOrderRemoteStorage
             .confirmOrder(orderId, deliveryAddress, deliveryDate)
