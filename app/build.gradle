@@ -70,6 +70,7 @@ dependencies {
     implementation "io.coil-kt:coil:$coilVersion"
     implementation "com.romandanylyk:pageindicatorview:$pageIndicatorViewVersion"
     implementation "com.tbuonomo.andrui:viewpagerdotsindicator:$viewPagerDotsIndicatorVersion"
+    implementation "com.github.bosphere.android-fadingedgelayout:fadingedgelayout:$fadingEdgeLayoutVersion"
 
     // Payment
     implementation "ru.yoomoney.sdk.kassa.payments:yookassa-android-sdk:$yookassaAndroidSdkVersion"

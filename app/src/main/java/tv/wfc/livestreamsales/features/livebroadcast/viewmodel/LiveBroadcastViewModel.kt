@@ -26,8 +26,10 @@ import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.Comput
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.manager.IAuthorizationManager
 import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
+import tv.wfc.livestreamsales.application.model.chat.ChatMessage
 import tv.wfc.livestreamsales.application.model.products.Product
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
+import tv.wfc.livestreamsales.application.repository.chat.IChatRepository
 import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.tools.exoplayer.PlaybackState
@@ -45,14 +47,18 @@ class LiveBroadcastViewModel @Inject constructor(
     private val broadcastsInformationRepository: IBroadcastsInformationRepository,
     private val broadcastAnalyticsRepository: IBroadcastAnalyticsRepository,
     private val productsRepository: IProductsRepository,
+    private val chatRepository: IChatRepository,
     private val authorizationManager: IAuthorizationManager,
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): ViewModel(), ILiveBroadcastViewModel {
     private val disposables = CompositeDisposable()
     private val productsSubject = PublishSubject.create<List<Product>>()
 
+    private val maxChatMessages = 15
+
     private var broadcastId: Long? = null
     private var userIsWatchingBroadcastDisposable: Disposable? = null
+    private var sendMessageDisposable: Disposable? = null
 
     override val dataPreparationState = MutableLiveData<ViewModelPreparationState>()
     override val isUserLoggedIn = MutableLiveData<Boolean>().apply{
@@ -66,6 +72,7 @@ class LiveBroadcastViewModel @Inject constructor(
             .addTo(disposables)
     }
     override val isDataBeingRefreshed = MutableLiveData(false)
+    override val genericErrorEvent = LiveEvent<String>()
     override val image = MutableLiveData<Drawable>()
     override val broadcastTitle = MutableLiveData<String>()
     override val viewersCount = MutableLiveData<Int>()
@@ -74,27 +81,6 @@ class LiveBroadcastViewModel @Inject constructor(
 
     override val playbackState = MutableLiveData<PlaybackState>()
     override val onPlayerError = LiveEvent<ExoPlaybackException>()
-
-    override val broadcastHasProducts: LiveData<Boolean> = MutableLiveData(false).apply {
-        productsSubject
-            .observeOn(mainThreadScheduler)
-            .map{ it.isNotEmpty() }
-            .distinctUntilChanged()
-            .subscribeBy(
-                onNext = ::setValue,
-                onError = applicationErrorsLogger::logError
-            )
-            .addTo(disposables)
-    }
-    override val products = MutableLiveData<List<Product>>().apply{
-        productsSubject
-            .observeOn(mainThreadScheduler)
-            .subscribeBy(
-                onNext = ::setValue,
-                onError = applicationErrorsLogger::logError
-            )
-            .addTo(disposables)
-    }
 
     override val playerEventListener = object : Player.Listener{
         override fun onPlaybackStateChanged(state: Int) {
@@ -114,6 +100,59 @@ class LiveBroadcastViewModel @Inject constructor(
             }
         }
     }
+
+    override val broadcastHasProducts: LiveData<Boolean> = MutableLiveData(false).apply {
+        productsSubject
+            .observeOn(mainThreadScheduler)
+            .map{ it.isNotEmpty() }
+            .distinctUntilChanged()
+            .subscribeBy(
+                onNext = ::setValue,
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
+
+    override val products = MutableLiveData<List<Product>>().apply{
+        productsSubject
+            .observeOn(mainThreadScheduler)
+            .subscribeBy(
+                onNext = ::setValue,
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
+
+    override val chatMessages = MutableLiveData<List<ChatMessage>>().apply{
+        fun addMessage(newMessage: ChatMessage){
+            val newMessagesList = value?.toMutableList() ?: mutableListOf()
+
+            newMessagesList.apply {
+                val excessMessagesCount = ((size + 1) - maxChatMessages).coerceAtLeast(0)
+
+                if(excessMessagesCount > 0){
+                    repeat(excessMessagesCount){
+                        removeLastOrNull()
+                    }
+                }
+
+                add(0, newMessage)
+            }
+
+            value = newMessagesList
+        }
+
+        chatRepository
+            .getChatObservable()
+            .observeOn(mainThreadScheduler)
+            .subscribeBy(
+                onNext = ::addMessage,
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
+
+    override val enteredMessage = MutableLiveData<String>()
 
     override fun onCleared() {
         super.onCleared()
@@ -181,6 +220,31 @@ class LiveBroadcastViewModel @Inject constructor(
 
     override fun notifyUserIsNotWatchingBroadcast() {
         userIsWatchingBroadcastDisposable?.dispose()
+    }
+
+    override fun updateEnteredMessage(message: String) {
+        if(enteredMessage.value == message) return
+        enteredMessage.value = message
+    }
+
+    @Synchronized
+    override fun sendMessage() {
+        val message = enteredMessage.value ?: return
+
+        sendMessageDisposable?.dispose()
+        sendMessageDisposable = chatRepository
+            .sendMessage(message)
+            .observeOn(mainThreadScheduler)
+            .doOnSubscribe { enteredMessage.value = "" }
+            .subscribeBy(
+                onError = {
+                    applicationErrorsLogger.logError(it)
+
+                    val errorMessage = context.getString(R.string.fragment_live_broadcast_error_failed_to_send_message)
+                    genericErrorEvent.value = errorMessage
+                }
+            )
+            .addTo(disposables)
     }
 
     private fun prepareBroadcastInformation(broadcastId: Long): Completable {

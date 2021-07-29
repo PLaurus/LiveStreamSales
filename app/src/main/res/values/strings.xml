@@ -328,5 +328,6 @@
     <string name="fragment_live_broadcast_send_message">Отправить</string>
     <string name="fragment_live_broadcast_buy">Купить</string>
     <string name="fragment_live_broadcast_price">%s руб.</string>
+    <string name="fragment_live_broadcast_error_failed_to_send_message">Не удалось отправить сообщение</string>
 
 </resources>

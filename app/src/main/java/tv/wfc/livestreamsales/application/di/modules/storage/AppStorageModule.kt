@@ -9,6 +9,8 @@ import tv.wfc.livestreamsales.application.storage.authorization.local.IAuthoriza
 import tv.wfc.livestreamsales.application.storage.authorization.remote.AuthorizationRemoteStorage
 import tv.wfc.livestreamsales.application.storage.authorization.remote.IAuthorizationRemoteStorage
 import tv.wfc.livestreamsales.application.storage.broadcastsinformation.IBroadcastsStorage
+import tv.wfc.livestreamsales.application.storage.chat.IChatStorage
+import tv.wfc.livestreamsales.application.storage.chat.simulated.SimulatedChatStorage
 import tv.wfc.livestreamsales.application.storage.paymentcardinformation.IPaymentCardInformationStorage
 import tv.wfc.livestreamsales.application.storage.products.IProductsStorage
 import tv.wfc.livestreamsales.application.storage.productsorder.IProductsOrderStorage
@@ -92,4 +94,9 @@ abstract class AppStorageModule {
     internal abstract fun bindProductsOrderLocalStorage(
         productsOrderLocalStorage: tv.wfc.livestreamsales.application.storage.productsorder.local.ProductsOrderLocalStorage
     ): IProductsOrderStorage
+
+    @Binds
+    internal abstract fun bindChatStorage(
+        simulatedChatStorage: SimulatedChatStorage
+    ): IChatStorage
 }

@@ -9,6 +9,8 @@ import tv.wfc.livestreamsales.application.repository.authorization.Authorization
 import tv.wfc.livestreamsales.application.repository.authorization.IAuthorizationRepository
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.BroadcastsInformationRepository
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
+import tv.wfc.livestreamsales.application.repository.chat.ChatRepository
+import tv.wfc.livestreamsales.application.repository.chat.IChatRepository
 import tv.wfc.livestreamsales.application.repository.paymentcardinformation.IPaymentCardInformationRepository
 import tv.wfc.livestreamsales.application.repository.paymentcardinformation.PaymentCardInformationRepository
 import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
@@ -69,4 +71,10 @@ abstract class AppRepositoryModule {
     internal abstract fun bindProductsOrderRepository(
         productsOrderRepository: ProductsOrderRepository
     ): IProductsOrderRepository
+
+    @ApplicationScope
+    @Binds
+    internal abstract fun bindChatRepository(
+        chatRepository: ChatRepository
+    ): IChatRepository
 }

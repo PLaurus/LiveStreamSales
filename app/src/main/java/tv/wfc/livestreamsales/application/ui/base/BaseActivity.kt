@@ -23,7 +23,7 @@ abstract class BaseActivity: AppCompatActivity() {
     }
 
     private fun setRootViewClickable(){
-        findViewById<ViewGroup>(android.R.id.content).getChildAt(0).apply {
+        findViewById<ViewGroup>(android.R.id.content).apply {
             isClickable = true
             isFocusable = true
             isFocusableInTouchMode = true
@@ -31,21 +31,29 @@ abstract class BaseActivity: AppCompatActivity() {
     }
 
     override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
-        if (event?.action == MotionEvent.ACTION_DOWN) {
+        if(event?.action == MotionEvent.ACTION_UP){
+            val previousFocusedView = currentFocus ?: return super.dispatchTouchEvent(event)
+            val isTouchEventConsumedAfterAction = super.dispatchTouchEvent(event)
+            val currentFocusedView = currentFocus ?: previousFocusedView
 
-            val currentFocus = currentFocus
+            if(currentFocusedView == previousFocusedView){
+                val currentFocusedViewRect = Rect()
+                currentFocusedView.getGlobalVisibleRect(currentFocusedViewRect)
 
-            if (currentFocus is EditText) {
-                val outRect = Rect()
-
-                currentFocus.getGlobalVisibleRect(outRect)
-
-                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
-                    currentFocus.clearFocus()
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                    imm?.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+                if(currentFocusedViewRect.contains(event.rawX.toInt(), event.rawY.toInt())){
+                    return isTouchEventConsumedAfterAction
+                } else{
+                    currentFocusedView.clearFocus()
                 }
             }
+            else if(currentFocusedView is EditText){
+                return isTouchEventConsumedAfterAction
+            }
+
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            imm?.hideSoftInputFromWindow(currentFocusedView.windowToken, 0)
+
+            return isTouchEventConsumedAfterAction
         }
 
         return super.dispatchTouchEvent(event)

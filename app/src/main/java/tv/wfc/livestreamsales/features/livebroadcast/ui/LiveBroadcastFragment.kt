@@ -3,6 +3,8 @@ package tv.wfc.livestreamsales.features.livebroadcast.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -18,6 +20,7 @@ import com.google.android.exoplayer2.trackselection.TrackSelector
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.util.ErrorMessageProvider
 import com.google.android.exoplayer2.util.Util
+import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding4.view.clicks
 import com.laurus.p.tools.view.hideSmoothly
 import com.laurus.p.tools.view.matchRootView
@@ -33,11 +36,13 @@ import tv.wfc.livestreamsales.NavigationGraphRootDirections
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
+import tv.wfc.livestreamsales.application.model.chat.ChatMessage
 import tv.wfc.livestreamsales.application.model.products.Product
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.ui.base.BaseFragment
 import tv.wfc.livestreamsales.databinding.FragmentLiveBroadcastBinding
 import tv.wfc.livestreamsales.features.livebroadcast.di.LiveBroadcastComponent
+import tv.wfc.livestreamsales.features.livebroadcast.ui.adapters.messages.MessagesAdapter
 import tv.wfc.livestreamsales.features.livebroadcast.ui.adapters.products.ProductsAdapter
 import tv.wfc.livestreamsales.features.livebroadcast.viewmodel.ILiveBroadcastViewModel
 import tv.wfc.livestreamsales.features.mainappcontent.ui.MainAppContentActivity
@@ -61,6 +66,9 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
 
     @Inject
     lateinit var productsDiffUtilItemCallback: DiffUtil.ItemCallback<Product>
+
+    @Inject
+    lateinit var chatMessagesDiffUtilItemCallback: DiffUtil.ItemCallback<ChatMessage>
 
     @Inject
     lateinit var imageLoader: ImageLoader
@@ -177,6 +185,9 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
         initializeBuyButton()
         initializeSendMessageButton()
         initializeMessageInput()
+        initializeChatRecyclerView()
+        initializeBottomLayout()
+        initializeSnackBar()
         showBroadcastInformationTemporarily()
     }
 
@@ -316,14 +327,50 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
 
     private fun initializeSendMessageButton(){
         viewBinding?.sendMessageButton?.apply{
-
+            clicks()
+                .throttleLatest(500L, TimeUnit.MILLISECONDS, computationScheduler)
+                .observeOn(mainThreadScheduler)
+                .subscribeBy(
+                    onNext = { viewModel.sendMessage() },
+                    onError = applicationErrorsLogger::logError
+                )
+                .addTo(viewScopeDisposables)
         }
     }
 
     private fun initializeMessageInput(){
         viewBinding?.run{
-            messageInput.setOnFocusChangeListener { _, hasFocus ->
-                if(hasFocus){
+            messageInput.apply{
+                viewModel.enteredMessage.observe(viewLifecycleOwner, Observer{ enteredMessage ->
+                    if(text.toString() == enteredMessage) return@Observer
+
+                    setText(enteredMessage, TextView.BufferType.EDITABLE)
+                })
+
+                addTextChangedListener { editable ->
+                    viewModel.updateEnteredMessage(editable.toString())
+                }
+            }
+        }
+    }
+
+    private fun initializeChatRecyclerView(){
+        viewBinding?.chatRecyclerView?.run {
+            adapter = MessagesAdapter(chatMessagesDiffUtilItemCallback)
+
+            overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+
+
+            viewModel.chatMessages.observe(viewLifecycleOwner){ messages ->
+                (adapter as MessagesAdapter).submitList(messages)
+            }
+        }
+    }
+
+    private fun initializeBottomLayout(){
+        viewBinding?.run{
+            root.viewTreeObserver.addOnGlobalFocusChangeListener { oldFocus, newFocus ->
+                if(bottomLayout.hasFocus()){
                     buyButton.visibility = View.GONE
                     sendMessageButton.visibility = View.VISIBLE
                 } else{
@@ -333,6 +380,14 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
                         buyButton.visibility = View.VISIBLE
                     }
                 }
+            }
+        }
+    }
+
+    private fun initializeSnackBar(){
+        viewBinding?.run {
+            viewModel.genericErrorEvent.observe(viewLifecycleOwner){ errorMessage ->
+                Snackbar.make(root, errorMessage, Snackbar.LENGTH_SHORT).show()
             }
         }
     }
