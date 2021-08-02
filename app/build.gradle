@@ -18,6 +18,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         project.ext.set("archivesBaseName", "LiveStreamSales-" + defaultConfig.versionName)
+        resValue("string", "ym_app_scheme", applicationId)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
