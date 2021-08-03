@@ -60,7 +60,7 @@ class ProductsRemoteStorage @Inject constructor(
     private fun RemoteProduct.toProduct(): ProductGroup?{
         val productName = name ?: return null
         val productVariants = skus?.mapNotNull { it.toProductVariant() } ?: return null
-        val productImage = null
+        val productImage = image
         val productDescription = description
         val productSpecifications = emptyList<Specification<*>>()
 
