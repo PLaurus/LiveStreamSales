@@ -11,14 +11,14 @@ import coil.request.ImageRequest
 import com.laurus.p.tools.context.getDrawableCompat
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
-import tv.wfc.livestreamsales.databinding.ItemLiveBroadcastPageBinding
+import tv.wfc.livestreamsales.databinding.ListItemLiveBroadcastCardBinding
 
 class LiveBroadcastViewHolder(
     liveBroadcastPage: View,
     private val imageLoader: ImageLoader,
     private val onItemClick: (broadcastId: Long) -> Unit
 ): RecyclerView.ViewHolder(liveBroadcastPage){
-    private val viewBinding = ItemLiveBroadcastPageBinding.bind(liveBroadcastPage)
+    private val viewBinding = ListItemLiveBroadcastCardBinding.bind(liveBroadcastPage)
     private val context: Context
         get() = viewBinding.root.context
 
@@ -29,11 +29,13 @@ class LiveBroadcastViewHolder(
 
         bindLiveBroadcastId(broadcast.id)
         bindLiveBroadcastImage(broadcast.imageUrl)
+        initializeLiveBroadcastTitleText(broadcast)
     }
 
     private fun clearView(){
         clearItemClickListener()
         clearLiveBroadcastImage()
+        clearLiveBroadcastTitleText()
     }
 
     private fun clearItemClickListener(){
@@ -67,6 +69,14 @@ class LiveBroadcastViewHolder(
         } else{
             setDefaultLiveBroadcastImage()
         }
+    }
+
+    private fun initializeLiveBroadcastTitleText(broadcast: Broadcast){
+        viewBinding.liveBroadcastsTitle.text = broadcast.title
+    }
+
+    private fun clearLiveBroadcastTitleText(){
+        viewBinding.liveBroadcastsTitle.text = ""
     }
 
     private fun setLiveBroadcastImageDrawable(drawable: Drawable){

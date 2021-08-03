@@ -10,6 +10,8 @@ data class Stream(
     val name: String?,
     @SerializedName("start_at")
     val startAt: DateTime?,
+    @SerializedName("end_at")
+    val endsAt: DateTime?,
     @SerializedName("description")
     val description: String?,
     @SerializedName("image")

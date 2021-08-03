@@ -7,6 +7,7 @@ data class Broadcast(
     val title: String,
     val description: String,
     val startsAt: DateTime,
+    val endsAt: DateTime,
     val imageUrl: String? = null,
     val manifestUrl: String? = null,
     val viewersCount: Int? = null

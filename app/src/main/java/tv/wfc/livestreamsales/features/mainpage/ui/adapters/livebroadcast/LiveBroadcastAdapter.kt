@@ -17,7 +17,7 @@ class LiveBroadcastAdapter(
         val liveBroadcastPage =
             LayoutInflater
                 .from(parent.context)
-                .inflate(R.layout.item_live_broadcast_page, parent, false)
+                .inflate(R.layout.list_item_live_broadcast_card, parent, false)
 
         return LiveBroadcastViewHolder(
             liveBroadcastPage,

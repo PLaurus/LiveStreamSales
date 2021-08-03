@@ -182,6 +182,7 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
         initializeNextProductButton()
         initializePlayer()
         initializePlayerView()
+        initializeErrorNoBroadcastManifestText()
         initializeBuyButton()
         initializeSendMessageButton()
         initializeMessageInput()
@@ -218,6 +219,13 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
 
     private fun initializePreviousProductButton(){
         viewBinding?.run{
+            viewModel.broadcastHasProducts.observe(viewLifecycleOwner){ hasProducts ->
+                previousProductButton.visibility = when(hasProducts){
+                    true -> View.VISIBLE
+                    else -> View.GONE
+                }
+            }
+
             previousProductButton.clicks()
                 .throttleLatest(500L, TimeUnit.MILLISECONDS, computationScheduler)
                 .observeOn(mainThreadScheduler)
@@ -231,6 +239,13 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
 
     private fun initializeProductsViewPager(){
         viewBinding?.productsViewPager?.run {
+            viewModel.broadcastHasProducts.observe(viewLifecycleOwner){ hasProducts ->
+                visibility = when(hasProducts){
+                    true -> View.VISIBLE
+                    else -> View.GONE
+                }
+            }
+
             adapter = ProductsAdapter(
                 productsDiffUtilItemCallback,
                 imageLoader
@@ -246,6 +261,13 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
 
     private fun initializeNextProductButton(){
         viewBinding?.run{
+            viewModel.broadcastHasProducts.observe(viewLifecycleOwner){ hasProducts ->
+                nextProductButton.visibility = when(hasProducts){
+                    true -> View.VISIBLE
+                    else -> View.GONE
+                }
+            }
+
             nextProductButton.clicks()
                 .throttleLatest(500L, TimeUnit.MILLISECONDS, computationScheduler)
                 .observeOn(mainThreadScheduler)
@@ -269,14 +291,17 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
         }
     }
 
-    private fun initializePlayer() {
-        viewModel.broadcastMediaItem.observe(viewLifecycleOwner, Observer{ broadcastMediaItem ->
-            releasePlayer()
-
-            if (broadcastMediaItem == null) {
-                navigateUp()
-                return@Observer
+    private fun initializeErrorNoBroadcastManifestText(){
+        viewBinding?.errorNoBroadcastManifestText?.run{
+            viewModel.broadcastMediaItem.observe(viewLifecycleOwner){ mediaItem ->
+                visibility = if(mediaItem == null) View.VISIBLE else View.GONE
             }
+        }
+    }
+
+    private fun initializePlayer() {
+        viewModel.broadcastMediaItem.observe(viewLifecycleOwner, { broadcastMediaItem ->
+            releasePlayer()
 
             context?.let {
                 val player = SimpleExoPlayer.Builder(it, renderersFactory)
@@ -288,7 +313,7 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
                     addListener(viewModel.playerEventListener)
                     setAudioAttributes(AudioAttributes.DEFAULT, true)
                     playWhenReady = true
-                    setMediaItem(broadcastMediaItem)
+                    broadcastMediaItem?.let(::setMediaItem)
                     prepare()
                 }
 

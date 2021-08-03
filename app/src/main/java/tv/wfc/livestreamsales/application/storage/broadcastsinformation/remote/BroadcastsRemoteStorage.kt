@@ -90,11 +90,14 @@ class BroadcastsRemoteStorage @Inject constructor(
             viewersCount = null
         }
 
+        val endsAt: DateTime = startsAt.plusHours(1)
+
         return Broadcast(
             0,
             "Отдай мне свои деньги 1",
             "Цыган вымогает деньги 1",
             startsAt,
+            endsAt,
             imageUrl,
             manifestUrl,
             viewersCount
@@ -106,6 +109,7 @@ class BroadcastsRemoteStorage @Inject constructor(
         val broadcastTitle = name ?: return null
         val broadcastDescription = description ?: return null
         val broadcastStartsAt = startAt ?: return null
+        val broadcastEndsAt = endsAt ?: return null
         val broadcastImageUrl = image
         val broadcastManifestUrl = manifestUrl
         val broadcastViewersCount = null
@@ -115,6 +119,7 @@ class BroadcastsRemoteStorage @Inject constructor(
             broadcastTitle,
             broadcastDescription,
             broadcastStartsAt,
+            broadcastEndsAt,
             broadcastImageUrl,
             broadcastManifestUrl,
             broadcastViewersCount

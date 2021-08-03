@@ -121,7 +121,7 @@ class MainPageViewModel @Inject constructor(
 
     private fun updateBroadcastsInformation(broadcasts: List<Broadcast>){
         val liveBroadcasts = broadcasts.filter{ broadcastInformation ->
-            broadcastInformation.startsAt.isBeforeNow
+            broadcastInformation.startsAt.isBeforeNow && broadcastInformation.endsAt.isAfterNow
         }
 
         val broadcastAnnouncements = broadcasts.filter{ broadcastInformation ->

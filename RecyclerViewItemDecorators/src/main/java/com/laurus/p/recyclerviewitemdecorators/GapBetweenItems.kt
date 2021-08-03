@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Works with LinearLayoutManager
+ * @gap is in pixels
  */
 class GapBetweenItems(private val gap: Int): RecyclerView.ItemDecoration() {
     override fun getItemOffsets(

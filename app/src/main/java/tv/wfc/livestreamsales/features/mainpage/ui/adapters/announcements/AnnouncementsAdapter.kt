@@ -17,7 +17,7 @@ class AnnouncementsAdapter(
         viewType: Int
     ): AnnouncementViewHolder {
         val announcementPage = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_broadcast_announcement_page, parent, false)
+            .inflate(R.layout.list_item_broadcast_announcement_card, parent, false)
 
         return AnnouncementViewHolder(announcementPage, imageLoader)
     }

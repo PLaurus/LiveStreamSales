@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
-import com.laurus.p.tools.viewpager2.onPageSelected
+import com.laurus.p.recyclerviewitemdecorators.GapBetweenItems
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
 import tv.wfc.livestreamsales.application.ui.base.BaseFragment
@@ -97,13 +97,9 @@ class MainPageFragment: BaseFragment(R.layout.fragment_main_page) {
     private fun onDataIsPrepared() {
         initializeSwipeRefreshLayout()
         initializeNoLiveBroadcastsText()
-        initializeLiveBroadcastTitleText()
-        initializeDescriptionBackground()
-        initializeLiveBroadcastsViewPager()
-        initializeLiveBroadcastsPageIndicator()
+        initializeLiveBroadcastsRecyclerView()
         initializeNoAnnouncementsText()
-        initializeAnnouncementsViewPager()
-        initializeAnnouncementsPageIndicator()
+        initializeAnnouncementsRecyclerView()
     }
 
     private fun initializeSwipeRefreshLayout(){
@@ -128,54 +124,19 @@ class MainPageFragment: BaseFragment(R.layout.fragment_main_page) {
         }
     }
 
-    private fun initializeLiveBroadcastTitleText(){
-        viewBinding?.apply{
-            viewModel.liveBroadcasts.observe(viewLifecycleOwner,{ liveBroadcasts ->
-                if(liveBroadcasts.isNotEmpty()){
-                    changeLiveBroadcastTitleText(liveBroadcastsPager.currentItem)
-                    liveBroadcastsTitle.visibility = View.VISIBLE
-                } else {
-                    liveBroadcastsTitle.visibility = View.GONE
-                }
-            })
+    private fun initializeLiveBroadcastsRecyclerView(){
+        viewBinding?.liveBroadcastsRecyclerView?.apply{
+            overScrollMode = RecyclerView.OVER_SCROLL_NEVER
 
-            liveBroadcastsPager.onPageSelected {
-                changeLiveBroadcastTitleText(it)
-            }
-        }
-    }
-
-    private fun changeLiveBroadcastTitleText(pagePosition: Int){
-        viewBinding
-            ?.liveBroadcastsTitle
-            ?.text = viewModel.getLiveBroadcastTitleByPosition(pagePosition)
-    }
-
-    private fun initializeDescriptionBackground(){
-        viewBinding?.descriptionBackground?.apply{
-            viewModel.liveBroadcasts.observe(viewLifecycleOwner,{ liveBroadcasts ->
-                visibility = if(liveBroadcasts.isNotEmpty()){
-                    View.VISIBLE
-                } else View.GONE
-            })
-        }
-    }
-
-    private fun initializeLiveBroadcastsViewPager(){
-        viewBinding?.liveBroadcastsPager?.apply{
-            (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
             adapter = liveBroadcastsAdapter
+
+            val contentMargin = resources.getDimensionPixelSize(R.dimen.contentMargin)
+            addItemDecoration(GapBetweenItems(contentMargin))
         }
 
         viewModel.liveBroadcasts.observe(viewLifecycleOwner,{ liveBroadcasts ->
             liveBroadcastsAdapter.submitList(liveBroadcasts)
         })
-    }
-
-    private fun initializeLiveBroadcastsPageIndicator(){
-        viewBinding?.liveBroadcastsPager?.let {
-            viewBinding?.liveBroadcastsPageIndicator?.setViewPager2(it)
-        }
     }
 
     private fun initializeNoAnnouncementsText(){
@@ -188,21 +149,19 @@ class MainPageFragment: BaseFragment(R.layout.fragment_main_page) {
         }
     }
 
-    private fun initializeAnnouncementsViewPager(){
-        viewBinding?.announcementViewPager?.apply{
-            (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+    private fun initializeAnnouncementsRecyclerView(){
+        viewBinding?.announcementsRecyclerView?.apply{
+            overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+
             adapter = announcementsAdapter
+
+            val contentMargin = resources.getDimensionPixelSize(R.dimen.contentMargin)
+            addItemDecoration(GapBetweenItems(contentMargin))
         }
 
         viewModel.announcements.observe(viewLifecycleOwner,{ broadcastAnnouncements ->
             announcementsAdapter.submitList(broadcastAnnouncements)
         })
-    }
-
-    private fun initializeAnnouncementsPageIndicator(){
-        viewBinding?.announcementViewPager?.let {
-            viewBinding?.announcementPageIndicator?.setViewPager2(it)
-        }
     }
 
     private fun navigateToLiveBroadcastDestination(liveBroadcastId: Long){

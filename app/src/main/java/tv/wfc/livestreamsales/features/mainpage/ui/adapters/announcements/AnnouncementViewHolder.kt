@@ -13,13 +13,13 @@ import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
-import tv.wfc.livestreamsales.databinding.ItemBroadcastAnnouncementPageBinding
+import tv.wfc.livestreamsales.databinding.ListItemBroadcastAnnouncementCardBinding
 
 class AnnouncementViewHolder(
     broadcastAnnouncementPage: View,
     private val imageLoader: ImageLoader
 ): RecyclerView.ViewHolder(broadcastAnnouncementPage) {
-    private val viewBinding = ItemBroadcastAnnouncementPageBinding.bind(broadcastAnnouncementPage)
+    private val viewBinding = ListItemBroadcastAnnouncementCardBinding.bind(broadcastAnnouncementPage)
     private val context: Context
         get() = viewBinding.root.context
 

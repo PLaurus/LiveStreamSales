@@ -30,6 +30,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/errorNoBroadcastManifestText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_live_broadcast_error_no_broadcast_manifest"
+            android:textColor="@color/colorOnPrimary"
+            android:textSize="@dimen/textSize_default"
+            android:shadowColor="@color/colorLiveBroadcast_shadow"
+            android:shadowRadius="@dimen/liveBroadcast_shadowRadius"
+            android:shadowDx="@dimen/liveBroadcast_shadowDx"
+            android:shadowDy="@dimen/liveBroadcast_shadowDy"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constrainedWidth="true"/>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/headerLayout"
             android:layout_width="0dp"
