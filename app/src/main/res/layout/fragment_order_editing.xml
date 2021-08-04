@@ -34,7 +34,7 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/fragment_order_editing_order_status_in_progress"
+                tools:text="@string/fragment_order_editing_order_status_waiting"
                 tools:background="@color/orderEditing_orderStatus_inProgress"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout

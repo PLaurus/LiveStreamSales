@@ -15,9 +15,9 @@ data class Order(
     val orderPrice = calculateOrderPrice()
 
     enum class Status{
-        NOT_PAID,
+        CREATED,
         PAID,
-        IN_PROGRESS,
+        WAITING,
         DONE
     }
 

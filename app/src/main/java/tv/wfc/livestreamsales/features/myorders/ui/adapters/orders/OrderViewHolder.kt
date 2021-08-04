@@ -129,16 +129,16 @@ class OrderViewHolder(
     private fun initializeOrderStatusText(order: Order){
         viewBinding.orderStatusText.run{
             when(order.status){
-                Order.Status.NOT_PAID -> {
-                    text = context.getString(R.string.fragment_my_orders_order_status_not_paid)
+                Order.Status.CREATED -> {
+                    text = context.getString(R.string.fragment_my_orders_order_status_created)
                     setBackgroundColor(ContextCompat.getColor(context, R.color.myOrders_orderStatus_notPaid))
                 }
                 Order.Status.PAID -> {
                     text = context.getString(R.string.fragment_my_orders_order_status_paid)
                     setBackgroundColor(ContextCompat.getColor(context, R.color.myOrders_orderStatus_paid))
                 }
-                Order.Status.IN_PROGRESS -> {
-                    text = context.getString(R.string.fragment_my_orders_order_status_in_progress)
+                Order.Status.WAITING -> {
+                    text = context.getString(R.string.fragment_my_orders_order_status_waiting)
                     setBackgroundColor(ContextCompat.getColor(context, R.color.myOrders_orderStatus_inProgress))
                 }
                 Order.Status.DONE -> {
@@ -291,7 +291,7 @@ class OrderViewHolder(
         viewBinding.completeTheOrderButton.run {
             visibility = when(order.status){
                 Order.Status.PAID,
-                Order.Status.NOT_PAID -> View.VISIBLE
+                Order.Status.CREATED -> View.VISIBLE
                 else -> View.GONE
             }
 
@@ -319,7 +319,7 @@ class OrderViewHolder(
     private fun initializeShowMoreInformationAboutOrderButton(order: Order){
         viewBinding.showMoreInformationAboutOrderButton.run {
             visibility = when(order.status){
-                Order.Status.IN_PROGRESS,
+                Order.Status.WAITING,
                 Order.Status.DONE -> View.VISIBLE
                 else -> View.GONE
             }

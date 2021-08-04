@@ -69,7 +69,7 @@ class MyOrdersViewModel @Inject constructor(
     override fun intentToNavigateToOrderEditing(orderId: Long) {
         val orderStatus = orders.value?.first{ it.id == orderId }?.status ?: return
 
-        if(orderStatus != Order.Status.NOT_PAID && orderStatus != Order.Status.PAID) return
+        if(orderStatus != Order.Status.CREATED && orderStatus != Order.Status.PAID) return
 
         checkIsOrderEditingAvailableDisposable?.dispose()
         checkIsOrderEditingAvailableDisposable = paymentCardInformationRepository
@@ -93,7 +93,7 @@ class MyOrdersViewModel @Inject constructor(
 
     override fun intentToNavigateToOrderInformation(orderId: Long) {
         val orderStatus = orders.value?.first{ it.id == orderId }?.status ?: return
-        if(orderStatus != Order.Status.IN_PROGRESS && orderStatus != Order.Status.DONE) return
+        if(orderStatus != Order.Status.WAITING && orderStatus != Order.Status.DONE) return
 
         nextDestinationEvent.value = IMyOrdersViewModel.NextDestination.OrderInformation(orderId)
     }

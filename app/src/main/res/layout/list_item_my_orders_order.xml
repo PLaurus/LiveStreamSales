@@ -74,7 +74,7 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/creationDateTitleText"
-        tools:text="@string/fragment_my_orders_order_status_in_progress"
+        tools:text="@string/fragment_my_orders_order_status_waiting"
         tools:background="@color/myOrders_orderStatus_inProgress"/>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -7,7 +7,7 @@ data class Order(
     @SerializedName("id")
     val id: Long?,
     @SerializedName("status")
-    val status: String?, // not_paid, paid, in_progress, done
+    val status: String?, // created, paid, waiting, done
     @SerializedName("order_date")
     val orderDate: DateTime?,
     @SerializedName("delivery_date")

@@ -153,9 +153,9 @@ class OrderInformationFragment: BaseFragment(R.layout.fragment_order_information
         viewBinding?.orderStatusText?.run{
             viewModel.orderStatus.observe(viewLifecycleOwner){ orderStatus ->
                 when(orderStatus){
-                    Order.Status.NOT_PAID -> {
+                    Order.Status.CREATED -> {
                         visibility = View.VISIBLE
-                        text = getString(R.string.fragment_order_information_order_status_not_paid)
+                        text = getString(R.string.fragment_order_information_order_status_created)
                         val backgroundColor = ContextCompat.getColor(context, R.color.orderInformation_orderStatus_notPaid)
                         setBackgroundColor(backgroundColor)
                     }
@@ -165,9 +165,9 @@ class OrderInformationFragment: BaseFragment(R.layout.fragment_order_information
                         val backgroundColor = ContextCompat.getColor(context, R.color.orderInformation_orderStatus_paid)
                         setBackgroundColor(backgroundColor)
                     }
-                    Order.Status.IN_PROGRESS -> {
+                    Order.Status.WAITING -> {
                         visibility = View.VISIBLE
-                        text = getString(R.string.fragment_order_information_order_status_in_progress)
+                        text = getString(R.string.fragment_order_information_order_status_waiting)
                         val backgroundColor = ContextCompat.getColor(context, R.color.orderInformation_orderStatus_inProgress)
                         setBackgroundColor(backgroundColor)
                     }
