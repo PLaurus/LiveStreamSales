@@ -37,7 +37,7 @@ import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.model.chat.ChatMessage
-import tv.wfc.livestreamsales.application.model.products.Product
+import tv.wfc.livestreamsales.application.model.products.ProductGroup
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.ui.base.BaseFragment
 import tv.wfc.livestreamsales.databinding.FragmentLiveBroadcastBinding
@@ -65,7 +65,7 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
     private lateinit var liveBroadcastComponent: LiveBroadcastComponent
 
     @Inject
-    lateinit var productsDiffUtilItemCallback: DiffUtil.ItemCallback<Product>
+    lateinit var productsDiffUtilItemCallback: DiffUtil.ItemCallback<ProductGroup>
 
     @Inject
     lateinit var chatMessagesDiffUtilItemCallback: DiffUtil.ItemCallback<ChatMessage>
@@ -253,7 +253,7 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
 
             (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
 
-            viewModel.products.observe(viewLifecycleOwner){ products ->
+            viewModel.productGroups.observe(viewLifecycleOwner){ products ->
                 (adapter as ProductsAdapter).submitList(products)
             }
         }
@@ -394,7 +394,7 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
 
     private fun initializeBottomLayout(){
         viewBinding?.run{
-            root.viewTreeObserver.addOnGlobalFocusChangeListener { oldFocus, newFocus ->
+            root.viewTreeObserver.addOnGlobalFocusChangeListener { _, _ ->
                 if(bottomLayout.hasFocus()){
                     buyButton.visibility = View.GONE
                     sendMessageButton.visibility = View.VISIBLE
@@ -429,10 +429,6 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
     private fun releasePlayer() {
         player?.release()
         player = null
-    }
-
-    private fun navigateUp(){
-        navigationController.navigateUp()
     }
 
     private var broadcastInformationVisibilityTimerDisposable: Disposable? = null

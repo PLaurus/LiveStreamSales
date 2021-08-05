@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import coil.ImageLoader
 import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.application.model.products.Product
+import tv.wfc.livestreamsales.application.model.products.ProductGroup
 
 class ProductsAdapter(
-    productsDiffUtilItemCallback: DiffUtil.ItemCallback<Product>,
+    productsDiffUtilItemCallback: DiffUtil.ItemCallback<ProductGroup>,
     private val imageLoader: ImageLoader,
-): ListAdapter<Product, ProductViewHolder>(productsDiffUtilItemCallback) {
+): ListAdapter<ProductGroup, ProductViewHolder>(productsDiffUtilItemCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val productPage =
             LayoutInflater

@@ -4,23 +4,23 @@ import androidx.recyclerview.widget.DiffUtil
 import dagger.Module
 import dagger.Provides
 import tv.wfc.livestreamsales.application.model.chat.ChatMessage
-import tv.wfc.livestreamsales.application.model.products.Product
+import tv.wfc.livestreamsales.application.model.products.ProductGroup
 
 @Module
 class DiffUtilsModule {
     @Provides
-    internal fun provideProductsDiffUtilCallback(): DiffUtil.ItemCallback<Product>{
-        return object: DiffUtil.ItemCallback<Product>(){
+    internal fun provideProductsDiffUtilCallback(): DiffUtil.ItemCallback<ProductGroup>{
+        return object: DiffUtil.ItemCallback<ProductGroup>(){
             override fun areItemsTheSame(
-                oldItem: Product,
-                newItem: Product
+                oldItem: ProductGroup,
+                newItem: ProductGroup
             ): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.name == newItem.name
             }
 
             override fun areContentsTheSame(
-                oldItem: Product,
-                newItem: Product
+                oldItem: ProductGroup,
+                newItem: ProductGroup
             ): Boolean {
                 return oldItem == newItem
             }

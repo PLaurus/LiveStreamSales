@@ -9,6 +9,17 @@ data class ProductGroup(
     val description: String? = null,
     val specifications: List<Specification<*>> = emptyList()
 ){
+    /**
+     * Quantity of all product product group contains in stock
+     */
+    val quantityInStock = productVariants
+        .map { it.quantityInStock }
+        .reduceOrNull{ result, next -> result + next}
+
+    val minProductVariantPrice = productVariants
+        .map{ it.price }
+        .minOrNull()
+
     fun toProducts(): List<Product> {
         val products = mutableListOf<Product>()
 

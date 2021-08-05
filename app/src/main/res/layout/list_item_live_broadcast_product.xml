@@ -83,11 +83,11 @@
         app:layout_constraintStart_toEndOf="@id/productImageContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/productPriceText"
+        app:layout_constraintBottom_toTopOf="@id/minProductVariantPriceText"
         tools:text="Потрясающее предложение на новый Телефон 12 Про Фессор"/>
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/productPriceText"
+        android:id="@+id/minProductVariantPriceText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/contentMargin"
@@ -103,6 +103,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constrainedWidth="true"
         app:layout_constraintHorizontal_bias="1"
-        tools:text="78 030,00 руб."/>
+        tools:text="от 78 030,00 руб."/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

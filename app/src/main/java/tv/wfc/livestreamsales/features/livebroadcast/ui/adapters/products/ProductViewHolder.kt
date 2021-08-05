@@ -9,7 +9,7 @@ import coil.request.ImageRequest
 import com.laurus.p.tools.context.getDrawableCompat
 import com.laurus.p.tools.floatKtx.format
 import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.application.model.products.Product
+import tv.wfc.livestreamsales.application.model.products.ProductGroup
 import tv.wfc.livestreamsales.databinding.ListItemLiveBroadcastProductBinding
 
 class ProductViewHolder(
@@ -21,13 +21,13 @@ class ProductViewHolder(
 
     private var imageLoaderDisposable: Disposable? = null
 
-    fun bind(product: Product){
+    fun bind(product: ProductGroup){
         clear()
         initializeProductImageView(product)
         initializeProductsAmountLayout(product)
         initializeProductsAmountText(product)
         initializeProductNameText(product)
-        initializeProductPriceText(product)
+        initializeMinProductVariantPriceText(product)
     }
 
     private fun clear(){
@@ -38,7 +38,7 @@ class ProductViewHolder(
         clearProductPriceText()
     }
 
-    private fun initializeProductImageView(product: Product){
+    private fun initializeProductImageView(product: ProductGroup){
         val productImageUrl = product.image
 
         if(productImageUrl == null){
@@ -80,7 +80,7 @@ class ProductViewHolder(
         )
     }
 
-    private fun initializeProductsAmountLayout(product: Product){
+    private fun initializeProductsAmountLayout(product: ProductGroup){
         val amount = product.quantityInStock
 
         viewBinding.productsAmountLayout.run{
@@ -92,7 +92,7 @@ class ProductViewHolder(
         viewBinding.productsAmountLayout.visibility = View.GONE
     }
 
-    private fun initializeProductsAmountText(product: Product){
+    private fun initializeProductsAmountText(product: ProductGroup){
         val amount = product.quantityInStock ?: 0
 
         viewBinding.productsAmountText.run{
@@ -108,7 +108,7 @@ class ProductViewHolder(
         }
     }
 
-    private fun initializeProductNameText(product: Product){
+    private fun initializeProductNameText(product: ProductGroup){
         viewBinding.productNameText.text = product.name
     }
 
@@ -116,16 +116,21 @@ class ProductViewHolder(
         viewBinding.productNameText.text = ""
     }
 
-    private fun initializeProductPriceText(product: Product){
-        val formattedPrice = product.price.format()
+    private fun initializeMinProductVariantPriceText(product: ProductGroup){
+        val formattedPrice = product.minProductVariantPrice?.format()
 
-        viewBinding.productPriceText.text = context.getString(
-            R.string.fragment_live_broadcast_price,
-            formattedPrice
-        )
+        viewBinding.minProductVariantPriceText.run{
+            if(formattedPrice != null){
+                text = context.getString(
+                    R.string.fragment_live_broadcast_price,
+                    formattedPrice
+                )
+                visibility = View.VISIBLE
+            } else { visibility = View.GONE }
+        }
     }
 
     private fun clearProductPriceText(){
-        viewBinding.productPriceText.text = ""
+        viewBinding.minProductVariantPriceText.text = ""
     }
 }

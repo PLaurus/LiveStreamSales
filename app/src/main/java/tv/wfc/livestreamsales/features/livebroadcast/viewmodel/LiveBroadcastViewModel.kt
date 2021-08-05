@@ -27,7 +27,7 @@ import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainTh
 import tv.wfc.livestreamsales.application.manager.IAuthorizationManager
 import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
 import tv.wfc.livestreamsales.application.model.chat.ChatMessage
-import tv.wfc.livestreamsales.application.model.products.Product
+import tv.wfc.livestreamsales.application.model.products.ProductGroup
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
 import tv.wfc.livestreamsales.application.repository.chat.IChatRepository
 import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
@@ -52,7 +52,7 @@ class LiveBroadcastViewModel @Inject constructor(
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): ViewModel(), ILiveBroadcastViewModel {
     private val disposables = CompositeDisposable()
-    private val productsSubject = PublishSubject.create<List<Product>>()
+    private val productGroupsSubject = PublishSubject.create<List<ProductGroup>>()
 
     private val maxChatMessages = 15
 
@@ -102,7 +102,7 @@ class LiveBroadcastViewModel @Inject constructor(
     }
 
     override val broadcastHasProducts: LiveData<Boolean> = MutableLiveData(false).apply {
-        productsSubject
+        productGroupsSubject
             .observeOn(mainThreadScheduler)
             .map{ it.isNotEmpty() }
             .distinctUntilChanged()
@@ -113,8 +113,8 @@ class LiveBroadcastViewModel @Inject constructor(
             .addTo(disposables)
     }
 
-    override val products = MutableLiveData<List<Product>>().apply{
-        productsSubject
+    override val productGroups = MutableLiveData<List<ProductGroup>>().apply{
+        productGroupsSubject
             .observeOn(mainThreadScheduler)
             .subscribeBy(
                 onNext = ::setValue,
@@ -338,21 +338,11 @@ class LiveBroadcastViewModel @Inject constructor(
                 val disposable = productsRepository
                     .getProductGroups(broadcastId)
                     .lastOrError()
-                    .map{ productGroups ->
-                        productGroups
-                            .map{ productGroup -> productGroup.toProducts() }
-                            .map{ products -> products.toMutableList() }
-                            .reduce{ result, nextProducts ->
-                                result.apply{
-                                    addAll(nextProducts)
-                                }
-                            }
-                    }
                     .doOnTerminate { emitter.onComplete() }
                     .subscribeBy(
-                        onSuccess = productsSubject::onNext,
+                        onSuccess = productGroupsSubject::onNext,
                         onError = {
-                            productsSubject.onNext(emptyList())
+                            productGroupsSubject.onNext(emptyList())
                             applicationErrorsLogger.logError(it)
                         }
                     )
