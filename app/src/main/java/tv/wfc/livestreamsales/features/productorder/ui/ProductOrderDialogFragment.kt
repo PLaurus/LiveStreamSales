@@ -1,6 +1,7 @@
 package tv.wfc.livestreamsales.features.productorder.ui
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -14,6 +15,7 @@ import coil.load
 import coil.request.Disposable
 import com.jakewharton.rxbinding4.view.clicks
 import com.laurus.p.recyclerviewitemdecorators.GapBetweenItems
+import com.laurus.p.tools.context.getDrawableCompat
 import com.laurus.p.tools.floatKtx.format
 import com.laurus.p.tools.string.strikeThrough
 import io.reactivex.rxjava3.core.Observable
@@ -24,6 +26,7 @@ import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.LiveStreamSalesApplication
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
+import tv.wfc.livestreamsales.application.model.orders.OrderedProduct
 import tv.wfc.livestreamsales.application.model.products.specification.Specification
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.ui.base.BaseDialogFragment
@@ -32,7 +35,6 @@ import tv.wfc.livestreamsales.features.productorder.di.ProductOrderComponent
 import tv.wfc.livestreamsales.features.productorder.di.modules.diffutils.qualifiers.ProductBoxDataDiffUtilItemCallback
 import tv.wfc.livestreamsales.features.productorder.di.modules.diffutils.qualifiers.ProductSpecificationsDiffUtilItemCallback
 import tv.wfc.livestreamsales.features.productorder.model.ProductBoxData
-import tv.wfc.livestreamsales.application.model.orders.OrderedProduct
 import tv.wfc.livestreamsales.features.productorder.model.SelectableSpecification
 import tv.wfc.livestreamsales.features.productorder.ui.adapters.cart.ProductsInCartAdapter
 import tv.wfc.livestreamsales.features.productorder.ui.adapters.products.ProductBoxesAdapter
@@ -208,19 +210,23 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
 
     private fun initializeOneProductImage(){
         viewBinding?.oneProductImage?.run {
-            scaleType = ImageView.ScaleType.CENTER_CROP
+            scaleType = ImageView.ScaleType.FIT_CENTER
 
             viewModel.currentProductGroupImageUrl.observe(viewLifecycleOwner, { imageUrl ->
-                oneProductImageLoaderDisposable?.dispose()
+                val placeholder = createDefaultProductDrawable()
 
-                oneProductImageLoaderDisposable = load(imageUrl, imageLoader) {
-                    listener(
-                        onSuccess = { _, _ -> showOneProductImage() },
-                        onError = { _, throwable ->
-                            hideOneProductImage()
-                            applicationErrorsLogger.logError(throwable)
-                        }
-                    )
+                if(imageUrl == null){
+                    setImageDrawable(placeholder)
+                } else{
+                    oneProductImageLoaderDisposable?.dispose()
+                    oneProductImageLoaderDisposable = load(imageUrl, imageLoader) {
+                        error(placeholder)
+                        listener(
+                            onError = { _, throwable ->
+                                applicationErrorsLogger.logError(throwable)
+                            }
+                        )
+                    }
                 }
             })
         }
@@ -457,19 +463,6 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
         viewBinding?.severalProductsHeaderLayout?.visibility = viewVisibility
     }
 
-    private fun showOneProductImage(){
-        changeOneProductImageVisibility(toVisible = true)
-    }
-
-    private fun hideOneProductImage(){
-        changeOneProductImageVisibility(toVisible = false)
-    }
-
-    private fun changeOneProductImageVisibility(toVisible: Boolean){
-        val viewVisibility = if(toVisible) View.VISIBLE else View.GONE
-        viewBinding?.oneProductImage?.visibility = viewVisibility
-    }
-
     private fun showSeveralProductsDescriptionText(){
         changeSeveralProductsDescriptionTextVisibility(toVisible = true)
     }
@@ -545,5 +538,12 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
     private fun navigateToProductsAreOrderedDialog(){
         val action = ProductOrderDialogFragmentDirections.actionToProductsAreOrderedDestination()
         navigationController.navigate(action)
+    }
+
+    private fun createDefaultProductDrawable(): Drawable?{
+        return context?.getDrawableCompat(
+            R.drawable.ic_baseline_shopping_bag_24,
+            R.color.productOrder_productBoxItem_placeholderTint
+        )
     }
 }
