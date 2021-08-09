@@ -30,25 +30,41 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/descriptionLayout"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/drawable_gradient_main_page_broadcast_card"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHeight_percent="0.4">
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/announcementTitleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/contentMargin"
+                android:textColor="@color/colorOnPrimary"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:shadowRadius="0.5"
+                android:shadowColor="@color/colorSecondaryText"
+                android:shadowDx="3"
+                android:shadowDy="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="IPhone 12 с Идой Галич IPhone 12 с Идой Галич IPhone 12 с Идой Галич IP hone 12 с Идой Галич IPhone 12 с Идой Галич IPhone 12 с Идой ГаличIPhone 12 с Идой ГаличIPhone 12 с Идой ГаличIPhone 12 с Идой Галич"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/notifyButton"
                 style="@style/Theme.LiveStreamSales.MaterialButton.IconOnly.Circle"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="@dimen/contentMargin"
                 android:layout_marginBottom="@dimen/contentMargin"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/dateText"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintDimensionRatio="1:1"
                 app:icon="@drawable/ic_baseline_notifications_none_24"
                 app:autoSizeTextType="uniform"
                 tools:visibility="visible"/>
@@ -56,30 +72,29 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/dateText"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/contentMargin"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/contentMargin"
+                android:textSize="@dimen/textSize_default"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/notifyButton"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/announcementTitleText"
                 app:layout_constraintBottom_toTopOf="@id/timeText"
-                app:autoSizeTextType="uniform"
                 tools:text="15.10.2020"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/timeText"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/contentMargin"
                 android:layout_marginBottom="@dimen/contentMargin"
+                android:textSize="@dimen/textSize_default"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintStart_toEndOf="@id/notifyButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dateText"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:autoSizeTextType="uniform"
                 tools:text="в 15:00"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

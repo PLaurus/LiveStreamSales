@@ -72,8 +72,9 @@
                 android:layout_marginHorizontal="@dimen/contentMargin"
                 android:textColor="@color/colorOnPrimary"
                 android:textStyle="bold"
+                android:ellipsize="end"
                 android:gravity="start|center"
-                android:maxLines="2"
+                android:maxLines="3"
                 android:shadowColor="@color/colorLiveBroadcast_shadow"
                 android:shadowRadius="@dimen/liveBroadcast_shadowRadius"
                 android:shadowDx="@dimen/liveBroadcast_shadowDx"
@@ -83,7 +84,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:autoSizeTextType="uniform"
-                tools:text="Отдай мне свои деньги 2 Отдай мне свои деньги 2"/>
+                tools:text="Отдай мне свои деньги 2 Отдай мне свои деньги 2 Отдай мне свои деньги 2 Отдай мне свои деньги 2"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/viewersIndicatorImage"

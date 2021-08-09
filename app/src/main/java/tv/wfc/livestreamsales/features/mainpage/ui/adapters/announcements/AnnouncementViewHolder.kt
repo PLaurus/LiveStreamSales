@@ -29,12 +29,14 @@ class AnnouncementViewHolder(
         clearView()
 
         bindAnnouncementImage(broadcast.imageUrl)
+        initializeAnnouncementTitleText(broadcast)
         bindAnnouncementDate(broadcast.startsAt)
         bindAnnouncementTime(broadcast.startsAt)
     }
 
     private fun clearView(){
         clearAnnouncementImage()
+        clearAnnouncementTitleText()
         clearAnnouncementDateText()
         clearAnnouncementTimeText()
     }
@@ -91,6 +93,14 @@ class AnnouncementViewHolder(
             R.drawable.ic_baseline_live_tv_24,
             R.color.broadcastAnnouncementItem_image_placeholderTint
         )
+    }
+
+    private fun initializeAnnouncementTitleText(broadcast: Broadcast){
+        viewBinding.announcementTitleText.text = broadcast.title
+    }
+
+    private fun clearAnnouncementTitleText(){
+        viewBinding.announcementTitleText.text = ""
     }
 
     private fun bindAnnouncementDate(dateTime: DateTime?){

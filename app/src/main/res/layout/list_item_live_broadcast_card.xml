@@ -38,17 +38,21 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/liveBroadcastsTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/contentMargin"
             android:layout_marginBottom="5dp"
             android:textColor="@color/colorOnPrimary"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:shadowRadius="0.5"
             android:shadowColor="@color/colorSecondaryText"
             android:shadowDx="3"
             android:shadowDy="1"
-            app:layout_constraintStart_toStartOf="@id/liveBroadcastsLiveTextCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/liveBroadcastsLiveTextCard"
-            tools:text="IPhone 12 с Идой Галич"/>
+            tools:text="IPhone 12 с Идой Галич IPhone 12 с Идой Галич IPhone 12 с Идой Галич IP hone 12 с Идой Галич IPhone 12 с Идой Галич IPhone 12 с Идой ГаличIPhone 12 с Идой ГаличIPhone 12 с Идой ГаличIPhone 12 с Идой Галич"/>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/liveBroadcastsLiveTextCard"
