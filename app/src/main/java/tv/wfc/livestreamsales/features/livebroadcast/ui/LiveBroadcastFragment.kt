@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import com.google.android.exoplayer2.ExoPlaybackException
+import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.RenderersFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.audio.AudioAttributes
@@ -55,8 +56,29 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
     private val broadcastInformationRevealDuration by lazy{
         resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
     }
+
     private val broadcastInformationHideDuration by lazy{
         resources.getInteger(android.R.integer.config_longAnimTime).toLong()
+    }
+
+    private val playerInitializationObserver = Observer<MediaItem?> { broadcastMediaItem ->
+        context?.let {
+            val player = SimpleExoPlayer.Builder(it, renderersFactory)
+                .setMediaSourceFactory(mediaSourceFactory)
+                .setTrackSelector(trackSelector)
+                .build()
+
+            player.apply {
+                addListener(viewModel.playerEventListener)
+                setAudioAttributes(AudioAttributes.DEFAULT, true)
+                playWhenReady = true
+                broadcastMediaItem?.let(::setMediaItem)
+                prepare()
+            }
+
+            this@LiveBroadcastFragment.player = player
+            viewBinding?.playerView?.player = this@LiveBroadcastFragment.player
+        }
     }
 
     private var viewBinding: FragmentLiveBroadcastBinding? = null
@@ -180,7 +202,6 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
         initializePreviousProductButton()
         initializeProductsViewPager()
         initializeNextProductButton()
-        initializePlayer()
         initializePlayerView()
         initializeErrorNoBroadcastManifestText()
         initializeBuyButton()
@@ -300,27 +321,12 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
     }
 
     private fun initializePlayer() {
-        viewModel.broadcastMediaItem.observe(viewLifecycleOwner, { broadcastMediaItem ->
-            releasePlayer()
+        viewModel.broadcastMediaItem.observe(viewLifecycleOwner, playerInitializationObserver)
+    }
 
-            context?.let {
-                val player = SimpleExoPlayer.Builder(it, renderersFactory)
-                    .setMediaSourceFactory(mediaSourceFactory)
-                    .setTrackSelector(trackSelector)
-                    .build()
-
-                player.apply {
-                    addListener(viewModel.playerEventListener)
-                    setAudioAttributes(AudioAttributes.DEFAULT, true)
-                    playWhenReady = true
-                    broadcastMediaItem?.let(::setMediaItem)
-                    prepare()
-                }
-
-                this@LiveBroadcastFragment.player = player
-                viewBinding?.playerView?.player = this@LiveBroadcastFragment.player
-            }
-        })
+    private fun clearPlayer(){
+        viewModel.broadcastMediaItem.removeObserver(playerInitializationObserver)
+        releasePlayer()
     }
 
     private fun initializeBuyButton(){
@@ -418,12 +424,13 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
     }
 
     private fun resumePlayerLifecycle(){
+        initializePlayer()
         viewBinding?.playerView?.onResume()
     }
 
     private fun pausePlayerLifecycle(){
         viewBinding?.playerView?.onPause()
-        releasePlayer()
+        clearPlayer()
     }
 
     private fun releasePlayer() {
