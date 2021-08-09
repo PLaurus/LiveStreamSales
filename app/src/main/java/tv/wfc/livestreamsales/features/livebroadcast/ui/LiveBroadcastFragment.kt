@@ -3,6 +3,7 @@ package tv.wfc.livestreamsales.features.livebroadcast.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
@@ -128,6 +129,11 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
         prepareViewModel(navigationArguments.liveBroadcastId)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindView(view)
@@ -169,6 +175,11 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
     override fun onDestroyView() {
         unbindView()
         super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        super.onDestroy()
     }
 
     private fun initializeLiveBroadcastComponent(){
