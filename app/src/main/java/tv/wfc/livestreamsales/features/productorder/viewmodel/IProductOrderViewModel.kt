@@ -19,6 +19,7 @@ interface IProductOrderViewModel: INeedPreparationViewModel{
     val selectedProductPrice: LiveData<Float?>
     val selectedProductOldPrice: LiveData<Float?>
     val selectedProductAmount: LiveData<Int?>
+    val isIncreasingOfSelectedProductAmountAllowed: LiveData<Boolean>
     val cart: LiveData<List<OrderedProduct>>
     val orderedProductsFinalPrice: LiveData<Float>
     val areProductsOrderedEvent: LiveData<Unit>

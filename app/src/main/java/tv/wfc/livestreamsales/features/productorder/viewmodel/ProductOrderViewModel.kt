@@ -13,6 +13,7 @@ import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import tv.wfc.contentloader.model.ViewModelPreparationState
+import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.model.orders.OrderedProduct
 import tv.wfc.livestreamsales.application.model.products.Product
@@ -31,6 +32,8 @@ class ProductOrderViewModel @Inject constructor(
     private val productsOrderRepository: IProductsOrderRepository,
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler,
+    @ComputationScheduler
+    private val computationScheduler: Scheduler,
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): ViewModel(), IProductOrderViewModel {
     private val disposables = CompositeDisposable()
@@ -55,6 +58,25 @@ class ProductOrderViewModel @Inject constructor(
     }
 
     private val selectedProductSubject = BehaviorSubject.create<NullablesWrapper<Product>>()
+
+    private val selectedProductAmountSubject = BehaviorSubject.createDefault(NullablesWrapper<Int>(null)).apply{
+        Observables
+            .combineLatest(selectedProductSubject, cartSubject)
+            .observeOn(mainThreadScheduler)
+            .subscribeBy(
+                onNext = { (product, cart) ->
+                    val amount = product.value?.id?.let{ productId ->
+                        cart?.firstOrNull { it.product.id == productId }?.amount ?: 0
+                    }
+                    onNext(NullablesWrapper(amount))
+                },
+                onError = {
+                    onNext(NullablesWrapper(null))
+                    applicationErrorsLogger::logError
+                }
+            )
+            .addTo(disposables)
+    }
 
     private var dataPreparationDisposable: Disposable? = null
 
@@ -120,15 +142,35 @@ class ProductOrderViewModel @Inject constructor(
     }
 
     override val selectedProductAmount: LiveData<Int?> = MutableLiveData<Int?>().apply{
-        Observables.combineLatest(selectedProductSubject, cartSubject)
+        selectedProductAmountSubject
+            .distinctUntilChanged()
             .observeOn(mainThreadScheduler)
             .subscribeBy(
-                onNext = { (product, cart) ->
-                    value = product.value?.id?.let{ productId ->
-                        cart?.firstOrNull { it.product.id == productId }?.amount ?: 0
-                    }
-                },
-                onError = applicationErrorsLogger::logError
+                onNext = { value = it.value },
+                onError = {
+                    value = null
+                    applicationErrorsLogger.logError(it)
+                }
+            )
+            .addTo(disposables)
+    }
+
+    override val isIncreasingOfSelectedProductAmountAllowed: LiveData<Boolean> = MutableLiveData(false).apply{
+        Observables.combineLatest(selectedProductSubject, selectedProductAmountSubject)
+            .map { (nullableProduct, nullableAmount) ->
+                nullableProduct.value?.quantityInStock?.let { maxAvailableAmount ->
+                    (nullableAmount.value ?: 0) < maxAvailableAmount
+                } ?: false
+            }
+            .distinctUntilChanged()
+            .subscribeOn(computationScheduler)
+            .observeOn(mainThreadScheduler)
+            .subscribeBy(
+                onNext = ::setValue,
+                onError = {
+                    value = false
+                    applicationErrorsLogger::logError
+                }
             )
             .addTo(disposables)
     }

@@ -374,8 +374,20 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
     }
 
     private fun initializeIncreaseProductVariantAmountButton(){
-        viewBinding?.increaseProductVariantAmountButton?.setOnClickListener {
-            viewModel.increaseSelectedProductAmount()
+        viewBinding?.increaseProductVariantAmountButton?.run{
+
+            viewModel.isIncreasingOfSelectedProductAmountAllowed.observe(viewLifecycleOwner){ isAllowed ->
+                isEnabled = isAllowed
+
+                when(isAllowed){
+                    true -> setIconTintResource(R.color.colorPrimaryText)
+                    false -> setIconTintResource(R.color.colorSecondaryText)
+                }
+            }
+
+            setOnClickListener {
+                viewModel.increaseSelectedProductAmount()
+            }
         }
     }
 
