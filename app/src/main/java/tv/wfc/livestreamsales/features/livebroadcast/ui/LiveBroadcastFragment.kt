@@ -25,7 +25,7 @@ import com.google.android.exoplayer2.util.Util
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding4.view.clicks
 import com.laurus.p.tools.view.hideSmoothly
-import com.laurus.p.tools.view.matchRootView
+import com.laurus.p.tools.view.matchAnotherView
 import com.laurus.p.tools.view.revealSmoothly
 import com.laurus.p.tools.viewpager2.goToNextPage
 import com.laurus.p.tools.viewpager2.goToPreviousPage
@@ -312,13 +312,15 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
     }
 
     private fun initializePlayerView(){
-        viewBinding?.playerView?.apply{
-            matchRootView()
-            setErrorMessageProvider(playerErrorMessageProvider)
-            resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
-            requestFocus()
-            videoSurfaceView?.setOnClickListener {
-                showBroadcastInformationTemporarily()
+        viewBinding?.run{
+            playerView.apply{
+                matchAnotherView(root)
+                setErrorMessageProvider(playerErrorMessageProvider)
+                resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+                requestFocus()
+                videoSurfaceView?.setOnClickListener {
+                    showBroadcastInformationTemporarily()
+                }
             }
         }
     }

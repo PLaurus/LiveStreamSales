@@ -10,15 +10,21 @@ import android.widget.TextView
 fun View.matchRootView(
     matchWidth: Boolean = true,
     matchHeight: Boolean = true
+) = matchAnotherView(rootView, matchWidth, matchHeight)
+
+fun View.matchAnotherView(
+    anotherView: View,
+    matchWidth: Boolean = true,
+    matchHeight: Boolean = true
 ){
     layoutParams = layoutParams.apply {
         if(matchWidth){
-            val rootViewWidth = rootView.width
+            val rootViewWidth = anotherView.width
             width = rootViewWidth
         }
 
         if(matchHeight){
-            val rootViewHeight = rootView.height
+            val rootViewHeight = anotherView.height
             height = rootViewHeight
         }
     }
