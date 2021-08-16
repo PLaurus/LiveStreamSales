@@ -28,6 +28,7 @@ interface ILiveBroadcastViewModel: INeedPreparationViewModel {
     val playerEventListener: Player.Listener
 
     val broadcastHasProducts: LiveData<Boolean>
+    val broadcastHasTwoOrMoreProducts: LiveData<Boolean>
     val productGroups: LiveData<List<ProductGroup>>
 
     val chatMessages: LiveData<List<ChatMessage>>

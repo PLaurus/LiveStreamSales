@@ -113,6 +113,18 @@ class LiveBroadcastViewModel @Inject constructor(
             .addTo(disposables)
     }
 
+    override val broadcastHasTwoOrMoreProducts: LiveData<Boolean> = MutableLiveData(false).apply{
+        productGroupsSubject
+            .observeOn(mainThreadScheduler)
+            .map{ it.size >= 2 }
+            .distinctUntilChanged()
+            .subscribeBy(
+                onNext = ::setValue,
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
+    }
+
     override val productGroups = MutableLiveData<List<ProductGroup>>().apply{
         productGroupsSubject
             .observeOn(mainThreadScheduler)

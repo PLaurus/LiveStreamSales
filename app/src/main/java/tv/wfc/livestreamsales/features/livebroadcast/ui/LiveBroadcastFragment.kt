@@ -251,8 +251,8 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
 
     private fun initializePreviousProductButton(){
         viewBinding?.run{
-            viewModel.broadcastHasProducts.observe(viewLifecycleOwner){ hasProducts ->
-                previousProductButton.visibility = when(hasProducts){
+            viewModel.broadcastHasTwoOrMoreProducts.observe(viewLifecycleOwner){ hasTwoOrMoreProducts ->
+                previousProductButton.visibility = when(hasTwoOrMoreProducts){
                     true -> View.VISIBLE
                     else -> View.GONE
                 }
@@ -293,8 +293,8 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
 
     private fun initializeNextProductButton(){
         viewBinding?.run{
-            viewModel.broadcastHasProducts.observe(viewLifecycleOwner){ hasProducts ->
-                nextProductButton.visibility = when(hasProducts){
+            viewModel.broadcastHasTwoOrMoreProducts.observe(viewLifecycleOwner){ hasTwoOrMoreProducts ->
+                nextProductButton.visibility = when(hasTwoOrMoreProducts){
                     true -> View.VISIBLE
                     else -> View.GONE
                 }
