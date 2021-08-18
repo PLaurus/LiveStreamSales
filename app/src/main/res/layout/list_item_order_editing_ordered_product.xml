@@ -78,6 +78,17 @@
         tools:text="Потрясающее предложение на новый Телефон 12 Про Фессор"/>
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/specificationsTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/contentMargin"
+        android:textSize="@dimen/textSize_small"
+        app:layout_constraintStart_toEndOf="@id/productImageContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/productNameText"
+        tools:text="цвет: белый, материал: воздух, снитч: тот, кто прочел"/>
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/productPriceText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -87,7 +98,7 @@
         android:textColor="@color/colorPrimary"
         app:layout_constraintStart_toEndOf="@id/productImageContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productNameText"
+        app:layout_constraintTop_toBottomOf="@id/specificationsTextView"
         app:layout_constrainedWidth="true"
         app:layout_constraintHorizontal_bias="1"
         tools:text="78 030,00 руб."/>

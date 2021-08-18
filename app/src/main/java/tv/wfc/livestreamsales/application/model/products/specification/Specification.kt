@@ -3,7 +3,12 @@ package tv.wfc.livestreamsales.application.model.products.specification
 import androidx.annotation.ColorInt
 
 sealed class Specification<out T>(val name: String, val value: T) {
-    class ColorSpecification(name: String, @ColorInt value: Int): Specification<Int>(name, value)
+    class ColorSpecification(
+        name: String,
+        @ColorInt
+        color: Int,
+        val colorName: String
+    ): Specification<Int>(name, color)
     class DescriptiveSpecification(name: String, value: String): Specification<String>(name, value)
 
     override fun equals(other: Any?): Boolean {

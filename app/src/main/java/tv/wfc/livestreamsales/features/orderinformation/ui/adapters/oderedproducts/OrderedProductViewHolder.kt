@@ -10,6 +10,7 @@ import com.laurus.p.tools.context.getDrawableCompat
 import com.laurus.p.tools.floatKtx.format
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.model.orders.OrderedProduct
+import tv.wfc.livestreamsales.application.model.products.specification.Specification
 import tv.wfc.livestreamsales.databinding.ListItemOrderInformationOrderedProductBinding
 
 class OrderedProductViewHolder(
@@ -27,6 +28,7 @@ class OrderedProductViewHolder(
         initializeProductsAmountLayout(orderedProduct)
         initializeProductsAmountText(orderedProduct)
         initializeProductNameText(orderedProduct)
+        initializeSpecificationsTextView(orderedProduct)
         initializeProductPriceText(orderedProduct)
     }
 
@@ -35,6 +37,7 @@ class OrderedProductViewHolder(
         clearProductsAmountLayout()
         clearProductsAmountText()
         clearProductNameText()
+        clearSpecificationsTextView()
         clearProductPriceText()
     }
 
@@ -112,6 +115,33 @@ class OrderedProductViewHolder(
 
     private fun clearProductNameText(){
         viewBinding.productNameText.text = ""
+    }
+
+    private fun initializeSpecificationsTextView(orderedProduct: OrderedProduct){
+        val productSpecificationsInOneString = StringBuilder()
+
+        orderedProduct.product.specifications.forEach { specification ->
+            val specificationValue: String = when(specification){
+                is Specification.ColorSpecification ->{
+                    specification.colorName
+                }
+                is Specification.DescriptiveSpecification ->{
+                    specification.value
+                }
+            }
+
+            productSpecificationsInOneString
+                .append(specification.name)
+                .append(": ")
+                .append(specificationValue)
+                .append("; ")
+        }
+
+        viewBinding.specificationsTextView.text = productSpecificationsInOneString.toString()
+    }
+
+    private fun clearSpecificationsTextView(){
+        viewBinding.specificationsTextView.text = ""
     }
 
     private fun initializeProductPriceText(orderedProduct: OrderedProduct){

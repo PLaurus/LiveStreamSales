@@ -1,5 +1,6 @@
 package tv.wfc.livestreamsales.application.storage.productsorder.remote
 
+import androidx.core.graphics.toColorInt
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
@@ -14,11 +15,13 @@ import tv.wfc.livestreamsales.application.model.orders.Order
 import tv.wfc.livestreamsales.application.model.orders.OrderRecipient
 import tv.wfc.livestreamsales.application.model.orders.OrderedProduct
 import tv.wfc.livestreamsales.application.model.products.Product
+import tv.wfc.livestreamsales.application.model.products.specification.Specification
 import tv.wfc.livestreamsales.application.model.storage.StorageDataUpdateResult
 import tv.wfc.livestreamsales.application.storage.productsorder.IProductsOrderStorage
 import tv.wfc.livestreamsales.features.rest.api.authorized.productsorders.IProductsOrdersApi
 import tv.wfc.livestreamsales.features.rest.api.authorized.productsorders.confirmorder.ConfirmOrderRequestBody
 import tv.wfc.livestreamsales.features.rest.model.api.orderproducts.OrderProductsRequestBody
+import tv.wfc.livestreamsales.features.rest.model.api.orderproducts.Property
 import javax.inject.Inject
 
 private typealias RemoteOrder = tv.wfc.livestreamsales.features.rest.api.authorized.productsorders.models.Order
@@ -210,12 +213,14 @@ class ProductsOrderRemoteStorage @Inject constructor(
         val id = this.id ?: return null
         val name = this.name ?: return null
         val price = this.price ?: return null
+        val specifications = properties?.mapNotNull { it.toSpecification() } ?: emptyList()
 
         return Product(
             id,
             name,
             price,
-            image = imageUrl
+            image = imageUrl,
+            specifications = specifications
         )
     }
 
@@ -246,5 +251,30 @@ class ProductsOrderRemoteStorage @Inject constructor(
             surname,
             email
         )
+    }
+
+    private fun Property.toSpecification(): Specification<*>? {
+        val specificationType = type ?: return null
+        val name = name ?: return null
+        val value = value ?: return null
+
+        return when(specificationType){
+            "regular" -> {
+                Specification.DescriptiveSpecification(name, value)
+            }
+            "color" -> {
+                try{
+                    val color = colorHex?.toColorInt() ?: return null
+                    Specification.ColorSpecification(
+                        name = name,
+                        color = color,
+                        colorName = value
+                    )
+                } catch (ex: IllegalArgumentException){
+                    null
+                }
+            }
+            else -> null
+        }
     }
 }

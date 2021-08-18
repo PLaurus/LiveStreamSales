@@ -99,7 +99,11 @@ class ProductsRemoteStorage @Inject constructor(
             "color" -> {
                 try{
                     val color = colorHex?.toColorInt() ?: return null
-                    Specification.ColorSpecification(name, color)
+                    Specification.ColorSpecification(
+                        name = name,
+                        color = color,
+                        colorName = value
+                    )
                 } catch (ex: IllegalArgumentException){
                     null
                 }
@@ -118,8 +122,9 @@ class ProductsRemoteStorage @Inject constructor(
                     price = 180_000.50f,
                     specifications = listOf(
                         Specification.ColorSpecification(
-                            context.getString(R.string.product_specification_name_color),
-                            Color.parseColor("#FFFFFF")
+                            name = context.getString(R.string.product_specification_name_color),
+                            color = Color.parseColor("#FFFFFF"),
+                            colorName = "Белый"
                         ),
                         Specification.DescriptiveSpecification(name = "Память", "128gb"),
                         Specification.DescriptiveSpecification(name = "Материал", "Сталь")
@@ -131,8 +136,9 @@ class ProductsRemoteStorage @Inject constructor(
                     price = 189_000.50f,
                     specifications = listOf(
                         Specification.ColorSpecification(
-                            context.getString(R.string.product_specification_name_color),
-                            Color.parseColor("#FFFFFF")
+                            name = context.getString(R.string.product_specification_name_color),
+                            color = Color.parseColor("#FFFFFF"),
+                            colorName = "Белый"
                         ),
                         Specification.DescriptiveSpecification(name = "Память", "128gb"),
                         Specification.DescriptiveSpecification(name = "Материал", "Золото")
@@ -144,8 +150,9 @@ class ProductsRemoteStorage @Inject constructor(
                     price = 300_000.50f,
                     specifications = listOf(
                         Specification.ColorSpecification(
-                            context.getString(R.string.product_specification_name_color),
-                            Color.parseColor("#FFAAAA")
+                            name = context.getString(R.string.product_specification_name_color),
+                            color = Color.parseColor("#FFA8AF"),
+                            colorName = "Светлый пурпурно-розовый"
                         ),
                         Specification.DescriptiveSpecification(name = "Материал", "Золото"),
                         Specification.DescriptiveSpecification(name = "Форма", "Ромб")
@@ -157,8 +164,9 @@ class ProductsRemoteStorage @Inject constructor(
                     price = 315_000.50f,
                     specifications = listOf(
                         Specification.ColorSpecification(
-                            context.getString(R.string.product_specification_name_color),
-                            Color.parseColor("#000000")
+                            name = context.getString(R.string.product_specification_name_color),
+                            color = Color.parseColor("#000000"),
+                            colorName = "Чёрный"
                         ),
                         Specification.DescriptiveSpecification(name = "Память", "128gb"),
                         Specification.DescriptiveSpecification(name = "Материал", "Золото"),
@@ -184,8 +192,9 @@ class ProductsRemoteStorage @Inject constructor(
                     price = 180_000.50f,
                     specifications = listOf(
                         Specification.ColorSpecification(
-                            context.getString(R.string.product_specification_name_color),
-                            Color.parseColor("#FFFFFF")
+                            name = context.getString(R.string.product_specification_name_color),
+                            color = Color.parseColor("#FFFFFF"),
+                            colorName = "Белый"
                         ),
                         Specification.DescriptiveSpecification(name = "Память", "128gb"),
                         Specification.DescriptiveSpecification(name = "Материал", "Сталь")
@@ -197,8 +206,9 @@ class ProductsRemoteStorage @Inject constructor(
                     price = 189_000.50f,
                     specifications = listOf(
                         Specification.ColorSpecification(
-                            context.getString(R.string.product_specification_name_color),
-                            Color.parseColor("#FFFFFF")
+                            name = context.getString(R.string.product_specification_name_color),
+                            color = Color.parseColor("#FFFFFF"),
+                            colorName = "Белый"
                         ),
                         Specification.DescriptiveSpecification(name = "Память", "128gb"),
                         Specification.DescriptiveSpecification(name = "Материал", "Золото")
@@ -210,8 +220,9 @@ class ProductsRemoteStorage @Inject constructor(
                     price = 300_000.50f,
                     specifications = listOf(
                         Specification.ColorSpecification(
-                            context.getString(R.string.product_specification_name_color),
-                            Color.parseColor("#CCCCCC")
+                            name = context.getString(R.string.product_specification_name_color),
+                            color = Color.parseColor("#C7D0CC"),
+                            colorName = "Гридеперлевый"
                         ),
                         Specification.DescriptiveSpecification(name = "Материал", "Золото"),
                         Specification.DescriptiveSpecification(name = "Форма", "Ромб")
@@ -223,8 +234,9 @@ class ProductsRemoteStorage @Inject constructor(
                     price = 315_000.50f,
                     specifications = listOf(
                         Specification.ColorSpecification(
-                            context.getString(R.string.product_specification_name_color),
-                            Color.parseColor("#FFFFFF")
+                            name = context.getString(R.string.product_specification_name_color),
+                            color = Color.parseColor("#FFFFFF"),
+                            colorName = "Белый"
                         ),
                         Specification.DescriptiveSpecification(name = "Память", "128gb"),
                         Specification.DescriptiveSpecification(name = "Материал", "Золото"),
@@ -237,8 +249,9 @@ class ProductsRemoteStorage @Inject constructor(
                     price = 315_000.50f,
                     specifications = listOf(
                         Specification.ColorSpecification(
-                            context.getString(R.string.product_specification_name_color),
-                            Color.parseColor("#FFFFFF")
+                            name = context.getString(R.string.product_specification_name_color),
+                            color = Color.parseColor("#FFFFFF"),
+                            colorName = "Белый"
                         ),
                         Specification.DescriptiveSpecification(name = "Память", "128gb"),
                         Specification.DescriptiveSpecification(name = "Материал", "Серебро"),

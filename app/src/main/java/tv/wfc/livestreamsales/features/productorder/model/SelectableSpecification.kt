@@ -11,8 +11,9 @@ sealed class SelectableSpecification<T>(
     class ColorSpecification(
         name: String,
         availableValues: Set<Int>,
-        selectedValue: Int? = null
-    ) : SelectableSpecification<Int>(name, availableValues, selectedValue)
+        selectedColor: Int? = null,
+        val selectedColorName: String? = null
+    ) : SelectableSpecification<Int>(name, availableValues, selectedColor)
 
     class DescriptiveSpecification(
         name: String,

@@ -577,7 +577,11 @@ class ProductOrderViewModel @Inject constructor(
     private fun SelectableSpecification<*>.toSpecification(): Specification<*>?{
         return when(this){
             is SelectableSpecification.ColorSpecification -> {
-                Specification.ColorSpecification(name, selectedValue ?: return null)
+                Specification.ColorSpecification(
+                    name = name,
+                    color = selectedValue ?: return null,
+                    colorName = selectedColorName ?: return null
+                )
             }
             is SelectableSpecification.DescriptiveSpecification -> {
                 Specification.DescriptiveSpecification(name, selectedValue ?: return null)
