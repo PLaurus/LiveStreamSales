@@ -70,7 +70,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/contentMargin"
-        android:textSize="@dimen/textSize_default"
         android:textColor="@color/colorOnPrimary"
         android:textStyle="bold"
         android:gravity="start|center"
@@ -84,6 +83,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/minProductVariantPriceText"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="@dimen/textSize_default"
         tools:text="Потрясающее предложение на новый Телефон 12 Про Фессор"/>
 
     <com.google.android.material.textview.MaterialTextView
