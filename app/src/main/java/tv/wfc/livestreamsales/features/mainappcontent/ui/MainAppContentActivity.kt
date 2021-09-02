@@ -99,6 +99,6 @@ class MainAppContentActivity : BaseActivity() {
     }
 
     fun interface ToolbarNavigationOnClickListener{
-        fun onClick(): Unit
+        fun onClick()
     }
 }
