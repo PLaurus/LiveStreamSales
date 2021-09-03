@@ -286,7 +286,7 @@
                 tools:errorEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/audioSampleRateBitrateEditText"
+                    android:id="@+id/audioSampleRateEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"/>

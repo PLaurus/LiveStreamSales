@@ -2,40 +2,39 @@ package tv.wfc.livestreamsales.application.di.modules.sharedpreferences
 
 import android.content.Context
 import android.content.SharedPreferences
-import tv.wfc.livestreamsales.application.di.modules.sharedpreferences.qualifiers.ApplicationSharedPreferences
-import tv.wfc.livestreamsales.application.di.modules.sharedpreferences.qualifiers.AuthorizationSharedPreferences
 import dagger.Module
 import dagger.Provides
-import javax.inject.Named
+import tv.wfc.livestreamsales.application.di.modules.sharedpreferences.qualifiers.*
 
 @Module
 class SharedPreferencesModule {
-    companion object{
-        private const val DEPENDENCY_NAME_AUTHORIZATION_FILE_NAME = "AUTHORIZATION_FILE_NAME"
-        private const val DEPENDENCY_NAME_APPLICATION_SETTINGS_FILE_NAME = "APPLICATION_SETTINGS_FILE_NAME"
-    }
-
     @Provides
-    @Named(DEPENDENCY_NAME_AUTHORIZATION_FILE_NAME)
+    @AuthorizationSharedPreferencesFileName
     internal fun provideAuthorizationSharedPreferencesFileName(): String{
         return "tv.wfc.livestreamsales.AUTHORIZATION_SHARED_PREFERENCES"
     }
 
     @Provides
-    @Named(DEPENDENCY_NAME_APPLICATION_SETTINGS_FILE_NAME)
+    @ApplicationSharedPreferencesFileName
     internal fun provideApplicationSharedPreferencesFileName(): String {
         return "tv.wfc.livestreamsales.APPLICATION_SHARED_PREFERENCES"
+    }
+
+    @Provides
+    @LiveBroadcastingSharedPreferencesFileName
+    internal fun provideLiveBroadcastingSharedPreferencesFileName(): String{
+        return "tv.wfc.livestreamsales.LIVE_BROADCASTING_SHARED_PREFERENCES"
     }
 
     @Provides
     @AuthorizationSharedPreferences
     internal fun provideAuthorizationSharedPreferences(
         context: Context,
-        @Named(DEPENDENCY_NAME_AUTHORIZATION_FILE_NAME)
-        authorizationSharedPreferencesFileName: String
+        @AuthorizationSharedPreferencesFileName
+        fileName: String
     ): SharedPreferences{
         return context.getSharedPreferences(
-            authorizationSharedPreferencesFileName,
+            fileName,
             Context.MODE_PRIVATE
         )
     }
@@ -44,11 +43,24 @@ class SharedPreferencesModule {
     @ApplicationSharedPreferences
     internal fun provideApplicationSharedPreferences(
         context: Context,
-        @Named(DEPENDENCY_NAME_APPLICATION_SETTINGS_FILE_NAME)
-        applicationSharedPreferencesFileName: String
+        @ApplicationSharedPreferencesFileName
+        fileName: String
     ): SharedPreferences{
         return context.getSharedPreferences(
-            applicationSharedPreferencesFileName,
+            fileName,
+            Context.MODE_PRIVATE
+        )
+    }
+
+    @Provides
+    @LiveBroadcastingSharedPreferences
+    internal fun provideLiveBroadcastingSharedPreferences(
+        context: Context,
+        @LiveBroadcastingSharedPreferencesFileName
+        fileName: String
+    ): SharedPreferences{
+        return context.getSharedPreferences(
+            fileName,
             Context.MODE_PRIVATE
         )
     }

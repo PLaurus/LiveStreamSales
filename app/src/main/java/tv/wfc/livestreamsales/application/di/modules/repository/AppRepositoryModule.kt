@@ -11,6 +11,8 @@ import tv.wfc.livestreamsales.application.repository.broadcastsinformation.Broad
 import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
 import tv.wfc.livestreamsales.application.repository.chat.ChatRepository
 import tv.wfc.livestreamsales.application.repository.chat.IChatRepository
+import tv.wfc.livestreamsales.application.repository.livebroadcastingsettings.ILiveBroadcastingSettingsRepository
+import tv.wfc.livestreamsales.application.repository.livebroadcastingsettings.LiveBroadcastingSettingsRepository
 import tv.wfc.livestreamsales.application.repository.paymentcardinformation.IPaymentCardInformationRepository
 import tv.wfc.livestreamsales.application.repository.paymentcardinformation.PaymentCardInformationRepository
 import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
@@ -27,54 +29,60 @@ abstract class AppRepositoryModule {
     @ApplicationScope
     @Binds
     internal abstract fun bindUserPersonalInformationRepository(
-        userPersonalInformationRepository: UserPersonalInformationRepository
+        repository: UserPersonalInformationRepository
     ): IUserPersonalInformationRepository
 
     @ApplicationScope
     @Binds
     internal abstract fun bindPaymentCardInformationRepository(
-        paymentCardInformationRepository: PaymentCardInformationRepository
+        repository: PaymentCardInformationRepository
     ): IPaymentCardInformationRepository
 
     @ApplicationScope
     @Binds
     internal abstract fun bindBroadcastAnalyticsRepository(
-        broadcastAnalyticsRepository: BroadcastAnalyticsRepository
+        repository: BroadcastAnalyticsRepository
     ): IBroadcastAnalyticsRepository
 
     @ApplicationScope
     @Binds
     internal abstract fun bindApplicationSettingsRepository(
-        applicationSettingsRepository: ApplicationSettingsRepository
+        repository: ApplicationSettingsRepository
     ): IApplicationSettingsRepository
 
     @ApplicationScope
     @Binds
     abstract fun bindAuthorizationRepository(
-        authorizationRepository: AuthorizationRepository
+        repository: AuthorizationRepository
     ): IAuthorizationRepository
 
     @ApplicationScope
     @Binds
     internal abstract fun bindBroadcastsInformationRepository(
-        broadcastsInformationRepository: BroadcastsInformationRepository
+        repository: BroadcastsInformationRepository
     ): IBroadcastsInformationRepository
 
     @ApplicationScope
     @Binds
     internal abstract fun bindProductsRepository(
-        productsRepository: ProductsRepository
+        repository: ProductsRepository
     ): IProductsRepository
 
     @ApplicationScope
     @Binds
     internal abstract fun bindProductsOrderRepository(
-        productsOrderRepository: ProductsOrderRepository
+        repository: ProductsOrderRepository
     ): IProductsOrderRepository
 
     @ApplicationScope
     @Binds
     internal abstract fun bindChatRepository(
-        chatRepository: ChatRepository
+        repository: ChatRepository
     ): IChatRepository
+
+    @ApplicationScope
+    @Binds
+    internal abstract fun bindLiveBroadcastingSettingsRepository(
+        repository: LiveBroadcastingSettingsRepository
+    ): ILiveBroadcastingSettingsRepository
 }
