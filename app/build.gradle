@@ -83,6 +83,9 @@ dependencies {
     implementation "com.google.android.exoplayer:exoplayer-ui:$exoPlayerVersion"
     implementation "com.google.android.exoplayer:extension-cronet:$exoPlayerVersion"
 
+    // Video broadcasting
+    implementation "com.github.pedroSG94.rtmp-rtsp-stream-client-java:rtplibrary:$rtplibraryVersion"
+
     // Android navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"

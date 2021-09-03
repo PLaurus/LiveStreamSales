@@ -8,7 +8,7 @@ buildscript {
 
     // UI
     ext.appCompatVersion =              "1.3.1"
-    ext.materialVersion =               "1.5.0-alpha03"
+    ext.materialVersion =               "1.4.0"
     ext.constraintLayoutVersion =       "2.1.0"
     ext.swipeRefreshLayoutVersion =     "1.1.0"
     ext.frescoVersion =                 "2.3.0"
@@ -23,6 +23,9 @@ buildscript {
 
     // Video player
     ext.exoPlayerVersion =              "2.15.0"
+
+    // Video broadcasting
+    ext.rtplibraryVersion =             "2.0.7"
 
     // Android navigation
     ext.navigationVersion =             "2.3.5"
