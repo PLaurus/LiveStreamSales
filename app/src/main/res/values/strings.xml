@@ -214,6 +214,8 @@
     <string name="fragment_profile_email_has_wrong_format">Недопустимый формат почты</string>
     <string name="fragment_profile_payment_information_title">2. Способ оплаты</string>
     <string name="fragment_profile_change_payment_information_button">Изменить способ оплаты</string>
+    <string name="fragment_profile_broadcasting_title">3. Трансляция</string>
+    <string name="fragment_profile_start_live_broadcasting_button">Начать трансляцию</string>
     <string name="fragment_profile_log_out_button">Выйти</string>
 
     <!-- User personal information fragment -->
@@ -330,5 +332,25 @@
     <string name="fragment_live_broadcast_price">от %s руб.</string>
     <string name="fragment_live_broadcast_error_failed_to_send_message">Не удалось отправить сообщение</string>
     <string name="fragment_live_broadcast_error_no_broadcast_manifest">Трансляция не найдена</string>
+
+    <!-- Broadcast settings fragment -->
+    <string name="fragment_broadcast_settings_destination_title">Настройки трансляции</string>
+    <string name="fragment_broadcast_settings_main_settings_title">Основные настройки</string>
+    <string name="fragment_broadcast_settings_server_address_hint">Адрес сервера</string>
+    <string name="fragment_broadcast_settings_server_port_hint">Порт сервера</string>
+    <string name="fragment_broadcast_settings_stream_key_hint">Ключ трансляции</string>
+    <string name="fragment_broadcast_settings_source_user_name_hint">Логин источника</string>
+    <string name="fragment_broadcast_settings_source_password_hint">Пароль источника</string>
+    <string name="fragment_broadcast_settings_video_settings_title">Видео</string>
+    <string name="fragment_broadcast_settings_video_resolution_hint">Разрешение</string>
+    <string name="fragment_broadcast_settings_video_bitrate_hint">Битрейт (на лету)</string>
+    <string name="fragment_broadcast_settings_fps_hint">FPS (Кадры в секунду)</string>
+    <string name="fragment_broadcast_settings_audio_settings_title">Аудио</string>
+    <string name="fragment_broadcast_settings_audio_bitrate_hint">Битрейт</string>
+    <string name="fragment_broadcast_settings_audio_sample_rate_hint">Частота дискретизации</string>
+    <string name="fragment_broadcast_settings_audio_channel_hint">Канал</string>
+    <string name="fragment_broadcast_settings_echo_canceler_text">Подавление эхо</string>
+    <string name="fragment_broadcast_settings_noise_suppressor_text">Шумоподавление</string>
+    <string name="fragment_broadcast_settings_confirm_button">Подтвердить</string>
 
 </resources>

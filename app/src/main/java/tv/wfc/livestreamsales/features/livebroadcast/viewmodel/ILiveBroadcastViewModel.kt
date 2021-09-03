@@ -2,8 +2,8 @@ package tv.wfc.livestreamsales.features.livebroadcast.viewmodel
 
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.LiveData
-import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
 import com.laurus.p.tools.livedata.LiveEvent
 import tv.wfc.contentloader.viewmodel.INeedPreparationViewModel
@@ -24,7 +24,7 @@ interface ILiveBroadcastViewModel: INeedPreparationViewModel {
 
     val broadcastMediaItem: LiveData<MediaItem?>
     val playbackState: LiveData<PlaybackState>
-    val onPlayerError: LiveEvent<ExoPlaybackException>
+    val onPlayerError: LiveEvent<PlaybackException>
     val playerEventListener: Player.Listener
 
     val broadcastHasProducts: LiveData<Boolean>

@@ -3,6 +3,7 @@ package tv.wfc.livestreamsales.features.livebroadcast.di.modules.exoplayer
 import android.content.Context
 import com.google.android.exoplayer2.DefaultRenderersFactory
 import com.google.android.exoplayer2.ExoPlaybackException
+import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.RenderersFactory
 import com.google.android.exoplayer2.ext.cronet.CronetDataSource
 import com.google.android.exoplayer2.ext.cronet.CronetEngineWrapper
@@ -29,7 +30,7 @@ abstract class ExoPlayerModule {
     @Binds
     internal abstract fun provideErrorMessageProvider(
         playerErrorMessageProvider: PlayerErrorMessageProvider
-    ): ErrorMessageProvider<ExoPlaybackException>
+    ): ErrorMessageProvider<PlaybackException>
 
     companion object{
         @Provides

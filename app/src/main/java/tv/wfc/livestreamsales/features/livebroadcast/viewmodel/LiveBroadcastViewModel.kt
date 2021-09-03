@@ -10,6 +10,7 @@ import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
 import com.laurus.p.tools.livedata.LiveEvent
 import io.reactivex.rxjava3.core.Completable
@@ -80,14 +81,14 @@ class LiveBroadcastViewModel @Inject constructor(
     override val broadcastMediaItem = MutableLiveData<MediaItem?>()
 
     override val playbackState = MutableLiveData<PlaybackState>()
-    override val onPlayerError = LiveEvent<ExoPlaybackException>()
+    override val onPlayerError = LiveEvent<PlaybackException>()
 
     override val playerEventListener = object : Player.Listener{
         override fun onPlaybackStateChanged(state: Int) {
             playbackState.value = PlaybackState.fromInt(state)
         }
 
-        override fun onPlayerError(error: ExoPlaybackException) {
+        override fun onPlayerError(error: PlaybackException) {
             onPlayerError.value = error
             applicationErrorsLogger.logError(error)
         }

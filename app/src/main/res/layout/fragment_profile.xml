@@ -125,7 +125,7 @@
                 style="@style/Theme.LiveStreamSales.BigMaterialButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/contentMargin"
                 android:text="@string/fragment_profile_update_user_personal_information_button"
                 android:textAllCaps="false"
                 app:layout_constraintStart_toStartOf="parent"
@@ -133,7 +133,7 @@
                 app:layout_constraintTop_toBottomOf="@id/emailLayout"/>
 
             <View
-                android:id="@+id/firstSectionSeparatorView"
+                android:id="@+id/sectionSeparatorView1"
                 android:layout_height="1dp"
                 android:layout_width="0dp"
                 android:layout_marginTop="@dimen/contentMargin"
@@ -152,7 +152,7 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/firstSectionSeparatorView"/>
+                app:layout_constraintTop_toBottomOf="@id/sectionSeparatorView1"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/changePaymentInformationButton"
@@ -168,6 +168,52 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/paymentCardHeaderText"/>
 
+            <View
+                android:id="@+id/sectionSeparatorView2"
+                android:layout_height="1dp"
+                android:layout_width="0dp"
+                android:layout_marginTop="@dimen/contentMargin"
+                android:background="@color/colorSecondaryText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/changePaymentInformationButton" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/broadcastingHeaderTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/contentMargin"
+                android:text="@string/fragment_profile_broadcasting_title"
+                android:textSize="@dimen/textSize_big"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sectionSeparatorView2"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/startLiveBroadcastButton"
+                style="@style/Theme.LiveStreamSales.BigMaterialButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/contentMargin"
+                android:text="@string/fragment_profile_start_live_broadcasting_button"
+                android:textColor="@color/colorOnPrimary"
+                android:textSize="@dimen/textSize_default"
+                android:textAllCaps="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/broadcastingHeaderTextView"/>
+
+            <View
+                android:id="@+id/sectionSeparatorView3"
+                android:layout_height="1dp"
+                android:layout_width="0dp"
+                android:layout_marginTop="@dimen/contentMargin"
+                android:background="@color/colorSecondaryText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/startLiveBroadcastButton" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/logOutButton"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -180,7 +226,7 @@
                 android:textAllCaps="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/changePaymentInformationButton"/>
+                app:layout_constraintTop_toBottomOf="@id/sectionSeparatorView3"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

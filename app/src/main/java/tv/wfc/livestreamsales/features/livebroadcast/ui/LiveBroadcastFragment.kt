@@ -12,10 +12,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
-import com.google.android.exoplayer2.ExoPlaybackException
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.RenderersFactory
-import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.source.MediaSourceFactory
 import com.google.android.exoplayer2.trackselection.TrackSelector
@@ -97,7 +94,7 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
     lateinit var imageLoader: ImageLoader
 
     @Inject
-    lateinit var playerErrorMessageProvider: ErrorMessageProvider<ExoPlaybackException>
+    lateinit var playerErrorMessageProvider: ErrorMessageProvider<PlaybackException>
 
     @Inject
     lateinit var renderersFactory: RenderersFactory

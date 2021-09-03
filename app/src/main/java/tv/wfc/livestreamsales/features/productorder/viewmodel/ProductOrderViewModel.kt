@@ -239,7 +239,7 @@ class ProductOrderViewModel @Inject constructor(
         val selectedProductGroup = this.selectedProductGroup ?: return
         val selectableSpecifications = selectableSpecificationsByProductGroup[selectedProductGroup] ?: return
 
-        if(selectedProductSubject != null) deselectProduct()
+        if(selectedProductSubject.value!!.value != null) deselectProduct()
 
         for(i in selectableSpecifications.lastIndex downTo specificationPosition + 1){
             selectableSpecifications.removeAt(i)

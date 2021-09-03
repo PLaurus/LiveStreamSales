@@ -69,8 +69,8 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshLayoutVersion"
     implementation "com.facebook.fresco:fresco:$frescoVersion"
     implementation "io.coil-kt:coil:$coilVersion"
-    implementation "com.romandanylyk:pageindicatorview:$pageIndicatorViewVersion"
-    implementation "com.tbuonomo.andrui:viewpagerdotsindicator:$viewPagerDotsIndicatorVersion"
+    implementation 'com.github.romandanylyk:PageIndicatorView:b1bad589b5'
+    implementation "com.tbuonomo:dotsindicator:$viewPagerDotsIndicatorVersion"
     implementation "com.github.bosphere.android-fadingedgelayout:fadingedgelayout:$fadingEdgeLayoutVersion"
 
     // Payment
