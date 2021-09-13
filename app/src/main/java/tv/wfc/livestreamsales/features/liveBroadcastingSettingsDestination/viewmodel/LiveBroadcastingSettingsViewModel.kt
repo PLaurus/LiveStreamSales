@@ -53,7 +53,7 @@ class LiveBroadcastingSettingsViewModel @Inject constructor(
     private val activeOperationsCount = BehaviorSubject.createDefault(0)
 
     private val nextDestinationSubject = PublishSubject.create<NextDestination>()
-    private val serverAddressSubject = BehaviorSubject.createDefault("")
+    private val serverAddressSubject = BehaviorSubject.createDefault("rtmp://7b9a2f.entrypoint.cloud.wowza.com/app-9223Q936")
     private val serverAddressErrorSubject: Observable<NullablesWrapper<ServerAddressError>> = BehaviorSubject.createDefault<NullablesWrapper<ServerAddressError>>(NullablesWrapper(null)).apply{
         serverAddressSubject
             .observeOn(mainThreadScheduler)
@@ -66,7 +66,7 @@ class LiveBroadcastingSettingsViewModel @Inject constructor(
             )
             .addTo(disposables)
     }
-    private val serverPortSubject = BehaviorSubject.createDefault<NullablesWrapper<Int>>(NullablesWrapper(null))
+    private val serverPortSubject = BehaviorSubject.createDefault(NullablesWrapper(1935))
     private val serverPortErrorSubject: Observable<NullablesWrapper<ServerPortError>> = BehaviorSubject.createDefault<NullablesWrapper<ServerPortError>>(NullablesWrapper(null)).apply{
         serverPortSubject
             .observeOn(mainThreadScheduler)
@@ -79,7 +79,7 @@ class LiveBroadcastingSettingsViewModel @Inject constructor(
             )
             .addTo(disposables)
     }
-    private val streamKeySubject = BehaviorSubject.createDefault("")
+    private val streamKeySubject = BehaviorSubject.createDefault("a3098ce9")
     private val streamKeyErrorSubject: Observable<NullablesWrapper<StreamKeyError>> = BehaviorSubject.createDefault<NullablesWrapper<StreamKeyError>>(NullablesWrapper(null)).apply{
         streamKeySubject
             .observeOn(mainThreadScheduler)
@@ -92,7 +92,7 @@ class LiveBroadcastingSettingsViewModel @Inject constructor(
             )
             .addTo(disposables)
     }
-    private val sourceUserNameSubject = BehaviorSubject.createDefault("")
+    private val sourceUserNameSubject = BehaviorSubject.createDefault("client69645")
     private val sourceUserNameErrorSubject: Observable<NullablesWrapper<SourceUserNameError>> = BehaviorSubject.createDefault<NullablesWrapper<SourceUserNameError>>(NullablesWrapper(null)).apply{
         sourceUserNameSubject
             .observeOn(mainThreadScheduler)
@@ -105,7 +105,7 @@ class LiveBroadcastingSettingsViewModel @Inject constructor(
             )
             .addTo(disposables)
     }
-    private val sourcePasswordSubject = BehaviorSubject.createDefault("")
+    private val sourcePasswordSubject = BehaviorSubject.createDefault("e0b136ae")
     private val sourcePasswordErrorSubject: Observable<NullablesWrapper<SourcePasswordError>> = BehaviorSubject.createDefault<NullablesWrapper<SourcePasswordError>>(NullablesWrapper(null)).apply{
         sourcePasswordSubject
             .observeOn(mainThreadScheduler)
