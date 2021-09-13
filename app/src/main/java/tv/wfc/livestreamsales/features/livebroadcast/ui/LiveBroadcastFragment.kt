@@ -313,7 +313,7 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
             playerView.apply{
                 matchAnotherView(root)
                 setErrorMessageProvider(playerErrorMessageProvider)
-                resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+                resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
                 requestFocus()
                 videoSurfaceView?.setOnClickListener {
                     showBroadcastInformationTemporarily()
