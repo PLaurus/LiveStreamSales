@@ -356,10 +356,10 @@ class OrderEditingViewModel @Inject constructor(
     }
 
     private fun checkAddressFieldsContainErrors(): Boolean{
-        return deliveryCityErrorSubject.value.value != null ||
-                deliveryStreetErrorSubject.value.value != null ||
-                deliveryBuildingErrorSubject.value.value != null ||
-                deliveryFlatErrorSubject.value.value != null
+        return deliveryCityErrorSubject.value?.value != null ||
+                deliveryStreetErrorSubject.value?.value != null ||
+                deliveryBuildingErrorSubject.value?.value != null ||
+                deliveryFlatErrorSubject.value?.value != null
     }
 
     private fun String.checkContainsOnlySingleLanguageLetters(): Boolean{

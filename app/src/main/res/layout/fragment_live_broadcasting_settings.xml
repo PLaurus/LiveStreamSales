@@ -25,7 +25,7 @@
                 android:id="@+id/mainSettingsTitleTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/fragment_broadcast_settings_main_settings_title"
+                android:text="@string/fragment_live_broadcasting_settings_main_settings_title"
                 android:textSize="@dimen/textSize_big"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
-                android:hint="@string/fragment_broadcast_settings_server_address_hint"
+                android:hint="@string/fragment_live_broadcasting_settings_server_address_hint"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/mainSettingsTitleTextView"
@@ -60,7 +60,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
-                android:hint="@string/fragment_broadcast_settings_server_port_hint"
+                android:hint="@string/fragment_live_broadcasting_settings_server_port_hint"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/serverAddressTextInputLayout"
@@ -82,7 +82,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
-                android:hint="@string/fragment_broadcast_settings_stream_key_hint"
+                android:hint="@string/fragment_live_broadcasting_settings_stream_key_hint"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/serverPortTextInputLayout"
@@ -104,7 +104,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
-                android:hint="@string/fragment_broadcast_settings_source_user_name_hint"
+                android:hint="@string/fragment_live_broadcasting_settings_source_user_name_hint"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/streamKeyTextInputLayout"
@@ -126,7 +126,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
-                android:hint="@string/fragment_broadcast_settings_source_password_hint"
+                android:hint="@string/fragment_live_broadcasting_settings_source_password_hint"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/sourceUserNameTextInputLayout"
@@ -157,7 +157,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
-                android:text="@string/fragment_broadcast_settings_video_settings_title"
+                android:text="@string/fragment_live_broadcasting_settings_video_settings_title"
                 android:textSize="@dimen/textSize_big"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -170,13 +170,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
-                android:hint="@string/fragment_broadcast_settings_video_resolution_hint"
+                android:hint="@string/fragment_live_broadcasting_settings_video_resolution_hint"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/videoSettingsTitleTextView">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/videoResolutionTextView"
+                    android:id="@+id/videoResolutionAutoCompleteTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"/>
@@ -189,7 +189,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
-                android:hint="@string/fragment_broadcast_settings_video_bitrate_hint"
+                android:hint="@string/fragment_live_broadcasting_settings_video_bitrate_hint"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/videoResolutionTextInputLayout"
@@ -211,7 +211,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
-                android:hint="@string/fragment_broadcast_settings_fps_hint"
+                android:hint="@string/fragment_live_broadcasting_settings_fps_hint"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/videoBitrateTextInputLayout"
@@ -242,7 +242,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
-                android:text="@string/fragment_broadcast_settings_audio_settings_title"
+                android:text="@string/fragment_live_broadcasting_settings_audio_settings_title"
                 android:textSize="@dimen/textSize_big"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -255,7 +255,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
-                android:hint="@string/fragment_broadcast_settings_audio_bitrate_hint"
+                android:hint="@string/fragment_live_broadcasting_settings_audio_bitrate_hint"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/audioSettingsTitleTextView"
@@ -277,7 +277,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
-                android:hint="@string/fragment_broadcast_settings_audio_sample_rate_hint"
+                android:hint="@string/fragment_live_broadcasting_settings_audio_sample_rate_hint"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/audioBitrateTextInputLayout"
@@ -299,13 +299,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
-                android:hint="@string/fragment_broadcast_settings_audio_channel_hint"
+                android:hint="@string/fragment_live_broadcasting_settings_audio_channel_hint"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/audioSampleRateTextInputLayout">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/audioChannelTextView"
+                    android:id="@+id/audioChannelAutoCompleteTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"/>
@@ -316,15 +316,15 @@
                 android:id="@+id/audioEchoCancelerTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/fragment_broadcast_settings_echo_canceler_text"
+                android:text="@string/fragment_live_broadcasting_settings_echo_canceler_text"
                 android:textSize="@dimen/textSize_default"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/audioEchoCancelerSwitchView"
-                app:layout_constraintTop_toTopOf="@id/audioEchoCancelerSwitchView"
-                app:layout_constraintBottom_toBottomOf="@id/audioEchoCancelerSwitchView"/>
+                app:layout_constraintEnd_toStartOf="@id/audioEchoCancelerSwitchMaterial"
+                app:layout_constraintTop_toTopOf="@id/audioEchoCancelerSwitchMaterial"
+                app:layout_constraintBottom_toBottomOf="@id/audioEchoCancelerSwitchMaterial"/>
 
             <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/audioEchoCancelerSwitchView"
+                android:id="@+id/audioEchoCancelerSwitchMaterial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
@@ -335,20 +335,20 @@
                 android:id="@+id/audioNoiseSuppressorTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/fragment_broadcast_settings_noise_suppressor_text"
+                android:text="@string/fragment_live_broadcasting_settings_noise_suppressor_text"
                 android:textSize="@dimen/textSize_default"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/audioNoiseSuppressorSwitchView"
-                app:layout_constraintTop_toTopOf="@id/audioNoiseSuppressorSwitchView"
-                app:layout_constraintBottom_toBottomOf="@id/audioNoiseSuppressorSwitchView"/>
+                app:layout_constraintEnd_toStartOf="@id/audioNoiseSuppressorSwitchMaterial"
+                app:layout_constraintTop_toTopOf="@id/audioNoiseSuppressorSwitchMaterial"
+                app:layout_constraintBottom_toBottomOf="@id/audioNoiseSuppressorSwitchMaterial"/>
 
             <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/audioNoiseSuppressorSwitchView"
+                android:id="@+id/audioNoiseSuppressorSwitchMaterial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/audioEchoCancelerSwitchView"/>
+                app:layout_constraintTop_toBottomOf="@id/audioEchoCancelerSwitchMaterial"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/confirmButton"
@@ -356,11 +356,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
-                android:text="@string/fragment_broadcast_settings_confirm_button"
+                android:text="@string/fragment_live_broadcasting_settings_confirm_button"
                 android:textAllCaps="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/audioNoiseSuppressorSwitchView"/>
+                app:layout_constraintTop_toBottomOf="@id/audioNoiseSuppressorSwitchMaterial"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

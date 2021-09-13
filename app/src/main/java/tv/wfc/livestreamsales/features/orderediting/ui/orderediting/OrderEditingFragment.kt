@@ -87,7 +87,7 @@ class OrderEditingFragment: BaseFragment(R.layout.fragment_order_editing){
     private fun createOrderEditingComponent(){
         if(::orderEditingComponent.isInitialized) return
 
-        val viewModelStoreOwner = navigationController.currentBackStackEntry?: throw NullPointerException()
+        val viewModelStoreOwner = navigationController.currentBackStackEntry ?: throw NullPointerException()
 
         orderEditingComponent = appComponent
             .orderEditingComponent()

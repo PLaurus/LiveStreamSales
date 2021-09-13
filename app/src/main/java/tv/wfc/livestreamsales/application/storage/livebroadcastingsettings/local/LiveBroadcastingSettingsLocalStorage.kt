@@ -172,7 +172,7 @@ class LiveBroadcastingSettingsLocalStorage @Inject constructor(
         return Completable
             .fromRunnable{
                 liveBroadcastingSharedPreferences.edit(commit = true){
-                    putBoolean(IS_NOISE_SUPPRESSOR_ENABLED_KEY, DEFAULT_IS_NOISE_SUPPRESSOR_ENABLED)
+                    putBoolean(IS_NOISE_SUPPRESSOR_ENABLED_KEY, isEnabled)
                 }
             }
             .subscribeOn(ioScheduler)

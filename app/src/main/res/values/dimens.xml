@@ -15,6 +15,7 @@
     <dimen name="card_elevation">5dp</dimen>
 
     <!-- Text size -->
+    <dimen name="textSize_verySmall">8sp</dimen>
     <dimen name="textSize_small">12sp</dimen>
     <dimen name="textSize_default">16sp</dimen>
     <dimen name="textSize_big">20sp</dimen>

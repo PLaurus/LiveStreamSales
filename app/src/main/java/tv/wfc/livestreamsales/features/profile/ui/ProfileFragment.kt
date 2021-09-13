@@ -1,5 +1,6 @@
 package tv.wfc.livestreamsales.features.profile.ui
 
+import android.Manifest
 import android.content.Context
 import android.os.Bundle
 import android.view.View
@@ -9,6 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding4.view.clicks
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.listener.multi.BaseMultiplePermissionsListener
+import com.karumi.dexter.listener.multi.CompositeMultiplePermissionsListener
+import com.karumi.dexter.listener.multi.SnackbarOnAnyDeniedMultiplePermissionsListener
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -108,6 +114,7 @@ class ProfileFragment: BaseFragment(R.layout.fragment_profile) {
         initializeEmailLayout()
         initializeUpdateUserPersonalInformationButton()
         initializeChangePaymentInformationButton()
+        initializeStartLiveBroadcastButton()
         initializeLogOutButton()
         initializeSnackBar()
     }
@@ -256,6 +263,19 @@ class ProfileFragment: BaseFragment(R.layout.fragment_profile) {
         }
     }
 
+    private fun initializeStartLiveBroadcastButton(){
+        viewBinding?.startLiveBroadcastButton?.run{
+            clicks()
+                .throttleLatest(500L, TimeUnit.MILLISECONDS, computationScheduler)
+                .observeOn(mainThreadScheduler)
+                .subscribeBy(
+                    onNext = { navigateToLiveBroadcastingSettings() },
+                    onError = applicationErrorsLogger::logError
+                )
+                .addTo(viewScopeDisposables)
+        }
+    }
+
     private fun initializeLogOutButton(){
         viewBinding?.logOutButton?.run{
             clicks()
@@ -290,5 +310,37 @@ class ProfileFragment: BaseFragment(R.layout.fragment_profile) {
     private fun navigateToPaymentCardInformation(){
         val action = HomeFragmentDirections.actionToPaymentCardInformationDestination()
         navigationController.navigate(action)
+    }
+
+    private fun navigateToLiveBroadcastingSettings(){
+        val rootView = viewBinding?.root ?: return
+
+        val permissionRejectionListener = SnackbarOnAnyDeniedMultiplePermissionsListener.Builder
+            .with(rootView, R.string.fragment_profile_camera_and_audio_record_permissions_are_required_to_begin_live_broadcasting)
+            .withOpenSettingsButton(R.string.fragment_profile_permissions_settings_button)
+            .build()
+
+        val accessIsGrantedListener = object: BaseMultiplePermissionsListener(){
+            override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                if(report?.areAllPermissionsGranted() == true){
+                    val action = HomeFragmentDirections.toLiveBroadcastingSettingsDestination()
+                    navigationController.navigate(action)
+                }
+            }
+        }
+
+        val permissionsListener = CompositeMultiplePermissionsListener(
+            permissionRejectionListener,
+            accessIsGrantedListener
+        )
+
+        Dexter
+            .withActivity(requireActivity())
+            .withPermissions(
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.CAMERA
+            )
+            .withListener(permissionsListener)
+            .check()
     }
 }

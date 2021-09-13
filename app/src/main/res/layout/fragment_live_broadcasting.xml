@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tv.wfc.contentloader.ContentLoaderView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contentLoaderView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/broadcastManagementViewsConstraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/screenPadding"
+        android:clipToPadding="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/currentVideoBitrate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textSize_verySmall"
+            android:textColor="@color/colorSecondaryText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="123456789 bps"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/switchBroadcastStateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            android:text="@string/fragment_live_broadcasting_switch_broadcast_state_button_on"
+            android:textSize="@dimen/textSize_small"
+            android:textAllCaps="false"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:shapeAppearance="@style/Theme.LiveStreamSales.ShapeAppearanceOverlay.Circle"
+            app:icon="@drawable/ic_baseline_video_camera_on_24"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/switchCameraFacingButton"
+            style="@style/Theme.LiveStreamSales.MaterialButton.IconOnly.Circle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/contentMargin"
+            android:textSize="@dimen/textSize_small"
+            android:textAllCaps="false"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintStart_toEndOf="@id/switchBroadcastStateButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:icon="@drawable/ic_baseline_camera_switch_24"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/switchMicrophoneOnOffButton"
+            style="@style/Theme.LiveStreamSales.MaterialButton.IconOnly.Circle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/contentMargin"
+            android:textSize="@dimen/textSize_small"
+            android:textAllCaps="false"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintStart_toEndOf="@id/switchCameraFacingButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:icon="@drawable/ic_baseline_mic_24"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/switchCameraOnOffButton"
+            style="@style/Theme.LiveStreamSales.MaterialButton.IconOnly.Circle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/contentMargin"
+            android:textSize="@dimen/textSize_small"
+            android:textAllCaps="false"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintStart_toEndOf="@id/switchMicrophoneOnOffButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:icon="@drawable/ic_baseline_camera_alt_24"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</tv.wfc.contentloader.ContentLoaderView>

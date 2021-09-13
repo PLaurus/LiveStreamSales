@@ -134,6 +134,14 @@
             app:popEnterAnim="@anim/stay_as_is"
             app:popExitAnim="@anim/slide_out_right"/>
 
+        <action
+            android:id="@+id/toLiveBroadcastingSettingsDestination"
+            app:destination="@id/liveBroadcastingSettingsDestination"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/stay_as_is"
+            app:popEnterAnim="@anim/stay_as_is"
+            app:popExitAnim="@anim/slide_out_right"/>
+
     </fragment>
 
     <fragment
@@ -203,6 +211,50 @@
         android:name="tv.wfc.livestreamsales.features.orderediting.ui.deliveryaddressediting.OrderDeliveryAddressEditingFragment"
         android:label="@string/fragment_order_delivery_address_editing_destination_title"
         tools:layout="@layout/fragment_order_delivery_address_editing">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/liveBroadcastingSettingsDestination"
+        android:name="tv.wfc.livestreamsales.features.liveBroadcastingSettingsDestination.ui.LiveBroadcastingSettingsFragment"
+        android:label="@string/fragment_live_broadcasting_settings_destination_title"
+        tools:layout="@layout/fragment_live_broadcasting_settings">
+
+        <action
+            android:id="@+id/toLiveBroadcastingDestination"
+            app:destination="@id/liveBroadcastingDestination"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/stay_as_is"
+            app:popEnterAnim="@anim/stay_as_is"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/liveBroadcastingDestination"
+        android:name="tv.wfc.livestreamsales.features.liveBroadcastingDestination.ui.LiveBroadcastingFragment"
+        android:label="@string/fragment_live_broadcasting_destination_title"
+        tools:layout="@layout/fragment_live_broadcasting">
+
+        <argument
+            android:name="serverAddress"
+            app:argType="string"/>
+
+        <argument
+            android:name="serverPort"
+            app:argType="integer"/>
+
+        <argument
+            android:name="streamKey"
+            app:argType="string"/>
+
+        <argument
+            android:name="sourceUserName"
+            app:argType="string"/>
+
+        <argument
+            android:name="sourcePassword"
+            app:argType="string"/>
 
     </fragment>
 

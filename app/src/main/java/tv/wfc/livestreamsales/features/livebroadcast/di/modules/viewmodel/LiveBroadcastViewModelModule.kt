@@ -18,7 +18,6 @@ abstract class LiveBroadcastViewModelModule {
     companion object{
         @LiveBroadcastFeatureScope
         @Provides
-        @JvmStatic
         internal fun provideILiveBroadcastViewModel(
             @LiveBroadcastFragment
             fragment: Fragment,
