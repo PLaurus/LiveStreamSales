@@ -6,6 +6,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.di.modules.storage.qualifiers.BroadcastsInformationLocalStorage
@@ -21,6 +22,8 @@ class BroadcastsInformationRepository @Inject constructor(
     private val broadcastsLocalStorage: IBroadcastsStorage,
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler,
+    @IoScheduler
+    private val ioScheduler: Scheduler,
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): IBroadcastsInformationRepository {
     private val disposables = CompositeDisposable()
@@ -41,6 +44,12 @@ class BroadcastsInformationRepository @Inject constructor(
     override fun getBroadcast(id: Long): Single<Broadcast> {
         return broadcastsRemoteStorage.getBroadcast(id)
             .onErrorResumeWith(broadcastsRemoteStorage.getBroadcast(id))
+    }
+
+    override fun getBroadcastViewersCount(broadcastId: Long): Single<Int> {
+        return broadcastsRemoteStorage
+            .getBroadcastViewersCount(broadcastId)
+            .subscribeOn(ioScheduler)
     }
 
     private fun getAndSaveBroadcastsInformationFromRemote(): Single<List<Broadcast>>{

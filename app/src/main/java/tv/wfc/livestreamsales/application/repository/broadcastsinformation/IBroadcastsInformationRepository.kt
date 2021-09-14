@@ -7,4 +7,5 @@ import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
 interface IBroadcastsInformationRepository {
     fun getBroadcasts(): Observable<List<Broadcast>>
     fun getBroadcast(id: Long): Single<Broadcast>
+    fun getBroadcastViewersCount(broadcastId: Long): Single<Int>
 }

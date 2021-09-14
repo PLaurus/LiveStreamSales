@@ -8,4 +8,5 @@ interface IBroadcastsStorage {
     fun getBroadcasts(): Single<List<Broadcast>>
     fun saveBroadcasts(broadcasts: List<Broadcast>): Completable
     fun getBroadcast(id: Long): Single<Broadcast>
+    fun getBroadcastViewersCount(broadcastId: Long): Single<Int>
 }

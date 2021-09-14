@@ -76,7 +76,7 @@ class LiveBroadcastViewModel @Inject constructor(
     override val genericErrorEvent = LiveEvent<String>()
     override val image = MutableLiveData<Drawable>()
     override val broadcastTitle = MutableLiveData<String>()
-    override val viewersCount = MutableLiveData<Int>()
+    override val viewersCount = MutableLiveData(0)
     override val broadcastDescription = MutableLiveData<String>()
     override val broadcastMediaItem = MutableLiveData<MediaItem?>()
 
@@ -263,7 +263,6 @@ class LiveBroadcastViewModel @Inject constructor(
     private fun prepareBroadcastInformation(broadcastId: Long): Completable {
         return broadcastsInformationRepository
             .getBroadcast(broadcastId)
-            .observeOn(mainThreadScheduler)
             .flatMapCompletable{ broadcastInformation ->
                 Completable.merge(listOf(
                     prepareImage(broadcastInformation),
@@ -276,73 +275,80 @@ class LiveBroadcastViewModel @Inject constructor(
     }
 
     private fun prepareImage(broadcast: Broadcast): Completable{
-        return Completable.create { emitter ->
-            val imageUri = broadcast.imageUrl
+        return Completable
+            .create { emitter ->
+                val imageUri = broadcast.imageUrl
 
-            if(imageUri == null)
-                emitter.onComplete()
+                if(imageUri == null)
+                    emitter.onComplete()
 
-            val request = ImageRequest.Builder(context)
-                .data(imageUri)
-                .placeholder(R.drawable.drawable_avatar_placeholder)
-                .transformations(CircleCropTransformation())
-                .target(
-                    onStart = image::setValue,
-                    onSuccess = { result ->
-                        image.value = result
-                        emitter.onComplete()
-                    },
-                    onError = { emitter.onComplete() }
-                )
-                .build()
+                val request = ImageRequest.Builder(context)
+                    .data(imageUri)
+                    .placeholder(R.drawable.drawable_avatar_placeholder)
+                    .transformations(CircleCropTransformation())
+                    .target(
+                        onStart = image::setValue,
+                        onSuccess = { result ->
+                            image.value = result
+                            emitter.onComplete()
+                        },
+                        onError = { emitter.onComplete() }
+                    )
+                    .build()
 
-            val disposable = imageLoader.enqueue(request)
-            emitter.setCancellable { disposable.dispose() }
-        }
+                val disposable = imageLoader.enqueue(request)
+                emitter.setCancellable { disposable.dispose() }
+            }
+            .subscribeOn(mainThreadScheduler)
     }
 
     private fun prepareBroadcastTitle(broadcast: Broadcast): Completable{
-        return Completable.create { emitter ->
-            this.broadcastTitle.value = broadcast.title
-            emitter.onComplete()
-        }
+        return Completable
+            .fromRunnable {
+                this.broadcastTitle.value = broadcast.title
+            }
+            .subscribeOn(mainThreadScheduler)
     }
 
     private fun prepareViewersCount(broadcast: Broadcast): Completable{
-        return Completable.create { emitter ->
-            val viewersCount = broadcast.viewersCount
-
-            if(viewersCount != null){
-                this.viewersCount.value = viewersCount
+        return broadcastsInformationRepository
+            .getBroadcastViewersCount(broadcast.id)
+            .flatMapCompletable { viewersCount ->
+                Completable
+                    .fromRunnable {
+                        this.viewersCount.value = viewersCount
+                    }
+                    .subscribeOn(mainThreadScheduler)
             }
-
-            emitter.onComplete()
-        }
+            .onErrorComplete()
     }
 
     private fun prepareBroadcastDescription(
         broadcast: Broadcast
     ): Completable{
-        return Completable.create{ emitter ->
-            broadcastDescription.value =  broadcast.description
-            emitter.onComplete()
-        }
+        return Completable
+            .fromRunnable {
+                broadcastDescription.value =  broadcast.description
+            }
+            .subscribeOn(mainThreadScheduler)
     }
 
     private fun prepareBroadcastMediaItem(
         broadcast: Broadcast
     ): Completable{
-        return Completable.fromRunnable{
-            val previousManifestUri = broadcastMediaItem.value?.playbackProperties?.uri?.toString()
-            val newBroadcastManifestUri = broadcast.manifestUrl
+        return Completable
+            .fromRunnable{
+                val previousManifestUri = broadcastMediaItem.value?.playbackProperties?.uri?.toString()
+                val newBroadcastManifestUri = broadcast.manifestUrl
 
-            if(newBroadcastManifestUri != null &&
-                newBroadcastManifestUri == previousManifestUri) return@fromRunnable
+                if(newBroadcastManifestUri != null &&
+                    newBroadcastManifestUri == previousManifestUri) return@fromRunnable
 
-            broadcastMediaItem.value = newBroadcastManifestUri?.let{
-                createBroadcastMediaItem(it)
+                broadcastMediaItem.value = newBroadcastManifestUri?.let{
+                    createBroadcastMediaItem(it)
+                }
             }
-        }
+            .subscribeOn(mainThreadScheduler)
     }
 
     private fun prepareProductsInformation(broadcastId: Long): Completable{

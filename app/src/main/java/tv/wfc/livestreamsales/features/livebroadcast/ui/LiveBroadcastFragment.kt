@@ -238,12 +238,11 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
     }
 
     private fun initializeViewersCountText(){
-        viewModel.viewersCount.observe(viewLifecycleOwner, { viewersCount ->
-            viewBinding?.viewersIndicatorText?.text = resources.getString(
-                R.string.fragment_live_broadcast_viewers_count,
-                viewersCount
-            )
-        })
+        viewBinding?.viewersIndicatorText?.run {
+            viewModel.viewersCount.observe(viewLifecycleOwner, { viewersCount ->
+                text = resources.getString(R.string.fragment_live_broadcast_viewers_count, viewersCount)
+            })
+        }
     }
 
     private fun initializePreviousProductButton(){

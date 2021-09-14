@@ -42,6 +42,12 @@ class BroadcastsRemoteStorage @Inject constructor(
             .subscribeOn(ioScheduler)
     }
 
+    override fun getBroadcastViewersCount(broadcastId: Long): Single<Int> {
+        return broadcastsApi
+            .getBroadcastViewersCount(broadcastId)
+            .subscribeOn(ioScheduler)
+    }
+
     private fun getBroadcastFromRemote(broadcastId: Long): Single<Broadcast>{
         return broadcastsApi
             .getBroadcast(broadcastId)

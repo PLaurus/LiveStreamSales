@@ -38,4 +38,12 @@ class BroadcastsLocalStorage @Inject constructor(
             }
             .subscribeOn(ioScheduler)
     }
+
+    override fun getBroadcastViewersCount(broadcastId: Long): Single<Int> {
+        return Single
+            .fromCallable<Int> {
+                throw NotImplementedError()
+            }
+            .subscribeOn(ioScheduler)
+    }
 }
