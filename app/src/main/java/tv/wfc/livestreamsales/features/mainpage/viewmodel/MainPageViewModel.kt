@@ -11,12 +11,12 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
-import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
+import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsRepository
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import javax.inject.Inject
 
 class MainPageViewModel @Inject constructor(
-    private val broadcastsInformationRepository: IBroadcastsInformationRepository,
+    private val broadcastsRepository: IBroadcastsRepository,
     private val applicationErrorsLogger: IApplicationErrorsLogger,
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler
@@ -102,7 +102,7 @@ class MainPageViewModel @Inject constructor(
         onError: ((Throwable) -> Unit)? = null,
         onNext: ((List<Broadcast>) -> Unit)? = null
     ): Disposable{
-        return broadcastsInformationRepository
+        return broadcastsRepository
             .getBroadcasts()
             .observeOn(mainThreadScheduler)
             .subscribeBy(

@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import com.google.android.exoplayer2.*
@@ -35,13 +36,13 @@ import tv.wfc.livestreamsales.NavigationGraphRootDirections
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
-import tv.wfc.livestreamsales.application.model.chat.ChatMessage
+import tv.wfc.livestreamsales.application.model.streamchatmessage.StreamChatMessage
 import tv.wfc.livestreamsales.application.model.products.ProductGroup
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.ui.base.BaseFragment
 import tv.wfc.livestreamsales.databinding.FragmentLiveBroadcastBinding
 import tv.wfc.livestreamsales.features.livebroadcast.di.LiveBroadcastComponent
-import tv.wfc.livestreamsales.features.livebroadcast.ui.adapters.messages.MessagesAdapter
+import tv.wfc.livestreamsales.features.livebroadcast.ui.adapters.messages.StreamChatMessagesAdapter
 import tv.wfc.livestreamsales.features.livebroadcast.ui.adapters.products.ProductsAdapter
 import tv.wfc.livestreamsales.features.livebroadcast.viewmodel.ILiveBroadcastViewModel
 import tv.wfc.livestreamsales.features.mainappcontent.ui.MainAppContentActivity
@@ -88,7 +89,7 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
     lateinit var productsDiffUtilItemCallback: DiffUtil.ItemCallback<ProductGroup>
 
     @Inject
-    lateinit var chatMessagesDiffUtilItemCallback: DiffUtil.ItemCallback<ChatMessage>
+    lateinit var streamChatMessagesDiffUtilItemCallback: DiffUtil.ItemCallback<StreamChatMessage>
 
     @Inject
     lateinit var imageLoader: ImageLoader
@@ -396,13 +397,19 @@ class LiveBroadcastFragment: BaseFragment(R.layout.fragment_live_broadcast) {
 
     private fun initializeChatRecyclerView(){
         viewBinding?.chatRecyclerView?.run {
-            adapter = MessagesAdapter(chatMessagesDiffUtilItemCallback)
+            val messagesAdapter = StreamChatMessagesAdapter(streamChatMessagesDiffUtilItemCallback)
+
+            adapter = messagesAdapter
+
+            layoutManager = object : LinearLayoutManager(context, VERTICAL, true) {
+                override fun canScrollVertically(): Boolean = false
+                override fun canScrollHorizontally(): Boolean = false
+            }
 
             overScrollMode = RecyclerView.OVER_SCROLL_NEVER
 
-
-            viewModel.chatMessages.observe(viewLifecycleOwner){ messages ->
-                (adapter as MessagesAdapter).submitList(messages)
+            viewModel.streamChatMessages.observe(viewLifecycleOwner){ messages ->
+                messagesAdapter.submitList(messages) { scrollToPosition(0) }
             }
         }
     }

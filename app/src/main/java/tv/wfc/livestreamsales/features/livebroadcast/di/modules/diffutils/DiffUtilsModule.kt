@@ -3,7 +3,7 @@ package tv.wfc.livestreamsales.features.livebroadcast.di.modules.diffutils
 import androidx.recyclerview.widget.DiffUtil
 import dagger.Module
 import dagger.Provides
-import tv.wfc.livestreamsales.application.model.chat.ChatMessage
+import tv.wfc.livestreamsales.application.model.streamchatmessage.StreamChatMessage
 import tv.wfc.livestreamsales.application.model.products.ProductGroup
 
 @Module
@@ -28,18 +28,18 @@ class DiffUtilsModule {
     }
 
     @Provides
-    internal fun provideMessagesDiffUtilCallback(): DiffUtil.ItemCallback<ChatMessage>{
-        return object: DiffUtil.ItemCallback<ChatMessage>(){
+    internal fun provideMessagesDiffUtilCallback(): DiffUtil.ItemCallback<StreamChatMessage>{
+        return object: DiffUtil.ItemCallback<StreamChatMessage>(){
             override fun areItemsTheSame(
-                oldItem: ChatMessage,
-                newItem: ChatMessage
+                oldItem: StreamChatMessage,
+                newItem: StreamChatMessage
             ): Boolean {
                 return oldItem === newItem
             }
 
             override fun areContentsTheSame(
-                oldItem: ChatMessage,
-                newItem: ChatMessage
+                oldItem: StreamChatMessage,
+                newItem: StreamChatMessage
             ): Boolean {
                 return oldItem == newItem
             }

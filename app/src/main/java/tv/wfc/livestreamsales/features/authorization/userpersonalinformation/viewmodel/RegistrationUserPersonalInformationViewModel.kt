@@ -17,14 +17,14 @@ import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.manager.IAuthorizationManager
-import tv.wfc.livestreamsales.application.model.userpersonalinformation.UserPersonalInformation
-import tv.wfc.livestreamsales.application.repository.userpersonalinformation.IUserPersonalInformationRepository
+import tv.wfc.livestreamsales.application.model.user.User
+import tv.wfc.livestreamsales.application.repository.userinformation.IUserInformationRepository
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import java.util.regex.Pattern
 import javax.inject.Inject
 
 class RegistrationUserPersonalInformationViewModel @Inject constructor(
-    private val userPersonalInformationRepository: IUserPersonalInformationRepository,
+    private val userInformationRepository: IUserInformationRepository,
     private val authorizationManager: IAuthorizationManager,
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler,
@@ -127,8 +127,8 @@ class RegistrationUserPersonalInformationViewModel @Inject constructor(
 
         saveUserPersonalDataDisposable?.dispose()
 
-        var saveUserPersonalInformationCompletable = userPersonalInformationRepository
-            .saveUserPersonalInformation(newUserPersonalInformation)
+        var saveUserPersonalInformationCompletable = userInformationRepository
+            .saveUserInformation(newUserPersonalInformation)
 
         if(isRegistrationFlow){
             val authorizationToken = this.authorizationToken
@@ -200,8 +200,8 @@ class RegistrationUserPersonalInformationViewModel @Inject constructor(
     }
 
     private fun prepareUserPersonalInformation(): Completable{
-        return userPersonalInformationRepository
-            .getUserPersonalInformation()
+        return userInformationRepository
+            .getUserInformation()
             .subscribeOn(ioScheduler)
             .observeOn(mainThreadScheduler)
             .flatMapCompletable{ userPersonalInformation ->
@@ -215,7 +215,7 @@ class RegistrationUserPersonalInformationViewModel @Inject constructor(
     }
 
     private fun prepareMinNameLength(): Completable{
-        return userPersonalInformationRepository
+        return userInformationRepository
             .getMinUserNameLength()
             .subscribeOn(ioScheduler)
             .observeOn(mainThreadScheduler)
@@ -225,7 +225,7 @@ class RegistrationUserPersonalInformationViewModel @Inject constructor(
     }
 
     private fun prepareMaxNameLength(): Completable{
-        return userPersonalInformationRepository
+        return userInformationRepository
             .getMaxUserNameLength()
             .subscribeOn(ioScheduler)
             .observeOn(mainThreadScheduler)
@@ -235,7 +235,7 @@ class RegistrationUserPersonalInformationViewModel @Inject constructor(
     }
 
     private fun prepareMinSurnameLength(): Completable{
-        return userPersonalInformationRepository
+        return userInformationRepository
             .getMinSurnameLength()
             .subscribeOn(ioScheduler)
             .observeOn(mainThreadScheduler)
@@ -245,7 +245,7 @@ class RegistrationUserPersonalInformationViewModel @Inject constructor(
     }
 
     private fun prepareMaxSurnameLength(): Completable{
-        return userPersonalInformationRepository
+        return userInformationRepository
             .getMaxSurnameLength()
             .subscribeOn(ioScheduler)
             .observeOn(mainThreadScheduler)
@@ -255,7 +255,7 @@ class RegistrationUserPersonalInformationViewModel @Inject constructor(
     }
 
     private fun prepareMinEmailLength(): Completable{
-        return userPersonalInformationRepository
+        return userInformationRepository
             .getMinEmailLength()
             .subscribeOn(ioScheduler)
             .observeOn(mainThreadScheduler)
@@ -265,7 +265,7 @@ class RegistrationUserPersonalInformationViewModel @Inject constructor(
     }
 
     private fun prepareMaxEmailLength(): Completable{
-        return userPersonalInformationRepository
+        return userInformationRepository
             .getMaxEmailLength()
             .subscribeOn(ioScheduler)
             .observeOn(mainThreadScheduler)
@@ -332,12 +332,12 @@ class RegistrationUserPersonalInformationViewModel @Inject constructor(
         activeOperationsCount.onNext(newActiveOperationsCount)
     }
 
-    private fun collectUserPersonalInformation(): UserPersonalInformation?{
+    private fun collectUserPersonalInformation(): User?{
         val name = this.name.value
         val surname = this.surname.value
         val phoneNumber = this.phoneNumber.value ?: return null
         val email = this.email.value
 
-        return UserPersonalInformation(name, surname, phoneNumber, email)
+        return User(name, surname, phoneNumber, email)
     }
 }

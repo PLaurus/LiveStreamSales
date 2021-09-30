@@ -10,6 +10,7 @@ import tv.wfc.livestreamsales.features.rest.api.authorized.IUserPersonalInformat
 import tv.wfc.livestreamsales.features.rest.api.notauthorized.IAuthorizationApi
 import tv.wfc.livestreamsales.features.rest.api.notauthorized.IBroadcastsApi
 import tv.wfc.livestreamsales.features.rest.api.notauthorized.IProductsApi
+import tv.wfc.livestreamsales.features.rest.api.streamchat.IStreamChatApi
 
 @Module
 class ApiModule {
@@ -58,5 +59,12 @@ class ApiModule {
         apiProvider: IApiProvider
     ): IProductsOrdersApi {
         return apiProvider.createApi(IProductsOrdersApi::class.java)
+    }
+
+    @Provides
+    internal fun provideIStreamChatApi(
+        apiProvider: IApiProvider
+    ): IStreamChatApi {
+        return apiProvider.createApi(IStreamChatApi::class.java)
     }
 }

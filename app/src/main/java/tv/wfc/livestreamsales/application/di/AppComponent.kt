@@ -6,14 +6,17 @@ import dagger.Component
 import tv.wfc.livestreamsales.application.di.modules.certificates.CertificatesModule
 import tv.wfc.livestreamsales.application.di.modules.coil.CoilModule
 import tv.wfc.livestreamsales.application.di.modules.database.DatabaseModule
+import tv.wfc.livestreamsales.application.di.modules.entitymapper.EntityMapperModule
 import tv.wfc.livestreamsales.application.di.modules.errorslogger.ErrorsLoggerModule
 import tv.wfc.livestreamsales.application.di.modules.manager.ManagersModule
+import tv.wfc.livestreamsales.application.di.modules.pusher.PusherModule
 import tv.wfc.livestreamsales.application.di.modules.reactivex.ReactiveXModule
 import tv.wfc.livestreamsales.application.di.modules.repository.AppRepositoryModule
 import tv.wfc.livestreamsales.application.di.modules.rest.RestModule
 import tv.wfc.livestreamsales.application.di.modules.restapi.ApiModule
+import tv.wfc.livestreamsales.application.di.modules.serialization.SerializationModule
 import tv.wfc.livestreamsales.application.di.modules.sharedpreferences.SharedPreferencesModule
-import tv.wfc.livestreamsales.application.di.modules.storage.AppStorageModule
+import tv.wfc.livestreamsales.application.di.modules.datastore.AppDataStoreModule
 import tv.wfc.livestreamsales.application.di.modules.subcomponents.AppSubComponentsModule
 import tv.wfc.livestreamsales.application.di.modules.utils.UtilsModule
 import tv.wfc.livestreamsales.application.di.modules.viewmodelprovider.ViewModelProviderModule
@@ -50,10 +53,13 @@ import tv.wfc.livestreamsales.features.profile.di.ProfileComponent
     SharedPreferencesModule::class,
     ViewModelProviderModule::class,
     ApiModule::class,
-    AppStorageModule::class,
+    AppDataStoreModule::class,
     AppRepositoryModule::class,
     CoilModule::class,
-    UtilsModule::class
+    UtilsModule::class,
+    SerializationModule::class,
+    EntityMapperModule::class,
+    PusherModule::class
 ])
 interface AppComponent {
     @Component.Factory

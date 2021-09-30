@@ -6,30 +6,30 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
-import tv.wfc.livestreamsales.application.di.modules.storage.qualifiers.ProductsLocalStorage
-import tv.wfc.livestreamsales.application.di.modules.storage.qualifiers.ProductsRemoteStorage
+import tv.wfc.livestreamsales.application.di.modules.datastore.qualifiers.ProductsLocalDataStore
+import tv.wfc.livestreamsales.application.di.modules.datastore.qualifiers.ProductsRemoteDataStore
 import tv.wfc.livestreamsales.application.model.products.ProductGroup
-import tv.wfc.livestreamsales.application.storage.products.IProductsStorage
+import tv.wfc.livestreamsales.application.storage.products.IProductsDataStore
 import javax.inject.Inject
 
 class ProductsRepository @Inject constructor(
-    @ProductsRemoteStorage
-    private val productsInformationRemoteStorage: IProductsStorage,
-    @ProductsLocalStorage
-    private val productsInformationLocalStorage: IProductsStorage,
+    @ProductsRemoteDataStore
+    private val productsRemoteDataStore: IProductsDataStore,
+    @ProductsLocalDataStore
+    private val productsLocalDataStore: IProductsDataStore,
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): IProductsRepository {
     private val disposables = CompositeDisposable()
 
     override fun getProductGroups(broadcastId: Long): Observable<List<ProductGroup>> {
-        return productsInformationLocalStorage
+        return productsLocalDataStore
             .getProductGroups(broadcastId)
             .onErrorComplete().toObservable()
             .concatWith(getAndSaveProductsFromRemote(broadcastId).toObservable())
     }
 
     private fun getAndSaveProductsFromRemote(broadcastId: Long): Single<List<ProductGroup>> {
-        return productsInformationRemoteStorage
+        return productsRemoteDataStore
             .getProductGroups(broadcastId)
             .doOnSuccess { saveProductsLocally(broadcastId, it) }
     }
@@ -38,7 +38,7 @@ class ProductsRepository @Inject constructor(
         broadcastId: Long,
         productGroups: List<ProductGroup>
     ){
-        productsInformationLocalStorage
+        productsLocalDataStore
             .saveProducts(broadcastId, productGroups)
             .subscribeBy(
                 onError = applicationErrorsLogger::logError

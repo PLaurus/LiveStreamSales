@@ -7,7 +7,7 @@ import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
 import com.laurus.p.tools.livedata.LiveEvent
 import tv.wfc.contentloader.viewmodel.INeedPreparationViewModel
-import tv.wfc.livestreamsales.application.model.chat.ChatMessage
+import tv.wfc.livestreamsales.application.model.streamchatmessage.StreamChatMessage
 import tv.wfc.livestreamsales.application.model.products.ProductGroup
 import tv.wfc.livestreamsales.application.tools.exoplayer.PlaybackState
 
@@ -31,7 +31,7 @@ interface ILiveBroadcastViewModel: INeedPreparationViewModel {
     val broadcastHasTwoOrMoreProducts: LiveData<Boolean>
     val productGroups: LiveData<List<ProductGroup>>
 
-    val chatMessages: LiveData<List<ChatMessage>>
+    val streamChatMessages: LiveData<List<StreamChatMessage>>
     val enteredMessage: LiveData<String>
 
     fun prepareData(broadcastId: Long)

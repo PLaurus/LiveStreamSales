@@ -130,6 +130,9 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-scalars:$retrofitConverterScalars"
     implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion"
 
+    // TCP
+    implementation "com.pusher:pusher-java-client:$pusherJavaClientVersion"
+
     // Local storage
     implementation "androidx.room:room-runtime:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"

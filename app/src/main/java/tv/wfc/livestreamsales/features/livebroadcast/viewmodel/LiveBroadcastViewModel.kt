@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
-import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
@@ -27,11 +26,11 @@ import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.Comput
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.manager.IAuthorizationManager
 import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
-import tv.wfc.livestreamsales.application.model.chat.ChatMessage
+import tv.wfc.livestreamsales.application.model.streamchatmessage.StreamChatMessage
 import tv.wfc.livestreamsales.application.model.products.ProductGroup
-import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsInformationRepository
-import tv.wfc.livestreamsales.application.repository.chat.IChatRepository
+import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsRepository
 import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
+import tv.wfc.livestreamsales.application.repository.streamchatmessage.IStreamChatMessageRepository
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.tools.exoplayer.PlaybackState
 import tv.wfc.livestreamsales.features.livebroadcast.repository.IBroadcastAnalyticsRepository
@@ -45,21 +44,20 @@ class LiveBroadcastViewModel @Inject constructor(
     @ComputationScheduler
     private val computationScheduler: Scheduler,
     private val imageLoader: ImageLoader,
-    private val broadcastsInformationRepository: IBroadcastsInformationRepository,
+    private val broadcastsRepository: IBroadcastsRepository,
     private val broadcastAnalyticsRepository: IBroadcastAnalyticsRepository,
     private val productsRepository: IProductsRepository,
-    private val chatRepository: IChatRepository,
+    private val streamChatMessageRepository: IStreamChatMessageRepository,
     private val authorizationManager: IAuthorizationManager,
     private val applicationErrorsLogger: IApplicationErrorsLogger
 ): ViewModel(), ILiveBroadcastViewModel {
     private val disposables = CompositeDisposable()
     private val productGroupsSubject = PublishSubject.create<List<ProductGroup>>()
 
-    private val maxChatMessages = 15
-
     private var broadcastId: Long? = null
     private var userIsWatchingBroadcastDisposable: Disposable? = null
     private var sendMessageDisposable: Disposable? = null
+    private var receivingNewChatMessagesDisposable: Disposable? = null
 
     override val dataPreparationState = MutableLiveData<ViewModelPreparationState>()
     override val isUserLoggedIn = MutableLiveData<Boolean>().apply{
@@ -136,34 +134,7 @@ class LiveBroadcastViewModel @Inject constructor(
             .addTo(disposables)
     }
 
-    override val chatMessages = MutableLiveData<List<ChatMessage>>().apply{
-        fun addMessage(newMessage: ChatMessage){
-            val newMessagesList = value?.toMutableList() ?: mutableListOf()
-
-            newMessagesList.apply {
-                val excessMessagesCount = ((size + 1) - maxChatMessages).coerceAtLeast(0)
-
-                if(excessMessagesCount > 0){
-                    repeat(excessMessagesCount){
-                        removeLastOrNull()
-                    }
-                }
-
-                add(0, newMessage)
-            }
-
-            value = newMessagesList
-        }
-
-        chatRepository
-            .getChatObservable()
-            .observeOn(mainThreadScheduler)
-            .subscribeBy(
-                onNext = ::addMessage,
-                onError = applicationErrorsLogger::logError
-            )
-            .addTo(disposables)
-    }
+    override val streamChatMessages = MutableLiveData<List<StreamChatMessage>>()
 
     override val enteredMessage = MutableLiveData<String>()
 
@@ -179,7 +150,12 @@ class LiveBroadcastViewModel @Inject constructor(
         this.broadcastId = broadcastId
 
         prepareBroadcastInformation(broadcastId)
-            .concatWith(prepareProductsInformation(broadcastId))
+            .concatWith(
+                Completable.mergeArray(
+                    prepareProductsInformation(broadcastId),
+                    prepareChatData(broadcastId)
+                )
+            )
             .observeOn(mainThreadScheduler)
             .doOnSubscribe { dataPreparationState.value = ViewModelPreparationState.DataIsBeingPrepared }
             .doOnComplete { startAutoRefresh(10L) }
@@ -243,10 +219,11 @@ class LiveBroadcastViewModel @Inject constructor(
     @Synchronized
     override fun sendMessage() {
         val message = enteredMessage.value ?: return
+        val streamId = broadcastId ?: return
 
         sendMessageDisposable?.dispose()
-        sendMessageDisposable = chatRepository
-            .sendMessage(message)
+        sendMessageDisposable = streamChatMessageRepository
+            .createMessage(streamId, message)
             .observeOn(mainThreadScheduler)
             .doOnSubscribe { enteredMessage.value = "" }
             .subscribeBy(
@@ -261,7 +238,7 @@ class LiveBroadcastViewModel @Inject constructor(
     }
 
     private fun prepareBroadcastInformation(broadcastId: Long): Completable {
-        return broadcastsInformationRepository
+        return broadcastsRepository
             .getBroadcast(broadcastId)
             .flatMapCompletable{ broadcastInformation ->
                 Completable.merge(listOf(
@@ -311,7 +288,7 @@ class LiveBroadcastViewModel @Inject constructor(
     }
 
     private fun prepareViewersCount(broadcast: Broadcast): Completable{
-        return broadcastsInformationRepository
+        return broadcastsRepository
             .getBroadcastViewersCount(broadcast.id)
             .flatMapCompletable { viewersCount ->
                 Completable
@@ -368,6 +345,27 @@ class LiveBroadcastViewModel @Inject constructor(
 
                 emitter.setDisposable(disposable)
             }
+    }
+
+    private fun prepareChatData(streamId: Long): Completable {
+        return Completable.fromRunnable {
+            startReceivingNewChatMessages(streamId)
+        }
+    }
+
+    private fun startReceivingNewChatMessages(streamId: Long) {
+        receivingNewChatMessagesDisposable?.dispose()
+        receivingNewChatMessagesDisposable = streamChatMessageRepository
+            .getNewMessages(streamId)
+            .map { newMessage ->
+                (streamChatMessages.value?.toMutableList() ?: mutableListOf()).apply{ add(0, newMessage) }
+            }
+            .observeOn(mainThreadScheduler)
+            .subscribeBy(
+                onNext = streamChatMessages::setValue,
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(disposables)
     }
 
     private fun createBroadcastMediaItem(

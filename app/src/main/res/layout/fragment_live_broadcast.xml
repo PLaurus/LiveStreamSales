@@ -185,9 +185,9 @@
                 android:id="@+id/chatRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:reverseLayout="true"
+                tools:orientation="vertical"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:reverseLayout="true"
                 tools:listitem="@layout/item_chat_message"
                 tools:itemCount="15"/>
 
