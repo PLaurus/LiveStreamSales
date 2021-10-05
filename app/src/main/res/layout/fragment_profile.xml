@@ -191,12 +191,12 @@
                 app:layout_constraintTop_toBottomOf="@id/sectionSeparatorView2"/>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/startLiveBroadcastButton"
+                android:id="@+id/myBroadcastsButton"
                 style="@style/Theme.LiveStreamSales.BigMaterialButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin"
-                android:text="@string/fragment_profile_start_live_broadcasting_button"
+                android:text="@string/fragment_profile_my_broadcasts_button"
                 android:textColor="@color/colorOnPrimary"
                 android:textSize="@dimen/textSize_default"
                 android:textAllCaps="false"
@@ -212,7 +212,7 @@
                 android:background="@color/colorSecondaryText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/startLiveBroadcastButton" />
+                app:layout_constraintTop_toBottomOf="@id/myBroadcastsButton" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/logOutButton"

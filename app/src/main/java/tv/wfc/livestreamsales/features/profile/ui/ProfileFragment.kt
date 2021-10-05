@@ -114,7 +114,7 @@ class ProfileFragment: BaseFragment(R.layout.fragment_profile) {
         initializeEmailLayout()
         initializeUpdateUserPersonalInformationButton()
         initializeChangePaymentInformationButton()
-        initializeStartLiveBroadcastButton()
+        initializeMyBroadcastsButton()
         initializeLogOutButton()
         initializeSnackBar()
     }
@@ -263,8 +263,8 @@ class ProfileFragment: BaseFragment(R.layout.fragment_profile) {
         }
     }
 
-    private fun initializeStartLiveBroadcastButton(){
-        viewBinding?.startLiveBroadcastButton?.run{
+    private fun initializeMyBroadcastsButton(){
+        viewBinding?.myBroadcastsButton?.run{
             clicks()
                 .throttleLatest(500L, TimeUnit.MILLISECONDS, computationScheduler)
                 .observeOn(mainThreadScheduler)
