@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <tv.wfc.contentloader.ContentLoaderView
+        android:id="@+id/contentLoaderView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/broadcastsRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/scheduleBroadcastButton"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/list_item_scheduled_broadcast"
+                tools:orientation="vertical"
+                tools:itemCount="40"/>
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Theme.LiveStreamSales.BigMaterialButton"
+                android:id="@+id/scheduleBroadcastButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/screenPadding"
+                android:layout_marginBottom="@dimen/screenPadding"
+                android:text="@string/fragment_my_broadcasts_schedule_broadcast_button"
+                android:textSize="@dimen/textSize_default"
+                android:textAllCaps="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </tv.wfc.contentloader.ContentLoaderView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
