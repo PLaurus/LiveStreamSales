@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <declare-styleable name="ValueButtonView">
+
+        <attr name="android:clickable"/>
+
+        <attr name="android:focusable"/>
+
+        <attr name="android:background"/>
+
+        <!-- ValueButtonView label text. -->
+        <attr name="vbv_label_text" format="string"/>
+
+        <!-- ValueButtonView value text. -->
+        <attr name="vbv_value_text" format="string"/>
+
+        <!-- Is left icon of ValueButtonView shown? -->
+        <attr name="vbv_leftIcon_isShown" format="boolean"/>
+
+        <!-- Is right icon of ValueButtonView shown? -->
+        <attr name="vbv_rightIcon_isShown" format="boolean"/>
+
+        <!-- Is top icon of ValueButtonView shown? -->
+        <attr name="vbv_topIcon_isShown" format="boolean"/>
+
+        <!-- Is bottom icon for ValueButtonView shown? -->
+        <attr name="vbv_bottomIcon_isShown" format="boolean"/>
+
+        <!-- Space size between text and left icon inside ValueButtonView. -->
+        <attr name="vbv_leftIcon_marginEnd" format="dimension"/>
+
+        <!-- Space size between text and right icon inside ValueButtonView. -->
+        <attr name="vbv_rightIcon_marginStart" format="dimension"/>
+
+        <!-- Space size between text and top icon inside ValueButtonView. -->
+        <attr name="vbv_topIcon_marginBottom" format="dimension"/>
+
+        <!-- Space size between text and bottom icon inside ValueButtonView. -->
+        <attr name="vbv_bottomIcon_marginTop" format="dimension"/>
+
+        <!-- Label text color for ValueButtonView. -->
+        <attr name="vbv_label_textColor" format="color"/>
+
+        <!-- Value text color for ValueButtonView. -->
+        <attr name="vbv_value_textColor" format="color"/>
+
+        <!-- Gap between label and value of ValueButtonView. -->
+        <attr name="vbv_gapBetweenLabelAndValue" format="dimension"/>
+
+        <!-- Size of ValueButtonView's label text. -->
+        <attr name="vbv_label_textSize" format="dimension"/>
+
+        <!-- Size of ValueButtonView's value text -->
+        <attr name="vbv_value_textSize" format="dimension"/>
+
+    </declare-styleable>
+
+</resources>

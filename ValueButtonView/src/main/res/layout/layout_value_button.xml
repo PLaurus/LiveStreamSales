@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/textContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_left_icon_margin_end"
+        android:layout_marginEnd="@dimen/default_right_icon_margin_start"
+        android:layout_marginTop="@dimen/default_top_icon_margin_bottom"
+        android:layout_marginBottom="@dimen/default_bottom_icon_margin_top"
+        app:layout_constraintStart_toEndOf="@id/leftIcon"
+        app:layout_constraintEnd_toStartOf="@id/rightIcon"
+        app:layout_constraintTop_toBottomOf="@id/topIcon"
+        app:layout_constraintBottom_toTopOf="@id/bottomIcon"
+        app:layout_goneMarginStart="0dp"
+        app:layout_goneMarginEnd="0dp"
+        app:layout_goneMarginTop="0dp"
+        app:layout_goneMarginBottom="0dp"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constrainedWidth="true">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/default_label_text_size"
+            android:textStyle="bold"
+            android:textColor="@color/default_label_text_color"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Label Label Label Label Label Label Label Label Label "/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_gap_between_label_and_value"
+            android:textSize="@dimen/default_value_text_size"
+            android:textColor="@color/default_value_text_color"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            tools:text="Value Value Value Value Value Value Value Value Value Value Value Value Value Value Value "
+            tools:visibility="visible"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/leftIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textContainer"
+        app:layout_constraintBottom_toBottomOf="@id/textContainer"
+        app:layout_constraintDimensionRatio="1:1"
+        app:srcCompat="@drawable/ic_baseline_chevron_left_24"
+        app:tint="@color/default_icon_tint"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/rightIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textContainer"
+        app:layout_constraintBottom_toBottomOf="@id/textContainer"
+        app:layout_constraintDimensionRatio="1:1"
+        app:srcCompat="@drawable/ic_baseline_chevron_right_24"
+        app:tint="@color/default_icon_tint"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/topIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:srcCompat="@drawable/ic_baseline_chevron_top_24"
+        app:tint="@color/default_icon_tint"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/bottomIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:srcCompat="@drawable/ic_baseline_chevron_bottom_24"
+        app:tint="@color/default_icon_tint"/>
+
+</merge>

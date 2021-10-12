@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <!-- Button padding -->
+
+    <dimen name="default_button_paddingStart">16dp</dimen>
+
+    <dimen name="default_button_paddingEnd">16dp</dimen>
+
+    <dimen name="default_button_paddingTop">8dp</dimen>
+
+    <dimen name="default_button_paddingBottom">8dp</dimen>
+
+    <!-- Views margins -->
+
+    <dimen name="default_gap_between_label_and_value">8dp</dimen>
+
+    <!-- Default icon margins -->
+
+    <dimen name="default_left_icon_margin_end">16dp</dimen>
+
+    <dimen name="default_right_icon_margin_start">16dp</dimen>
+
+    <dimen name="default_top_icon_margin_bottom">8dp</dimen>
+
+    <dimen name="default_bottom_icon_margin_top">8dp</dimen>
+
+    <!-- Default text size -->
+
+    <dimen name="default_label_text_size">16sp</dimen>
+
+    <dimen name="default_value_text_size">12sp</dimen>
+
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="default_label_text_color">#FF000000</color>
+
+    <color name="default_value_text_color">#5E5E5E</color>
+
+    <color name="default_icon_tint">#FF000000</color>
+
+</resources>

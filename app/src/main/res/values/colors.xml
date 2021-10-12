@@ -75,4 +75,10 @@
     <color name="orderEditing_orderStatus_inProgress">@color/myOrders_orderStatus_inProgress</color>
     <color name="orderEditing_orderStatus_done">@color/myOrders_orderStatus_done</color>
 
+    <!--- Broadcast creation fragment -->
+    <color name="broadcastCreationFragment_previewCard_backgroundColor">#F3F3F3</color>
+    <color name="broadcastCreationFragment_previewImage_placeholder_tint">#AAAAAA</color>
+    <color name="broadcastCreationFragment_changePreviewText_color">#FFFFFFFF</color>
+    <color name="broadcastCreationFragment_changePreviewText_shadowColor">#FF000000</color>
+
 </resources>

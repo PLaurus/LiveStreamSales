@@ -390,4 +390,15 @@
     <string name="fragment_my_broadcasts_start_date">Дата начала:</string>
     <string name="fragment_my_broadcasts_start_time">Время начала:</string>
 
+    <!-- Broadcast creation fragment -->
+    <string name="fragment_broadcast_creation_name_hint">Название</string>
+    <string name="fragment_broadcast_creation_description_hint">Описание</string>
+    <string name="fragment_broadcast_creation_start_date_label">Дата начала</string>
+    <string name="fragment_broadcast_creation_start_date_not_set">Не указана</string>
+    <string name="fragment_broadcast_creation_start_time_label">Время начала</string>
+    <string name="fragment_broadcast_creation_start_time_not_set">Не указано</string>
+    <string name="fragment_broadcast_creation_preview_image_label">Картинка превью</string>
+    <string name="fragment_broadcast_creation_change_preview_text">Изменить</string>
+    <string name="fragment_broadcast_creation_create_button">Создать</string>
+
 </resources>

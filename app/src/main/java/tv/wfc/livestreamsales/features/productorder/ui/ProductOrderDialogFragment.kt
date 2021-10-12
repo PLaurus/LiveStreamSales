@@ -295,7 +295,7 @@ class ProductOrderDialogFragment: BaseDialogFragment(R.layout.dialog_product_ord
 
     private fun initializeSelectableSpecificationsRecyclerView(){
         viewBinding?.selectableSpecificationsRecyclerView?.run {
-            addItemDecoration(GapBetweenItems(resources.getDimensionPixelSize(R.dimen.contentMargin)))
+            addItemDecoration(GapBetweenItems(resources.getDimensionPixelSize(R.dimen.contentMargin_default)))
             overScrollMode = RecyclerView.OVER_SCROLL_NEVER
 
             adapter = SelectableSpecificationsAdapter(selectableSpecificationsDiffUtilItemCallback){ selectableSpecIndex, valueIndex ->

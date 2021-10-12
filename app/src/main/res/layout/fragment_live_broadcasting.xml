@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <tv.wfc.contentloader.ContentLoaderView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -60,7 +61,7 @@
             style="@style/Theme.LiveStreamSales.MaterialButton.IconOnly.Circle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/contentMargin"
+            android:layout_marginStart="@dimen/contentMargin_default"
             android:textSize="@dimen/textSize_small"
             android:textAllCaps="false"
             android:ellipsize="end"
@@ -75,7 +76,7 @@
             style="@style/Theme.LiveStreamSales.MaterialButton.IconOnly.Circle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/contentMargin"
+            android:layout_marginStart="@dimen/contentMargin_default"
             android:textSize="@dimen/textSize_small"
             android:textAllCaps="false"
             android:ellipsize="end"
@@ -90,7 +91,7 @@
             style="@style/Theme.LiveStreamSales.MaterialButton.IconOnly.Circle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/contentMargin"
+            android:layout_marginStart="@dimen/contentMargin_default"
             android:textSize="@dimen/textSize_small"
             android:textAllCaps="false"
             android:ellipsize="end"

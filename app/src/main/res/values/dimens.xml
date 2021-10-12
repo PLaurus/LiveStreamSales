@@ -9,7 +9,10 @@
 
     <!-- Shared -->
     <dimen name="screenPadding">16dp</dimen>
-    <dimen name="contentMargin">16dp</dimen>
+    <dimen name="contentMargin_big">32dp</dimen>
+    <dimen name="contentMargin_default">16dp</dimen>
+    <dimen name="contentMargin_small">8dp</dimen>
+    <dimen name="contentMargin_verySmall">4dp</dimen>
     <dimen name="textInputLayout_cornerRadius">16dp</dimen>
     <dimen name="card_cornerRadius">16dp</dimen>
     <dimen name="card_elevation">5dp</dimen>
@@ -58,5 +61,10 @@
     <dimen name="orderEditing_orderStatus_paddingVertical">@dimen/myOrders_orderStatus_paddingVertical</dimen>
     <dimen name="orderEditing_orderStatus_paddingHorizontal">@dimen/myOrders_orderStatus_paddingHorizontal</dimen>
     <dimen name="orderEditing_relativeText_marginVertical">8dp</dimen>
+
+    <!-- Broadcast creation fragment -->
+    <dimen name="broadcastCreationFragment_changePreviewText_shadowRadius">3.0</dimen>
+    <dimen name="broadcastCreationFragment_changePreviewText_shadowDx">1.0</dimen>
+    <dimen name="broadcastCreationFragment_changePreviewText_shadowDy">1.0</dimen>
 
 </resources>

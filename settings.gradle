@@ -6,3 +6,4 @@ include ':ContentLoader'
 include ':codeview'
 include ':app'
 rootProject.name = "LiveStreamSales"
+include ':ValueButtonView'

@@ -130,7 +130,7 @@ class MainPageFragment: BaseFragment(R.layout.fragment_main_page) {
 
             adapter = liveBroadcastsAdapter
 
-            val contentMargin = resources.getDimensionPixelSize(R.dimen.contentMargin)
+            val contentMargin = resources.getDimensionPixelSize(R.dimen.contentMargin_default)
             addItemDecoration(GapBetweenItems(contentMargin))
         }
 
@@ -155,7 +155,7 @@ class MainPageFragment: BaseFragment(R.layout.fragment_main_page) {
 
             adapter = announcementsAdapter
 
-            val contentMargin = resources.getDimensionPixelSize(R.dimen.contentMargin)
+            val contentMargin = resources.getDimensionPixelSize(R.dimen.contentMargin_default)
             addItemDecoration(GapBetweenItems(contentMargin))
         }
 

@@ -155,4 +155,5 @@ dependencies {
     implementation project(':EditTextFormatters')
     implementation project(':Tools')
     implementation project(':RecyclerViewItemDecorators')
+    implementation project(":ValueButtonView")
 }

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<tv.wfc.contentloader.ContentLoaderView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/nameTextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/screenPadding"
+                android:layout_marginHorizontal="@dimen/screenPadding"
+                android:hint="@string/fragment_broadcast_creation_name_hint"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:endIconMode="clear_text">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nameTextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:inputType="textMultiLine"
+                    tools:text="@string/template_text"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/descriptionTextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/contentMargin_default"
+                android:layout_marginHorizontal="@dimen/screenPadding"
+                android:hint="@string/fragment_broadcast_creation_description_hint"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nameTextInputLayout"
+                app:endIconMode="clear_text">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/descriptionTextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="4"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    tools:text="@string/template_text"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <tv.wfc.value_button_view.ValueButtonView
+                android:id="@+id/startDateButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/contentMargin_default"
+                android:paddingHorizontal="@dimen/screenPadding"
+                android:paddingVertical="@dimen/contentMargin_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/descriptionTextInputLayout"
+                app:vbv_label_text="@string/fragment_broadcast_creation_start_date_label"
+                app:vbv_value_text="@string/fragment_broadcast_creation_start_date_not_set"
+                app:vbv_label_textSize="@dimen/textSize_default"
+                app:vbv_value_textSize="@dimen/textSize_small"
+                app:vbv_label_textColor="@color/colorPrimaryText"
+                app:vbv_value_textColor="@color/colorSecondaryText"/>
+
+            <tv.wfc.value_button_view.ValueButtonView
+                android:id="@+id/startTimeButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/screenPadding"
+                android:paddingVertical="@dimen/contentMargin_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/startDateButton"
+                app:vbv_label_text="@string/fragment_broadcast_creation_start_date_label"
+                app:vbv_value_text="@string/fragment_broadcast_creation_start_date_not_set"
+                app:vbv_label_textSize="@dimen/textSize_default"
+                app:vbv_value_textSize="@dimen/textSize_small"
+                app:vbv_label_textColor="@color/colorPrimaryText"
+                app:vbv_value_textColor="@color/colorSecondaryText"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/previewImageLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/screenPadding"
+                android:layout_marginTop="@dimen/contentMargin_default"
+                android:text="@string/fragment_broadcast_creation_preview_image_label"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/startTimeButton"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/previewCard"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginHorizontal="@dimen/screenPadding"
+                android:layout_marginTop="@dimen/contentMargin_default"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                app:layout_constraintTop_toBottomOf="@id/previewImageLabel"
+                app:cardCornerRadius="@dimen/card_cornerRadius"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/broadcastCreationFragment_previewCard_backgroundColor">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/previewImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_baseline_image_24"
+                        tools:tint="@color/broadcastCreationFragment_previewImage_placeholder_tint"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/changePreviewText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/contentMargin_default"
+                        android:layout_marginBottom="@dimen/contentMargin_default"
+                        android:text="@string/fragment_broadcast_creation_change_preview_text"
+                        android:textColor="@color/broadcastCreationFragment_changePreviewText_color"
+                        android:shadowColor="@color/broadcastCreationFragment_changePreviewText_shadowColor"
+                        android:shadowRadius="@dimen/broadcastCreationFragment_changePreviewText_shadowRadius"
+                        android:shadowDx="@dimen/broadcastCreationFragment_changePreviewText_shadowDx"
+                        android:shadowDy="@dimen/broadcastCreationFragment_changePreviewText_shadowDy"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Theme.LiveStreamSales.BigMaterialButton"
+                android:id="@+id/createButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/screenPadding"
+                android:layout_marginTop="@dimen/contentMargin_default"
+                android:layout_marginBottom="@dimen/screenPadding"
+                android:text="@string/fragment_broadcast_creation_create_button"
+                android:textAllCaps="false"
+                android:textSize="@dimen/textSize_default"
+                app:layout_constraintTop_toBottomOf="@id/previewCard"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</tv.wfc.contentloader.ContentLoaderView>
