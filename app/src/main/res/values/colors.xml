@@ -75,10 +75,32 @@
     <color name="orderEditing_orderStatus_inProgress">@color/myOrders_orderStatus_inProgress</color>
     <color name="orderEditing_orderStatus_done">@color/myOrders_orderStatus_done</color>
 
-    <!--- Broadcast creation fragment -->
+    <!-- Broadcast creation fragment -->
+
     <color name="broadcastCreationFragment_previewCard_backgroundColor">#F3F3F3</color>
+
     <color name="broadcastCreationFragment_previewImage_placeholder_tint">#AAAAAA</color>
+
     <color name="broadcastCreationFragment_changePreviewText_color">#FFFFFFFF</color>
+
     <color name="broadcastCreationFragment_changePreviewText_shadowColor">#FF000000</color>
+
+    <!-- Broadcast editing fragment -->
+
+    <color name="broadcastEditingFragment_previewCard_backgroundColor">
+        @color/broadcastCreationFragment_previewCard_backgroundColor
+    </color>
+
+    <color name="broadcastEditingFragment_previewImage_placeholder_tint">
+        @color/broadcastCreationFragment_previewImage_placeholder_tint
+    </color>
+
+    <color name="broadcastEditingFragment_changePreviewText_color">
+        @color/broadcastCreationFragment_changePreviewText_color
+    </color>
+
+    <color name="broadcastEditingFragment_changePreviewText_shadowColor">
+        @color/broadcastCreationFragment_changePreviewText_shadowColor
+    </color>
 
 </resources>

@@ -98,8 +98,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/descriptionTextInputLayout"
-                app:vbv_label_text="@string/fragment_broadcast_creation_start_date_label"
-                app:vbv_value_text="@string/fragment_broadcast_creation_start_date_not_set"
+                app:vbv_label_text="@string/fragment_broadcast_editing_start_date_label"
+                app:vbv_value_text="@string/fragment_broadcast_editing_start_date_not_set"
                 app:vbv_label_textSize="@dimen/textSize_default"
                 app:vbv_value_textSize="@dimen/textSize_small"
                 app:vbv_label_textColor="@color/colorPrimaryText"
@@ -114,8 +114,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/startDateButton"
-                app:vbv_label_text="@string/fragment_broadcast_creation_start_date_label"
-                app:vbv_value_text="@string/fragment_broadcast_creation_start_date_not_set"
+                app:vbv_label_text="@string/fragment_broadcast_editing_start_date_label"
+                app:vbv_value_text="@string/fragment_broadcast_editing_start_date_not_set"
                 app:vbv_label_textSize="@dimen/textSize_default"
                 app:vbv_value_textSize="@dimen/textSize_small"
                 app:vbv_label_textColor="@color/colorPrimaryText"
@@ -126,7 +126,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin_small"
-                android:text="@string/fragment_broadcast_creation_preview_image_label"
+                android:text="@string/fragment_broadcast_editing_preview_image_label"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
                 app:layout_constraintEnd_toEndOf="@id/contentMarginEndGuideline"
@@ -145,7 +145,7 @@
                 app:layout_constraintTop_toBottomOf="@id/previewImageLabel"
                 app:cardCornerRadius="@dimen/card_cornerRadius"
                 app:cardElevation="@dimen/card_elevation"
-                app:cardBackgroundColor="@color/broadcastCreationFragment_previewCard_backgroundColor">
+                app:cardBackgroundColor="@color/broadcastEditingFragment_previewCard_backgroundColor">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -157,7 +157,7 @@
                         android:layout_height="match_parent"
                         android:scaleType="fitCenter"
                         app:srcCompat="@drawable/ic_baseline_image_24"
-                        tools:tint="@color/broadcastCreationFragment_previewImage_placeholder_tint"/>
+                        tools:tint="@color/broadcastEditingFragment_previewImage_placeholder_tint"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/changePreviewText"
@@ -165,12 +165,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/contentMargin_default"
                         android:layout_marginBottom="@dimen/contentMargin_default"
-                        android:text="@string/fragment_broadcast_creation_change_preview_text"
-                        android:textColor="@color/broadcastCreationFragment_changePreviewText_color"
-                        android:shadowColor="@color/broadcastCreationFragment_changePreviewText_shadowColor"
-                        android:shadowRadius="@dimen/broadcastCreationFragment_changePreviewText_shadowRadius"
-                        android:shadowDx="@dimen/broadcastCreationFragment_changePreviewText_shadowDx"
-                        android:shadowDy="@dimen/broadcastCreationFragment_changePreviewText_shadowDy"
+                        android:text="@string/fragment_broadcast_editing_change_preview_text"
+                        android:textColor="@color/broadcastEditingFragment_changePreviewText_color"
+                        android:shadowColor="@color/broadcastEditingFragment_changePreviewText_shadowColor"
+                        android:shadowRadius="@dimen/broadcastEditingFragment_changePreviewText_shadowRadius"
+                        android:shadowDx="@dimen/broadcastEditingFragment_changePreviewText_shadowDx"
+                        android:shadowDy="@dimen/broadcastEditingFragment_changePreviewText_shadowDy"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"/>
 

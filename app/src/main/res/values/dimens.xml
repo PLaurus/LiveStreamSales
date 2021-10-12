@@ -63,8 +63,25 @@
     <dimen name="orderEditing_relativeText_marginVertical">8dp</dimen>
 
     <!-- Broadcast creation fragment -->
+
     <dimen name="broadcastCreationFragment_changePreviewText_shadowRadius">3.0</dimen>
+
     <dimen name="broadcastCreationFragment_changePreviewText_shadowDx">1.0</dimen>
+
     <dimen name="broadcastCreationFragment_changePreviewText_shadowDy">1.0</dimen>
+
+    <!-- Broadcast editing fragment -->
+
+    <dimen name="broadcastEditingFragment_changePreviewText_shadowRadius">
+        @dimen/broadcastCreationFragment_changePreviewText_shadowRadius
+    </dimen>
+
+    <dimen name="broadcastEditingFragment_changePreviewText_shadowDx">
+        @dimen/broadcastCreationFragment_changePreviewText_shadowDx
+    </dimen>
+
+    <dimen name="broadcastEditingFragment_changePreviewText_shadowDy">
+        @dimen/broadcastCreationFragment_changePreviewText_shadowDy
+    </dimen>
 
 </resources>
