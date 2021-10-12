@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contentLoader"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,17 +16,43 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/contentMarginStartGuideline"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/screenPadding"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/contentMarginEndGuideline"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/screenPadding"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/contentMarginTopGuideline"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="@dimen/screenPadding"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/contentMarginBottomGuideline"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="@dimen/screenPadding"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/nameTextInputLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/screenPadding"
-                android:layout_marginHorizontal="@dimen/screenPadding"
-                android:hint="@string/fragment_broadcast_creation_name_hint"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:hint="@string/fragment_broadcast_editing_name_hint"
+                app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+                app:layout_constraintEnd_toEndOf="@id/contentMarginEndGuideline"
+                app:layout_constraintTop_toBottomOf="@id/contentMarginTopGuideline"
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -44,10 +71,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin_default"
-                android:layout_marginHorizontal="@dimen/screenPadding"
-                android:hint="@string/fragment_broadcast_creation_description_hint"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:hint="@string/fragment_broadcast_editing_description_hint"
+                app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+                app:layout_constraintEnd_toEndOf="@id/contentMarginEndGuideline"
                 app:layout_constraintTop_toBottomOf="@id/nameTextInputLayout"
                 app:endIconMode="clear_text">
 
@@ -97,23 +123,25 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/previewImageLabel"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/screenPadding"
                 android:layout_marginTop="@dimen/contentMargin_small"
                 android:text="@string/fragment_broadcast_creation_preview_image_label"
                 android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+                app:layout_constraintEnd_toEndOf="@id/contentMarginEndGuideline"
                 app:layout_constraintTop_toBottomOf="@id/startTimeButton"/>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/previewCard"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="200dp"
-                android:layout_marginHorizontal="@dimen/screenPadding"
                 android:layout_marginTop="@dimen/contentMargin_default"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+                app:layout_constraintEnd_toEndOf="@id/contentMarginEndGuideline"
                 app:layout_constraintTop_toBottomOf="@id/previewImageLabel"
                 app:cardCornerRadius="@dimen/card_cornerRadius"
                 app:cardElevation="@dimen/card_elevation"
@@ -150,19 +178,54 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:id="@+id/qualityTextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/contentMargin_default"
+                android:hint="@string/fragment_broadcast_editing_quality_hint"
+                app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+                app:layout_constraintEnd_toEndOf="@id/contentMarginEndGuideline"
+                app:layout_constraintTop_toBottomOf="@id/previewCard">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/qualityAutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.button.MaterialButton
                 style="@style/Theme.LiveStreamSales.BigMaterialButton"
-                android:id="@+id/createButton"
-                android:layout_width="match_parent"
+                android:id="@+id/saveMaterialButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/screenPadding"
+                android:layout_marginEnd="@dimen/contentMargin_small"
                 android:layout_marginTop="@dimen/contentMargin_default"
-                android:layout_marginBottom="@dimen/screenPadding"
-                android:text="@string/fragment_broadcast_creation_create_button"
+                android:text="@string/fragment_broadcast_editing_save_button"
                 android:textAllCaps="false"
                 android:textSize="@dimen/textSize_default"
-                app:layout_constraintTop_toBottomOf="@id/previewCard"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+                app:layout_constraintEnd_toStartOf="@id/startBroadcastMaterialButton"
+                app:layout_constraintTop_toBottomOf="@id/qualityTextInputLayout"
+                app:layout_constraintBottom_toBottomOf="@id/contentMarginBottomGuideline"/>
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Theme.LiveStreamSales.BigMaterialButton"
+                android:id="@+id/startBroadcastMaterialButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/contentMargin_small"
+                android:layout_marginTop="@dimen/contentMargin_default"
+                android:text="@string/fragment_broadcast_editing_start_broadcast_button"
+                android:textAllCaps="false"
+                android:textSize="@dimen/textSize_default"
+                app:layout_constraintStart_toEndOf="@id/saveMaterialButton"
+                app:layout_constraintEnd_toEndOf="@id/contentMarginEndGuideline"
+                app:layout_constraintTop_toBottomOf="@id/qualityTextInputLayout"
+                app:layout_constraintBottom_toBottomOf="@id/contentMarginBottomGuideline"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

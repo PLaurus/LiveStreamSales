@@ -401,4 +401,34 @@
     <string name="fragment_broadcast_creation_change_preview_text">Изменить</string>
     <string name="fragment_broadcast_creation_create_button">Создать</string>
 
+    <!-- Broadcast editing fragment -->
+
+    <string name="fragment_broadcast_editing_name_hint">@string/fragment_broadcast_creation_name_hint</string>
+
+    <string name="fragment_broadcast_editing_description_hint">@string/fragment_broadcast_creation_description_hint</string>
+
+    <string name="fragment_broadcast_editing_start_date_label">@string/fragment_broadcast_creation_start_date_label</string>
+
+    <string name="fragment_broadcast_editing_start_date_not_set">@string/fragment_broadcast_creation_start_date_not_set</string>
+
+    <string name="fragment_broadcast_editing_start_time_label">@string/fragment_broadcast_creation_start_time_label</string>
+
+    <string name="fragment_broadcast_editing_start_time_not_set">@string/fragment_broadcast_creation_start_time_not_set</string>
+
+    <string name="fragment_broadcast_editing_preview_image_label">@string/fragment_broadcast_creation_preview_image_label</string>
+
+    <string name="fragment_broadcast_editing_change_preview_text">@string/fragment_broadcast_creation_change_preview_text</string>
+
+    <string name="fragment_broadcast_editing_quality_hint">Качество трансляции</string>
+
+    <string name="fragment_broadcast_editing_quality_low">Слабый интернет</string>
+
+    <string name="fragment_broadcast_editing_quality_medium">Стандартное качество</string>
+
+    <string name="fragment_broadcast_editing_quality_high">Full HD</string>
+
+    <string name="fragment_broadcast_editing_save_button">Сохранить</string>
+
+    <string name="fragment_broadcast_editing_start_broadcast_button">Начать</string>
+
 </resources>
