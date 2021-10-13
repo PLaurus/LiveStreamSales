@@ -8,25 +8,118 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <SurfaceView
-        android:id="@+id/surfaceView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/broadcastManagementViewsConstraintLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="@dimen/screenPadding"
-        android:clipToPadding="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/contentMarginStartGuideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/screenPadding"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/contentMarginEndGuideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/screenPadding"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/contentMarginTopGuideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/screenPadding"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/contentMarginBottomGuideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/screenPadding"/>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/liveUiGroup"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:constraint_referenced_ids="liveText,viewersCount,viewersIcon,currentVideoBitrate"
+            tools:visibility="visible"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/liveUiBottomBarrier"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="liveText,viewersCount,viewersIcon,currentVideoBitrate"
+            app:barrierDirection="bottom"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/broadcastManagementUiTopBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="switchBroadcastStateButton,switchCameraFacingButton,switchMicrophoneOnOffButton,switchCameraOnOffButton"
+            app:barrierDirection="top"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/sendMessageTopBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="messageInputLayout,sendMessageButton"
+            app:barrierDirection="top"/>
+
+        <SurfaceView
+            android:id="@+id/surfaceView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:visibility="visible"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/liveText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_live_broadcasting_live_text"
+            android:textSize="@dimen/textSize_default"
+            android:textColor="@color/liveBroadcastingFragment_liveText_color"
+            android:shadowColor="@color/liveBroadcastingFragment_liveText_shadowColor"
+            android:shadowRadius="@dimen/liveBroadcastingFragment_liveText_shadowRadius"
+            android:shadowDx="@dimen/liveBroadcastingFragment_liveText_shadowDx"
+            android:shadowDy="@dimen/liveBroadcastingFragment_liveText_shadowDy"
+            app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+            app:layout_constraintTop_toTopOf="@id/contentMarginTopGuideline"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/viewersCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textSize_default"
+            android:textColor="@color/liveBroadcastingFragment_viewersCount_textColor"
+            android:shadowColor="@color/liveBroadcastingFragment_viewersCount_shadowColor"
+            android:shadowRadius="@dimen/liveBroadcastingFragment_viewersCount_shadowRadius"
+            android:shadowDx="@dimen/liveBroadcastingFragment_viewersCount_shadowDx"
+            android:shadowDy="@dimen/liveBroadcastingFragment_viewersCount_shadowDy"
+            app:layout_constraintEnd_toEndOf="@id/contentMarginEndGuideline"
+            app:layout_constraintTop_toTopOf="@id/contentMarginTopGuideline"
+            tools:text="1340"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/viewersIcon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitCenter"
+            android:elevation="4dp"
+            app:layout_constraintEnd_toStartOf="@id/viewersCount"
+            app:layout_constraintTop_toTopOf="@id/contentMarginTopGuideline"
+            app:layout_constraintBottom_toBottomOf="@id/viewersCount"
+            app:layout_constraintDimensionRatio="1:1"
+            app:srcCompat="@drawable/ic_baseline_eye_24"
+            app:tint="@color/liveBroadcastingFragment_viewersCount_textColor"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/currentVideoBitrate"
@@ -34,9 +127,73 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/textSize_verySmall"
             android:textColor="@color/colorSecondaryText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+            app:layout_constraintTop_toBottomOf="@id/liveText"
             tools:text="123456789 bps"/>
+
+        <com.bosphere.fadingedgelayout.FadingEdgeLayout
+            android:id="@+id/chatFadingEdgeLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+            app:layout_constraintEnd_toEndOf="@id/contentMarginEndGuideline"
+            app:layout_constraintTop_toBottomOf="@id/liveUiBottomBarrier"
+            app:layout_constraintBottom_toTopOf="@id/sendMessageTopBarrier"
+            app:layout_constraintHeight_max="200dp"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintVertical_bias="1.0"
+            app:fel_edge="top"
+            app:fel_size_top="80dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:orientation="vertical"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:reverseLayout="true"
+                tools:listitem="@layout/item_chat_message"
+                tools:itemCount="15"/>
+
+        </com.bosphere.fadingedgelayout.FadingEdgeLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/messageInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/contentMargin_small"
+            android:hint="@string/fragment_live_broadcasting_message_hint"
+            app:hintEnabled="true"
+            app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+            app:layout_constraintEnd_toStartOf="@id/sendMessageButton"
+            app:layout_constraintBottom_toBottomOf="@id/sendMessageButton"
+            app:boxBackgroundColor="@color/colorLiveBroadcast_messageInput_boxBackgroundColor">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/messageInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:textSize="@dimen/textSize_small"
+                android:inputType="textMultiLine"
+                android:maxLines="3"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sendMessageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/contentMargin_small"
+
+            android:text="@string/fragment_live_broadcasting_send_button"
+            android:textAllCaps="false"
+            android:textSize="@dimen/textSize_small"
+            app:layout_constraintEnd_toEndOf="@id/contentMarginEndGuideline"
+            app:layout_constraintBottom_toTopOf="@id/broadcastManagementUiTopBarrier"
+            app:shapeAppearance="@style/Theme.LiveStreamSales.ShapeAppearanceOverlay.Circle"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/switchBroadcastStateButton"
@@ -51,8 +208,8 @@
             android:textAllCaps="false"
             android:ellipsize="end"
             android:maxLines="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+            app:layout_constraintBottom_toBottomOf="@id/contentMarginBottomGuideline"
             app:shapeAppearance="@style/Theme.LiveStreamSales.ShapeAppearanceOverlay.Circle"
             app:icon="@drawable/ic_baseline_video_camera_on_24"/>
 
@@ -67,7 +224,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             app:layout_constraintStart_toEndOf="@id/switchBroadcastStateButton"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/contentMarginBottomGuideline"
             app:layout_constraintDimensionRatio="1:1"
             app:icon="@drawable/ic_baseline_camera_switch_24"/>
 
@@ -82,7 +239,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             app:layout_constraintStart_toEndOf="@id/switchCameraFacingButton"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/contentMarginBottomGuideline"
             app:layout_constraintDimensionRatio="1:1"
             app:icon="@drawable/ic_baseline_mic_24"/>
 
@@ -97,7 +254,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             app:layout_constraintStart_toEndOf="@id/switchMicrophoneOnOffButton"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/contentMarginBottomGuideline"
             app:layout_constraintDimensionRatio="1:1"
             app:icon="@drawable/ic_baseline_camera_alt_24"/>
 

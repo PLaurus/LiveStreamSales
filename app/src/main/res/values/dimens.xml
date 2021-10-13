@@ -84,4 +84,24 @@
         @dimen/broadcastCreationFragment_changePreviewText_shadowDy
     </dimen>
 
+    <!-- Live broadcasting fragment -->
+
+    <dimen name="liveBroadcastingFragment_liveText_shadowRadius">3.0</dimen>
+
+    <dimen name="liveBroadcastingFragment_liveText_shadowDx">0.5</dimen>
+
+    <dimen name="liveBroadcastingFragment_liveText_shadowDy">0.5</dimen>
+
+    <dimen name="liveBroadcastingFragment_viewersCount_shadowRadius">
+        @dimen/liveBroadcastingFragment_liveText_shadowRadius
+    </dimen>
+
+    <dimen name="liveBroadcastingFragment_viewersCount_shadowDx">
+        @dimen/liveBroadcastingFragment_liveText_shadowDx
+    </dimen>
+
+    <dimen name="liveBroadcastingFragment_viewersCount_shadowDy">
+        @dimen/liveBroadcastingFragment_liveText_shadowDy
+    </dimen>
+
 </resources>

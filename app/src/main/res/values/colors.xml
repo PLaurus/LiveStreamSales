@@ -83,7 +83,9 @@
 
     <color name="broadcastCreationFragment_changePreviewText_color">#FFFFFFFF</color>
 
-    <color name="broadcastCreationFragment_changePreviewText_shadowColor">#FF000000</color>
+    <color name="broadcastCreationFragment_changePreviewText_shadowColor">
+        @android:color/black
+    </color>
 
     <!-- Broadcast editing fragment -->
 
@@ -101,6 +103,18 @@
 
     <color name="broadcastEditingFragment_changePreviewText_shadowColor">
         @color/broadcastCreationFragment_changePreviewText_shadowColor
+    </color>
+
+    <!-- Live broadcasting fragment -->
+
+    <color name="liveBroadcastingFragment_liveText_color">@color/colorPrimary</color>
+
+    <color name="liveBroadcastingFragment_liveText_shadowColor">#717171</color>
+
+    <color name="liveBroadcastingFragment_viewersCount_textColor">@android:color/white</color>
+
+    <color name="liveBroadcastingFragment_viewersCount_shadowColor">
+        @color/liveBroadcastingFragment_liveText_shadowColor
     </color>
 
 </resources>

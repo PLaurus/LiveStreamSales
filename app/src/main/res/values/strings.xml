@@ -373,17 +373,36 @@
     <string name="fragment_live_broadcasting_settings_confirm_button">Подтвердить</string>
 
     <!-- Live broadcasting fragment -->
+
     <string name="fragment_live_broadcasting_destination_title">Трансляция</string>
+
     <string name="fragment_live_broadcasting_switch_broadcast_state_button_on">Начать</string>
+
     <string name="fragment_live_broadcasting_switch_broadcast_state_button_off">Закончить</string>
+
     <string name="fragment_live_broadcasting_switch_camera_button">Переключить камеру</string>
+
     <string name="fragment_live_broadcasting_message_auth_success">Успешная авторизация</string>
+
     <string name="fragment_live_broadcasting_message_connection_succeeded">Соединение установлено</string>
+
     <string name="fragment_live_broadcasting_message_disconnected">Вы отключены от сервера</string>
+
     <string name="fragment_live_broadcasting_error_auth_error">Ошибка авторизации</string>
+
     <string name="fragment_live_broadcasting_error_connection_failed">Соединение не удалось: %s</string>
+
     <string name="fragment_live_broadcasting_error_failed_to_prepare_encoders">Не удалось подготовить трансляцию. Ваше устройство не может этого сделать</string>
+
     <string name="fragment_live_broadcasting_video_bitrate_text">%d bps</string>
+
+    <string name="fragment_live_broadcasting_live_text">● В эфире</string>
+
+    <string name="fragment_live_broadcasting_reconnect">Переподключить</string>
+
+    <string name="fragment_live_broadcasting_message_hint">Сообщение</string>
+
+    <string name="fragment_live_broadcasting_send_button">Отправить</string>
 
     <!-- My broadcasts fragment -->
     <string name="fragment_my_broadcasts_schedule_broadcast_button">Запланировать трансляцию</string>
