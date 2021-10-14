@@ -29,6 +29,7 @@ import tv.wfc.livestreamsales.features.liveBroadcastingDestination.di.LiveBroadc
 import tv.wfc.livestreamsales.features.liveBroadcastingSettingsDestination.di.LiveBroadcastingSettingsComponent
 import tv.wfc.livestreamsales.features.mainappcontent.di.MainAppContentComponent
 import tv.wfc.livestreamsales.features.mainpage.di.MainPageComponent
+import tv.wfc.livestreamsales.features.my_broadcasts.di.MyBroadcastsComponent
 import tv.wfc.livestreamsales.features.myorders.di.MyOrdersComponent
 import tv.wfc.livestreamsales.features.needpaymentinformation.di.NeedPaymentInformationComponent
 import tv.wfc.livestreamsales.features.orderediting.di.OrderDeliveryAddressEditingComponent
@@ -86,4 +87,5 @@ interface AppComponent {
     fun orderIsConfirmedComponent(): OrderIsConfirmedComponent.Factory
     fun liveBroadcastingSettingsComponent(): LiveBroadcastingSettingsComponent.Factory
     fun liveBroadcastingComponent(): LiveBroadcastingComponent.Factory
+    fun myBroadcastsComponent(): MyBroadcastsComponent.Builder
 }

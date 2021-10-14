@@ -405,8 +405,12 @@
     <string name="fragment_live_broadcasting_send_button">Отправить</string>
 
     <!-- My broadcasts fragment -->
+    <string name="fragment_my_broadcasts_destination_title">Мои трансляции</string>
+
     <string name="fragment_my_broadcasts_schedule_broadcast_button">Запланировать трансляцию</string>
+
     <string name="fragment_my_broadcasts_start_date">Дата начала:</string>
+
     <string name="fragment_my_broadcasts_start_time">Время начала:</string>
 
     <!-- Broadcast creation fragment -->

@@ -2,20 +2,19 @@ package tv.wfc.livestreamsales.features.liveBroadcastingSettingsDestination.view
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.laurus.p.tools.livedata.LiveEvent
 import com.laurus.p.tools.reactivex.NullablesWrapper
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import tv.wfc.contentloader.model.ViewModelPreparationState
+import tv.wfc.livestreamsales.application.base.view_model.BaseViewModel
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.manager.IAuthorizationManager
@@ -48,10 +47,7 @@ class LiveBroadcastingSettingsViewModel @Inject constructor(
     @ComputationScheduler
     private val computationScheduler: Scheduler,
     private val applicationErrorsLogger: IApplicationErrorsLogger
-): ViewModel(), ILiveBroadcastingSettingsViewModel {
-    private val disposables = CompositeDisposable()
-    private val activeOperationsCount = BehaviorSubject.createDefault(0)
-
+): BaseViewModel(), ILiveBroadcastingSettingsViewModel {
     private val nextDestinationSubject = PublishSubject.create<NextDestination>()
     private val serverAddressSubject = BehaviorSubject.createDefault("rtmp://7b9a2f.entrypoint.cloud.wowza.com/app-9223Q936")
     private val serverAddressErrorSubject: Observable<NullablesWrapper<ServerAddressError>> = BehaviorSubject.createDefault<NullablesWrapper<ServerAddressError>>(NullablesWrapper(null)).apply{
@@ -217,9 +213,8 @@ class LiveBroadcastingSettingsViewModel @Inject constructor(
     override val dataPreparationState = MutableLiveData<ViewModelPreparationState>(ViewModelPreparationState.DataIsNotPrepared)
 
     override val isAnyOperationInProgress = MutableLiveData<Boolean>().apply {
-        activeOperationsCount
+        isAnyOperationInProgressObservable
             .observeOn(mainThreadScheduler)
-            .map { it > 0 }
             .subscribeBy(
                 onNext = ::setValue,
                 onError = applicationErrorsLogger::logError
@@ -1002,21 +997,5 @@ class LiveBroadcastingSettingsViewModel @Inject constructor(
                 onError = applicationErrorsLogger::logError
             )
             .addTo(disposables)
-    }
-
-    @Synchronized
-    private fun incrementActiveOperationsCount(){
-        val currentActiveOperationsCount = activeOperationsCount.value ?: 0
-        val newActiveOperationsCount = currentActiveOperationsCount + 1
-
-        activeOperationsCount.onNext(newActiveOperationsCount)
-    }
-
-    @Synchronized
-    private fun decrementActiveOperationsCount(){
-        val currentActiveOperationsCount = activeOperationsCount.value ?: 0
-        val newActiveOperationsCount = currentActiveOperationsCount - 1
-
-        activeOperationsCount.onNext(newActiveOperationsCount)
     }
 }
