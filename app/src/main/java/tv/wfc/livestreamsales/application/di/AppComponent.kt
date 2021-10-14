@@ -26,6 +26,7 @@ import tv.wfc.livestreamsales.features.home.di.HomeComponent
 import tv.wfc.livestreamsales.features.livebroadcast.di.LiveBroadcastComponent
 import tv.wfc.livestreamsales.features.authorization.di.AuthorizationComponent
 import tv.wfc.livestreamsales.features.broadcast_creation.di.BroadcastCreationComponent
+import tv.wfc.livestreamsales.features.broadcast_editing.di.BroadcastEditingComponent
 import tv.wfc.livestreamsales.features.liveBroadcastingDestination.di.LiveBroadcastingComponent
 import tv.wfc.livestreamsales.features.liveBroadcastingSettingsDestination.di.LiveBroadcastingSettingsComponent
 import tv.wfc.livestreamsales.features.mainappcontent.di.MainAppContentComponent
@@ -90,4 +91,5 @@ interface AppComponent {
     fun liveBroadcastingComponent(): LiveBroadcastingComponent.Factory
     fun myBroadcastsComponent(): MyBroadcastsComponent.Builder
     fun broadcastCreationComponentFactory(): BroadcastCreationComponent.Factory
+    fun broadcastEditingComponentFactory(): BroadcastEditingComponent.Factory
 }

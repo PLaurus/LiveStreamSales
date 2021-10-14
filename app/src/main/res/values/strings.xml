@@ -436,6 +436,8 @@
 
     <!-- Broadcast editing fragment -->
 
+    <string name="fragment_broadcast_editing_destination_title">Информация о трансляции</string>
+
     <string name="fragment_broadcast_editing_name_hint">@string/fragment_broadcast_creation_name_hint</string>
 
     <string name="fragment_broadcast_editing_description_hint">@string/fragment_broadcast_creation_description_hint</string>

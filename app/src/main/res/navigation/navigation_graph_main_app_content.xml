@@ -280,6 +280,14 @@
             app:popEnterAnim="@anim/stay_as_is"
             app:popExitAnim="@anim/slide_out_right"/>
 
+        <action
+            android:id="@+id/toBroadcastEditingDestination"
+            app:destination="@id/broadcastEditingDestination"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/stay_as_is"
+            app:popEnterAnim="@anim/stay_as_is"
+            app:popExitAnim="@anim/slide_out_right"/>
+
     </fragment>
 
     <fragment
@@ -287,6 +295,12 @@
         android:name="tv.wfc.livestreamsales.features.broadcast_creation.ui.BroadcastCreationFragment"
         android:label="@string/fragment_broadcast_creation_destination_title"
         tools:layout="@layout/fragment_broadcast_creation"/>
+
+    <fragment
+        android:id="@+id/broadcastEditingDestination"
+        android:name="tv.wfc.livestreamsales.features.broadcast_editing.ui.BroadcastEditingFragment"
+        android:label="@string/fragment_broadcast_editing_destination_title"
+        tools:layout="@layout/fragment_broadcast_editing"/>
 
     <dialog
         android:id="@+id/productOrderDestination"
