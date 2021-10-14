@@ -270,7 +270,23 @@
         android:id="@+id/myBroadcastsDestination"
         android:name="tv.wfc.livestreamsales.features.my_broadcasts.ui.MyBroadcastsFragment"
         android:label="@string/fragment_my_broadcasts_destination_title"
-        tools:layout="@layout/fragment_my_broadcasts"/>
+        tools:layout="@layout/fragment_my_broadcasts">
+
+        <action
+            android:id="@+id/toBroadcastCreationDestination"
+            app:destination="@id/broadcastCreationDestination"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/stay_as_is"
+            app:popEnterAnim="@anim/stay_as_is"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/broadcastCreationDestination"
+        android:name="tv.wfc.livestreamsales.features.broadcast_creation.ui.BroadcastCreationFragment"
+        android:label="@string/fragment_broadcast_creation_destination_title"
+        tools:layout="@layout/fragment_broadcast_creation"/>
 
     <dialog
         android:id="@+id/productOrderDestination"

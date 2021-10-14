@@ -5,6 +5,7 @@ import tv.wfc.livestreamsales.features.greeting.di.GreetingComponent
 import tv.wfc.livestreamsales.features.home.di.HomeComponent
 import tv.wfc.livestreamsales.features.livebroadcast.di.LiveBroadcastComponent
 import tv.wfc.livestreamsales.features.authorization.di.AuthorizationComponent
+import tv.wfc.livestreamsales.features.broadcast_creation.di.BroadcastCreationComponent
 import tv.wfc.livestreamsales.features.liveBroadcastingDestination.di.LiveBroadcastingComponent
 import tv.wfc.livestreamsales.features.liveBroadcastingSettingsDestination.di.LiveBroadcastingSettingsComponent
 import tv.wfc.livestreamsales.features.mainappcontent.di.MainAppContentComponent
@@ -42,6 +43,7 @@ import tv.wfc.livestreamsales.features.profile.di.ProfileComponent
     OrderIsConfirmedComponent::class,
     LiveBroadcastingSettingsComponent::class,
     LiveBroadcastingComponent::class,
-    MyBroadcastsComponent::class
+    MyBroadcastsComponent::class,
+    BroadcastCreationComponent::class
 ])
 class AppSubComponentsModule

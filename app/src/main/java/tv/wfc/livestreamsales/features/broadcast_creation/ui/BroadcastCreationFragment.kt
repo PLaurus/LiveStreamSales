@@ -1,4 +1,4 @@
-package tv.wfc.livestreamsales.features.my_broadcasts.ui
+package tv.wfc.livestreamsales.features.broadcast_creation.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -7,14 +7,14 @@ import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.ui.base.BaseFragment
-import tv.wfc.livestreamsales.databinding.FragmentMyBroadcastsBinding
+import tv.wfc.livestreamsales.databinding.FragmentBroadcastCreationBinding
+import tv.wfc.livestreamsales.features.broadcast_creation.di.BroadcastCreationComponent
+import tv.wfc.livestreamsales.features.broadcast_creation.model.NextDestination
+import tv.wfc.livestreamsales.features.broadcast_creation.view_model.IBroadcastCreationViewModel
 import tv.wfc.livestreamsales.features.mainappcontent.ui.MainAppContentActivity
-import tv.wfc.livestreamsales.features.my_broadcasts.di.MyBroadcastsComponent
-import tv.wfc.livestreamsales.features.my_broadcasts.model.NextDestination
-import tv.wfc.livestreamsales.features.my_broadcasts.view_model.IMyBroadcastsViewModel
 import javax.inject.Inject
 
-class MyBroadcastsFragment: BaseFragment(R.layout.fragment_my_broadcasts) {
+class BroadcastCreationFragment: BaseFragment(R.layout.fragment_broadcast_creation) {
     private val navigationController by lazy { findNavController() }
 
     private val onToolbarBackPressed = object: MainAppContentActivity.ToolbarNavigationOnClickListener{
@@ -24,12 +24,12 @@ class MyBroadcastsFragment: BaseFragment(R.layout.fragment_my_broadcasts) {
         }
     }
 
-    private var viewBinding: FragmentMyBroadcastsBinding? = null
+    private lateinit var dependenciesComponent: BroadcastCreationComponent
 
-    private lateinit var dependenciesComponent: MyBroadcastsComponent
+    private var viewBinding: FragmentBroadcastCreationBinding? = null
 
     @Inject
-    lateinit var viewModel: IMyBroadcastsViewModel
+    lateinit var viewModel: IBroadcastCreationViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -53,9 +53,10 @@ class MyBroadcastsFragment: BaseFragment(R.layout.fragment_my_broadcasts) {
 
     private fun initializeDependenciesComponent() {
         if(::dependenciesComponent.isInitialized) return
-        dependenciesComponent = appComponent.myBroadcastsComponent()
-            .fragment(this)
-            .build()
+
+        dependenciesComponent = appComponent
+            .broadcastCreationComponentFactory()
+            .create(this)
     }
 
     private fun injectDependencies() {
@@ -63,7 +64,7 @@ class MyBroadcastsFragment: BaseFragment(R.layout.fragment_my_broadcasts) {
     }
 
     private fun bindView(view: View) {
-        viewBinding = FragmentMyBroadcastsBinding.bind(view)
+        viewBinding = FragmentBroadcastCreationBinding.bind(view)
     }
 
     private fun unbindView() {
@@ -71,7 +72,7 @@ class MyBroadcastsFragment: BaseFragment(R.layout.fragment_my_broadcasts) {
     }
 
     private fun initializeContentLoader() {
-        viewBinding?.contentLoaderView?.apply {
+        viewBinding?.contentLoader?.run {
             clearPreparationListeners()
             addOnDataIsPreparedListener(::onDataIsPrepared)
             attachViewModel(viewLifecycleOwner, viewModel)
@@ -85,10 +86,6 @@ class MyBroadcastsFragment: BaseFragment(R.layout.fragment_my_broadcasts) {
         }
     }
 
-    private fun onDataIsPrepared() {
-
-    }
-
     private fun manageNavigation() {
         viewModel.nextDestinationEvent.observe(viewLifecycleOwner) { nextDestination ->
             when(nextDestination) {
@@ -99,6 +96,10 @@ class MyBroadcastsFragment: BaseFragment(R.layout.fragment_my_broadcasts) {
         requireActivity().onBackPressedDispatcher.addCallback(this){
             viewModel.intentToCloseCurrentDestination()
         }
+    }
+
+    private fun onDataIsPrepared() {
+
     }
 
     private fun bindActivityToolbar() {

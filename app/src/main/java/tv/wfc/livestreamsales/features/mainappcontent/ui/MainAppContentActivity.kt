@@ -58,6 +58,11 @@ class MainAppContentActivity : BaseActivity() {
         viewBinding.toolbar.title = ""
     }
 
+    /**
+     * Only the last added listener will be executed. To execute previous one current must be
+     * removed (Use [removeToolbarNavigationOnClickListener]). This functionality implements Chain
+     * of Responsibility pattern (partly).
+     */
     fun addToolbarNavigationOnClickListener(listener: ToolbarNavigationOnClickListener){
         toolbarNavigationOnClickListeners.add(listener)
     }
@@ -90,10 +95,10 @@ class MainAppContentActivity : BaseActivity() {
             val appBarConfiguration = AppBarConfiguration(navigationController.graph)
             setSupportActionBar(this) // Must be called before toolbar.setupWithNavController!
             setupWithNavController(navigationController, appBarConfiguration)
+            addToolbarNavigationOnClickListener { NavigationUI.navigateUp(navigationController, appBarConfiguration) }
             setNavigationOnClickListener{
                 val actions = toolbarNavigationOnClickListeners.toList()
-                actions.forEach { it.onClick() }
-                NavigationUI.navigateUp(navigationController, appBarConfiguration)
+                actions.last().onClick()
             }
         }
     }
