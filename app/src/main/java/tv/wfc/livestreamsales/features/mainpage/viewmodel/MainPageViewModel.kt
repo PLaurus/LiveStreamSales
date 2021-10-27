@@ -10,13 +10,13 @@ import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
-import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
-import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsRepository
+import tv.wfc.livestreamsales.application.model.stream.PublicStream
+import tv.wfc.livestreamsales.application.repository.publicstream.IPublicStreamRepository
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import javax.inject.Inject
 
 class MainPageViewModel @Inject constructor(
-    private val broadcastsRepository: IBroadcastsRepository,
+    private val publicStreamRepository: IPublicStreamRepository,
     private val applicationErrorsLogger: IApplicationErrorsLogger,
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler
@@ -27,9 +27,9 @@ class MainPageViewModel @Inject constructor(
 
     override val isDataBeingRefreshed = MutableLiveData(false)
 
-    override val liveBroadcasts = MutableLiveData<List<Broadcast>>()
+    override val liveStreams = MutableLiveData<List<PublicStream>>()
 
-    override val announcements = MutableLiveData<List<Broadcast>>()
+    override val announcements = MutableLiveData<List<PublicStream>>()
 
     init{
         prepareData()
@@ -49,7 +49,7 @@ class MainPageViewModel @Inject constructor(
     }
 
     override fun getLiveBroadcastTitleByPosition(position: Int): String {
-        return liveBroadcasts.value
+        return liveStreams.value
             ?.getOrNull(position)
             ?.title ?: ""
     }
@@ -100,14 +100,14 @@ class MainPageViewModel @Inject constructor(
     private fun getBroadcastsFromRepository(
         onComplete: (() -> Unit)? = null,
         onError: ((Throwable) -> Unit)? = null,
-        onNext: ((List<Broadcast>) -> Unit)? = null
+        onNext: ((List<PublicStream>) -> Unit)? = null
     ): Disposable{
-        return broadcastsRepository
-            .getBroadcasts()
+        return publicStreamRepository
+            .getAll()
             .observeOn(mainThreadScheduler)
             .subscribeBy(
                 onNext = {
-                    updateBroadcastsInformation(it)
+                    updateStreamsInformation(it)
                     onNext?.invoke(it)
                 },
                 onComplete = {
@@ -119,16 +119,16 @@ class MainPageViewModel @Inject constructor(
             )
     }
 
-    private fun updateBroadcastsInformation(broadcasts: List<Broadcast>){
-        val liveBroadcasts = broadcasts.filter{ broadcastInformation ->
+    private fun updateStreamsInformation(streams: List<PublicStream>){
+        val liveStreams = streams.filter { broadcastInformation ->
             broadcastInformation.startsAt.isBeforeNow && broadcastInformation.endsAt.isAfterNow
         }
 
-        val broadcastAnnouncements = broadcasts.filter{ broadcastInformation ->
+        val streamAnnouncements = streams.filter { broadcastInformation ->
             broadcastInformation.startsAt.isAfterNow
         }
 
-        this.liveBroadcasts.value = liveBroadcasts
-        this.announcements.value = broadcastAnnouncements
+        this.liveStreams.value = liveStreams
+        this.announcements.value = streamAnnouncements
     }
 }

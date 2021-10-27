@@ -6,6 +6,8 @@ import org.joda.time.DateTime
 data class Stream(
     @SerializedName("id")
     val id: Long?,
+    @SerializedName("user_id")
+    val userId: Long?,
     @SerializedName("name")
     val name: String?,
     @SerializedName("start_at")

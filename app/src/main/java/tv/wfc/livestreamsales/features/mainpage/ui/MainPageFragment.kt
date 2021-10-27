@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import com.laurus.p.recyclerviewitemdecorators.GapBetweenItems
 import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
+import tv.wfc.livestreamsales.application.model.stream.PublicStream
 import tv.wfc.livestreamsales.application.ui.base.BaseFragment
 import tv.wfc.livestreamsales.databinding.FragmentMainPageBinding
 import tv.wfc.livestreamsales.features.home.ui.HomeFragmentDirections
@@ -51,7 +51,7 @@ class MainPageFragment: BaseFragment(R.layout.fragment_main_page) {
     lateinit var imageLoader: ImageLoader
 
     @Inject
-    lateinit var broadcastsDiffUtilCallback: DiffUtil.ItemCallback<Broadcast>
+    lateinit var broadcastsDiffUtilCallback: DiffUtil.ItemCallback<PublicStream>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -116,7 +116,7 @@ class MainPageFragment: BaseFragment(R.layout.fragment_main_page) {
 
     private fun initializeNoLiveBroadcastsText(){
         viewBinding?.noLiveBroadcastsText?.apply{
-            viewModel.liveBroadcasts.observe(viewLifecycleOwner,{ liveBroadcasts ->
+            viewModel.liveStreams.observe(viewLifecycleOwner,{ liveBroadcasts ->
                 visibility = if(liveBroadcasts.isEmpty()){
                     View.VISIBLE
                 } else View.GONE
@@ -134,7 +134,7 @@ class MainPageFragment: BaseFragment(R.layout.fragment_main_page) {
             addItemDecoration(GapBetweenItems(contentMargin))
         }
 
-        viewModel.liveBroadcasts.observe(viewLifecycleOwner,{ liveBroadcasts ->
+        viewModel.liveStreams.observe(viewLifecycleOwner,{ liveBroadcasts ->
             liveBroadcastsAdapter.submitList(liveBroadcasts)
         })
     }

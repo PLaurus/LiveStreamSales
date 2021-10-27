@@ -5,11 +5,11 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
-import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
-import tv.wfc.livestreamsales.application.di.modules.datastore.qualifiers.ProductsLocalDataStore
-import tv.wfc.livestreamsales.application.di.modules.datastore.qualifiers.ProductsRemoteDataStore
+import tv.wfc.livestreamsales.application.di.modules.datasource.qualifiers.ProductsLocalDataStore
+import tv.wfc.livestreamsales.application.di.modules.datasource.qualifiers.ProductsRemoteDataStore
 import tv.wfc.livestreamsales.application.model.products.ProductGroup
 import tv.wfc.livestreamsales.application.storage.products.IProductsDataStore
+import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import javax.inject.Inject
 
 class ProductsRepository @Inject constructor(

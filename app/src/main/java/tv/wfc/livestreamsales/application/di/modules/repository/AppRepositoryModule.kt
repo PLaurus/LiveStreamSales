@@ -7,16 +7,18 @@ import tv.wfc.livestreamsales.application.repository.applicationsettings.Applica
 import tv.wfc.livestreamsales.application.repository.applicationsettings.IApplicationSettingsRepository
 import tv.wfc.livestreamsales.application.repository.authorization.AuthorizationRepository
 import tv.wfc.livestreamsales.application.repository.authorization.IAuthorizationRepository
-import tv.wfc.livestreamsales.application.repository.broadcastsinformation.BroadcastsRepository
-import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsRepository
 import tv.wfc.livestreamsales.application.repository.livebroadcastingsettings.ILiveBroadcastingSettingsRepository
 import tv.wfc.livestreamsales.application.repository.livebroadcastingsettings.LiveBroadcastingSettingsRepository
+import tv.wfc.livestreamsales.application.repository.mystream.IMyStreamRepository
+import tv.wfc.livestreamsales.application.repository.mystream.MyStreamRepository
 import tv.wfc.livestreamsales.application.repository.paymentcardinformation.IPaymentCardInformationRepository
 import tv.wfc.livestreamsales.application.repository.paymentcardinformation.PaymentCardInformationRepository
 import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
 import tv.wfc.livestreamsales.application.repository.products.ProductsRepository
 import tv.wfc.livestreamsales.application.repository.productsorder.IProductsOrderRepository
 import tv.wfc.livestreamsales.application.repository.productsorder.ProductsOrderRepository
+import tv.wfc.livestreamsales.application.repository.publicstream.IPublicStreamRepository
+import tv.wfc.livestreamsales.application.repository.publicstream.PublicStreamRepository
 import tv.wfc.livestreamsales.application.repository.streamchatmessage.IStreamChatMessageRepository
 import tv.wfc.livestreamsales.application.repository.streamchatmessage.StreamChatMessageRepository
 import tv.wfc.livestreamsales.application.repository.userinformation.IUserInformationRepository
@@ -25,64 +27,70 @@ import tv.wfc.livestreamsales.features.livebroadcast.repository.BroadcastAnalyti
 import tv.wfc.livestreamsales.features.livebroadcast.repository.IBroadcastAnalyticsRepository
 
 @Module
-abstract class AppRepositoryModule {
+interface AppRepositoryModule {
     @ApplicationScope
     @Binds
-    internal abstract fun bindIUserInformationRepository(
+    fun bindIUserInformationRepository(
         repository: UserInformationRepository
     ): IUserInformationRepository
 
     @ApplicationScope
     @Binds
-    internal abstract fun bindIPaymentCardInformationRepository(
+    fun bindIPaymentCardInformationRepository(
         repository: PaymentCardInformationRepository
     ): IPaymentCardInformationRepository
 
     @ApplicationScope
     @Binds
-    internal abstract fun bindIBroadcastAnalyticsRepository(
+    fun bindIBroadcastAnalyticsRepository(
         repository: BroadcastAnalyticsRepository
     ): IBroadcastAnalyticsRepository
 
     @ApplicationScope
     @Binds
-    internal abstract fun bindIApplicationSettingsRepository(
+    fun bindIApplicationSettingsRepository(
         repository: ApplicationSettingsRepository
     ): IApplicationSettingsRepository
 
     @ApplicationScope
     @Binds
-    abstract fun bindIAuthorizationRepository(
+    fun bindIAuthorizationRepository(
         repository: AuthorizationRepository
     ): IAuthorizationRepository
 
     @ApplicationScope
     @Binds
-    internal abstract fun bindIBroadcastsRepository(
-        repository: BroadcastsRepository
-    ): IBroadcastsRepository
+    fun bindIBroadcastsRepository(
+        repository: PublicStreamRepository
+    ): IPublicStreamRepository
 
     @ApplicationScope
     @Binds
-    internal abstract fun bindIProductsRepository(
+    fun bindIProductsRepository(
         repository: ProductsRepository
     ): IProductsRepository
 
     @ApplicationScope
     @Binds
-    internal abstract fun bindIProductsOrderRepository(
+    fun bindIProductsOrderRepository(
         repository: ProductsOrderRepository
     ): IProductsOrderRepository
 
     @ApplicationScope
     @Binds
-    internal abstract fun bindIStreamChatMessageRepository(
+    fun bindIStreamChatMessageRepository(
         repository: StreamChatMessageRepository
     ): IStreamChatMessageRepository
 
     @ApplicationScope
     @Binds
-    internal abstract fun bindILiveBroadcastingSettingsRepository(
+    fun bindILiveBroadcastingSettingsRepository(
         repository: LiveBroadcastingSettingsRepository
     ): ILiveBroadcastingSettingsRepository
+
+    @ApplicationScope
+    @Binds
+    fun bindIMyStreamRepository(
+        repository: MyStreamRepository
+    ): IMyStreamRepository
 }

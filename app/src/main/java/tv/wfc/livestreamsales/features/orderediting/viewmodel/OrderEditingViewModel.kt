@@ -286,7 +286,7 @@ class OrderEditingViewModel @Inject constructor(
             .addTo(disposables)
     }
 
-    private fun prepareOrderInformation(orderId: Long): Completable{
+    private fun prepareOrderInformation(orderId: Long): Completable {
         return productsOrderRepository
             .getOrder(orderId)
             .observeOn(mainThreadScheduler)
@@ -326,7 +326,7 @@ class OrderEditingViewModel @Inject constructor(
             .addTo(disposables)
     }
 
-    private fun checkDeliveryCity(city: String?): IOrderEditingViewModel.CityError?{
+    private fun checkDeliveryCity(city: String?): IOrderEditingViewModel.CityError? {
         if(city.isNullOrEmpty()) return IOrderEditingViewModel.CityError.FieldIsRequired
         if(!city.checkContainsOnlySingleLanguageLetters()) return IOrderEditingViewModel.CityError.FieldContainsIllegalSymbols
 

@@ -323,7 +323,7 @@ class ProfileFragment: BaseFragment(R.layout.fragment_profile) {
         val accessIsGrantedListener = object: BaseMultiplePermissionsListener(){
             override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
                 if(report?.areAllPermissionsGranted() == true){
-                    val action = HomeFragmentDirections.toMyBroadcastsDestination()
+                    val action = HomeFragmentDirections.toMyStreamsDestination()
                     navigationController.navigate(action)
                 }
             }

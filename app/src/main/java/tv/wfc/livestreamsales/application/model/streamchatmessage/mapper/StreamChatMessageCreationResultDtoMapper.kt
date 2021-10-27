@@ -8,15 +8,9 @@ import javax.inject.Inject
 class StreamChatMessageCreationResultDtoMapper @Inject constructor(
 
 ): IEntityMapper<StreamChatMessageCreationResultDto, StreamChatMessageCreationResult> {
-    override fun mapToDomainEntity(from: StreamChatMessageCreationResultDto): StreamChatMessageCreationResult? {
+    override fun map(from: StreamChatMessageCreationResultDto): StreamChatMessageCreationResult? {
         return StreamChatMessageCreationResult(
             isSent = from.success ?: return null
-        )
-    }
-
-    override fun mapToExternalEntity(from: StreamChatMessageCreationResult): StreamChatMessageCreationResultDto {
-        return StreamChatMessageCreationResultDto(
-            success = from.isSent
         )
     }
 }

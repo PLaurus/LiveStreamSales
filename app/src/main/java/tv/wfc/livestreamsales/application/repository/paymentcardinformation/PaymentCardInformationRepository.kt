@@ -2,8 +2,8 @@ package tv.wfc.livestreamsales.application.repository.paymentcardinformation
 
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
+import tv.wfc.livestreamsales.application.di.modules.datasource.qualifiers.PaymentCardInformationRemoteDataStore
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
-import tv.wfc.livestreamsales.application.di.modules.datastore.qualifiers.PaymentCardInformationRemoteDataStore
 import tv.wfc.livestreamsales.application.model.paymentcardinformation.PaymentCardInformation
 import tv.wfc.livestreamsales.application.model.paymentcardinformation.ResultOfStartingPaymentCardBinding
 import tv.wfc.livestreamsales.application.storage.paymentcardinformation.IPaymentCardInformationDataStore

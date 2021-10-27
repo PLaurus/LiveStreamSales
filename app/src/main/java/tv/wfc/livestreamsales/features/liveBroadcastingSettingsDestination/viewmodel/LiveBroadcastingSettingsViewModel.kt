@@ -14,7 +14,7 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import tv.wfc.contentloader.model.ViewModelPreparationState
-import tv.wfc.livestreamsales.application.base.view_model.BaseViewModel
+import tv.wfc.livestreamsales.application.base.viewmodel.BaseViewModel
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.manager.IAuthorizationManager

@@ -7,5 +7,5 @@ import com.google.gson.annotations.SerializedName
  */
 class StreamChatMessageCreationDto (
     @SerializedName("message")
-    val messageText: String
+    val messageText: String?
 )

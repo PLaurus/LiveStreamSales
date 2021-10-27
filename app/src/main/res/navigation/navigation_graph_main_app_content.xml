@@ -143,8 +143,8 @@
             app:popExitAnim="@anim/slide_out_right"/>
 
         <action
-            android:id="@+id/toMyBroadcastsDestination"
-            app:destination="@id/myBroadcastsDestination"
+            android:id="@+id/toMyStreamsDestination"
+            app:destination="@id/myStreamsDestination"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/stay_as_is"
             app:popEnterAnim="@anim/stay_as_is"
@@ -267,10 +267,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/myBroadcastsDestination"
-        android:name="tv.wfc.livestreamsales.features.my_broadcasts.ui.MyBroadcastsFragment"
-        android:label="@string/fragment_my_broadcasts_destination_title"
-        tools:layout="@layout/fragment_my_broadcasts">
+        android:id="@+id/myStreamsDestination"
+        android:name="tv.wfc.livestreamsales.features.mystreams.ui.MyStreamsFragment"
+        android:label="@string/fragment_my_streams_destination_title"
+        tools:layout="@layout/fragment_my_streams">
 
         <action
             android:id="@+id/toBroadcastCreationDestination"

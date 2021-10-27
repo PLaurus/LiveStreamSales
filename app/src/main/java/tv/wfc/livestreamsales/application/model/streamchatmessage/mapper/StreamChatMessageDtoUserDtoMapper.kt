@@ -8,19 +8,11 @@ import javax.inject.Inject
 class StreamChatMessageDtoUserDtoMapper @Inject constructor(
 
 ): IEntityMapper<StreamChatMessageDto.UserDto, StreamChatMessage.Sender> {
-    override fun mapToDomainEntity(from: StreamChatMessageDto.UserDto): StreamChatMessage.Sender? {
+    override fun map(from: StreamChatMessageDto.UserDto): StreamChatMessage.Sender? {
         val id = from.id ?: return null
 
         return StreamChatMessage.Sender(
             id = id,
-            name = from.name,
-            surname = from.surname
-        )
-    }
-
-    override fun mapToExternalEntity(from: StreamChatMessage.Sender): StreamChatMessageDto.UserDto {
-        return StreamChatMessageDto.UserDto(
-            id = from.id,
             name = from.name,
             surname = from.surname
         )

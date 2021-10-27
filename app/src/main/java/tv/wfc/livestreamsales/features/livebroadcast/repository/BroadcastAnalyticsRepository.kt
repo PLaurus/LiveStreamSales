@@ -1,7 +1,7 @@
 package tv.wfc.livestreamsales.features.livebroadcast.repository
 
 import io.reactivex.rxjava3.core.Completable
-import tv.wfc.livestreamsales.application.di.modules.datastore.qualifiers.BroadcastAnalyticsRemoteDataStore
+import tv.wfc.livestreamsales.application.di.modules.datasource.qualifiers.BroadcastAnalyticsRemoteDataStore
 import tv.wfc.livestreamsales.features.livebroadcast.storage.IBroadcastAnalyticsDataStore
 import javax.inject.Inject
 

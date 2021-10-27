@@ -5,9 +5,9 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import org.joda.time.DateTime
+import tv.wfc.livestreamsales.application.di.modules.datasource.qualifiers.ProductsOrderLocalDataStore
+import tv.wfc.livestreamsales.application.di.modules.datasource.qualifiers.ProductsOrderRemoteDataStore
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
-import tv.wfc.livestreamsales.application.di.modules.datastore.qualifiers.ProductsOrderLocalDataStore
-import tv.wfc.livestreamsales.application.di.modules.datastore.qualifiers.ProductsOrderRemoteDataStore
 import tv.wfc.livestreamsales.application.model.address.Address
 import tv.wfc.livestreamsales.application.model.orders.Order
 import tv.wfc.livestreamsales.application.model.orders.OrderedProduct

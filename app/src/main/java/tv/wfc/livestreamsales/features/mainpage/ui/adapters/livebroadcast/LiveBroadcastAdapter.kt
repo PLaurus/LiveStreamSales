@@ -6,13 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import coil.ImageLoader
 import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
+import tv.wfc.livestreamsales.application.model.stream.PublicStream
 
 class LiveBroadcastAdapter(
-    liveBroadcastsDiffUtilCallback: DiffUtil.ItemCallback<Broadcast>,
+    liveBroadcastsDiffUtilCallback: DiffUtil.ItemCallback<PublicStream>,
     private val imageLoader: ImageLoader,
     private val onItemClick: (broadcastId: Long) -> Unit
-): ListAdapter<Broadcast, LiveBroadcastViewHolder>(liveBroadcastsDiffUtilCallback) {
+): ListAdapter<PublicStream, LiveBroadcastViewHolder>(liveBroadcastsDiffUtilCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LiveBroadcastViewHolder {
         val liveBroadcastPage =
             LayoutInflater

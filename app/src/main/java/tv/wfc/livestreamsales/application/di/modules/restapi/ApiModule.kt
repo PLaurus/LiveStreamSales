@@ -5,11 +5,13 @@ import dagger.Provides
 import tv.wfc.livestreamsales.features.rest.IApiProvider
 import tv.wfc.livestreamsales.features.rest.api.authorized.IBroadcastAnalyticsApi
 import tv.wfc.livestreamsales.features.rest.api.authorized.IPaymentCardInformationApi
-import tv.wfc.livestreamsales.features.rest.api.authorized.productsorders.IProductsOrdersApi
 import tv.wfc.livestreamsales.features.rest.api.authorized.IUserPersonalInformationApi
+import tv.wfc.livestreamsales.features.rest.api.authorized.productsorders.IProductsOrdersApi
+import tv.wfc.livestreamsales.features.rest.api.mystreams.IMyStreamsService
 import tv.wfc.livestreamsales.features.rest.api.notauthorized.IAuthorizationApi
 import tv.wfc.livestreamsales.features.rest.api.notauthorized.IBroadcastsApi
 import tv.wfc.livestreamsales.features.rest.api.notauthorized.IProductsApi
+import tv.wfc.livestreamsales.features.rest.api.stream.IStreamService
 import tv.wfc.livestreamsales.features.rest.api.streamchat.IStreamChatApi
 
 @Module
@@ -29,7 +31,7 @@ class ApiModule {
     @Provides
     internal fun providePaymentCardInformationApi(
         apiProvider: IApiProvider
-    ): IPaymentCardInformationApi{
+    ): IPaymentCardInformationApi {
         return apiProvider.createApi(IPaymentCardInformationApi::class.java)
     }
 
@@ -67,4 +69,14 @@ class ApiModule {
     ): IStreamChatApi {
         return apiProvider.createApi(IStreamChatApi::class.java)
     }
+
+    @Provides
+    internal fun provideIStreamService(
+        serviceProvider: IApiProvider
+    ): IStreamService = serviceProvider.createApi(IStreamService::class.java)
+
+    @Provides
+    internal fun provideIMyStreamsService(
+        serviceProvider: IApiProvider
+    ): IMyStreamsService = serviceProvider.createApi(IMyStreamsService::class.java)
 }

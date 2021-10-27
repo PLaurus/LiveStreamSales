@@ -3,8 +3,8 @@ package tv.wfc.livestreamsales.application.repository.livebroadcastingsettings
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
+import tv.wfc.livestreamsales.application.di.modules.datasource.qualifiers.LiveBroadcastingSettingsLocalDataStore
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
-import tv.wfc.livestreamsales.application.di.modules.datastore.qualifiers.LiveBroadcastingSettingsLocalDataStore
 import tv.wfc.livestreamsales.application.storage.livebroadcastingsettings.ILiveBroadcastingSettingsDataStore
 import javax.inject.Inject
 

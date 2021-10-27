@@ -10,7 +10,7 @@ import coil.request.Disposable
 import coil.request.ImageRequest
 import com.laurus.p.tools.context.getDrawableCompat
 import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
+import tv.wfc.livestreamsales.application.model.stream.PublicStream
 import tv.wfc.livestreamsales.databinding.ListItemLiveBroadcastCardBinding
 
 class LiveBroadcastViewHolder(
@@ -24,12 +24,12 @@ class LiveBroadcastViewHolder(
 
     private var liveBroadcastImageLoaderDisposable: Disposable? = null
 
-    fun bind(broadcast: Broadcast){
+    fun bind(stream: PublicStream){
         clearView()
 
-        bindLiveBroadcastId(broadcast.id)
-        bindLiveBroadcastImage(broadcast.imageUrl)
-        initializeLiveBroadcastTitleText(broadcast)
+        bindLiveBroadcastId(stream.id)
+        bindLiveBroadcastImage(stream.imageUrl)
+        initializeLiveBroadcastTitleText(stream)
     }
 
     private fun clearView(){
@@ -71,8 +71,8 @@ class LiveBroadcastViewHolder(
         }
     }
 
-    private fun initializeLiveBroadcastTitleText(broadcast: Broadcast){
-        viewBinding.liveBroadcastsTitle.text = broadcast.title
+    private fun initializeLiveBroadcastTitleText(stream: PublicStream){
+        viewBinding.liveBroadcastsTitle.text = stream.title
     }
 
     private fun clearLiveBroadcastTitleText(){

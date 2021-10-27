@@ -25,11 +25,11 @@ import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.manager.IAuthorizationManager
-import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
-import tv.wfc.livestreamsales.application.model.streamchatmessage.StreamChatMessage
 import tv.wfc.livestreamsales.application.model.products.ProductGroup
-import tv.wfc.livestreamsales.application.repository.broadcastsinformation.IBroadcastsRepository
+import tv.wfc.livestreamsales.application.model.stream.PublicStream
+import tv.wfc.livestreamsales.application.model.streamchatmessage.StreamChatMessage
 import tv.wfc.livestreamsales.application.repository.products.IProductsRepository
+import tv.wfc.livestreamsales.application.repository.publicstream.IPublicStreamRepository
 import tv.wfc.livestreamsales.application.repository.streamchatmessage.IStreamChatMessageRepository
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.tools.exoplayer.PlaybackState
@@ -44,7 +44,7 @@ class LiveBroadcastViewModel @Inject constructor(
     @ComputationScheduler
     private val computationScheduler: Scheduler,
     private val imageLoader: ImageLoader,
-    private val broadcastsRepository: IBroadcastsRepository,
+    private val publicStreamRepository: IPublicStreamRepository,
     private val broadcastAnalyticsRepository: IBroadcastAnalyticsRepository,
     private val productsRepository: IProductsRepository,
     private val streamChatMessageRepository: IStreamChatMessageRepository,
@@ -238,8 +238,8 @@ class LiveBroadcastViewModel @Inject constructor(
     }
 
     private fun prepareBroadcastInformation(broadcastId: Long): Completable {
-        return broadcastsRepository
-            .getBroadcast(broadcastId)
+        return publicStreamRepository
+            .getById(broadcastId)
             .flatMapCompletable{ broadcastInformation ->
                 Completable.merge(listOf(
                     prepareImage(broadcastInformation),
@@ -251,10 +251,10 @@ class LiveBroadcastViewModel @Inject constructor(
             }
     }
 
-    private fun prepareImage(broadcast: Broadcast): Completable{
+    private fun prepareImage(stream: PublicStream): Completable{
         return Completable
             .create { emitter ->
-                val imageUri = broadcast.imageUrl
+                val imageUri = stream.imageUrl
 
                 if(imageUri == null)
                     emitter.onComplete()
@@ -279,17 +279,17 @@ class LiveBroadcastViewModel @Inject constructor(
             .subscribeOn(mainThreadScheduler)
     }
 
-    private fun prepareBroadcastTitle(broadcast: Broadcast): Completable{
+    private fun prepareBroadcastTitle(stream: PublicStream): Completable{
         return Completable
             .fromRunnable {
-                this.broadcastTitle.value = broadcast.title
+                this.broadcastTitle.value = stream.title
             }
             .subscribeOn(mainThreadScheduler)
     }
 
-    private fun prepareViewersCount(broadcast: Broadcast): Completable{
-        return broadcastsRepository
-            .getBroadcastViewersCount(broadcast.id)
+    private fun prepareViewersCount(stream: PublicStream): Completable{
+        return publicStreamRepository
+            .getViewersCountByStreamId(stream.id)
             .flatMapCompletable { viewersCount ->
                 Completable
                     .fromRunnable {
@@ -301,27 +301,27 @@ class LiveBroadcastViewModel @Inject constructor(
     }
 
     private fun prepareBroadcastDescription(
-        broadcast: Broadcast
+        stream: PublicStream
     ): Completable{
         return Completable
             .fromRunnable {
-                broadcastDescription.value =  broadcast.description
+                broadcastDescription.value =  stream.description
             }
             .subscribeOn(mainThreadScheduler)
     }
 
     private fun prepareBroadcastMediaItem(
-        broadcast: Broadcast
+        stream: PublicStream
     ): Completable{
         return Completable
             .fromRunnable{
                 val previousManifestUri = broadcastMediaItem.value?.playbackProperties?.uri?.toString()
-                val newBroadcastManifestUri = broadcast.manifestUrl
+                val newStreamManifestUri = stream.manifestUrl
 
-                if(newBroadcastManifestUri != null &&
-                    newBroadcastManifestUri == previousManifestUri) return@fromRunnable
+                if(newStreamManifestUri != null &&
+                    newStreamManifestUri == previousManifestUri) return@fromRunnable
 
-                broadcastMediaItem.value = newBroadcastManifestUri?.let{
+                broadcastMediaItem.value = newStreamManifestUri?.let{
                     createBroadcastMediaItem(it)
                 }
             }

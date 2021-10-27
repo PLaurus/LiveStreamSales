@@ -7,7 +7,7 @@ import javax.inject.Inject
 class StreamChatStringMessageMapper @Inject constructor(
 
 ): IEntityMapper<String, StreamChatMessage> {
-    override fun mapToDomainEntity(from: String): StreamChatMessage {
+    override fun map(from: String): StreamChatMessage {
         val sender = StreamChatMessage.Sender(
             id = -1,
             name = null,
@@ -15,9 +15,5 @@ class StreamChatStringMessageMapper @Inject constructor(
         )
 
         return StreamChatMessage(sender, from)
-    }
-
-    override fun mapToExternalEntity(from: StreamChatMessage): String {
-        return from.text
     }
 }

@@ -7,9 +7,9 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import tv.wfc.livestreamsales.application.di.modules.datasource.qualifiers.UserInformationLocalDataStore
+import tv.wfc.livestreamsales.application.di.modules.datasource.qualifiers.UserInformationRemoteDataStore
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
-import tv.wfc.livestreamsales.application.di.modules.datastore.qualifiers.UserInformationLocalDataStore
-import tv.wfc.livestreamsales.application.di.modules.datastore.qualifiers.UserInformationRemoteDataStore
 import tv.wfc.livestreamsales.application.model.user.User
 import tv.wfc.livestreamsales.application.storage.userpersonalinformation.IUserInformationDataStore
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger

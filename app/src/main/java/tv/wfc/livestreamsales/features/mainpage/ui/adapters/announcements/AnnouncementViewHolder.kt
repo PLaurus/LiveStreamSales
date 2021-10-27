@@ -12,7 +12,7 @@ import com.laurus.p.tools.context.getDrawableCompat
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import tv.wfc.livestreamsales.R
-import tv.wfc.livestreamsales.application.model.broadcastinformation.Broadcast
+import tv.wfc.livestreamsales.application.model.stream.PublicStream
 import tv.wfc.livestreamsales.databinding.ListItemBroadcastAnnouncementCardBinding
 
 class AnnouncementViewHolder(
@@ -25,13 +25,13 @@ class AnnouncementViewHolder(
 
     private var announcementImageLoaderDisposable: Disposable? = null
 
-    fun bind(broadcast: Broadcast){
+    fun bind(stream: PublicStream){
         clearView()
 
-        bindAnnouncementImage(broadcast.imageUrl)
-        initializeAnnouncementTitleText(broadcast)
-        bindAnnouncementDate(broadcast.startsAt)
-        bindAnnouncementTime(broadcast.startsAt)
+        bindAnnouncementImage(stream.imageUrl)
+        initializeAnnouncementTitleText(stream)
+        bindAnnouncementDate(stream.startsAt)
+        bindAnnouncementTime(stream.startsAt)
     }
 
     private fun clearView(){
@@ -95,8 +95,8 @@ class AnnouncementViewHolder(
         )
     }
 
-    private fun initializeAnnouncementTitleText(broadcast: Broadcast){
-        viewBinding.announcementTitleText.text = broadcast.title
+    private fun initializeAnnouncementTitleText(stream: PublicStream){
+        viewBinding.announcementTitleText.text = stream.title
     }
 
     private fun clearAnnouncementTitleText(){
