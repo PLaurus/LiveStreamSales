@@ -17,5 +17,7 @@ interface IMyStreamsViewModel: INeedPreparationViewModel {
 
     fun refreshData()
 
-    fun intentToCloseCurrentDestination()
+    fun prepareToCloseCurrentDestination()
+
+    fun prepareToNavigateToStreamCreationDestination()
 }

@@ -1,10 +1,10 @@
-package tv.wfc.livestreamsales.features.broadcast_creation.view_model
+package tv.wfc.livestreamsales.features.streamcreation.viewmodel
 
 import androidx.lifecycle.LiveData
 import tv.wfc.contentloader.viewmodel.INeedPreparationViewModel
-import tv.wfc.livestreamsales.features.broadcast_creation.model.NextDestination
+import tv.wfc.livestreamsales.features.streamcreation.model.NextDestination
 
-interface IBroadcastCreationViewModel: INeedPreparationViewModel {
+interface IStreamCreationViewModel: INeedPreparationViewModel {
     val isAnyOperationInProgress: LiveData<Boolean>
 
     val nextDestinationEvent: LiveData<NextDestination>

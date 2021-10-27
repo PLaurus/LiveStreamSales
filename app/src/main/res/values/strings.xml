@@ -407,52 +407,52 @@
     <!-- My streams fragment -->
     <string name="fragment_my_streams_destination_title">Мои трансляции</string>
 
-    <string name="fragment_my_streams_schedule_broadcast_button">Запланировать трансляцию</string>
+    <string name="fragment_my_streams_schedule_stream_button">Запланировать трансляцию</string>
 
     <string name="fragment_my_streams_start_date">Дата начала:</string>
 
     <string name="fragment_my_streams_start_time">Время начала:</string>
 
-    <!-- Broadcast creation fragment -->
-    <string name="fragment_broadcast_creation_destination_title">Создать трансляцию</string>
+    <!-- Stream creation fragment -->
+    <string name="fragment_stream_creation_destination_title">Создать трансляцию</string>
 
-    <string name="fragment_broadcast_creation_name_hint">Название</string>
+    <string name="fragment_stream_creation_name_hint">Название</string>
 
-    <string name="fragment_broadcast_creation_description_hint">Описание</string>
+    <string name="fragment_stream_creation_description_hint">Описание</string>
 
-    <string name="fragment_broadcast_creation_start_date_label">Дата начала</string>
+    <string name="fragment_stream_creation_start_date_label">Дата начала</string>
 
-    <string name="fragment_broadcast_creation_start_date_not_set">Не указана</string>
+    <string name="fragment_stream_creation_start_date_not_set">Не указана</string>
 
-    <string name="fragment_broadcast_creation_start_time_label">Время начала</string>
+    <string name="fragment_stream_creation_start_time_label">Время начала</string>
 
-    <string name="fragment_broadcast_creation_start_time_not_set">Не указано</string>
+    <string name="fragment_stream_creation_start_time_not_set">Не указано</string>
 
-    <string name="fragment_broadcast_creation_preview_image_label">Картинка превью</string>
+    <string name="fragment_stream_creation_preview_image_label">Картинка превью</string>
 
-    <string name="fragment_broadcast_creation_change_preview_text">Изменить</string>
+    <string name="fragment_stream_creation_change_preview_text">Изменить</string>
 
-    <string name="fragment_broadcast_creation_create_button">Создать</string>
+    <string name="fragment_stream_creation_create_button">Создать</string>
 
     <!-- Broadcast editing fragment -->
 
     <string name="fragment_broadcast_editing_destination_title">Информация о трансляции</string>
 
-    <string name="fragment_broadcast_editing_name_hint">@string/fragment_broadcast_creation_name_hint</string>
+    <string name="fragment_broadcast_editing_name_hint">@string/fragment_stream_creation_name_hint</string>
 
-    <string name="fragment_broadcast_editing_description_hint">@string/fragment_broadcast_creation_description_hint</string>
+    <string name="fragment_broadcast_editing_description_hint">@string/fragment_stream_creation_description_hint</string>
 
-    <string name="fragment_broadcast_editing_start_date_label">@string/fragment_broadcast_creation_start_date_label</string>
+    <string name="fragment_broadcast_editing_start_date_label">@string/fragment_stream_creation_start_date_label</string>
 
-    <string name="fragment_broadcast_editing_start_date_not_set">@string/fragment_broadcast_creation_start_date_not_set</string>
+    <string name="fragment_broadcast_editing_start_date_not_set">@string/fragment_stream_creation_start_date_not_set</string>
 
-    <string name="fragment_broadcast_editing_start_time_label">@string/fragment_broadcast_creation_start_time_label</string>
+    <string name="fragment_broadcast_editing_start_time_label">@string/fragment_stream_creation_start_time_label</string>
 
-    <string name="fragment_broadcast_editing_start_time_not_set">@string/fragment_broadcast_creation_start_time_not_set</string>
+    <string name="fragment_broadcast_editing_start_time_not_set">@string/fragment_stream_creation_start_time_not_set</string>
 
-    <string name="fragment_broadcast_editing_preview_image_label">@string/fragment_broadcast_creation_preview_image_label</string>
+    <string name="fragment_broadcast_editing_preview_image_label">@string/fragment_stream_creation_preview_image_label</string>
 
-    <string name="fragment_broadcast_editing_change_preview_text">@string/fragment_broadcast_creation_change_preview_text</string>
+    <string name="fragment_broadcast_editing_change_preview_text">@string/fragment_stream_creation_change_preview_text</string>
 
     <string name="fragment_broadcast_editing_quality_hint">Качество трансляции</string>
 

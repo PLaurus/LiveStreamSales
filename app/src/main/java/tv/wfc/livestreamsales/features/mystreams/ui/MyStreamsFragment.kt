@@ -9,8 +9,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
+import com.jakewharton.rxbinding4.view.clicks
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.kotlin.addTo
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import tv.wfc.livestreamsales.R
+import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.ComputationScheduler
+import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.model.stream.MyStream
+import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.application.ui.base.BaseFragment
 import tv.wfc.livestreamsales.databinding.FragmentMyStreamsBinding
 import tv.wfc.livestreamsales.features.mainappcontent.ui.MainAppContentActivity
@@ -18,6 +25,7 @@ import tv.wfc.livestreamsales.features.mystreams.di.MyStreamsComponent
 import tv.wfc.livestreamsales.features.mystreams.model.NextDestination
 import tv.wfc.livestreamsales.features.mystreams.ui.adapter.MyStreamsAdapter
 import tv.wfc.livestreamsales.features.mystreams.viewmodel.IMyStreamsViewModel
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MyStreamsFragment: BaseFragment(R.layout.fragment_my_streams) {
@@ -26,7 +34,7 @@ class MyStreamsFragment: BaseFragment(R.layout.fragment_my_streams) {
     private val onToolbarBackPressed = object: MainAppContentActivity.ToolbarNavigationOnClickListener{
         override fun onClick() {
             (requireActivity() as MainAppContentActivity).removeToolbarNavigationOnClickListener(this)
-            viewModel.intentToCloseCurrentDestination()
+            viewModel.prepareToCloseCurrentDestination()
         }
     }
 
@@ -42,6 +50,17 @@ class MyStreamsFragment: BaseFragment(R.layout.fragment_my_streams) {
 
     @Inject
     lateinit var imageLoader: ImageLoader
+
+    @Inject
+    @MainThreadScheduler
+    lateinit var mainThreadScheduler: Scheduler
+
+    @Inject
+    @ComputationScheduler
+    lateinit var computationScheduler: Scheduler
+
+    @Inject
+    lateinit var applicationErrorsLogger: IApplicationErrorsLogger
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -100,17 +119,19 @@ class MyStreamsFragment: BaseFragment(R.layout.fragment_my_streams) {
         initializeContentLoader()
         initializeSwipeRefreshLayout()
         initializeMyStreamsRecyclerView()
+        initializeScheduleStreamButton()
     }
 
     private fun manageNavigation() {
         viewModel.nextDestinationEvent.observe(viewLifecycleOwner) { nextDestination ->
             when(nextDestination) {
                 NextDestination.Close -> navigationController.navigateUp()
+                NextDestination.StreamCreation -> navigateToStreamCreationDestination()
             }
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(this){
-            viewModel.intentToCloseCurrentDestination()
+            viewModel.prepareToCloseCurrentDestination()
         }
     }
 
@@ -140,5 +161,22 @@ class MyStreamsFragment: BaseFragment(R.layout.fragment_my_streams) {
 
             viewModel.myStreams.observe(viewLifecycleOwner, myStreamsAdapter::submitList)
         }
+    }
+
+    private fun FragmentMyStreamsBinding.initializeScheduleStreamButton() {
+        scheduleStreamButton
+            .clicks()
+            .throttleLatest(500L, TimeUnit.MILLISECONDS, computationScheduler)
+            .observeOn(mainThreadScheduler)
+            .subscribeBy(
+                onNext = { viewModel.prepareToNavigateToStreamCreationDestination() },
+                onError = applicationErrorsLogger::logError
+            )
+            .addTo(viewScopeDisposables)
+    }
+
+    private fun navigateToStreamCreationDestination() {
+        val action = MyStreamsFragmentDirections.toStreamCreationDestination()
+        navigationController.navigate(action)
     }
 }

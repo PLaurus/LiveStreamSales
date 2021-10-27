@@ -273,8 +273,8 @@
         tools:layout="@layout/fragment_my_streams">
 
         <action
-            android:id="@+id/toBroadcastCreationDestination"
-            app:destination="@id/broadcastCreationDestination"
+            android:id="@+id/toStreamCreationDestination"
+            app:destination="@id/streamCreationDestination"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/stay_as_is"
             app:popEnterAnim="@anim/stay_as_is"
@@ -291,10 +291,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/broadcastCreationDestination"
-        android:name="tv.wfc.livestreamsales.features.broadcast_creation.ui.BroadcastCreationFragment"
-        android:label="@string/fragment_broadcast_creation_destination_title"
-        tools:layout="@layout/fragment_broadcast_creation"/>
+        android:id="@+id/streamCreationDestination"
+        android:name="tv.wfc.livestreamsales.features.streamcreation.ui.StreamCreationFragment"
+        android:label="@string/fragment_stream_creation_destination_title"
+        tools:layout="@layout/fragment_stream_creation"/>
 
     <fragment
         android:id="@+id/broadcastEditingDestination"

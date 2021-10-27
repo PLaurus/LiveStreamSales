@@ -1,4 +1,4 @@
-package tv.wfc.livestreamsales.features.broadcast_creation.view_model
+package tv.wfc.livestreamsales.features.streamcreation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,14 +11,14 @@ import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.base.viewmodel.BaseViewModel
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
-import tv.wfc.livestreamsales.features.broadcast_creation.model.NextDestination
+import tv.wfc.livestreamsales.features.streamcreation.model.NextDestination
 import javax.inject.Inject
 
-class BroadcastCreationViewModel @Inject constructor(
+class StreamCreationViewModel @Inject constructor(
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler,
     private val applicationErrorsLogger: IApplicationErrorsLogger
-): BaseViewModel(), IBroadcastCreationViewModel {
+): BaseViewModel(), IStreamCreationViewModel {
     private val dataPreparationStateSubject = BehaviorSubject.createDefault<ViewModelPreparationState>(ViewModelPreparationState.DataIsNotPrepared)
 
     private val nextDestinationEventSubject = PublishSubject.create<NextDestination>()

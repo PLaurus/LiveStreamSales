@@ -1,4 +1,4 @@
-package tv.wfc.livestreamsales.features.broadcast_creation.ui
+package tv.wfc.livestreamsales.features.streamcreation.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -7,14 +7,14 @@ import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.ui.base.BaseFragment
-import tv.wfc.livestreamsales.databinding.FragmentBroadcastCreationBinding
-import tv.wfc.livestreamsales.features.broadcast_creation.di.BroadcastCreationComponent
-import tv.wfc.livestreamsales.features.broadcast_creation.model.NextDestination
-import tv.wfc.livestreamsales.features.broadcast_creation.view_model.IBroadcastCreationViewModel
+import tv.wfc.livestreamsales.databinding.FragmentStreamCreationBinding
 import tv.wfc.livestreamsales.features.mainappcontent.ui.MainAppContentActivity
+import tv.wfc.livestreamsales.features.streamcreation.di.StreamCreationComponent
+import tv.wfc.livestreamsales.features.streamcreation.model.NextDestination
+import tv.wfc.livestreamsales.features.streamcreation.viewmodel.IStreamCreationViewModel
 import javax.inject.Inject
 
-class BroadcastCreationFragment: BaseFragment(R.layout.fragment_broadcast_creation) {
+class StreamCreationFragment: BaseFragment(R.layout.fragment_stream_creation) {
     private val navigationController by lazy { findNavController() }
 
     private val onToolbarBackPressed = object: MainAppContentActivity.ToolbarNavigationOnClickListener{
@@ -24,12 +24,12 @@ class BroadcastCreationFragment: BaseFragment(R.layout.fragment_broadcast_creati
         }
     }
 
-    private lateinit var dependenciesComponent: BroadcastCreationComponent
+    private lateinit var dependenciesComponent: StreamCreationComponent
 
-    private var viewBinding: FragmentBroadcastCreationBinding? = null
+    private var viewBinding: FragmentStreamCreationBinding? = null
 
     @Inject
-    lateinit var viewModel: IBroadcastCreationViewModel
+    lateinit var viewModel: IStreamCreationViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -64,7 +64,7 @@ class BroadcastCreationFragment: BaseFragment(R.layout.fragment_broadcast_creati
     }
 
     private fun bindView(view: View) {
-        viewBinding = FragmentBroadcastCreationBinding.bind(view)
+        viewBinding = FragmentStreamCreationBinding.bind(view)
     }
 
     private fun unbindView() {

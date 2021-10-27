@@ -24,7 +24,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/scheduleBroadcastButton"
+                app:layout_constraintBottom_toTopOf="@id/scheduleStreamButton"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/list_item_my_stream"
                 tools:orientation="vertical"
@@ -32,12 +32,12 @@
 
             <com.google.android.material.button.MaterialButton
                 style="@style/Theme.LiveStreamSales.BigMaterialButton"
-                android:id="@+id/scheduleBroadcastButton"
+                android:id="@+id/scheduleStreamButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/screenPadding"
                 android:layout_marginBottom="@dimen/screenPadding"
-                android:text="@string/fragment_my_streams_schedule_broadcast_button"
+                android:text="@string/fragment_my_streams_schedule_stream_button"
                 android:textSize="@dimen/textSize_default"
                 android:textAllCaps="false"
                 app:layout_constraintStart_toStartOf="parent"

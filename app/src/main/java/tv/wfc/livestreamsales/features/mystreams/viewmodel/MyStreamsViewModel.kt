@@ -114,8 +114,12 @@ class MyStreamsViewModel @Inject constructor(
             .addTo(disposables)
     }
 
-    override fun intentToCloseCurrentDestination() {
+    override fun prepareToCloseCurrentDestination() {
         nextDestinationSubject.onNext(NextDestination.Close)
+    }
+
+    override fun prepareToNavigateToStreamCreationDestination() {
+        nextDestinationSubject.onNext(NextDestination.StreamCreation)
     }
 
     override fun onCleared() {
