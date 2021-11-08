@@ -1,11 +1,11 @@
 package tv.wfc.livestreamsales.application.di.modules.utils
 
-import tv.wfc.livestreamsales.application.tools.stringresannotation.IStringResAnnotationProcessor
-import tv.wfc.livestreamsales.application.tools.stringresannotation.StringResAnnotationProcessor
+import com.laurus.p.tools.camera.ICameraResolutionsProvider
+import com.laurus.p.tools.camera.camera1.Camera1ResolutionsProvider
 import dagger.Binds
 import dagger.Module
-import tv.wfc.livestreamsales.application.tools.camera.ICameraPreviewSizeReceivingBehavior
-import tv.wfc.livestreamsales.application.tools.camera.camera1.Camera1PreviewSizeReceivingBehavior
+import tv.wfc.livestreamsales.application.tools.stringresannotation.IStringResAnnotationProcessor
+import tv.wfc.livestreamsales.application.tools.stringresannotation.StringResAnnotationProcessor
 
 @Module
 abstract class UtilsModule {
@@ -15,7 +15,7 @@ abstract class UtilsModule {
     ): IStringResAnnotationProcessor
 
     @Binds
-    internal abstract fun bindICameraPreviewSizeReceivingBehavior(
-        behavior: Camera1PreviewSizeReceivingBehavior
-    ): ICameraPreviewSizeReceivingBehavior
+    internal abstract fun bindICameraResolutionsProvider(
+        behavior: Camera1ResolutionsProvider
+    ): ICameraResolutionsProvider
 }

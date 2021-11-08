@@ -16,17 +16,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/contentMarginStartGuideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/screenPadding"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/contentMarginEndGuideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/screenPadding"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/contentMarginTopGuideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="@dimen/screenPadding"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/contentMarginBottomGuideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="@dimen/screenPadding"/>
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/endDateTimeGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:constraint_referenced_ids="endDateButton, endTimeButton"
+                tools:visibility="visible"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/nameTextInputLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/screenPadding"
-                android:layout_marginHorizontal="@dimen/screenPadding"
                 android:hint="@string/fragment_stream_creation_name_hint"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+                app:layout_constraintEnd_toEndOf="@id/contentMarginEndGuideline"
+                app:layout_constraintTop_toTopOf="@id/contentMarginTopGuideline"
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -45,10 +79,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentMargin_default"
-                android:layout_marginHorizontal="@dimen/screenPadding"
                 android:hint="@string/fragment_stream_creation_description_hint"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+                app:layout_constraintEnd_toEndOf="@id/contentMarginEndGuideline"
                 app:layout_constraintTop_toBottomOf="@id/nameTextInputLayout"
                 app:endIconMode="clear_text">
 
@@ -89,8 +122,40 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/startDateButton"
-                app:vbv_label_text="@string/fragment_stream_creation_start_date_label"
-                app:vbv_value_text="@string/fragment_stream_creation_start_date_not_set"
+                app:vbv_label_text="@string/fragment_stream_creation_start_time_label"
+                app:vbv_value_text="@string/fragment_stream_creation_start_time_not_set"
+                app:vbv_label_textSize="@dimen/textSize_default"
+                app:vbv_value_textSize="@dimen/textSize_small"
+                app:vbv_label_textColor="@color/colorPrimaryText"
+                app:vbv_value_textColor="@color/colorSecondaryText"/>
+
+            <tv.wfc.value_button_view.ValueButtonView
+                android:id="@+id/endDateButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/screenPadding"
+                android:paddingVertical="@dimen/contentMargin_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/startTimeButton"
+                app:vbv_label_text="@string/fragment_stream_creation_end_date_label"
+                app:vbv_value_text="@string/fragment_stream_creation_end_date_not_set"
+                app:vbv_label_textSize="@dimen/textSize_default"
+                app:vbv_value_textSize="@dimen/textSize_small"
+                app:vbv_label_textColor="@color/colorPrimaryText"
+                app:vbv_value_textColor="@color/colorSecondaryText"/>
+
+            <tv.wfc.value_button_view.ValueButtonView
+                android:id="@+id/endTimeButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/screenPadding"
+                android:paddingVertical="@dimen/contentMargin_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/endDateButton"
+                app:vbv_label_text="@string/fragment_stream_creation_end_time_label"
+                app:vbv_value_text="@string/fragment_stream_creation_end_time_not_set"
                 app:vbv_label_textSize="@dimen/textSize_default"
                 app:vbv_value_textSize="@dimen/textSize_small"
                 app:vbv_label_textColor="@color/colorPrimaryText"
@@ -98,23 +163,25 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/previewImageLabel"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/screenPadding"
                 android:layout_marginTop="@dimen/contentMargin_small"
                 android:text="@string/fragment_stream_creation_preview_image_label"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/startTimeButton"/>
+                app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+                app:layout_constraintEnd_toEndOf="@id/contentMarginEndGuideline"
+                app:layout_constraintTop_toBottomOf="@id/endTimeButton"/>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/previewCard"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="200dp"
-                android:layout_marginHorizontal="@dimen/screenPadding"
                 android:layout_marginTop="@dimen/contentMargin_default"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+                app:layout_constraintEnd_toEndOf="@id/contentMarginEndGuideline"
                 app:layout_constraintTop_toBottomOf="@id/previewImageLabel"
                 app:cardCornerRadius="@dimen/card_cornerRadius"
                 app:cardElevation="@dimen/card_elevation"
@@ -129,8 +196,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/ic_baseline_image_24"
-                        tools:tint="@color/broadcastCreationFragment_previewImage_placeholder_tint"/>
+                        tools:tint="@color/broadcastCreationFragment_previewImage_placeholder_tint"
+                        tools:srcCompat="@drawable/ic_baseline_image_24" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/changePreviewText"
@@ -154,16 +221,27 @@
             <com.google.android.material.button.MaterialButton
                 style="@style/Theme.LiveStreamSales.BigMaterialButton"
                 android:id="@+id/createButton"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/screenPadding"
                 android:layout_marginTop="@dimen/contentMargin_default"
-                android:layout_marginBottom="@dimen/screenPadding"
                 android:text="@string/fragment_stream_creation_create_button"
                 android:textAllCaps="false"
                 android:textSize="@dimen/textSize_default"
-                app:layout_constraintTop_toBottomOf="@id/previewCard"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+                app:layout_constraintEnd_toEndOf="@id/contentMarginEndGuideline"
+                app:layout_constraintTop_toBottomOf="@id/previewCard"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fieldsAreRequiredText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_stream_creation_fields_are_required_text"
+                android:textColor="@color/colorSecondaryText"
+                android:gravity="end"
+                app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+                app:layout_constraintEnd_toEndOf="@+id/contentMarginEndGuideline"
+                app:layout_constraintTop_toBottomOf="@+id/createButton"
+                app:layout_constraintBottom_toBottomOf="@id/contentMarginBottomGuideline"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

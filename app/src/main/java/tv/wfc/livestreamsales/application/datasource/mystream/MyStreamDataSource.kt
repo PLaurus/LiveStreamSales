@@ -2,12 +2,12 @@ package tv.wfc.livestreamsales.application.datasource.mystream
 
 import android.content.Context
 import android.net.Uri
-import com.laurus.p.tools.uri.toMultipartBodyPart
+import com.laurus.p.tools.okhttp3.toMultipartBodyPart
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import okhttp3.MultipartBody
 import org.joda.time.DateTime
-import tv.wfc.livestreamsales.application.base.entity.entitymapper.IEntityMapper
+import tv.wfc.core.entity.IEntityMapper
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
 import tv.wfc.livestreamsales.application.model.exception.storage.ReceivedDataWithWrongFormatException
 import tv.wfc.livestreamsales.application.model.stream.MyStream

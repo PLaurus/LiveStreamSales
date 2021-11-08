@@ -1,8 +1,11 @@
 package tv.wfc.livestreamsales.application.di.modules.entitymapper
 
+import android.hardware.Camera
+import com.laurus.p.tools.camera.model.Resolution
+import com.laurus.p.tools.camera.model.mapper.Camera1SizeToResolutionMapper
 import dagger.Binds
 import dagger.Module
-import tv.wfc.livestreamsales.application.base.entity.entitymapper.IEntityMapper
+import tv.wfc.core.entity.IEntityMapper
 import tv.wfc.livestreamsales.application.model.stream.MyStream
 import tv.wfc.livestreamsales.application.model.stream.mapper.*
 import tv.wfc.livestreamsales.application.model.streamchatmessage.StreamChatMessage
@@ -90,4 +93,9 @@ interface EntityMapperModule {
     fun bindMyStreamDtoToStreamingServiceAuthenticationDataMapper(
         mapper: MyStreamDtoToStreamingServiceAuthenticationDataMapper
     ): IEntityMapper<MyStreamDto, StreamingService.AuthenticationData>
+
+    @Binds
+    fun bindCamera1SizeToResolutionMapper(
+        mapper: Camera1SizeToResolutionMapper
+    ): IEntityMapper<Camera.Size, Resolution>
 }

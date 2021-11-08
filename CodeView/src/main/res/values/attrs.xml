@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <declare-styleable name="BoxDividedEditText">
+        <attr name="squareBoxes" format="boolean" />
+        <attr name="numberOfBoxes" format="integer" />
+        <attr name="gapBetweenBoxes" format="dimension" />
+        <attr name="boxBackgroundColor" format="color" />
+        <attr name="filledBoxBorderColor" format="color" />
+        <attr name="emptyBoxBorderColor" format="color" />
+        <attr name="boxBorderWidth" format="dimension" />
+        <attr name="emptyBoxHint" format="string" />
+        <attr name="boxCornerRadius" format="dimension" />
+        <attr name="android:textColorHint" />
+        <attr name="android:textSize" />
+    </declare-styleable>
+</resources>

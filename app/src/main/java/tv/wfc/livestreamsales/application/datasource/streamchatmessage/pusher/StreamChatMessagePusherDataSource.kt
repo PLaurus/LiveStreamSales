@@ -2,7 +2,7 @@ package tv.wfc.livestreamsales.application.datasource.streamchatmessage.pusher
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
-import tv.wfc.livestreamsales.application.base.entity.entitymapper.IEntityMapper
+import tv.wfc.core.entity.IEntityMapper
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
 import tv.wfc.livestreamsales.application.model.exception.storage.ReceivedDataWithWrongFormatException
 import tv.wfc.livestreamsales.application.model.streamchatmessage.StreamChatMessage

@@ -1,4 +1,4 @@
-package tv.wfc.livestreamsales.application.base.entity.entitymapper
+package tv.wfc.core.entity
 
 interface IEntityMapper<FromT, ToT> {
     /**

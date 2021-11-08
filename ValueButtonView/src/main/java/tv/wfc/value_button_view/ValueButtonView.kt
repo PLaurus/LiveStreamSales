@@ -464,7 +464,7 @@ class ValueButtonView @JvmOverloads constructor(
         val selectableItemBackgroundTypedValue = TypedValue()
 
         val isAttributeFound = context.theme.resolveAttribute(
-            android.R.attr.selectableItemBackgroundBorderless,
+            android.R.attr.selectableItemBackground,
             selectableItemBackgroundTypedValue,
             true
         )

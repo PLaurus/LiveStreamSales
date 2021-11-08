@@ -371,7 +371,7 @@ class OrderEditingFragment: BaseFragment(R.layout.fragment_order_editing){
             )
             .build()
 
-        datePicker.apply{
+        datePicker.apply {
             addOnPositiveButtonClickListener { selectedDateInMillis ->
                 viewModel.updateDeliveryDate(selectedDateInMillis)
                 viewModel.intentToNavigateToDeliveryTimePicker()

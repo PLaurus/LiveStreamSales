@@ -1,9 +1,9 @@
 package tv.wfc.livestreamsales.features.liveBroadcastingSettingsDestination.viewmodel
 
 import androidx.lifecycle.LiveData
+import com.laurus.p.tools.camera.model.Resolution
 import com.laurus.p.tools.livedata.LiveEvent
 import tv.wfc.contentloader.viewmodel.INeedPreparationViewModel
-import tv.wfc.livestreamsales.application.tools.camera.model.CameraSize
 import tv.wfc.livestreamsales.features.liveBroadcastingSettingsDestination.model.error.*
 import tv.wfc.livestreamsales.features.liveBroadcastingSettingsDestination.model.navigation.NextDestination
 
@@ -21,7 +21,7 @@ interface ILiveBroadcastingSettingsViewModel: INeedPreparationViewModel {
     val sourceUserNameError: LiveData<SourceUserNameError?>
     val sourcePassword: LiveData<String>
     val sourcePasswordError: LiveData<SourcePasswordError?>
-    val videoResolutions: LiveData<List<CameraSize>>
+    val videoResolutions: LiveData<List<Resolution>>
     val videoResolutionPosition: LiveData<Int>
     val videoBitrate: LiveData<Int?>
     val videoBitrateError: LiveData<VideoBitrateError?>

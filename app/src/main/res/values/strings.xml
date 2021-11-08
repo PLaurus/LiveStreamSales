@@ -1,57 +1,79 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Application -->
+
     <string name="app_name">LiveStreamSales</string>
 
     <!-- Menu exit -->
+
     <string name="menu_exit_exit_button_title">Закрыть</string>
 
     <!-- Product Specifications -->
+
     <string name="product_specification_name_color">Цвет</string>
 
     <!-- Generic player strings-->
+
     <string name="player_error_generic">Воспроизведение не удалось</string>
+
     <string name="player_error_querying_decoders">Невозможно запросить декодеры устройства</string>
+
     <string name="player_error_no_secure_decoder">
         Это устройство не обеспечивает безопасный декодер для <xliff:g id="mime_type">%1$s</xliff:g>
     </string>
+
     <string name="player_error_no_decoder">
         Это устройство не предоставляет декодер для <xliff:g id="mime_type">%1$s</xliff:g>
     </string>
+
     <string name="player_error_instantiating_decoder">
         Не удается создать экземпляр декодера <xliff:g id="decoder_name">%1$s</xliff:g>
     </string>
 
     <!-- Empty fragment -->
+
     <string name="empty_fragment_text">Скоро…</string>
 
     <!-- Greeting fragment -->
+
     <string name="greeting_fragment_title">Добро пожаловать</string>
+
     <string name="greeting_fragment_next_button">Далее</string>
+
     <string name="greeting_fragment_start_button">Начать</string>
+
     <string name="greeting_fragment_skip_button">Пропустить</string>
 
     <!-- Greeting fragment page 1 -->
+
     <string name="greeting_fragment_page1_title">Добро пожаловать!</string>
+
     <string name="greeting_fragment_page1_description">@string/template_text</string>
 
     <!-- Greeting fragment page 2 -->
+
     <string name="greeting_fragment_page2_title">Смотри и покупай!</string>
+
     <string name="greeting_fragment_page2_description">
         Смотри прямые эфиры, в которых блоггеры будут показывать товары с уникальной ценой.
         Совершай покупки не отключаясь от эфира
     </string>
 
     <!-- Greeting fragment page 3 -->
+
     <string name="greeting_fragment_page3_title">Регистрируй карту!</string>
+
     <string name="greeting_fragment_page3_description">
         Регистрируй банковскую карту, чтобы совершать покупки не прерывая прямой эфир
     </string>
 
     <!-- Greeting fragment page 4 -->
+
     <string name="greeting_fragment_page4_title">Покупай с выгодой!</string>
+
     <string name="greeting_fragment_page4_description">@string/template_text</string>
 
     <!-- Template text -->
+
     <string name="template_text">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
@@ -60,89 +82,139 @@
     </string>
 
     <!-- Home fragment -->
+
     <string name="fragment_home_destination_title">@string/app_name</string>
+
     <string name="fragment_home_main_page_button">Главная</string>
+
     <string name="fragment_home_notifications_button">Напоминания</string>
+
     <string name="fragment_home_my_orders_button">Мои заказы</string>
+
     <string name="fragment_home_profile_button">Профиль</string>
 
     <!-- Home fragment -->
+
     <string name="fragment_home_live">● Прямой эфир</string>
+
     <string name="fragment_home_announcement">Анонс</string>
+
     <string name="fragment_home_coming_soon">Скоро в эфире</string>
+
     <string name="fragment_home_promo_banner_text">Привяжи карту и получи бонус!</string>
 
     <!-- Live broadcasts fragment -->
+
     <string name="fragment_live_broadcasts_title">Прямая трансляция</string>
 
     <!-- Product order dialog -->
+
     <string name="dialog_product_order_title">Заказ</string>
+
     <string name="dialog_product_order_specifications_title">Характеристики:</string>
+
     <string name="dialog_product_order_products_amount">Количество</string>
+
     <string name="dialog_product_order_product_color">Цвет</string>
+
     <string name="dialog_product_order_add_to_cart">Добавить</string>
+
     <string name="dialog_product_order_buy">Купить</string>
+
     <string name="dialog_product_order_sum">Итого:</string>
+
     <string name="dialog_product_order_price">%s руб.</string>
 
     <!-- Products are ordered dialog -->
+
     <string name="dialog_products_are_ordered_destination_title">Благодарим за покупку</string>
+
     <string name="dialog_products_are_ordered_title">Благодарим за покупку!</string>
+
     <string name="dialog_products_are_ordered_description">
         Заказ был успешно оформлен.
         Выберите дату и время доставки в разделе \"Мои заказы\"
     </string>
+
     <string name="dialog_products_are_ordered_confirm_button">Понятно</string>
 
     <!-- Need payment information dialog -->
+
     <string name="dialog_need_payment_information_destination_title">Привяжите карту</string>
+
     <string name="dialog_need_payment_information_title">Привяжите карту!</string>
-    <string name="dialog_need_payment_information_description">Чтобы продолжить, необходимо привязать карту</string>
+
+    <string name="dialog_need_payment_information_description">
+        Чтобы продолжить, необходимо привязать карту
+    </string>
+
     <string name="dialog_need_payment_information_confirm_button">Продолжить</string>
 
     <!-- Order is confirmed dialog -->
+
     <string name="dialog_order_is_confirmed_destination_title">Заказ подтверждён</string>
+
     <string name="dialog_order_is_confirmed_title_text">Заказ подтверждён</string>
+
     <string name="dialog_order_is_confirmed_ok_button">Ок</string>
 
     <!-- Phone number input fragment -->
+
     <string name="fragment_phone_number_input_title">Вход</string>
-    <string name="fragment_phone_number_input_enter_phone_number">Введите ваш номер телефона</string>
+
+    <string name="fragment_phone_number_input_enter_phone_number">
+        Введите ваш номер телефона
+    </string>
+
     <string name="fragment_phone_number_input_phone_number_hint">Номер телефона</string>
+
     <string name="fragment_phone_number_input_phone_number_prefix">+7 </string>
+
     <string name="fragment_phone_number_input_send_code_button">Отправить код</string>
+
     <string name="fragment_phone_number_input_new_code_message">
         Получить новый код можно через %s
     </string>
+
     <string name="fragment_phone_number_input_new_code_message_tools">
         Получить новый код можно через
         <font color="#FF0000">00:47</font>
     </string>
+
     <string name="activity_authorization_code_request_error">
         Не удалось запросить код подтверждения
     </string>
 
     <!-- Phone number confirmation fragment -->
+
     <string name="fragment_phone_number_confirmation_title">Подтверждение</string>
+
     <string name="fragment_phone_number_confirmation_enter_code">Введите код</string>
+
     <string name="fragment_phone_number_confirmation_code_is_sent">
         Мы отправили код на номер %s
     </string>
+
     <string name="fragment_phone_number_confirmation_code_is_sent_tools">
         Мы отправили код на номер
         <font color="#FF0000">+ 7 (999) 999 99 99</font>
     </string>
+
     <string name="fragment_phone_number_confirmation_new_code_message">
         Получить новый код можно через %s
     </string>
+
     <string name="fragment_phone_number_confirmation_new_code_message_tools">
         Получить новый код можно через
         <font color="#FF0000">00:47</font>
     </string>
+
     <string name="fragment_phone_number_confirmation_request_code">Получить новый код</string>
+
     <string name="fragment_phone_number_confirmation_terms_of_the_offer_text">
         Я ознакомлен, согласен и принимаю <annotation tag="">условия оферты</annotation>
     </string>
+
     <string name="fragment_phone_number_confirmation_terms_of_the_offer_text_tools">
         Я ознакомлен, согласен и принимаю
         <font color="#FF0000">
@@ -151,225 +223,571 @@
     </string>
 
     <!-- Registration. User personal information fragment -->
+
     <string name="fragment_registration_user_personal_information_title">Личные данные</string>
-    <string name="fragment_registration_user_personal_information_continue_button">Продолжить</string>
-    <string name="fragment_registration_user_personal_information_field_is_required">Обязательное поле</string>
-    <string name="fragment_registration_user_personal_information_field_contains_illegal_symbols">Поле содержит недопустимые символы</string>
-    <string name="fragment_registration_user_personal_information_field_starts_with_whitespace">@string/fragment_profile_field_starts_with_whitespace</string>
-    <string name="fragment_registration_user_personal_information_field_ends_with_whitespace">@string/fragment_profile_field_ends_with_whitespace</string>
-    <string name="fragment_registration_user_personal_information_field_repetitive_whitespaces">@string/fragment_profile_field_repetitive_whitespaces</string>
-    <string name="fragment_registration_user_personal_information_field_length_is_too_short">Минимальная длина поля %d</string>
-    <string name="fragment_registration_user_personal_information_field_length_is_too_long">Максимальная длина поля %d</string>
-    <string name="fragment_registration_user_personal_information_email_has_wrong_format">Недопустимый формат почты</string>
+
+    <string name="fragment_registration_user_personal_information_continue_button">
+        Продолжить
+    </string>
+
+    <string name="fragment_registration_user_personal_information_field_is_required">
+        Обязательное поле
+    </string>
+
+    <string name="fragment_registration_user_personal_information_field_contains_illegal_symbols">
+        Поле содержит недопустимые символы
+    </string>
+
+    <string name="fragment_registration_user_personal_information_field_starts_with_whitespace">
+        @string/fragment_profile_field_starts_with_whitespace
+    </string>
+
+    <string name="fragment_registration_user_personal_information_field_ends_with_whitespace">
+        @string/fragment_profile_field_ends_with_whitespace
+    </string>
+
+    <string name="fragment_registration_user_personal_information_field_repetitive_whitespaces">
+        @string/fragment_profile_field_repetitive_whitespaces
+    </string>
+
+    <string name="fragment_registration_user_personal_information_field_length_is_too_short">
+        Минимальная длина поля %d
+    </string>
+
+    <string name="fragment_registration_user_personal_information_field_length_is_too_long">
+        Максимальная длина поля %d
+    </string>
+
+    <string name="fragment_registration_user_personal_information_email_has_wrong_format">
+        Недопустимый формат почты
+    </string>
 
     <!-- Payment card information fragment-->
+
     <string name="fragment_payment_card_information_destination_title">Привязка карты</string>
+
     <string name="fragment_payment_card_information_description">
         Привяжите свою карту, чтобы делать заказ не отрываясь от прямого эфира
     </string>
+
     <string name="fragment_payment_card_information_title_text">Привязанная карта:</string>
+
     <string name="fragment_payment_card_information_number_text">•••• •••• •••• %s</string>
-    <string name="fragment_payment_card_information_card_will_be_bound_soon">Карта скоро будет привязана</string>
+
+    <string name="fragment_payment_card_information_card_will_be_bound_soon">
+        Карта скоро будет привязана
+    </string>
+
     <string name="fragment_payment_card_information_link_card_button">Привязать карту</string>
-    <string name="fragment_payment_card_information_link_another_card_button">Привязать другую карту</string>
+
+    <string name="fragment_payment_card_information_link_another_card_button">
+        Привязать другую карту
+    </string>
+
     <string name="fragment_payment_card_information_skip_button">Привязать позже</string>
-    <string name="fragment_payment_card_information_yookassa_card_binding_title">Привязка карты</string>
-    <string name="fragment_payment_card_information_yookassa_card_binding_subtitle">Списание 1 руб. для привязки карты</string>
-    <string name="fragment_payment_card_information_binding_default_error">Не удалось привязать карту</string>
-    <string name="fragment_payment_card_information_binding_3ds_canceled_error">Подтверждение карты было отменено</string>
-    <string name="fragment_payment_card_information_binding_3ds_unknown_error">Не удалось подтвердить привязку карты</string>
-    <string name="fragment_payment_card_information_binding_3ds_host_lookup_error">Ошибка поиска имени хоста сервера или прокси-сервера</string>
-    <string name="fragment_payment_card_information_binding_3ds_unsupported_auth_scheme_error">Схема авторизации не поддерживается</string>
-    <string name="fragment_payment_card_information_binding_3ds_authentication_error">3ds не удалось авторизовать пользователся на сервере</string>
-    <string name="fragment_payment_card_information_binding_3ds_proxy_authentication_error">3ds не удалось авторизовать пользователся на прокси-сервере</string>
-    <string name="fragment_payment_card_information_binding_3ds_connect_error">3ds не удалось подключиться к серверу</string>
-    <string name="fragment_payment_card_information_binding_3ds_io_error">3ds не удалось отправить или получить данные с сервера</string>
-    <string name="fragment_payment_card_information_binding_3ds_timeout_error">Время подключения истекло</string>
-    <string name="fragment_payment_card_information_binding_3ds_redirect_loop_error">Ошибка. Слишком много перенаправлений</string>
-    <string name="fragment_payment_card_information_binding_3ds_unsupported_scheme_error">Ошибка. Схема URI не поддерживается</string>
-    <string name="fragment_payment_card_information_binding_3ds_failed_ssl_handshake_error">3ds не удалось установить безопасное соединение</string>
-    <string name="fragment_payment_card_information_binding_3ds_bad_url_error">3ds получил некорректную ссылку подтверждения</string>
-    <string name="fragment_payment_card_information_binding_3ds_file_error">Не удалось обработать файл</string>
-    <string name="fragment_payment_card_information_binding_3ds_file_not_found_error">Файл не найден</string>
-    <string name="fragment_payment_card_information_binding_3ds_too_many_requests_error">Слишком много запросов во время загрузки</string>
-    <string name="fragment_payment_card_information_binding_3ds_unsafe_resource_error">Загрузка ресурса была отменена в целях безопасности</string>
-    <string name="fragment_payment_card_information_binding_3ds_not_http_url_error">Ошибка. Небезопасный протокол передачи данных</string>
+
+    <string name="fragment_payment_card_information_yookassa_card_binding_title">
+        Привязка карты
+    </string>
+
+    <string name="fragment_payment_card_information_yookassa_card_binding_subtitle">
+        Списание 1 руб. для привязки карты
+    </string>
+
+    <string name="fragment_payment_card_information_binding_default_error">
+        Не удалось привязать карту
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_canceled_error">
+        Подтверждение карты было отменено
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_unknown_error">
+        Не удалось подтвердить привязку карты
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_host_lookup_error">
+        Ошибка поиска имени хоста сервера или прокси-сервера
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_unsupported_auth_scheme_error">
+        Схема авторизации не поддерживается
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_authentication_error">
+        3ds не удалось авторизовать пользователся на сервере
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_proxy_authentication_error">
+        3ds не удалось авторизовать пользователся на прокси-сервере
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_connect_error">
+        3ds не удалось подключиться к серверу
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_io_error">
+        3ds не удалось отправить или получить данные с сервера
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_timeout_error">
+        Время подключения истекло
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_redirect_loop_error">
+        Ошибка. Слишком много перенаправлений
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_unsupported_scheme_error">
+        Ошибка. Схема URI не поддерживается
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_failed_ssl_handshake_error">
+        3ds не удалось установить безопасное соединение
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_bad_url_error">
+        3ds получил некорректную ссылку подтверждения
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_file_error">
+        Не удалось обработать файл
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_file_not_found_error">
+        Файл не найден
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_too_many_requests_error">
+        Слишком много запросов во время загрузки
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_unsafe_resource_error">
+        Загрузка ресурса была отменена в целях безопасности
+    </string>
+
+    <string name="fragment_payment_card_information_binding_3ds_not_http_url_error">
+        Ошибка. Небезопасный протокол передачи данных
+    </string>
 
     <!-- Profile fragment -->
+
     <string name="fragment_profile_destination_title">Профиль</string>
+
     <string name="fragment_profile_user_personal_information_title">1. Личные данные</string>
+
     <string name="fragment_profile_name_input_hint">Имя</string>
+
     <string name="fragment_profile_surname_input_hint">Фамилия</string>
+
     <string name="fragment_profile_phone_number_hint">Номер телефона</string>
+
     <string name="fragment_profile_email_hint">E-mail</string>
+
     <string name="fragment_profile_update_user_personal_information_button">Сохранить</string>
-    <string name="fragment_profile_user_personal_information_is_saved">Данные пользователя изменены</string>
+
+    <string name="fragment_profile_user_personal_information_is_saved">
+        Данные пользователя изменены
+    </string>
+
     <string name="fragment_profile_field_is_required">Обязательное поле</string>
-    <string name="fragment_profile_field_contains_illegal_symbols">Поле содержит недопустимые символы</string>
+
+    <string name="fragment_profile_field_contains_illegal_symbols">
+        Поле содержит недопустимые символы
+    </string>
+
     <string name="fragment_profile_field_starts_with_whitespace">Поле начинается с пробела</string>
+
     <string name="fragment_profile_field_ends_with_whitespace">Поле заканчивается на пробел</string>
+
     <string name="fragment_profile_field_repetitive_whitespaces">Повторяющиеся пробелы</string>
+
     <string name="fragment_profile_field_length_is_too_short">Минимальная длина поля %d</string>
+
     <string name="fragment_profile_field_length_is_too_long">Максимальная длина поля %d</string>
+
     <string name="fragment_profile_email_has_wrong_format">Недопустимый формат почты</string>
+
     <string name="fragment_profile_payment_information_title">2. Способ оплаты</string>
-    <string name="fragment_profile_change_payment_information_button">Изменить способ оплаты</string>
+
+    <string name="fragment_profile_change_payment_information_button">
+        Изменить способ оплаты
+    </string>
+
     <string name="fragment_profile_broadcasting_title">3. Трансляция</string>
+
     <string name="fragment_profile_my_broadcasts_button">Мои трансляции</string>
-    <string name="fragment_profile_camera_and_audio_record_permissions_are_required_to_begin_live_broadcasting">Чтобы начать трансляцию необходим доступ к камере и микрофону</string>
+
+    <string name="fragment_profile_camera_and_audio_record_permissions_are_required_to_begin_live_broadcasting">
+        Чтобы начать трансляцию необходим доступ к камере и микрофону
+    </string>
+
     <string name="fragment_profile_permissions_settings_button">Настройки</string>
+
     <string name="fragment_profile_log_out_button">Выйти</string>
 
     <!-- User personal information fragment -->
+
     <string name="fragment_user_personal_information_name_input_hint">Имя</string>
+
     <string name="fragment_user_personal_information_surname_input_hint">Фамилия</string>
+
     <string name="fragment_user_personal_information_phone_number_hint">Номер телефона</string>
+
     <string name="fragment_user_personal_information_email_hint">E-mail</string>
-    <string name="fragment_user_personal_information_save_user_information_button">Сохранить</string>
+
+    <string name="fragment_user_personal_information_save_user_information_button">
+        Сохранить
+    </string>
 
     <!-- Payment card editing fragment -->
+
     <string name="fragment_payment_card_editing_purpose_description">
         Привяжите свою карту, чтобы делать заказ не отрываясь от прямого эфира
     </string>
+
     <string name="fragment_payment_card_editing_card_number_hint">Номер карты</string>
+
     <string name="fragment_payment_card_editing_card_holder_name_hint">Имя владельца карты</string>
+
     <string name="fragment_payment_card_editing_valid_through_hint">Срок действия</string>
+
     <string name="fragment_payment_card_editing_cvc_hint">Код безопасности</string>
+
     <string name="fragment_payment_card_editing_confirm_button">Подтвердить карту</string>
 
     <!-- Payment card fragment -->
+
     <string name="fragment_payment_card_replace_card">Заменить карту</string>
 
     <!-- Card confirmation fragment -->
+
     <string name="fragment_card_confirmation_title">Подтверждение карты</string>
 
     <!-- Main page fragment -->
+
     <string name="main_page_title">Главная</string>
+
     <string name="main_page_no_live_broadcasts">Пока нет доступных трансляций</string>
+
     <string name="main_page_no_announcements">Ничего не запланировано</string>
 
     <!-- Item live broadcast page -->
+
     <string name="item_live_broadcast_page_time">в %s</string>
 
     <!-- Notifications fragment -->
+
     <string name="fragment_notifications_title">Напоминания</string>
 
     <!-- My orders fragment -->
+
     <string name="fragment_my_orders_destination_title">Мои заказы</string>
+
     <string name="fragment_my_orders_order_number_text">№%s</string>
+
     <string name="fragment_my_orders_creation_date_title_text">дата заказа</string>
+
     <string name="fragment_my_orders_delivery_date_title_text">дата доставки</string>
+
     <string name="fragment_my_orders_order_status_created">новый без данных</string>
+
     <string name="fragment_my_orders_order_status_paid">оформлен</string>
+
     <string name="fragment_my_orders_order_status_waiting">ждет обработки</string>
+
     <string name="fragment_my_orders_order_status_done">завершен</string>
-    <string name="fragment_my_orders_short_order_information_text">Краткая информация о заказе</string>
-    <string name="fragment_my_orders_short_order_information_delivery_address">г. %s, ул. %s, д. %s, кв. %s, этаж %s</string>
-    <string name="fragment_my_orders_short_order_information_delivery_address_not_entered">не указан</string>
+
+    <string name="fragment_my_orders_short_order_information_text">
+        Краткая информация о заказе
+    </string>
+
+    <string name="fragment_my_orders_short_order_information_delivery_address">
+        г. %s, ул. %s, д. %s, кв. %s, этаж %s
+    </string>
+
+    <string name="fragment_my_orders_short_order_information_delivery_address_not_entered">
+        не указан
+    </string>
+
     <string name="fragment_my_orders_sum_title_text">Сумма</string>
+
     <string name="fragment_my_orders_sum_text">%s руб.</string>
+
     <string name="fragment_my_orders_complete_the_order_button">Завершить оформление заказа</string>
+
     <string name="fragment_my_orders_show_more_information_about_order_button">Подробнее</string>
 
     <!-- Order information fragment -->
+
     <string name="fragment_order_information_destination_title">Информация о заказе</string>
+
     <string name="fragment_order_information_order_number_toolbar_title">№%s</string>
-    <string name="fragment_order_information_order_status_created">@string/fragment_my_orders_order_status_created</string>
-    <string name="fragment_order_information_order_status_paid">@string/fragment_my_orders_order_status_paid</string>
-    <string name="fragment_order_information_order_status_waiting">@string/fragment_my_orders_order_status_waiting</string>
-    <string name="fragment_order_information_order_status_done">@string/fragment_my_orders_order_status_done</string>
-    <string name="fragment_order_information_creation_date_title_text">@string/fragment_my_orders_creation_date_title_text</string>
-    <string name="fragment_order_information_delivery_date_title_text">@string/fragment_my_orders_delivery_date_title_text</string>
+
+    <string name="fragment_order_information_order_status_created">
+        @string/fragment_my_orders_order_status_created
+    </string>
+
+    <string name="fragment_order_information_order_status_paid">
+        @string/fragment_my_orders_order_status_paid
+    </string>
+
+    <string name="fragment_order_information_order_status_waiting">
+        @string/fragment_my_orders_order_status_waiting
+    </string>
+
+    <string name="fragment_order_information_order_status_done">
+        @string/fragment_my_orders_order_status_done
+    </string>
+
+    <string name="fragment_order_information_creation_date_title_text">
+        @string/fragment_my_orders_creation_date_title_text
+    </string>
+
+    <string name="fragment_order_information_delivery_date_title_text">
+        @string/fragment_my_orders_delivery_date_title_text
+    </string>
+
     <string name="fragment_order_information_order_information_text">Информация о заказе</string>
+
     <string name="fragment_order_information_delivery_address_title_text">Адрес доставки</string>
-    <string name="fragment_order_information_delivery_address_text">г. %s, ул. %s, д. %s, кв. %s, этаж %s</string>
+
+    <string name="fragment_order_information_delivery_address_text">
+        г. %s, ул. %s, д. %s, кв. %s, этаж %s
+    </string>
+
     <string name="fragment_order_information_delivery_address_not_entered">не указан</string>
-    <string name="fragment_order_information_full_delivery_date_title_text">Плановая дата доставки</string>
+
+    <string name="fragment_order_information_full_delivery_date_title_text">
+        Плановая дата доставки
+    </string>
+
     <string name="fragment_order_information_order_recipient_title_text">Получатель</string>
+
     <string name="fragment_order_information_sum_title_text">Сумма заказа</string>
+
     <string name="fragment_order_information_sum_text">%s руб.</string>
+
     <string name="fragment_order_information_ordered_products_title_text">Состав заказа</string>
 
     <!-- Order editing fragment -->
+
     <string name="fragment_order_editing_destination_title">Подтверждение заказа</string>
+
     <string name="fragment_order_editing_order_number_toolbar_title">№%s</string>
-    <string name="fragment_order_editing_order_status_created">@string/fragment_my_orders_order_status_created</string>
-    <string name="fragment_order_editing_order_status_paid">@string/fragment_my_orders_order_status_paid</string>
-    <string name="fragment_order_editing_order_status_waiting">@string/fragment_my_orders_order_status_waiting</string>
-    <string name="fragment_order_editing_order_status_done">@string/fragment_my_orders_order_status_done</string>
+
+    <string name="fragment_order_editing_order_status_created">
+        @string/fragment_my_orders_order_status_created
+    </string>
+
+    <string name="fragment_order_editing_order_status_paid">
+        @string/fragment_my_orders_order_status_paid
+    </string>
+
+    <string name="fragment_order_editing_order_status_waiting">
+        @string/fragment_my_orders_order_status_waiting
+    </string>
+
+    <string name="fragment_order_editing_order_status_done">
+        @string/fragment_my_orders_order_status_done
+    </string>
+
     <string name="fragment_order_editing_delivery_address_title_text">Адрес доставки</string>
-    <string name="fragment_order_editing_delivery_address_text_not_entered">необходимо указать</string>
+
+    <string name="fragment_order_editing_delivery_address_text_not_entered">
+        необходимо указать
+    </string>
+
     <string name="fragment_order_editing_delivery_address_text_floor_not_entered">не указан</string>
+
     <string name="fragment_order_editing_delivery_address_text_flat_not_entered">не указана</string>
-    <string name="fragment_order_editing_delivery_address_text_entered">г. %s, ул. %s, д. %s, кв. %s, этаж %s</string>
+
+    <string name="fragment_order_editing_delivery_address_text_entered">
+        г. %s, ул. %s, д. %s, кв. %s, этаж %s
+    </string>
+
     <string name="fragment_order_editing_delivery_date_title_text">Дата доставки</string>
+
     <string name="fragment_order_editing_delivery_time_title_text">Время доставки</string>
+
     <string name="fragment_order_editing_delivery_date_text_not_entered">не указана</string>
+
     <string name="fragment_order_editing_order_recipient_title_text">Получатель</string>
-    <string name="fragment_order_editing_order_recipient_text_not_entered">необходимо указать</string>
+
+    <string name="fragment_order_editing_order_recipient_text_not_entered">
+        необходимо указать
+    </string>
+
     <string name="fragment_order_editing_your_order_title_text">Ваш заказ</string>
+
     <string name="fragment_order_editing_sum_title_text">Сумма заказа</string>
+
     <string name="fragment_order_editing_sum_text">%s руб.</string>
+
     <string name="fragment_order_editing_confirm_order_button">Подтвердить заказ</string>
-    <string name="fragment_order_editing_error_failed_to_confirm_order">Не удалось подтвердить заказ</string>
+
+    <string name="fragment_order_editing_error_failed_to_confirm_order">
+        Не удалось подтвердить заказ
+    </string>
 
     <!-- Order delivery address editing fragment -->
+
     <string name="fragment_order_delivery_address_editing_destination_title">Адрес доставки</string>
+
     <string name="fragment_order_delivery_address_editing_address_title_text">Адрес</string>
+
     <string name="fragment_order_delivery_address_editing_city_hint">Город</string>
+
     <string name="fragment_order_delivery_address_editing_street_hint">Улица</string>
+
     <string name="fragment_order_delivery_address_editing_building_hint">Дом</string>
+
     <string name="fragment_order_delivery_address_editing_flat_hint">Квартира</string>
+
     <string name="fragment_order_delivery_address_editing_floor_hint">Этаж</string>
-    <string name="fragment_order_delivery_address_editing_field_is_required">Обязательное поле</string>
-    <string name="fragment_order_delivery_address_editing_field_contains_illegal_symbols">Поле содержит недопустимые символы</string>
+
+    <string name="fragment_order_delivery_address_editing_field_is_required">
+        Обязательное поле
+    </string>
+
+    <string name="fragment_order_delivery_address_editing_field_contains_illegal_symbols">
+        Поле содержит недопустимые символы
+    </string>
+
     <string name="fragment_order_delivery_address_editing_save_address_button">Сохранить</string>
 
     <!-- Live broadcast fragment -->
+
     <string name="fragment_live_broadcast_viewers_count">%d онлайн</string>
+
     <string name="fragment_live_broadcast_timer_title">до конца эфира</string>
+
     <string name="fragment_live_broadcast_message_hint">Оставить комментарий</string>
+
     <string name="fragment_live_broadcast_send_message">Отправить</string>
+
     <string name="fragment_live_broadcast_buy">Купить</string>
+
     <string name="fragment_live_broadcast_price">от %s руб.</string>
-    <string name="fragment_live_broadcast_error_failed_to_send_message">Не удалось отправить сообщение</string>
-    <string name="fragment_live_broadcast_error_no_broadcast_manifest">Трансляция не найдена</string>
+
+    <string name="fragment_live_broadcast_error_failed_to_send_message">
+        Не удалось отправить сообщение
+    </string>
+
+    <string name="fragment_live_broadcast_error_no_broadcast_manifest">
+        Трансляция не найдена
+    </string>
 
     <!-- Live broadcasting settings fragment -->
-    <string name="fragment_live_broadcasting_settings_destination_title">Настройки трансляции</string>
-    <string name="fragment_live_broadcasting_settings_main_settings_title">Основные настройки</string>
-    <string name="fragment_live_broadcasting_settings_error_field_is_required">Поле является обязательным</string>
+
+    <string name="fragment_live_broadcasting_settings_destination_title">
+        Настройки трансляции
+    </string>
+
+    <string name="fragment_live_broadcasting_settings_main_settings_title">
+        Основные настройки
+    </string>
+
+    <string name="fragment_live_broadcasting_settings_error_field_is_required">
+        Поле является обязательным
+    </string>
+
     <string name="fragment_live_broadcasting_settings_server_address_hint">Адрес сервера</string>
-    <string name="fragment_live_broadcasting_settings_server_address_error_field_is_required">@string/fragment_live_broadcasting_settings_error_field_is_required</string>
+
+    <string name="fragment_live_broadcasting_settings_server_address_error_field_is_required">
+        @string/fragment_live_broadcasting_settings_error_field_is_required
+    </string>
+
     <string name="fragment_live_broadcasting_settings_server_port_hint">Порт сервера</string>
-    <string name="fragment_live_broadcasting_settings_server_port_error_field_is_required">@string/fragment_live_broadcasting_settings_error_field_is_required</string>
-    <string name="fragment_live_broadcasting_settings_server_port_error_must_be_unsigned_integer">Порт не может быть отрицательным числом</string>
+
+    <string name="fragment_live_broadcasting_settings_server_port_error_field_is_required">
+        @string/fragment_live_broadcasting_settings_error_field_is_required
+    </string>
+
+    <string name="fragment_live_broadcasting_settings_server_port_error_must_be_unsigned_integer">
+        Порт не может быть отрицательным числом
+    </string>
+
     <string name="fragment_live_broadcasting_settings_stream_key_hint">Ключ трансляции</string>
-    <string name="fragment_live_broadcasting_settings_stream_key_error_field_is_required">@string/fragment_live_broadcasting_settings_error_field_is_required</string>
-    <string name="fragment_live_broadcasting_settings_source_user_name_hint">Логин источника</string>
-    <string name="fragment_live_broadcasting_settings_source_user_name_error_field_is_required">@string/fragment_live_broadcasting_settings_error_field_is_required</string>
-    <string name="fragment_live_broadcasting_settings_source_password_hint">Пароль источника</string>
-    <string name="fragment_live_broadcasting_settings_source_password_error_field_is_required">@string/fragment_live_broadcasting_settings_error_field_is_required</string>
+
+    <string name="fragment_live_broadcasting_settings_stream_key_error_field_is_required">
+        @string/fragment_live_broadcasting_settings_error_field_is_required
+    </string>
+
+    <string name="fragment_live_broadcasting_settings_source_user_name_hint">
+        Логин источника
+    </string>
+
+    <string name="fragment_live_broadcasting_settings_source_user_name_error_field_is_required">
+        @string/fragment_live_broadcasting_settings_error_field_is_required
+    </string>
+
+    <string name="fragment_live_broadcasting_settings_source_password_hint">
+        Пароль источника
+    </string>
+
+    <string name="fragment_live_broadcasting_settings_source_password_error_field_is_required">
+        @string/fragment_live_broadcasting_settings_error_field_is_required
+    </string>
+
     <string name="fragment_live_broadcasting_settings_video_settings_title">Видео</string>
+
     <string name="fragment_live_broadcasting_settings_video_resolution_hint">Разрешение</string>
+
     <string name="fragment_live_broadcasting_settings_video_bitrate_hint">Битрейт (на лету)</string>
-    <string name="fragment_live_broadcasting_settings_video_bitrate_error_field_is_required">@string/fragment_live_broadcasting_settings_error_field_is_required</string>
-    <string name="fragment_live_broadcasting_settings_video_bitrate_error_too_low">Минимальный битрейт: %d</string>
+
+    <string name="fragment_live_broadcasting_settings_video_bitrate_error_field_is_required">
+        @string/fragment_live_broadcasting_settings_error_field_is_required
+    </string>
+
+    <string name="fragment_live_broadcasting_settings_video_bitrate_error_too_low">
+        Минимальный битрейт: %d
+    </string>
+
     <string name="fragment_live_broadcasting_settings_fps_hint">FPS (Кадры в секунду)</string>
-    <string name="fragment_live_broadcasting_settings_fps_error_field_is_required">@string/fragment_live_broadcasting_settings_error_field_is_required</string>
-    <string name="fragment_live_broadcasting_settings_fps_error_too_low">Минимальное количество кадров: %d</string>
+
+    <string name="fragment_live_broadcasting_settings_fps_error_field_is_required">
+        @string/fragment_live_broadcasting_settings_error_field_is_required
+    </string>
+
+    <string name="fragment_live_broadcasting_settings_fps_error_too_low">
+        Минимальное количество кадров: %d
+    </string>
+
     <string name="fragment_live_broadcasting_settings_audio_settings_title">Аудио</string>
+
     <string name="fragment_live_broadcasting_settings_audio_bitrate_hint">Битрейт</string>
-    <string name="fragment_live_broadcasting_settings_audio_bitrate_error_field_is_required">@string/fragment_live_broadcasting_settings_error_field_is_required</string>
-    <string name="fragment_live_broadcasting_settings_audio_bitrate_error_too_low">Минимальный аудио битрейт: %d</string>
-    <string name="fragment_live_broadcasting_settings_audio_sample_rate_hint">Частота дискретизации</string>
-    <string name="fragment_live_broadcasting_settings_audio_sample_rate_error_field_is_required">@string/fragment_live_broadcasting_settings_error_field_is_required</string>
-    <string name="fragment_live_broadcasting_settings_audio_sample_rate_error_too_low">Минимальная частота дискретизации: %d</string>
+
+    <string name="fragment_live_broadcasting_settings_audio_bitrate_error_field_is_required">
+        @string/fragment_live_broadcasting_settings_error_field_is_required
+    </string>
+
+    <string name="fragment_live_broadcasting_settings_audio_bitrate_error_too_low">
+        Минимальный аудио битрейт: %d
+    </string>
+
+    <string name="fragment_live_broadcasting_settings_audio_sample_rate_hint">
+        Частота дискретизации
+    </string>
+
+    <string name="fragment_live_broadcasting_settings_audio_sample_rate_error_field_is_required">
+        @string/fragment_live_broadcasting_settings_error_field_is_required
+    </string>
+
+    <string name="fragment_live_broadcasting_settings_audio_sample_rate_error_too_low">
+        Минимальная частота дискретизации: %d
+    </string>
+
     <string name="fragment_live_broadcasting_settings_audio_channel_hint">Канал</string>
+
     <string name="fragment_live_broadcasting_settings_audio_channel_mono">Моно</string>
+
     <string name="fragment_live_broadcasting_settings_audio_channel_stereo">Стерео</string>
+
     <string name="fragment_live_broadcasting_settings_echo_canceler_text">Подавление эхо</string>
+
     <string name="fragment_live_broadcasting_settings_noise_suppressor_text">Шумоподавление</string>
+
     <string name="fragment_live_broadcasting_settings_confirm_button">Подтвердить</string>
 
     <!-- Live broadcasting fragment -->
@@ -384,15 +802,21 @@
 
     <string name="fragment_live_broadcasting_message_auth_success">Успешная авторизация</string>
 
-    <string name="fragment_live_broadcasting_message_connection_succeeded">Соединение установлено</string>
+    <string name="fragment_live_broadcasting_message_connection_succeeded">
+        Соединение установлено
+    </string>
 
     <string name="fragment_live_broadcasting_message_disconnected">Вы отключены от сервера</string>
 
     <string name="fragment_live_broadcasting_error_auth_error">Ошибка авторизации</string>
 
-    <string name="fragment_live_broadcasting_error_connection_failed">Соединение не удалось: %s</string>
+    <string name="fragment_live_broadcasting_error_connection_failed">
+        Соединение не удалось: %s
+    </string>
 
-    <string name="fragment_live_broadcasting_error_failed_to_prepare_encoders">Не удалось подготовить трансляцию. Ваше устройство не может этого сделать</string>
+    <string name="fragment_live_broadcasting_error_failed_to_prepare_encoders">
+        Не удалось подготовить трансляцию. Ваше устройство не может этого сделать
+    </string>
 
     <string name="fragment_live_broadcasting_video_bitrate_text">%d bps</string>
 
@@ -414,47 +838,114 @@
     <string name="fragment_my_streams_start_time">Время начала:</string>
 
     <!-- Stream creation fragment -->
+
     <string name="fragment_stream_creation_destination_title">Создать трансляцию</string>
 
-    <string name="fragment_stream_creation_name_hint">Название</string>
+    <string name="fragment_stream_creation_name_hint">Название*</string>
 
-    <string name="fragment_stream_creation_description_hint">Описание</string>
+    <string name="fragment_stream_creation_description_hint">Описание*</string>
 
-    <string name="fragment_stream_creation_start_date_label">Дата начала</string>
+    <string name="fragment_stream_creation_start_date_label">Дата начала*</string>
 
     <string name="fragment_stream_creation_start_date_not_set">Не указана</string>
 
-    <string name="fragment_stream_creation_start_time_label">Время начала</string>
+    <string name="fragment_stream_creation_start_time_label">Время начала*</string>
 
     <string name="fragment_stream_creation_start_time_not_set">Не указано</string>
 
+    <string name="fragment_stream_creation_end_date_label">Дата конца*</string>
+
+    <string name="fragment_stream_creation_end_date_not_set">Не указана</string>
+
+    <string name="fragment_stream_creation_end_time_label">Время конца*</string>
+
+    <string name="fragment_stream_creation_end_time_not_set">Не указано</string>
+
     <string name="fragment_stream_creation_preview_image_label">Картинка превью</string>
+
+    <string name="fragment_stream_creation_choose_application_to_pick_image">
+        Приложение для выбора превью
+    </string>
 
     <string name="fragment_stream_creation_change_preview_text">Изменить</string>
 
+    <string name="fragment_stream_creation_video_resolution_hint">Разрешение*</string>
+
     <string name="fragment_stream_creation_create_button">Создать</string>
+
+    <string name="fragment_stream_creation_fields_are_required_text">
+        * поле обязательное к заполнению
+    </string>
+
+    <string name="fragment_stream_creation_error_necessary_fields_are_not_filled_in">
+        Обязательные поля не заполнены
+    </string>
+
+    <string name="fragment_stream_creation_error_start_date_time_is_after_end_date_time">
+        Начало должно быть раньше конца
+    </string>
+
+    <string name="fragment_stream_creation_error_start_date_is_after_end_date">
+        Дата начала не может быть позже даты конца
+    </string>
+
+    <string name="fragment_stream_creation_error_start_date_time_is_before_now">
+        Начало не может быть указано в прошлом
+    </string>
+
+    <string name="fragment_stream_creation_error_end_date_time_is_before_start_date_time">
+        Конец должен быть позже начала
+    </string>
+
+    <string name="fragment_stream_creation_error_end_date_is_before_start_date">
+        Дата конца не может быть раньше даты начала
+    </string>
+
+    <string name="fragment_stream_creation_error_end_date_time_is_before_now">
+        Конец не может быть указан в прошлом
+    </string>
+
+    <string name="fragment_stream_creation_error_failed_to_schedule_the_stream">
+        Не удалось запланировать трансляцию
+    </string>
 
     <!-- Broadcast editing fragment -->
 
     <string name="fragment_broadcast_editing_destination_title">Информация о трансляции</string>
 
-    <string name="fragment_broadcast_editing_name_hint">@string/fragment_stream_creation_name_hint</string>
+    <string name="fragment_broadcast_editing_name_hint">
+        @string/fragment_stream_creation_name_hint
+    </string>
 
-    <string name="fragment_broadcast_editing_description_hint">@string/fragment_stream_creation_description_hint</string>
+    <string name="fragment_broadcast_editing_description_hint">
+        @string/fragment_stream_creation_description_hint
+    </string>
 
-    <string name="fragment_broadcast_editing_start_date_label">@string/fragment_stream_creation_start_date_label</string>
+    <string name="fragment_broadcast_editing_start_date_label">
+        @string/fragment_stream_creation_start_date_label
+    </string>
 
-    <string name="fragment_broadcast_editing_start_date_not_set">@string/fragment_stream_creation_start_date_not_set</string>
+    <string name="fragment_broadcast_editing_start_date_not_set">
+        @string/fragment_stream_creation_start_date_not_set
+    </string>
 
-    <string name="fragment_broadcast_editing_start_time_label">@string/fragment_stream_creation_start_time_label</string>
+    <string name="fragment_broadcast_editing_start_time_label">
+        @string/fragment_stream_creation_start_time_label
+    </string>
 
-    <string name="fragment_broadcast_editing_start_time_not_set">@string/fragment_stream_creation_start_time_not_set</string>
+    <string name="fragment_broadcast_editing_start_time_not_set">
+        @string/fragment_stream_creation_start_time_not_set
+    </string>
 
-    <string name="fragment_broadcast_editing_preview_image_label">@string/fragment_stream_creation_preview_image_label</string>
+    <string name="fragment_broadcast_editing_preview_image_label">
+        @string/fragment_stream_creation_preview_image_label
+    </string>
 
-    <string name="fragment_broadcast_editing_change_preview_text">@string/fragment_stream_creation_change_preview_text</string>
+    <string name="fragment_broadcast_editing_change_preview_text">
+        @string/fragment_stream_creation_change_preview_text
+    </string>
 
-    <string name="fragment_broadcast_editing_quality_hint">Качество трансляции</string>
+    <string name="fragment_broadcast_editing_quality_hint">Качество трансляции*</string>
 
     <string name="fragment_broadcast_editing_quality_low">Слабый интернет</string>
 

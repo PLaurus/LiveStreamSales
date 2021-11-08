@@ -1,6 +1,6 @@
 package tv.wfc.livestreamsales.application.model.streamchatmessage.mapper
 
-import tv.wfc.livestreamsales.application.base.entity.entitymapper.IEntityMapper
+import tv.wfc.core.entity.IEntityMapper
 import tv.wfc.livestreamsales.application.model.streamchatmessage.StreamChatMessageCreationResult
 import tv.wfc.livestreamsales.features.rest.api.streamchat.dto.StreamChatMessageCreationResultDto
 import javax.inject.Inject

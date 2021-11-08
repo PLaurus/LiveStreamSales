@@ -1,5 +1,6 @@
 package tv.wfc.livestreamsales.features.orderediting.viewmodel
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -29,6 +30,7 @@ import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import java.util.regex.Pattern
 import javax.inject.Inject
 
+@SuppressLint("StaticFieldLeak")
 class OrderEditingViewModel @Inject constructor(
     private val applicationContext: Context,
     private val authorizationManager: IAuthorizationManager,
@@ -210,7 +212,7 @@ class OrderEditingViewModel @Inject constructor(
     override fun updateDeliveryDate(dateInMillis: Long) {
         incrementActiveOperationsCount()
         val existingDeliveryTime = orderDeliveryDateTime.value?.toLocalTime()
-        val newDeliveryDateTime = DateTime(dateInMillis, DateTimeZone.UTC)
+        val newDeliveryDateTime = DateTime(dateInMillis)
         orderDeliveryDateTime.value = existingDeliveryTime?.let(newDeliveryDateTime::withTime) ?: newDeliveryDateTime
         decrementActiveOperationsCount()
     }
@@ -220,7 +222,7 @@ class OrderEditingViewModel @Inject constructor(
         val existingDeliveryDateTime = orderDeliveryDateTime.value
         if(existingDeliveryDateTime != null){
             orderDeliveryDateTime.value = existingDeliveryDateTime
-                .withTime(hour, minute, /* second = */0, /* millisecond = */0)
+                .withTime(hour, minute, 0, 0)
         }
         decrementActiveOperationsCount()
     }

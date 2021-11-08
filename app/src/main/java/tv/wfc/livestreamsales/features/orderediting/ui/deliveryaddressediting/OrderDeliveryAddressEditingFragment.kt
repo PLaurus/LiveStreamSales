@@ -118,7 +118,7 @@ class OrderDeliveryAddressEditingFragment: BaseFragment(R.layout.fragment_order_
 
     private fun initializeCityEditText(){
         viewBinding?.cityEditText?.run {
-            viewModel.deliveryCity.observe(viewLifecycleOwner, Observer{ city ->
+            viewModel.deliveryCity.observe(viewLifecycleOwner, Observer { city ->
                 if(text.toString() == city) return@Observer
 
                 setText(city, TextView.BufferType.EDITABLE)
@@ -205,7 +205,7 @@ class OrderDeliveryAddressEditingFragment: BaseFragment(R.layout.fragment_order_
 
     private fun initializeFlatEditText(){
         viewBinding?.flatEditText?.run {
-            viewModel.deliveryFlat.observe(viewLifecycleOwner, Observer{ flat ->
+            viewModel.deliveryFlat.observe(viewLifecycleOwner, Observer { flat ->
                 if(text.toString() == flat) return@Observer
 
                 setText(flat, TextView.BufferType.EDITABLE)

@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tv.wfc.livestreamsales">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <!-- Permissions needed by background Rtp service to keep service alive -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <!-- Optional for play store -->
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
-    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
 
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
-            <!--suppress AndroidElementNotAllowed -->
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="http" />
         </intent>
@@ -34,9 +42,10 @@
 
         <activity
             android:name=".features.splash.ui.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.LiveStreamSales.SplashScreen"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait">
+            android:windowSoftInputMode="adjustResize">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,13 +57,15 @@
 
         <activity
             android:name=".features.greeting.ui.GreetingActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing" />
 
         <activity
             android:name=".features.mainappcontent.ui.MainAppContentActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
     </application>
 

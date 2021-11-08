@@ -6,13 +6,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "tv.wfc.livestreamsales"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
@@ -116,7 +115,7 @@ dependencies {
     implementation "com.karumi:dexter:$dexterVersion"
 
     // Date + Time
-    implementation "net.danlew:android.joda:$androidJodaVersion"
+    implementation "joda-time:joda-time:$androidJodaVersion"
 
     // Serialization
     implementation "com.google.code.gson:gson:$gsonVersion"
@@ -149,7 +148,8 @@ dependencies {
     implementation fileTree(include: ['*.aar'], dir: 'libs')
 
     // Modules
-    implementation project(":codeview")
+    implementation project(':Core')
+    implementation project(':CodeView')
     implementation project(":ContentLoader")
     implementation project(':AutoFillTextView')
     implementation project(':EditTextFormatters')

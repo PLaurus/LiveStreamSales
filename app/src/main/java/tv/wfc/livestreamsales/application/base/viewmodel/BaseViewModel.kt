@@ -36,4 +36,10 @@ abstract class BaseViewModel: ViewModel() {
 
         activeOperationsCount.onNext(newActiveOperationsCount)
     }
+
+    protected fun launchLongTermOperation(operation: () -> Unit) {
+        incrementActiveOperationsCount()
+        operation()
+        decrementActiveOperationsCount()
+    }
 }

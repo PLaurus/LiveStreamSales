@@ -2,6 +2,8 @@ package tv.wfc.livestreamsales.features.liveBroadcastingSettingsDestination.view
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.laurus.p.tools.camera.ICameraResolutionsProvider
+import com.laurus.p.tools.camera.model.Resolution
 import com.laurus.p.tools.livedata.LiveEvent
 import com.laurus.p.tools.reactivex.NullablesWrapper
 import io.reactivex.rxjava3.core.Completable
@@ -19,8 +21,6 @@ import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.Comput
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.manager.IAuthorizationManager
 import tv.wfc.livestreamsales.application.repository.livebroadcastingsettings.ILiveBroadcastingSettingsRepository
-import tv.wfc.livestreamsales.application.tools.camera.ICameraPreviewSizeReceivingBehavior
-import tv.wfc.livestreamsales.application.tools.camera.model.CameraSize
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
 import tv.wfc.livestreamsales.features.liveBroadcastingSettingsDestination.di.qualifiers.MinimalAudioBitrate
 import tv.wfc.livestreamsales.features.liveBroadcastingSettingsDestination.di.qualifiers.MinimalAudioSampleRate
@@ -33,7 +33,7 @@ import javax.inject.Inject
 class LiveBroadcastingSettingsViewModel @Inject constructor(
     private val authorizationManager: IAuthorizationManager,
     private val liveBroadcastingSettingsRepository: ILiveBroadcastingSettingsRepository,
-    private val cameraPreviewSizeReceivingBehavior: ICameraPreviewSizeReceivingBehavior,
+    private val cameraResolutionsProvider: ICameraResolutionsProvider,
     @MinimalVideoBitrate
     private val minimalVideoBitrate: Int,
     @MinimalVideoFps
@@ -114,7 +114,7 @@ class LiveBroadcastingSettingsViewModel @Inject constructor(
             )
             .addTo(disposables)
     }
-    private val videoResolutionsSubject = BehaviorSubject.createDefault(emptyList<CameraSize>())
+    private val videoResolutionsSubject = BehaviorSubject.createDefault(emptyList<Resolution>())
     private val videoResolutionPositionSubject = BehaviorSubject.createDefault(0)
     private val videoBitrateSubject = BehaviorSubject.createDefault<NullablesWrapper<Int>>(NullablesWrapper(null))
     private val videoBitrateErrorSubject: Observable<NullablesWrapper<VideoBitrateError>> = BehaviorSubject.createDefault<NullablesWrapper<VideoBitrateError>>(NullablesWrapper(null)).apply{
@@ -332,7 +332,7 @@ class LiveBroadcastingSettingsViewModel @Inject constructor(
             .addTo(disposables)
     }
 
-    override val videoResolutions: LiveData<List<CameraSize>> = MutableLiveData<List<CameraSize>>().apply{
+    override val videoResolutions: LiveData<List<Resolution>> = MutableLiveData<List<Resolution>>().apply{
         videoResolutionsSubject
             .observeOn(mainThreadScheduler)
             .subscribeBy(
@@ -616,7 +616,7 @@ class LiveBroadcastingSettingsViewModel @Inject constructor(
 
     private fun prepareVideoResolutions(): Completable{
         return Single
-            .fromCallable { cameraPreviewSizeReceivingBehavior.getBackCameraPreviewSizes() }
+            .fromCallable { cameraResolutionsProvider.getBackCameraResolutions() }
             .subscribeOn(computationScheduler)
             .flatMapCompletable { videoResolutions ->
                 Completable.fromRunnable { videoResolutionsSubject.onNext(videoResolutions) }
