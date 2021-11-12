@@ -75,6 +75,12 @@
     <color name="orderEditing_orderStatus_inProgress">@color/myOrders_orderStatus_inProgress</color>
     <color name="orderEditing_orderStatus_done">@color/myOrders_orderStatus_done</color>
 
+    <!-- My streams fragment -->
+
+    <color name="myStreamsFragment_myStreamListItem_card_cardBackgroundColor">#FFFFFFFF</color>
+
+    <color name="myStreamsFragment_myStreamListItem_textBackground_background">#0D000000</color>
+
     <!-- Broadcast creation fragment -->
 
     <color name="broadcastCreationFragment_previewCard_backgroundColor">#F3F3F3</color>

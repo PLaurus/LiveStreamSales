@@ -6,6 +6,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import org.joda.time.DateTime
+import tv.wfc.core.entity.IEntityMapper
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
 import tv.wfc.livestreamsales.application.model.address.Address
 import tv.wfc.livestreamsales.application.model.exception.storage.FailedToUpdateDataInStorageException
@@ -32,15 +33,17 @@ private typealias RemoteOrderRecipient = tv.wfc.livestreamsales.features.rest.ap
 
 class ProductsOrderRemoteDataStore @Inject constructor(
     private val productsOrdersApi: IProductsOrdersApi,
+    private val jodaDateTimeToIso8601StringMapper: IEntityMapper<DateTime, String>,
+    private val iso8601StringToJodaDateTimeMapper: IEntityMapper<String, DateTime>,
     @IoScheduler
     private val ioScheduler: Scheduler
-): IProductsOrderDataStore {
+) : IProductsOrderDataStore {
     override fun orderProducts(products: List<OrderedProduct>): Completable {
         val orderProductsRequestBody = OrderProductsRequestBody(products.toRemoteProductsOrder())
         return productsOrdersApi
             .orderProducts(orderProductsRequestBody)
             .flatMapCompletable {
-                when(it.areProductsOrdered){
+                when (it.areProductsOrdered) {
                     true -> Completable.complete()
                     false -> Completable.error(FailedToUpdateDataInStorageException())
                     else -> Completable.error(ReceivedDataWithWrongFormatException())
@@ -126,8 +129,8 @@ class ProductsOrderRemoteDataStore @Inject constructor(
     override fun getOrder(id: Long): Single<Order> {
         return productsOrdersApi
             .getOrder(id)
-            .map{ it.order ?: throw NoSuchDataInStorageException() }
-            .map{ remoteOrder ->
+            .map { it.order ?: throw NoSuchDataInStorageException() }
+            .map { remoteOrder ->
                 remoteOrder.toApplicationOrder() ?: throw ReceivedDataWithWrongFormatException()
             }
             .subscribeOn(ioScheduler)
@@ -138,17 +141,19 @@ class ProductsOrderRemoteDataStore @Inject constructor(
         deliveryAddress: Address,
         deliveryDate: DateTime?
     ): Single<StorageDataUpdateResult> {
+        val deliveryJodaDateTime = deliveryDate?.let(jodaDateTimeToIso8601StringMapper::map)
+
         val confirmOrderRequestBody = ConfirmOrderRequestBody(
-            deliveryDate = deliveryDate,
+            deliveryDate = deliveryJodaDateTime,
             deliveryAddress = deliveryAddress.toRemoteAddress()
         )
 
         return productsOrdersApi
             .confirmOrder(orderId, confirmOrderRequestBody)
             .flatMap {
-                if(it.isOrderConfirmed == null){
+                if (it.isOrderConfirmed == null) {
                     Single.error(ReceivedDataWithWrongFormatException())
-                } else{
+                } else {
                     Single.just(
                         StorageDataUpdateResult(
                             it.isOrderConfirmed,
@@ -160,7 +165,7 @@ class ProductsOrderRemoteDataStore @Inject constructor(
             .subscribeOn(ioScheduler)
     }
 
-    private fun List<OrderedProduct>.toRemoteProductsOrder(): List<tv.wfc.livestreamsales.features.rest.model.api.orderproducts.Product>{
+    private fun List<OrderedProduct>.toRemoteProductsOrder(): List<tv.wfc.livestreamsales.features.rest.model.api.orderproducts.Product> {
         return map {
             tv.wfc.livestreamsales.features.rest.model.api.orderproducts.Product(
                 it.product.id,
@@ -169,11 +174,12 @@ class ProductsOrderRemoteDataStore @Inject constructor(
         }
     }
 
-    private fun RemoteOrder.toApplicationOrder(): Order?{
+    private fun RemoteOrder.toApplicationOrder(): Order? {
         val id = this.id ?: return null
         val status = this.status?.toStatus() ?: return null
-        val orderDate = this.orderDate ?: return null
-        val deliveryDate = this.deliveryDate
+        val orderDate = this.orderDate?.let(iso8601StringToJodaDateTimeMapper::map) ?: return null
+        val deliveryDate =
+            this.deliveryDate?.let(iso8601StringToJodaDateTimeMapper::map) ?: return null
         val products = this.products?.mapNotNull { it.toApplicationOrderedProduct() } ?: return null
         val deliveryAddress = this.deliveryAddress?.toApplicationAddress()
         val orderRecipient = this.orderRecipient?.toApplicationOrderRecipient()
@@ -189,8 +195,8 @@ class ProductsOrderRemoteDataStore @Inject constructor(
         )
     }
 
-    private fun String.toStatus(): Order.Status?{
-        return when(this){
+    private fun String.toStatus(): Order.Status? {
+        return when (this) {
             "paid" -> Order.Status.PAID
             "created" -> Order.Status.CREATED
             "waiting" -> Order.Status.WAITING
@@ -199,7 +205,7 @@ class ProductsOrderRemoteDataStore @Inject constructor(
         }
     }
 
-    private fun RemoteOrderedProduct.toApplicationOrderedProduct(): OrderedProduct?{
+    private fun RemoteOrderedProduct.toApplicationOrderedProduct(): OrderedProduct? {
         val product = this.product?.toApplicationProduct() ?: return null
         val amount = this.amount ?: 0
 
@@ -224,7 +230,7 @@ class ProductsOrderRemoteDataStore @Inject constructor(
         )
     }
 
-    private fun RemoteAddress.toApplicationAddress(): Address?{
+    private fun RemoteAddress.toApplicationAddress(): Address? {
         val city = this.city ?: return null
         val street = this.street ?: return null
         val building = this.building ?: return null
@@ -239,11 +245,11 @@ class ProductsOrderRemoteDataStore @Inject constructor(
         )
     }
 
-    private fun Address.toRemoteAddress(): RemoteAddress{
+    private fun Address.toRemoteAddress(): RemoteAddress {
         return RemoteAddress(city, street, building, flat, floor)
     }
 
-    private fun RemoteOrderRecipient.toApplicationOrderRecipient(): OrderRecipient?{
+    private fun RemoteOrderRecipient.toApplicationOrderRecipient(): OrderRecipient? {
         val name = this.name ?: return null
 
         return OrderRecipient(
@@ -258,19 +264,19 @@ class ProductsOrderRemoteDataStore @Inject constructor(
         val name = name ?: return null
         val value = value ?: return null
 
-        return when(specificationType){
+        return when (specificationType) {
             "regular" -> {
                 Specification.DescriptiveSpecification(name, value)
             }
             "color" -> {
-                try{
+                try {
                     val color = colorHex?.toColorInt() ?: return null
                     Specification.ColorSpecification(
                         name = name,
                         color = color,
                         colorName = value
                     )
-                } catch (ex: IllegalArgumentException){
+                } catch (ex: IllegalArgumentException) {
                     null
                 }
             }

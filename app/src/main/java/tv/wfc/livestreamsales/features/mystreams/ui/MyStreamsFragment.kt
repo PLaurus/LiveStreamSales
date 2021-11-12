@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import com.jakewharton.rxbinding4.view.clicks
+import com.laurus.p.recyclerviewitemdecorators.GapBetweenItems
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -156,6 +157,9 @@ class MyStreamsFragment: BaseFragment(R.layout.fragment_my_streams) {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
             val myStreamsAdapter = MyStreamsAdapter(myStreamsDiffUtilItemCallback, imageLoader)
+
+            val contentMargin = resources.getDimensionPixelSize(R.dimen.contentMargin_default)
+            addItemDecoration(GapBetweenItems(contentMargin))
 
             adapter = myStreamsAdapter
 

@@ -42,7 +42,7 @@ class GapBetweenItems(private val gap: Int): RecyclerView.ItemDecoration() {
     private fun getOffsetForElement(
         recyclerView: RecyclerView,
         view: View
-    ): Int{
+    ): Int {
         return when (recyclerView.getChildAdapterPosition(view)) {
             RecyclerView.NO_POSITION,
             0 -> 0

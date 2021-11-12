@@ -7,12 +7,40 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/card_cornerRadius"
-    tools:layout_marginHorizontal="@dimen/screenPadding"
-    tools:layout_marginTop="@dimen/contentMargin_default">
+    app:cardElevation="@dimen/card_elevation"
+    app:cardBackgroundColor="@color/myStreamsFragment_myStreamListItem_card_cardBackgroundColor">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/contentMarginStartGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/contentMargin_default"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/contentMarginEndGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/contentMargin_default"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/contentMarginTopGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/contentMargin_default"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/contentMarginBottomGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/contentMargin_default"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/previewImage"
@@ -24,88 +52,86 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/informationConstraintLayout"
+        <View
+            android:id="@+id/textBackground"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/contentMargin_default"
-            android:clipToPadding="false"
+            android:layout_height="0dp"
+            android:background="@color/myStreamsFragment_myStreamListItem_textBackground_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/nameTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/textSize_big"
-                android:textStyle="bold"
-                android:maxLines="2"
-                android:ellipsize="end"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/template_text"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/nameTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textSize_big"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+            app:layout_constraintEnd_toEndOf="@id/contentMarginEndGuideline"
+            app:layout_constraintTop_toTopOf="@id/contentMarginTopGuideline"
+            tools:text="@string/template_text"/>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/descriptionTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/contentMargin_default"
-                android:textSize="@dimen/textSize_default"
-                android:maxLines="4"
-                android:ellipsize="end"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nameTextView"
-                tools:text="@string/template_text"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/contentMargin_default"
+            android:textSize="@dimen/textSize_default"
+            android:maxLines="4"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+            app:layout_constraintEnd_toEndOf="@id/contentMarginEndGuideline"
+            app:layout_constraintTop_toBottomOf="@id/nameTextView"
+            tools:text="@string/template_text"/>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/startDateLabelTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/contentMargin_default"
-                android:text="@string/fragment_my_streams_start_date"
-                android:textSize="@dimen/textSize_small"
-                android:maxLines="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/descriptionTextView"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/startDateLabelTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/contentMargin_default"
+            android:text="@string/fragment_my_streams_start_date"
+            android:textSize="@dimen/textSize_small"
+            android:maxLines="1"
+            app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+            app:layout_constraintTop_toBottomOf="@id/descriptionTextView"/>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/startDateTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/contentMargin_default"
-                android:layout_marginTop="@dimen/contentMargin_default"
-                android:textSize="@dimen/textSize_small"
-                android:maxLines="1"
-                app:layout_constraintStart_toEndOf="@id/startDateLabelTextView"
-                app:layout_constraintTop_toBottomOf="@id/descriptionTextView"
-                tools:text="01.06.2022"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/startDateTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/contentMargin_default"
+            android:layout_marginTop="@dimen/contentMargin_default"
+            android:textSize="@dimen/textSize_small"
+            android:maxLines="1"
+            app:layout_constraintStart_toEndOf="@id/startDateLabelTextView"
+            app:layout_constraintTop_toBottomOf="@id/descriptionTextView"
+            tools:text="01.06.2022"/>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/startTimeLabelTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/fragment_my_streams_start_time"
-                android:textSize="@dimen/textSize_small"
-                android:maxLines="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/startDateLabelTextView"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/startTimeLabelTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_my_streams_start_time"
+            android:textSize="@dimen/textSize_small"
+            android:maxLines="1"
+            app:layout_constraintStart_toStartOf="@id/contentMarginStartGuideline"
+            app:layout_constraintTop_toBottomOf="@id/startDateLabelTextView"/>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/startTimeTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/contentMargin_default"
-                android:textSize="@dimen/textSize_small"
-                android:maxLines="1"
-                app:layout_constraintStart_toEndOf="@id/startTimeLabelTextView"
-                app:layout_constraintTop_toBottomOf="@id/startDateLabelTextView"
-                tools:text="00:00"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/startTimeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/contentMargin_default"
+            android:textSize="@dimen/textSize_small"
+            android:maxLines="1"
+            app:layout_constraintStart_toEndOf="@id/startTimeLabelTextView"
+            app:layout_constraintTop_toBottomOf="@id/startDateLabelTextView"
+            app:layout_constraintBottom_toTopOf="@id/contentMarginBottomGuideline"
+            tools:text="00:00"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import org.joda.time.DateTime
+import tv.wfc.core.entity.IEntityMapper
 import tv.wfc.livestreamsales.BuildConfig
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
 import tv.wfc.livestreamsales.application.model.exception.storage.NoSuchDataInStorageException
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 class PublicStreamRemoteDataSource @Inject constructor(
     private val broadcastsApi: IBroadcastsApi,
+    private val iso8601StringToJodaDateTimeMapper: IEntityMapper<String, DateTime>,
     @IoScheduler
     private val ioScheduler: Scheduler
 ) : IPublicStreamDataSource {
@@ -93,7 +95,8 @@ class PublicStreamRemoteDataSource @Inject constructor(
 
         if (isLive) {
             startsAt = DateTime.now().plusDays(2)
-            manifestUrl = "https://video-weaver.hel01.hls.ttvnw.net/v1/playlist/CvUE8eBU1jbFJ-rvvSiAJVpToZhpXMn2x0vuMbhpnAN3ijq-X6mWxDLwLS-OblxDC-H8rGikJ1s8EtwOUwEZeSoMXPm7JpPMQdIbiWbd2ZWeuLIkLv_azK0V4UgFDSyrHde8IuyU9ZgY11kmQ1aH4soL1HxYpiJAkBtRUpI5bAZ2WNY_bR8QTyz6XCxhP5kCie75f2SfyRAbjkCQ9SRhwXipo2VrjijaBzwDogxXMZsZZzAiNBoEQi_WKzuJlQi1IN1jkorZL93uW6e7j-Bnt6MNCHlTu3MbcDwJ1MeNn3HKh-Xk1Y1ctlDoTTIg9cw1JIXzZ1q75e8hIeBa2VsSP-ZySE7bfY1X6T3eSPX53z2Sk6GAaHU3M6r2kmh639Q41x_EHNf9uPYnA2t-bFmeFwaifk-qslKsnBS4tqY8RXwQVTxHYQpC61UZWlnsfVi79E6jm78NWd0L4jMGngaVbiyJqly_qEeLQOIUntoXU4FsO4A891-6nDoKHhs4H8Jlb6U099ipbqdIOQxeZlcNv-oZbQJnT1KjbnAKY17F8QXVhDZQkYccB3ynPwVYdLTPmaviP9QQmo4UnEcwnNRrugaUXGOJj988hQ0HGtdyj9pwpLTFDMsx5f5ZJJdsThWo2MZLzwEmt-I1BqIlgqtmKBECaFgyBB7FSeHZ2YZq2uUwAWVca8HwowBFacyfdoQGYdryDpAn6Oh3BWTAQEZ71e8r51SleTyxEIERJGjN1AM8ptJnw8C4WZ2M8m_xbiqrSn8BycRt_L1Z_5qbo1V-4AJxqj8YwdZs5QnKRny_wfIHKmHQGDFSishj1-tiYjDJ_ATsD_hxJkASEO0jx4jVJqICjTE2gc5rhV8aDAcY9epL9ySi43qQDg.m3u8"
+            manifestUrl =
+                "https://video-weaver.hel01.hls.ttvnw.net/v1/playlist/CvUE8eBU1jbFJ-rvvSiAJVpToZhpXMn2x0vuMbhpnAN3ijq-X6mWxDLwLS-OblxDC-H8rGikJ1s8EtwOUwEZeSoMXPm7JpPMQdIbiWbd2ZWeuLIkLv_azK0V4UgFDSyrHde8IuyU9ZgY11kmQ1aH4soL1HxYpiJAkBtRUpI5bAZ2WNY_bR8QTyz6XCxhP5kCie75f2SfyRAbjkCQ9SRhwXipo2VrjijaBzwDogxXMZsZZzAiNBoEQi_WKzuJlQi1IN1jkorZL93uW6e7j-Bnt6MNCHlTu3MbcDwJ1MeNn3HKh-Xk1Y1ctlDoTTIg9cw1JIXzZ1q75e8hIeBa2VsSP-ZySE7bfY1X6T3eSPX53z2Sk6GAaHU3M6r2kmh639Q41x_EHNf9uPYnA2t-bFmeFwaifk-qslKsnBS4tqY8RXwQVTxHYQpC61UZWlnsfVi79E6jm78NWd0L4jMGngaVbiyJqly_qEeLQOIUntoXU4FsO4A891-6nDoKHhs4H8Jlb6U099ipbqdIOQxeZlcNv-oZbQJnT1KjbnAKY17F8QXVhDZQkYccB3ynPwVYdLTPmaviP9QQmo4UnEcwnNRrugaUXGOJj988hQ0HGtdyj9pwpLTFDMsx5f5ZJJdsThWo2MZLzwEmt-I1BqIlgqtmKBECaFgyBB7FSeHZ2YZq2uUwAWVca8HwowBFacyfdoQGYdryDpAn6Oh3BWTAQEZ71e8r51SleTyxEIERJGjN1AM8ptJnw8C4WZ2M8m_xbiqrSn8BycRt_L1Z_5qbo1V-4AJxqj8YwdZs5QnKRny_wfIHKmHQGDFSishj1-tiYjDJ_ATsD_hxJkASEO0jx4jVJqICjTE2gc5rhV8aDAcY9epL9ySi43qQDg.m3u8"
         } else {
             startsAt = DateTime.now().minusDays(2)
             manifestUrl = ""
@@ -114,13 +117,19 @@ class PublicStreamRemoteDataSource @Inject constructor(
     }
 
     private fun Stream.toBroadcast(): PublicStream? {
+        val startsAtJodaDateTime =
+            startAt?.let(iso8601StringToJodaDateTimeMapper::map) ?: return null
+
+        val endsAtJodaDateTime =
+            endsAt?.let(iso8601StringToJodaDateTimeMapper::map) ?: return null
+
         return PublicStream(
             id = id ?: return null,
             streamerId = userId ?: return null,
             title = name ?: return null,
             description = description ?: return null,
-            startsAt = startAt ?: return null,
-            endsAt = endsAt ?: return null,
+            startsAt = startsAtJodaDateTime,
+            endsAt = endsAtJodaDateTime,
             imageUrl = image,
             manifestUrl = manifestUrl
         )

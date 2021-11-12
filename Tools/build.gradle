@@ -56,6 +56,9 @@ dependencies {
     // Date + Time
     implementation "joda-time:joda-time:$androidJodaVersion"
 
+    // Serialization
+    implementation "com.google.code.gson:gson:$gsonVersion"
+
     // Tests
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidJunitVersion"

@@ -7,6 +7,7 @@ import tv.wfc.livestreamsales.application.di.modules.certificates.CertificatesMo
 import tv.wfc.livestreamsales.application.di.modules.coil.CoilModule
 import tv.wfc.livestreamsales.application.di.modules.database.DatabaseModule
 import tv.wfc.livestreamsales.application.di.modules.datasource.AppDataSourceModule
+import tv.wfc.livestreamsales.application.di.modules.datetime.DateTimeModule
 import tv.wfc.livestreamsales.application.di.modules.entitymapper.EntityMapperModule
 import tv.wfc.livestreamsales.application.di.modules.errorslogger.ErrorsLoggerModule
 import tv.wfc.livestreamsales.application.di.modules.manager.ManagersModule
@@ -62,7 +63,8 @@ import tv.wfc.livestreamsales.features.streamcreation.di.StreamCreationComponent
     UtilsModule::class,
     SerializationModule::class,
     EntityMapperModule::class,
-    PusherModule::class
+    PusherModule::class,
+    DateTimeModule::class
 ])
 interface AppComponent {
     @Component.Factory

@@ -1,7 +1,6 @@
 package tv.wfc.livestreamsales.features.rest.model.api.getbroadcasts
 
 import com.google.gson.annotations.SerializedName
-import org.joda.time.DateTime
 
 data class Stream(
     @SerializedName("id")
@@ -11,9 +10,9 @@ data class Stream(
     @SerializedName("name")
     val name: String?,
     @SerializedName("start_at")
-    val startAt: DateTime?,
+    val startAt: String?,
     @SerializedName("end_at")
-    val endsAt: DateTime?,
+    val endsAt: String?,
     @SerializedName("description")
     val description: String?,
     @SerializedName("image")

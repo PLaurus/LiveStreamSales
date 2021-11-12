@@ -1,4 +1,4 @@
-package tv.wfc.livestreamsales.application.tools.gson.typeadapters
+package com.laurus.p.tools.gson.typeadapter
 
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
@@ -6,15 +6,14 @@ import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormatter
-import javax.inject.Inject
 
-class DateTimeTypeAdapter @Inject constructor(
+class JodaDateTimeAdapter(
     private val dateTimeFormatter: DateTimeFormatter
-): TypeAdapter<DateTime>() {
+) : TypeAdapter<DateTime>() {
     override fun write(jsonWriter: JsonWriter?, dateTime: DateTime?) {
-        if(dateTime == null){
+        if (dateTime == null) {
             jsonWriter?.nullValue()
-        } else{
+        } else {
             jsonWriter?.value(dateTime.toString(dateTimeFormatter))
         }
     }

@@ -5,7 +5,10 @@ import com.laurus.p.tools.camera.model.Resolution
 import com.laurus.p.tools.camera.model.mapper.Camera1SizeToResolutionMapper
 import dagger.Binds
 import dagger.Module
+import org.joda.time.DateTime
 import tv.wfc.core.entity.IEntityMapper
+import tv.wfc.livestreamsales.application.model.datetime.mapper.Iso8601StringToJodaDateTimeMapper
+import tv.wfc.livestreamsales.application.model.datetime.mapper.JodaDateTimeToIso8601StringMapper
 import tv.wfc.livestreamsales.application.model.stream.MyStream
 import tv.wfc.livestreamsales.application.model.stream.mapper.*
 import tv.wfc.livestreamsales.application.model.streamchatmessage.StreamChatMessage
@@ -98,4 +101,14 @@ interface EntityMapperModule {
     fun bindCamera1SizeToResolutionMapper(
         mapper: Camera1SizeToResolutionMapper
     ): IEntityMapper<Camera.Size, Resolution>
+
+    @Binds
+    fun bindIso8601StringToJodaDateTimeMapper(
+        mapper: Iso8601StringToJodaDateTimeMapper
+    ): IEntityMapper<String, DateTime>
+
+    @Binds
+    fun bindJodaDateTimeToIso8601StringMapper(
+        mapper: JodaDateTimeToIso8601StringMapper
+    ): IEntityMapper<DateTime, String>
 }

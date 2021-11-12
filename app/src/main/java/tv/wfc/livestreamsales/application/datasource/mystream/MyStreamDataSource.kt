@@ -22,6 +22,7 @@ class MyStreamDataSource @Inject constructor(
     private val streamService: IStreamService,
     private val myStreamsService: IMyStreamsService,
     private val applicationContext: Context,
+    private val jodaDateTimeToIso8601StringMapper: IEntityMapper<DateTime, String>,
     private val streamCreationResultDtoToMyStreamMapper: IEntityMapper<StreamCreationResultDto, MyStream>,
     private val streamUpdateResultDtoToMyStreamMapper: IEntityMapper<StreamUpdateResultDto, MyStream>,
     private val myStreamsDtoToListOfMyStreamsMapper: IEntityMapper<MyStreamsDto, List<MyStream>>,
@@ -39,16 +40,17 @@ class MyStreamDataSource @Inject constructor(
     ): Single<MyStream> {
         return Single
             .defer {
-                val imagePart: MultipartBody.Part? = image?.toMultipartBodyPart(
-                    applicationContext,
-                    "image"
-                )
+                val imagePart: MultipartBody.Part? = image
+                    ?.toMultipartBodyPart(applicationContext, "image")
+
+                val startAtIso8601String = jodaDateTimeToIso8601StringMapper.map(startAt)
+                val endAtIso8601String = jodaDateTimeToIso8601StringMapper.map(endAt)
 
                 streamService.createStream(
                     name,
                     description,
-                    startAt,
-                    endAt,
+                    startAt = startAtIso8601String,
+                    endAt = endAtIso8601String,
                     imagePart,
                     videoWidth,
                     videoHeight
@@ -76,12 +78,15 @@ class MyStreamDataSource @Inject constructor(
                 val imagePart: MultipartBody.Part? = image
                     ?.toMultipartBodyPart(applicationContext, "image")
 
+                val startAtIso8601String = jodaDateTimeToIso8601StringMapper.map(startAt)
+                val endAtIso8601String = jodaDateTimeToIso8601StringMapper.map(endAt)
+
                 streamService.updateStream(
                     streamId,
                     name,
                     description,
-                    startAt,
-                    endAt,
+                    startAt = startAtIso8601String,
+                    endAt = endAtIso8601String,
                     imagePart,
                     videoWidth,
                     videoHeight

@@ -21,14 +21,18 @@
                 android:id="@+id/myStreamsRecyclerView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:clipToPadding="false"
+                android:paddingHorizontal="@dimen/screenPadding"
+                android:paddingTop="@dimen/screenPadding"
+                android:paddingBottom="@dimen/contentMargin_default"
                 app:layout_constraintBottom_toTopOf="@id/scheduleStreamButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:itemCount="20"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/list_item_my_stream"
-                tools:orientation="vertical"
-                tools:itemCount="40"/>
+                tools:orientation="vertical" />
 
             <com.google.android.material.button.MaterialButton
                 style="@style/Theme.LiveStreamSales.BigMaterialButton"

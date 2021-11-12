@@ -2,17 +2,13 @@ package tv.wfc.livestreamsales.application.di.modules.rest
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.TypeAdapter
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import io.reactivex.rxjava3.core.Scheduler
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.tls.HandshakeCertificates
-import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
-import org.joda.time.format.DateTimeFormatter
 import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -21,14 +17,12 @@ import tv.wfc.livestreamsales.BuildConfig
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.IoScheduler
 import tv.wfc.livestreamsales.application.di.modules.rest.qualifiers.*
 import tv.wfc.livestreamsales.application.di.scope.ApplicationScope
-import tv.wfc.livestreamsales.application.tools.gson.typeadapters.DateTimeTypeAdapter
 import tv.wfc.livestreamsales.features.rest.IApiProvider
 import tv.wfc.livestreamsales.features.rest.RetrofitApiProvider
 import tv.wfc.livestreamsales.features.rest.errors.IResponseErrorsManager
 import tv.wfc.livestreamsales.features.rest.errors.ResponseErrorsManager
 import tv.wfc.livestreamsales.features.rest.interceptors.AuthorizationInterceptor
 import tv.wfc.livestreamsales.features.rest.interceptors.IAuthorizationInterceptor
-import tv.wfc.livestreamsales.features.rest.interceptors.RestServerErrorsInterceptor
 import javax.net.ssl.HostnameVerifier
 
 @Module
@@ -66,8 +60,12 @@ abstract class RestModule {
             handshakeCertificates: HandshakeCertificates,
             hostnameVerifier: HostnameVerifier,
             authorizationInterceptor: IAuthorizationInterceptor,
-            httpLoggingInterceptor: HttpLoggingInterceptor,
-            restServerErrorsInterceptor: RestServerErrorsInterceptor
+            @XRequestedWithHeaderInterceptor
+            xRequestedWithHeaderInterceptor: Interceptor,
+            @HttpLoggingInterceptor
+            httpLoggingInterceptor: Interceptor,
+            @RestServerErrorsInterceptor
+            restServerErrorsInterceptor: Interceptor
         ): OkHttpClient{
             return OkHttpClient.Builder()
                 .sslSocketFactory(
@@ -76,6 +74,7 @@ abstract class RestModule {
                 )
                 .hostnameVerifier(hostnameVerifier)
                 .addInterceptor(authorizationInterceptor)
+                .addInterceptor(xRequestedWithHeaderInterceptor)
                 .addInterceptor(httpLoggingInterceptor)
                 .addInterceptor(restServerErrorsInterceptor)
                 .build()
@@ -84,7 +83,7 @@ abstract class RestModule {
         @ApplicationScope
         @Provides
         @GsonConverterFactory
-        fun provideGsonConverterFactory(
+        internal fun provideGsonConverterFactory(
             @RestGson
             gson: Gson
         ): Converter.Factory {
@@ -99,65 +98,42 @@ abstract class RestModule {
 
         @Provides
         @RestGson
-        internal fun provideGson(
-            @RestDateTimeTypeAdapter
-            restDateTimeAdapter: TypeAdapter<DateTime>
-        ): Gson {
-            return GsonBuilder()
-                .registerTypeAdapter(DateTime::class.java, restDateTimeAdapter)
-                .setPrettyPrinting()
-                .create()
-        }
-
-        @Provides
-        @RestDateTimeTypeAdapter
-        internal fun provideRestDateTimeTypeAdapter(
-            @RestDateTimeFormatter
-            restDateTimeFormatter: DateTimeFormatter
-        ): TypeAdapter<DateTime>{
-            return DateTimeTypeAdapter(restDateTimeFormatter)
-        }
-
-        @Provides
-        @RestDateTimeFormatter
-        internal fun provideRestDateTimeFormatter(
-            @RestDateTimeFormatPattern
-            restDateTimeFormatPattern: String
-        ): DateTimeFormatter{
-            return DateTimeFormat.forPattern(restDateTimeFormatPattern)
-        }
-
-        @Provides
-        @RestDateTimeFormatPattern
-        internal fun provideRestDateTimeFormatPattern(): String = "yyyy-MM-dd'T'HH:mm:ssZ"
+        internal fun provideGson(): Gson = GsonBuilder()
+            .setPrettyPrinting()
+            .create()
 
         @ApplicationScope
         @Provides
-        fun provideCallAdapterFactory(
+        internal fun provideCallAdapterFactory(
             @IoScheduler
             scheduler: Scheduler
         ): CallAdapter.Factory{
             return RxJava3CallAdapterFactory.createWithScheduler(scheduler)
         }
 
-        @ApplicationScope
         @Provides
-        fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-            return HttpLoggingInterceptor().apply{
+        @HttpLoggingInterceptor
+        internal fun provideHttpLoggingInterceptor(): Interceptor {
+            return okhttp3.logging.HttpLoggingInterceptor().apply {
                 level = if(BuildConfig.DEBUG){
-                    HttpLoggingInterceptor.Level.BODY
-                } else{
-                    HttpLoggingInterceptor.Level.NONE
+                    okhttp3.logging.HttpLoggingInterceptor.Level.BODY
+                } else {
+                    okhttp3.logging.HttpLoggingInterceptor.Level.NONE
                 }
             }
         }
 
         @Provides
-        fun provideRestServerErrorInterceptor(
-            responseErrorsManager: IResponseErrorsManager
-        ): RestServerErrorsInterceptor {
-            return RestServerErrorsInterceptor(responseErrorsManager)
-        }
+        @AuthorizationHeaderName
+        internal fun provideAuthorizationHeaderName() = "Authorization"
+
+        @Provides
+        @XRequestedWithHeaderName
+        internal fun provideXRequestedWithHeaderName() = "X-Requested-With"
+
+        @Provides
+        @XRequestedWithHeaderValue
+        internal fun provideXRequestedWithHeaderValue() = "XMLHttpRequest"
     }
 
     @ApplicationScope
@@ -175,6 +151,18 @@ abstract class RestModule {
     @ApplicationScope
     @Binds
     abstract fun provideAuthorizationInterceptor(
-        authorizationInterceptor: AuthorizationInterceptor
+        interceptor: AuthorizationInterceptor
     ): IAuthorizationInterceptor
+
+    @Binds
+    @XRequestedWithHeaderInterceptor
+    abstract fun bindXRequestedWithHeaderInterceptor(
+        interceptor: tv.wfc.livestreamsales.features.rest.interceptors.XRequestedWithHeaderInterceptor
+    ): Interceptor
+
+    @Binds
+    @RestServerErrorsInterceptor
+    abstract fun bindRestServerErrorsInterceptor(
+        interceptor: tv.wfc.livestreamsales.features.rest.interceptors.RestServerErrorsInterceptor
+    ): Interceptor
 }
