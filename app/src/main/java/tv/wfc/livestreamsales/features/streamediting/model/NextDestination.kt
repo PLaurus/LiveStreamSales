@@ -1,4 +1,4 @@
-package tv.wfc.livestreamsales.features.broadcast_editing.model
+package tv.wfc.livestreamsales.features.streamediting.model
 
 sealed class NextDestination {
     object Close: NextDestination()

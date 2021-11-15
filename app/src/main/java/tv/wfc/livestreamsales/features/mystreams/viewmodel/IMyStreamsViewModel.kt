@@ -20,4 +20,6 @@ interface IMyStreamsViewModel: INeedPreparationViewModel {
     fun prepareToCloseCurrentDestination()
 
     fun prepareToNavigateToStreamCreationDestination()
+
+    fun prepareToNavigateToStreamEditingDestination(streamId: Long)
 }

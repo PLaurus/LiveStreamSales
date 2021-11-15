@@ -1,4 +1,4 @@
-package tv.wfc.livestreamsales.features.broadcast_editing.view_model
+package tv.wfc.livestreamsales.features.streamediting.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,14 +11,14 @@ import tv.wfc.contentloader.model.ViewModelPreparationState
 import tv.wfc.livestreamsales.application.base.viewmodel.BaseViewModel
 import tv.wfc.livestreamsales.application.di.modules.reactivex.qualifiers.MainThreadScheduler
 import tv.wfc.livestreamsales.application.tools.errors.IApplicationErrorsLogger
-import tv.wfc.livestreamsales.features.broadcast_editing.model.NextDestination
+import tv.wfc.livestreamsales.features.streamediting.model.NextDestination
 import javax.inject.Inject
 
-class BroadcastEditingViewModel @Inject constructor(
+class StreamEditingViewModel @Inject constructor(
     @MainThreadScheduler
     private val mainThreadScheduler: Scheduler,
     private val applicationErrorsLogger: IApplicationErrorsLogger
-): BaseViewModel(), IBroadcastEditingViewModel {
+): BaseViewModel(), IStreamEditingViewModel {
     private val dataPreparationStateSubject = BehaviorSubject.createDefault<ViewModelPreparationState>(ViewModelPreparationState.DataIsNotPrepared)
 
     private val nextDestinationEventSubject = PublishSubject.create<NextDestination>()
@@ -52,6 +52,8 @@ class BroadcastEditingViewModel @Inject constructor(
             )
             .addTo(disposables)
     }
+
+    override fun prepare(streamId: Long) = Unit
 
     override fun requestToCloseCurrentDestination() {
         nextDestinationEventSubject.onNext(NextDestination.Close)

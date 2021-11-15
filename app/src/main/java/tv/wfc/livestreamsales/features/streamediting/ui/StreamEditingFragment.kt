@@ -1,37 +1,40 @@
-package tv.wfc.livestreamsales.features.broadcast_editing.ui
+package tv.wfc.livestreamsales.features.streamediting.ui
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import tv.wfc.livestreamsales.R
 import tv.wfc.livestreamsales.application.ui.base.BaseFragment
 import tv.wfc.livestreamsales.databinding.FragmentBroadcastEditingBinding
-import tv.wfc.livestreamsales.features.broadcast_editing.di.BroadcastEditingComponent
-import tv.wfc.livestreamsales.features.broadcast_editing.model.NextDestination
-import tv.wfc.livestreamsales.features.broadcast_editing.view_model.IBroadcastEditingViewModel
 import tv.wfc.livestreamsales.features.mainappcontent.ui.MainAppContentActivity
+import tv.wfc.livestreamsales.features.streamediting.di.StreamEditingComponent
+import tv.wfc.livestreamsales.features.streamediting.model.NextDestination
+import tv.wfc.livestreamsales.features.streamediting.viewmodel.IStreamEditingViewModel
 import javax.inject.Inject
 
-class BroadcastEditingFragment: BaseFragment(R.layout.fragment_broadcast_editing) {
+class StreamEditingFragment: BaseFragment(R.layout.fragment_broadcast_editing) {
     private val navigationController by lazy { findNavController() }
+    private val navigationArguments by navArgs<StreamEditingFragmentArgs>()
 
     private val onToolbarBackPressed = MainAppContentActivity.ToolbarNavigationOnClickListener {
         viewModel.requestToCloseCurrentDestination()
     }
 
-    private lateinit var dependenciesComponent: BroadcastEditingComponent
+    private lateinit var dependenciesComponent: StreamEditingComponent
 
     private var viewBinding: FragmentBroadcastEditingBinding? = null
 
     @Inject
-    lateinit var viewModel: IBroadcastEditingViewModel
+    lateinit var viewModel: IStreamEditingViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         initializeDependenciesComponent()
         injectDependencies()
+        prepareViewModel()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,12 +55,17 @@ class BroadcastEditingFragment: BaseFragment(R.layout.fragment_broadcast_editing
         if(::dependenciesComponent.isInitialized) return
 
         dependenciesComponent = appComponent
-            .broadcastEditingComponentFactory()
+            .streamEditingComponentFactory()
             .create(this)
     }
 
     private fun injectDependencies() {
         dependenciesComponent.inject(this)
+    }
+
+    private fun prepareViewModel() {
+        val streamId = navigationArguments.streamId
+        viewModel.prepare(streamId)
     }
 
     private fun bindView(view: View) {

@@ -2,7 +2,6 @@ package tv.wfc.livestreamsales.application.di.modules.subcomponents
 
 import dagger.Module
 import tv.wfc.livestreamsales.features.authorization.di.AuthorizationComponent
-import tv.wfc.livestreamsales.features.broadcast_editing.di.BroadcastEditingComponent
 import tv.wfc.livestreamsales.features.greeting.di.GreetingComponent
 import tv.wfc.livestreamsales.features.home.di.HomeComponent
 import tv.wfc.livestreamsales.features.liveBroadcastingDestination.di.LiveBroadcastingComponent
@@ -23,6 +22,7 @@ import tv.wfc.livestreamsales.features.productsareordered.di.ProductsAreOrderedC
 import tv.wfc.livestreamsales.features.profile.di.ProfileComponent
 import tv.wfc.livestreamsales.features.splash.di.SplashComponent
 import tv.wfc.livestreamsales.features.streamcreation.di.StreamCreationComponent
+import tv.wfc.livestreamsales.features.streamediting.di.StreamEditingComponent
 
 @Module(subcomponents = [
     SplashComponent::class,
@@ -46,6 +46,6 @@ import tv.wfc.livestreamsales.features.streamcreation.di.StreamCreationComponent
     LiveBroadcastingComponent::class,
     MyStreamsComponent::class,
     StreamCreationComponent::class,
-    BroadcastEditingComponent::class
+    StreamEditingComponent::class
 ])
 class AppSubComponentsModule

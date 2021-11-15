@@ -122,6 +122,10 @@ class MyStreamsViewModel @Inject constructor(
         nextDestinationSubject.onNext(NextDestination.StreamCreation)
     }
 
+    override fun prepareToNavigateToStreamEditingDestination(streamId: Long) {
+        nextDestinationSubject.onNext(NextDestination.StreamEditing(streamId))
+    }
+
     override fun onCleared() {
         disposables.dispose()
         super.onCleared()

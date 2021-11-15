@@ -23,7 +23,6 @@ import tv.wfc.livestreamsales.application.di.modules.utils.UtilsModule
 import tv.wfc.livestreamsales.application.di.modules.viewmodelprovider.ViewModelProviderModule
 import tv.wfc.livestreamsales.application.di.scope.ApplicationScope
 import tv.wfc.livestreamsales.features.authorization.di.AuthorizationComponent
-import tv.wfc.livestreamsales.features.broadcast_editing.di.BroadcastEditingComponent
 import tv.wfc.livestreamsales.features.greeting.di.GreetingComponent
 import tv.wfc.livestreamsales.features.home.di.HomeComponent
 import tv.wfc.livestreamsales.features.liveBroadcastingDestination.di.LiveBroadcastingComponent
@@ -44,6 +43,7 @@ import tv.wfc.livestreamsales.features.productsareordered.di.ProductsAreOrderedC
 import tv.wfc.livestreamsales.features.profile.di.ProfileComponent
 import tv.wfc.livestreamsales.features.splash.di.SplashComponent
 import tv.wfc.livestreamsales.features.streamcreation.di.StreamCreationComponent
+import tv.wfc.livestreamsales.features.streamediting.di.StreamEditingComponent
 
 @ApplicationScope
 @Component(modules = [
@@ -93,5 +93,5 @@ interface AppComponent {
     fun liveBroadcastingComponent(): LiveBroadcastingComponent.Factory
     fun myBroadcastsComponent(): MyStreamsComponent.Builder
     fun broadcastCreationComponentFactory(): StreamCreationComponent.Factory
-    fun broadcastEditingComponentFactory(): BroadcastEditingComponent.Factory
+    fun streamEditingComponentFactory(): StreamEditingComponent.Factory
 }

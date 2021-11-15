@@ -128,6 +128,8 @@ class MyStreamsFragment: BaseFragment(R.layout.fragment_my_streams) {
             when(nextDestination) {
                 NextDestination.Close -> navigationController.navigateUp()
                 NextDestination.StreamCreation -> navigateToStreamCreationDestination()
+                is NextDestination.StreamEditing ->
+                    navigateToStreamEditingDestination(nextDestination.streamId)
             }
         }
 
@@ -156,7 +158,15 @@ class MyStreamsFragment: BaseFragment(R.layout.fragment_my_streams) {
         myStreamsRecyclerView.run {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
-            val myStreamsAdapter = MyStreamsAdapter(myStreamsDiffUtilItemCallback, imageLoader)
+            val myStreamsAdapter = MyStreamsAdapter(
+                myStreamsDiffUtilItemCallback,
+                imageLoader,
+                computationScheduler,
+                mainThreadScheduler,
+                applicationErrorsLogger,
+                viewScopeDisposables,
+                viewModel::prepareToNavigateToStreamEditingDestination
+            )
 
             val contentMargin = resources.getDimensionPixelSize(R.dimen.contentMargin_default)
             addItemDecoration(GapBetweenItems(contentMargin))
@@ -181,6 +191,11 @@ class MyStreamsFragment: BaseFragment(R.layout.fragment_my_streams) {
 
     private fun navigateToStreamCreationDestination() {
         val action = MyStreamsFragmentDirections.toStreamCreationDestination()
+        navigationController.navigate(action)
+    }
+
+    private fun navigateToStreamEditingDestination(streamId: Long) {
+        val action = MyStreamsFragmentDirections.toStreamEditingDestination(streamId)
         navigationController.navigate(action)
     }
 }

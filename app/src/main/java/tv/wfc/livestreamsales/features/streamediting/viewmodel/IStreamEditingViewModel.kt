@@ -1,13 +1,15 @@
-package tv.wfc.livestreamsales.features.broadcast_editing.view_model
+package tv.wfc.livestreamsales.features.streamediting.viewmodel
 
 import androidx.lifecycle.LiveData
 import tv.wfc.contentloader.viewmodel.INeedPreparationViewModel
-import tv.wfc.livestreamsales.features.broadcast_editing.model.NextDestination
+import tv.wfc.livestreamsales.features.streamediting.model.NextDestination
 
-interface IBroadcastEditingViewModel: INeedPreparationViewModel {
+interface IStreamEditingViewModel: INeedPreparationViewModel {
     val isAnyOperationInProgress: LiveData<Boolean>
 
     val nextDestinationEvent: LiveData<NextDestination>
+
+    fun prepare(streamId: Long)
 
     fun requestToCloseCurrentDestination()
 }
