@@ -299,8 +299,8 @@
     <fragment
         android:id="@+id/streamEditingDestination"
         android:name="tv.wfc.livestreamsales.features.streamediting.ui.StreamEditingFragment"
-        android:label="@string/fragment_broadcast_editing_destination_title"
-        tools:layout="@layout/fragment_broadcast_editing">
+        android:label="@string/fragment_stream_editing_destination_title"
+        tools:layout="@layout/fragment_stream_editing">
 
         <argument
             android:name="streamId"

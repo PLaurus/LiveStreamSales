@@ -92,6 +92,6 @@ interface AppComponent {
     fun liveBroadcastingSettingsComponent(): LiveBroadcastingSettingsComponent.Factory
     fun liveBroadcastingComponent(): LiveBroadcastingComponent.Factory
     fun myBroadcastsComponent(): MyStreamsComponent.Builder
-    fun broadcastCreationComponentFactory(): StreamCreationComponent.Factory
+    fun streamCreationComponentFactory(): StreamCreationComponent.Factory
     fun streamEditingComponentFactory(): StreamEditingComponent.Factory
 }

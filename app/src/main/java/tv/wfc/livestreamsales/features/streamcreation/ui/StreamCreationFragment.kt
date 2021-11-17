@@ -113,7 +113,7 @@ class StreamCreationFragment : BaseFragment(R.layout.fragment_stream_creation) {
         if (::dependenciesComponent.isInitialized) return
 
         dependenciesComponent = appComponent
-            .broadcastCreationComponentFactory()
+            .streamCreationComponentFactory()
             .create(this)
     }
 

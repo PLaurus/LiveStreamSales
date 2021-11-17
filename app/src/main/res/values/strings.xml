@@ -909,52 +909,108 @@
         Не удалось запланировать трансляцию
     </string>
 
-    <!-- Broadcast editing fragment -->
+    <!-- Stream editing fragment -->
 
-    <string name="fragment_broadcast_editing_destination_title">Информация о трансляции</string>
+    <string name="fragment_stream_editing_destination_title">Информация о трансляции</string>
 
-    <string name="fragment_broadcast_editing_name_hint">
+    <string name="fragment_stream_editing_name_hint">
         @string/fragment_stream_creation_name_hint
     </string>
 
-    <string name="fragment_broadcast_editing_description_hint">
+    <string name="fragment_stream_editing_description_hint">
         @string/fragment_stream_creation_description_hint
     </string>
 
-    <string name="fragment_broadcast_editing_start_date_label">
+    <string name="fragment_stream_editing_start_date_label">
         @string/fragment_stream_creation_start_date_label
     </string>
 
-    <string name="fragment_broadcast_editing_start_date_not_set">
+    <string name="fragment_stream_editing_start_date_not_set">
         @string/fragment_stream_creation_start_date_not_set
     </string>
 
-    <string name="fragment_broadcast_editing_start_time_label">
+    <string name="fragment_stream_editing_start_time_label">
         @string/fragment_stream_creation_start_time_label
     </string>
 
-    <string name="fragment_broadcast_editing_start_time_not_set">
+    <string name="fragment_stream_editing_start_time_not_set">
         @string/fragment_stream_creation_start_time_not_set
     </string>
 
-    <string name="fragment_broadcast_editing_preview_image_label">
+    <string name="fragment_stream_editing_end_date_label">
+        @string/fragment_stream_creation_end_date_label
+    </string>
+
+    <string name="fragment_stream_editing_end_date_not_set">
+        @string/fragment_stream_creation_end_date_not_set
+    </string>
+
+    <string name="fragment_stream_editing_end_time_label">
+        @string/fragment_stream_creation_end_time_label
+    </string>
+
+    <string name="fragment_stream_editing_end_time_not_set">
+        @string/fragment_stream_editing_end_time_not_set
+    </string>
+
+    <string name="fragment_stream_editing_preview_image_label">
         @string/fragment_stream_creation_preview_image_label
     </string>
 
-    <string name="fragment_broadcast_editing_change_preview_text">
+    <string name="fragment_stream_editing_choose_application_to_pick_image">
+        @string/fragment_stream_creation_choose_application_to_pick_image
+    </string>
+
+    <string name="fragment_stream_editing_change_preview_text">
         @string/fragment_stream_creation_change_preview_text
     </string>
 
-    <string name="fragment_broadcast_editing_quality_hint">Качество трансляции*</string>
+    <string name="fragment_stream_editing_quality_hint">Качество трансляции*</string>
 
-    <string name="fragment_broadcast_editing_quality_low">Слабый интернет</string>
+    <string name="fragment_stream_editing_quality_low">Слабый интернет</string>
 
-    <string name="fragment_broadcast_editing_quality_medium">Стандартное качество</string>
+    <string name="fragment_stream_editing_quality_medium">Стандартное качество</string>
 
-    <string name="fragment_broadcast_editing_quality_high">Full HD</string>
+    <string name="fragment_stream_editing_quality_high">Full HD</string>
 
-    <string name="fragment_broadcast_editing_save_button">Сохранить</string>
+    <string name="fragment_stream_editing_save_button">Сохранить</string>
 
-    <string name="fragment_broadcast_editing_start_broadcast_button">Начать</string>
+    <string name="fragment_stream_editing_start_broadcast_button">Начать</string>
+
+    <string name="fragment_stream_editing_fields_are_required_text">
+        @string/fragment_stream_creation_fields_are_required_text
+    </string>
+
+    <string name="fragment_stream_editing_error_necessary_fields_are_not_filled_in">
+        @string/fragment_stream_creation_error_necessary_fields_are_not_filled_in
+    </string>
+
+    <string name="fragment_stream_editing_error_start_date_time_is_after_end_date_time">
+        @string/fragment_stream_creation_error_start_date_time_is_after_end_date_time
+    </string>
+
+    <string name="fragment_stream_editing_error_start_date_is_after_end_date">
+        @string/fragment_stream_creation_error_start_date_is_after_end_date
+    </string>
+
+    <string name="fragment_stream_editing_error_start_date_time_is_before_now">
+        @string/fragment_stream_creation_error_start_date_time_is_before_now
+    </string>
+
+    <string name="fragment_stream_editing_error_end_date_time_is_before_start_date_time">
+        @string/fragment_stream_creation_error_end_date_time_is_before_start_date_time
+    </string>
+
+    <string name="fragment_stream_editing_error_end_date_is_before_start_date">
+        @string/fragment_stream_creation_error_end_date_is_before_start_date
+    </string>
+
+    <string name="fragment_stream_editing_error_end_date_time_is_before_now">
+        @string/fragment_stream_creation_error_end_date_time_is_before_now
+    </string>
+
+    <string name="fragment_stream_editing_error_failed_to_update_stream_information">
+        Не удалось обновить информацию о трансляции
+    </string>
 
 </resources>

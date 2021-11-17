@@ -440,18 +440,6 @@ class StreamCreationViewModel @Inject constructor(
             .addTo(disposables)
     }
 
-    private fun getDefaultVideoResolution(): Resolution {
-        val horizontalResolution = cameraResolutionsProvider
-            .getTheHighestResolutionOfBackCamera(preferredVideoAspectRatio)
-            ?: cameraResolutionsProvider
-                .getTheHighestResolutionOfFrontCamera(
-                    preferredVideoAspectRatio
-                )
-            ?: Resolution(1280, 720)
-
-        return horizontalResolution.rotate()
-    }
-
     override fun prepareToCloseCurrentDestination() {
         launchLongTermOperation {
             nextDestinationEventSubject.onNext(NextDestination.Close)
@@ -523,6 +511,18 @@ class StreamCreationViewModel @Inject constructor(
                 })
             .subscribeBy(this::onError, this::onComplete, this::onNext)
             .addTo(disposables)
+    }
+
+    private fun getDefaultVideoResolution(): Resolution {
+        val horizontalResolution = cameraResolutionsProvider
+            .getTheHighestResolutionOfBackCamera(preferredVideoAspectRatio)
+            ?: cameraResolutionsProvider
+                .getTheHighestResolutionOfFrontCamera(
+                    preferredVideoAspectRatio
+                )
+            ?: Resolution(1280, 720)
+
+        return horizontalResolution.rotate()
     }
 
     private fun sendSystemMessage(@StringRes resourceId: Int) {
