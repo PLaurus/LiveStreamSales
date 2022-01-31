@@ -3,7 +3,7 @@ buildscript {
     ext.kotlin_version =                "1.5.31"
 
     // Gradle
-    ext.gradleVersion = '7.0.3'
+    ext.gradleVersion = '7.1.0'
 
     // Kotlin extensions
     ext.coreKtxVersion =                "1.7.0"
